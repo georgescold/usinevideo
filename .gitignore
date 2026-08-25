@@ -1,0 +1,42 @@
+# --- Secrets : ne sortent JAMAIS du poste -----------------------------------
+.env
+config/keys.json
+config/.trousseau-etat.json
+**/*.key
+
+# --- Dependances ------------------------------------------------------------
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+
+# --- Media lourds : regenerables ou irrecuperables, jamais versionnes -------
+videos/*/02-tournage/
+videos/*/03-audio/
+videos/*/06-rendu/
+veille/youtube/miniatures/
+veille/youtube/raw/
+veille/tiktok/media/
+veille/tiktok/raw/
+assets/broll/
+assets/musique/
+assets/sfx/
+remotion/out/
+outils/bin/
+outils/modeles/
+
+# --- Caches -----------------------------------------------------------------
+.cache/
+*.log
+.remotion/
+
+# --- Ancien projet, conserve comme reference le temps de la migration -------
+Youtube automatisé/
+
+# --- Systeme ----------------------------------------------------------------
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Permissions locales, propres a chaque poste
+.claude/settings.local.json

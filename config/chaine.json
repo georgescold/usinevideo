@@ -1,0 +1,83 @@
+{
+  "_lecture": "Carte d'identite de la chaine. VIDE au depart : c'est /init-chaine qui le remplit, en interrogeant l'utilisateur puis la veille. Tout le reste de la stack lit ce fichier. Ne jamais l'editer a la main sans prevenir l'utilisateur.",
+
+  "initialise": false,
+  "date_init": null,
+
+  "identite": {
+    "id": null,
+    "nom": null,
+    "langue": "fr",
+    "promesse": null,
+    "en_une_phrase": null
+  },
+
+  "produit": {
+    "nom": null,
+    "type": null,
+    "prix": null,
+    "url": null,
+    "fiche": "marque/Fiche-Produit.md"
+  },
+
+  "avatar": {
+    "_lecture": "L'avatar GÉNÉRAL de la chaîne : celui à qui toutes les vidéos parlent. Les autres avatars restent dans marque/Fiche-Avatars.md et servent à varier les angles.",
+    "nom": null,
+    "segment": null,
+    "niveau_de_conscience": null,
+    "fiche": "marque/Fiche-Avatars.md",
+    "hooks": "marque/Hook-Bank.md"
+  },
+
+  "marketeur": {
+    "nom": null,
+    "posture": null,
+    "fiche": "marque/Le-Marketeur.md"
+  },
+
+  "plateformes": {
+    "youtube": { "actif": true, "handle": null, "url": null, "id_chaine": null },
+    "tiktok": { "actif": true, "handle": null, "url": null },
+    "instagram": { "actif": true, "handle": null, "url": null }
+  },
+
+  "formats": {
+    "_lecture": "Actives par /init-chaine apres la veille : on ne choisit un format qu'une fois qu'on a vu ce qui marche dans la niche.",
+    "long_face_camera": { "actif": false, "duree_cible_s": [480, 900] },
+    "long_faceless": { "actif": false, "duree_cible_s": [420, 720] },
+    "long_screencast": { "actif": false, "duree_cible_s": [360, 900] },
+    "long_avatar": { "actif": false, "duree_cible_s": [300, 600] },
+    "short_face_camera": { "actif": false, "duree_cible_s": [25, 55] },
+    "short_faceless": { "actif": false, "duree_cible_s": [20, 45] },
+    "short_avatar": { "actif": false, "duree_cible_s": [20, 45] }
+  },
+
+  "voix": {
+    "mode": "sts",
+    "_modes": "sts = tu enregistres, ElevenLabs remplace le timbre | brute = ta voix telle quelle | tts = voix entierement synthetique | avatar = HeyGen genere image + voix",
+    "elevenlabs_voice_id": null,
+    "voix_de_reference": null
+  },
+
+  "identite_visuelle": {
+    "fiche": "marque/identite-visuelle.md",
+    "police_titres": null,
+    "police_soustitres": null,
+    "couleur_accent": null,
+    "couleur_fond": null,
+    "lut": null,
+    "logo": null,
+    "style_soustitres": "mot-a-mot-pastille"
+  },
+
+  "seo": {
+    "mot_cle_pilier": null,
+    "piliers": [],
+    "playlists": []
+  },
+
+  "cadence": {
+    "long_par_semaine": 0,
+    "short_par_semaine": 0
+  }
+}

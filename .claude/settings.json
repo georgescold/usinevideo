@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(node pipeline/*)",
+      "Bash(node outils/*)",
+      "Bash(npm run verifie*)",
+      "Bash(npm run autotest*)",
+      "Bash(npm run veille*)",
+      "Bash(npm run tiktok*)",
+      "Bash(npm run transcris*)",
+      "Bash(npm run monte*)",
+      "Bash(npm run rends*)",
+      "Bash(ffprobe:*)",
+      "Bash(ffmpeg -hide_banner -i:*)",
+      "Read(//**)",
+      "Glob(//**)",
+      "Grep(//**)"
+    ],
+    "ask": [
+      "Bash(npm run voix*)",
+      "Bash(node pipeline/voix.mjs*)"
+    ],
+    "deny": [
+      "Read(./config/keys.json)",
+      "Read(./.env)"
+    ]
+  }
+}

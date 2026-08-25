@@ -1,0 +1,19 @@
+{
+  "_lecture": "Modele du trousseau. Copie-le en config/keys.json et remplis-le. Chaque service accepte PLUSIEURS cles : la stack tourne entre elles toute seule quand un quota est epuise. Le champ 'tier' sert a prioriser : une cle 'paid' passe toujours avant une cle 'free'.",
+  "apify": [
+    { "key": "apify_api_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "label": "apify-01", "enabled": true }
+  ],
+  "elevenlabs": [
+    { "key": "sk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "label": "eleven-pro", "tier": "paid", "enabled": true },
+    { "key": "sk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "label": "eleven-free-01", "tier": "free", "enabled": true }
+  ],
+  "pexels": [
+    { "key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "label": "pexels-01", "enabled": true }
+  ],
+  "pixabay": [
+    { "key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "label": "pixabay-01", "enabled": true }
+  ],
+  "heygen": [
+    { "key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "label": "heygen-01", "enabled": true }
+  ]
+}
