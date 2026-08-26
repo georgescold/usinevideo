@@ -71,6 +71,14 @@ const A_CREER = [
   'remotion/public',
 ]
 
+/**
+ * Ce qui ne doit jamais voyager, même en vivant dans un dossier copié.
+ * `settings.local.json` porte les permissions approuvées sur CE poste : les
+ * transporter reviendrait à pré-approuver des actions dans un dossier où
+ * l'utilisateur ne les a jamais validées.
+ */
+const A_RETIRER_APRES_COPIE = ['.claude/settings.local.json']
+
 /** Les gabarits du socle marque : la structure, pas le contenu. */
 const GABARITS_MARQUE = ['LISEZ-MOI.md', 'identite-visuelle.md', 'ligne-editoriale.md']
 
@@ -111,6 +119,13 @@ await principal(async () => {
     } else {
       fs.copyFileSync(source, cible)
       fichiers++
+    }
+  }
+  for (const relatif of A_RETIRER_APRES_COPIE) {
+    const indesirable = path.join(destination, relatif)
+    if (fs.existsSync(indesirable)) {
+      fs.rmSync(indesirable, { force: true })
+      fichiers--
     }
   }
   journal.ok(`${fichiers} fichiers copiés`)
