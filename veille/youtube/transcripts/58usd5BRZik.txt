@@ -1,0 +1,590 @@
+# Le Système Malsain Des Applis de Rencontre
+# Laganne   · 82 k vues · 00:19:05
+# https://www.youtube.com/watch?v=58usd5BRZik
+
+L'histoire des applications de rencontre
+est réellement fascinante. Pour
+commencer, si on était à la recherche
+d'un ou d'une partenaire au 19e siècle,
+on pouvait passer par ce qu'on appelait
+des agences matrimoniales. Et ça jusque
+dans les années 1960 où on a eu
+l'apparition des petites annonces dans
+certains journaux puis 1980 avec le
+Minitel cette fois jusqu'à une date
+fatidique 1995. C'est le moment où le
+pionnier de la rencontre en ligne qui
+s'appelait à ce moment-là match.com a vu
+le jour et surtout c'est le début de son
+ascension jusqu'au sommet du marché
+avant qu'arrive 2012 et l'apparition de
+Tinder qui a popularisé cette méthode de
+rencontre parce que juste avant
+l'apparition de Tinder, les rencontres
+en ligne étaient quelque chose d'assez
+peu commun en tout cas c'était rarement
+ce qui alimentait les discussions de
+comptoir ou dont on se ventait mais
+c'est pas le sujet de la vidéo enfin
+presque car le plus important selon moi
+dans ces appli application où se joue
+une guerre asymétrique de la
+désirabilité sur fond d'algorithme
+obscur, c'est leur réputation et plus
+particulièrement la réputation qui
+voudrait que ces applications soient
+remplies de femmes qui reçoivent
+l'attention qu'elles ne veulent pas et
+d'hommes qui veulent une attention
+qu'ils ne reçoivent pas. Derrière cette
+jolie formule se cache une réalité
+statistique. Les hommes hétérosexuels
+obtiennent en moyenne beaucoup, beaucoup
+mais vraiment beaucoup moins de likes et
+de matchs que les femmes sur ces
+plateformes. Et au cas où, les likes et
+les matchs sont une manière sur toutes
+ces applications de confirmer qu'on
+souhaite aller plus loin avec une
+personne dont on a vu le profil. Et
+inversement, si on ne veut pas aller
+plus loin, on ne donne pas de like ou de
+match. C'est plutôt logique. Et pour
+expliquer ce déséquilibre entre les
+hommes et les femmes sur ces
+applications qui peut sur le papier, je
+suis d'accord, avoir l'air très logique
+mais qui pourtant ne l'est pas tant que
+ça, on va se pencher sur toutes les
+raisons de la plus à la moins évidente
+afin de démêler tout ça et surtout afin
+de se rendre compte que ce sentiment
+d'invisibilité ne tient pas au hasard,
+il est le fruit d'un ensemble de
+facteurs structurels qui organisent la
+culture même de ces applications,
+notamment le fait qu'à l'origine de ce
+phénomène, il y plus qu'un simple défaut
+individuel inhérent à tous les hommes,
+mais une réalité. Et cette réalité,
+c'est que les applications de rencontre
+combinent un déséquilibre démographique
+conséquent. Et ça, c'est la première
+raison qu'on va étudier parce qu'en
+effet, il y a plus d'hommes que de
+femmes inscrits sur la plupart des
+applis de rencontre. Et si on prend les
+chiffres par exemple de Bumble, on sait
+via l'entreprise qu'environ 67 % des
+utilisateurs actifs sont des hommes et
+ce chiffre atteint même 76 % sur Tinder.
+Autrement dit, on compte deux hommes
+pour une femme sur Bumble et trois
+hommes pour une femme sur Tinder. Et
+même si tous ne sont pas hétérosexuels,
+la majorité des utilisateurs recherchent
+des rencontres avec l'autre sexe. dit
+bien que si on traitait tout ça comme
+n'importe quelle réalité économique,
+l'offre féminine disponible est
+nettement inférieure à la demande
+masculine. Car oui, pour bien comprendre
+ces phénomènes, il faut garder en tête
+que dans un tel marché, la loi de
+l'offre et la demande s'applique aussi,
+c'est-à-dire que l'attention des femmes
+est limitée et donc plus chère
+statistiquement. Quand des dizaines
+d'hommes concurrencent pour le même
+profil féminin, l'application a intérêt
+à donner plus de visibilité à certains
+profils dit attractifs qui sont parfois
+aussi appelés top man par les personnes
+de l'entreprise derrière mais qu'on va
+se permettre d'appeler les ultra BG
+histoire de simplifier car mettre en
+avant ces ultra BG ça permet de garder
+les autres utilisateurs en attente. En
+pratique, ça signifie que beaucoup
+d'hommes subissent une très faible
+exposition. Par exemple, des analyses
+montrent qu'un profil masculin moyen a
+souvent un taux de match de l'ordre de 1
+% ou moins. Alors qu'une femme peut
+obtenir un taux de match de l'ordre de
+50 % sur la même plateforme et en
+faisant beaucoup moins d'efforts dans la
+création de son profil. Ce simple calcul
+de concurrence explique en grande partie
+pourquoi beaucoup d'hommes voient
+beaucoup de profil mais sont rarement vu
+en retour. Ce déséquilibre brut se
+traduit aussi dans les comportements.
+Les hommes voyant peu de retour tendent
+à liker massivement pour maximiser leur
+chance. tandis qu'à l'inverse, les
+femmes submergées de sollicitations
+deviennent très très sélectives. Ce qui
+est bien évidemment de la logique comme
+les cours de SES au lycée. J'ai rien
+inventé. Et nous reviendrons sur ces
+stratégies de swipe plus tard. D'abord,
+on va retenir que le nombre nettement
+inférieur de femmes et la concurrence
+acharnée entre hommes constituent la
+première raison de l'invisibilité
+numérique masculine et de la
+surexposition numérique des femmes. Hop
+hop hop. Avant de savoir pourquoi tu
+n'as pas reçu de lik aujourd'hui, je
+tiens à remercier le sponsor de cette
+vidéo, Incognit, le logiciel qui permet
+de se protéger contre les individus qui
+naviguent autour de nos données privées
+en ligne et qui se font de l'argent
+dessus. Et c'est surtout le logiciel qui
+permet de faire le ménage sur ce qu'on
+peut laisser traîner en ligne. Car comme
+on dit, ils ne peuvent pas nous faire de
+mal s'ils ne peuvent pas nous trouver.
+Parce que oui, tu dois le savoir, mais
+plus que les simples spams sortis de
+nulle part que tu reçois dans ta boîte
+mail, tes données en ligne peuvent aussi
+être réutilisées par des individus pour
+des vols d'identité, des vols tout
+courts ou des tentatives d'arnaque sur
+toi et tes proches. Et tout ça parce
+qu'il existe des gens sur internet qu'on
+appelle des courtiers en données qui
+vendent tes informations personnelles
+comme ton nom, ton adresse, tes achats,
+ton numéro de téléphone ou encore tes
+informations financières. Mais le truc
+c'est que ces courtiers sont parfois
+voire souvent impliqués dans des
+problèmes de hacking. Ce qui va faire
+que tes données vont finir dans les
+poches de gens pas très sympas. Et c'est
+pour ça que je te recommande de passer
+par Incognie car avec ces offres, tu
+peux dire adieu aux courtiers aux
+données et aux failles de sécurité,
+notamment via la fonction de suppression
+personnalisée qui te permet de choisir
+les sites où tu souhaites faire
+disparaître tes données par exemple.
+Tout ce que tu as à faire, c'est de
+créer un compte et de leur accorder le
+droit de travailler pour toi et c'est
+tout. Incogni contactera les courtiers
+en données en ton nom pour demander la
+suppression de toutes tes données et
+traitera toute objection de leur part.
+Pour commencer, il suffit de s'inscrire
+en utilisant le lien dans la
+description. Utilise le code lagane avec
+le lien ci-dessous pour recevoir 60 % de
+réduction sur Incognie. Tu as évidemment
+30 jours d'essai avant et j'encourage
+très sincèrement chacun d'entre vous à
+au moins essayer pour votre sécurité en
+ligne. Enfin bref, dans tous les cas,
+fais super attention à tes données
+personnelles. Et maintenant, on est
+reparti.
+Maintenant, deuxième raison derrière
+tout ça, les applications de rencontre
+ne sont pas de simples carnets d'adresse
+et elles reposent sur des algorithmes
+complexes qui décident quel profil
+montrer en priorité comme on l'a évoqué
+avec les Ultra BG. Or, ces algorithmes
+ont tendance à reproduire des boucles de
+rétroaction positive. Et pour te le
+résumer super simplement, ça veut dire
+que les profils qui reçoivent beaucoup
+d'attention sont poussés vers davantage
+de visibilité tandis que ceux qui en
+reçoivent peu restent dans l'ombre. Et
+oui, c'est cruel, ça s'appelle le jeu de
+la vie. Ou pour te le résumer en terme
+League of Legend, plus tu snowball, plus
+tu snowballeras. Mais si tu es hard
+stock bronze, ton MMR va te laisser au
+fond. Concrètement, un nouvel inscrit
+sur une appli comme Tinder par exemple
+bénéficie d'un boost initial.
+L'algorithme va lui offrir un pic de
+visibilité pendant 48 heures. Donc
+beaucoup de matchs peuvent survenir
+pendant ce bref lapse de temps, créant
+l'illusion que la vie est belle et que
+tu es juste au top. Mais très vite,
+l'algorithme va retirer ce coup de
+projecteur et même sache qu'au bout de
+quelques jours, la visibilité est
+volontairement réduite. Un profil
+masculin moyen peut passer de plusieurs
+likes par jour à un zéro match quasi
+complet. C'est ce qu'on va appeler le
+phénomène de lune de miel suivi d'une
+chute programmée de la popularité. Ce
+mécanisme explique pourquoi certains
+hommes voient très peu leur [musique]
+profil présenté aux femmes,
+indépendamment de l'apparence de leurs
+photos, de la qualité/authenticité
+de leur description. Et pourquoi ? Bah
+parce qu'en arrière-plan, les
+applications classent les utilisateurs
+selon ce que certains appellent une note
+de désirabilité. Elle n'est plus
+officiellement affichée et c'était le
+mythique Hoscore. Ouais, un peu comme
+aux échecs. Mais malgré le fait
+qu'aujourd'hui il n'y a plus cette note
+d'afficher, l'idée est restée. Plus un
+profil est jugé populaire, plus il aura
+de chances d'apparaître dans les
+recherches des autres. À l'inverse, les
+profils peu likés vont petit à petit
+disparaître du flux des autres
+utilisateurs jusqu'à devenir totalement
+fantomatique. Donc si de base tu es un
+homme qui n'a pas obtenu beaucoup de
+likes dès que tu as installé
+l'application, tu as de fortes chances
+d'être tombé dans ce qu'on va appeler la
+fausse pouilleux algorithmique. Et ceci
+est une blague évidemment, ce qui va
+renforcer ton invisibilité
+indépendamment de tes efforts pour
+améliorer ton profil. En outre, les
+critères exacts de l'algorithme ne sont
+pas publics, mais on sait qu'il utilise
+une partie des méthodes de filtrage
+classique. C'est-à-dire que on te
+montrera surtout des profils que
+d'autres utilisateurs qui ont des goûts
+similaires au tien aimé. Chaque swipe
+est enregistré puis affiné de sorte que
+l'application te propose plus ou moins
+les mêmes types de profils. Et si tes
+likes ne rencontrent pas beaucoup de
+réciprocité, donc si tu likes quelqu'un
+et que ce quelqu'un ne te like pas en
+retour. Et si ce scénario arrive
+plusieurs fois, l'algorithme te
+considérera comme moins attractif et te
+montrera moins souvent. Enfin, ces
+algorithmes cherchent à maximiser la
+durée d'utilisation et évidemment le
+chiffre d'affaires. Pas forcément ton
+bonheur. Bon, on l'avait pas vu venir
+celle-là. Et plusieurs enquêtes lancées
+par divers médias ont révélé que par
+exemple Tinder travaille avec des
+spécialistes du jeu vidéo pour activer
+les mécanismes de frustration dans le
+cerveau des hommes. Donc lorsque
+l'application identifie un utilisateur
+masculin susceptible de payer, ce qui va
+évidemment aussi dépendre de son profil
+socio-économique ou de son niveau
+d'éducation, par exemple, il se peut
+qu'il le classe dans une catégorie où
+son profil apparaîtra peu. Ainsi, même
+s'il swipe beaucoup, il n'obtiendra
+presque aucun match et finira par
+s'impatienter. Puis même en général,
+selon des anciens employé interrogés, la
+majorité des hommes ne sont tout
+simplement pas montrés aux utilisateurs
+et seuls ceux qui achètent des fonctions
+payantes voient leur profil remis sous
+les projecteurs. Cette stratégie incite
+bien sûr à céder à l'achat et
+l'utilisateur Pai pour retrouver la
+visibilité qu'on lui avait initialement
+donnée gratuitement. C'est comme une
+machine à zoom mais inversée. Et oui,
+avec ces applications, on joue
+parfaitement avec les addictions et les
+frustrations des utilisateurs. C'est
+quasiment du génie. Puis troisème
+raison, au-delà des algorithmes, si on
+revient sur les comportements même des
+utilisateurs, on est alors face à un
+déséquilibre supplémentaire. Parce que
+oui, et je ne t'apprends rien, je pense,
+les hommes et les femmes ne swipent pas
+de la même manière. D'un côté, de
+nombreux hommes ont tendance à liker un
+grand nombre de profils pour maximiser
+leurs chances. Et pour rester classe, on
+peut dire qu'ils envoient un filet de
+pêche assez large ou qu'ils font la
+technique du chien affamé. Toutefois, de
+l'autre côté, la majorité des femmes se
+montre beaucoup plus sélective et elle
+n'approuve qu'une petite fraction des
+profils qu'elle voit. Encore une fois,
+c'est des généralités et attention ici,
+j'ai perdu la source donc je vais rester
+vigilant. Mais en gros, une étude avait
+supposément rapporté que les hommes
+peuvent aimer jusqu'à environ 60 % des
+profils féminins qu'il voient. Alors que
+pour les femmes, c'est plus du 5 % de
+profil masculin. Et pour l'illustrer
+super simplement, si on fait un petit
+calcul mental, supposons qu'il y a les
+100 hommes et 50 femmes sur une appli.
+Si chaque homme aime 60 % des femmes,
+c'est-à-dire 30 profils chacun et chaque
+femme aime 5 % des hommes, soit
+[musique] bah cinq profils chacun, alors
+le nombre moyen de match sera faible
+pour chacun. En simulant ce cas, on
+obtient par exemple environ 150 matchs
+au total, soit 1,5 matchs en moyenne par
+homme, mais trois par femme car moins de
+femmes mettent des likes. Autrement dit,
+les femmes ont en moyenne deux fois plus
+de matchs par personne que les hommes
+dans ce scénario. Et cette illustration
+montre que même sans algorithme, un
+simple jeu de probabilité conduit à un
+plus faible taux de succès pour les
+hommes. Et en réalité, des tests
+empiriques sur Tinder ont déjà montré
+qu'une femme peut avoir jusqu'à 20 à 25
+fois plus de chance qu'un homme de
+matcher toute chose égale par ailleurs.
+Puis pour aller plus loin, cette
+différence de stratégie du swipe est
+actuellement liée à la psychologie du
+choix. Les femmes qui sont bombardées de
+profil masculin potentiel ont
+naturellement moins d'incitation à
+l'impulsivité. Donc elles sélectionnent
+soigneusement. Et ça c'est normal vu que
+chaque swipe représente un risque de
+match avec quelqu'un de désagréable ou
+pour le dire plus simplement de tomber
+sur un gros port ce qui les rend
+forcément plus critique. Alors que les
+hommes eux swipent souvent à l'aveugle
+dans l'espoir de quelques rencontres.
+C'est un peu la stratégie du miskin, je
+te l'accorde, mais à la guerre comme à
+la guerre. Et pour reprendre une image
+sympa, si un homme like comme un cochon
+à l'aveugle, il envoie beaucoup de
+demandes et fait généralement le tri
+après coup tandis que la femme consulte
+plus soigneusement et en même temps plus
+rapidement afin de sélectionner que
+quelques élus. Ce qui fait que dans ce
+contexte, un profil masculin doit se
+démarquer beaucoup plus pour attirer
+l'attention d'une femme qui balait
+rapidement l'écran au vu du nombre
+d'énergumaines dans sa liste. Et la
+conséquence, c'est que même un profil de
+top qualité peut ne pas être remarqué.
+s'il n'est pas dans la bonne catégorie
+ou visible au bon moment. Et c'est aussi
+une des raisons pour laquelle beaucoup
+de gars qui se trouvent plutôt bg ou OK
+socialement se retrouvent avec zéro ou
+alors très très peu de matchs. Et tout
+cela va nous amener à la 4e raison parce
+que les processus décrits juste avant
+créent une forte concentration de
+l'attention sur un petit nombre de
+profils. Seuls quelques hommes et femmes
+recueillent l'essentiel des likes et des
+matchs tandis que la grande majorité
+reste en bas de l'échelle. On parle
+alors parfois du principe 8020. Je pense
+que tu le connais. Environ 20 % des
+utilisateurs, considérés comme les plus
+attractifs selon les normes sociales
+majoritaires, pourraient obtenir 80 % ou
+plus de la demande disponible. En tout
+cas, en théorie. Et dans la pratique, ça
+se traduit par un phénomène d'effet
+boule de neige ou un peu de rich get
+richer. C'est-à-dire que plus tu es
+riche, plus tu le deviendras. En gros,
+un profil qui attire déjà beaucoup
+d'intérêt verra encore son score se
+renforcer. Puis l'algorithme et les
+utilisateurs eux-mêmes favorisent les
+profils populaires. Bref, tout ça on l'a
+déjà dit. Et cette concentration
+renforce aussi la perception
+d'invisibilité. Car si tu es dans les 80
+% restants, tes chances de voir ton
+profil apparaître dans le flux d'autres
+utilisateurs sont très faibles. OK ? Et
+même si tu es beau gosse, la comparaison
+se fait automatiquement avec une norme
+de profil extrêmement travaillé, genre
+les personnes avec des photos limites
+professionnelles, des styles très
+particuliers et cetera. surtout que tu
+n'as pas le contexte social réel, donc
+ta façon de parler, ton attitude et même
+les recommandations d'amis pour valider
+ta valeur entre guillemets. Et pour
+illustrer mathématiquement, si 10 % des
+hommes réunissent 90 % des likes reçus,
+un homme qu'on va appeler moyen pour les
+besoins de la vulgarisation recevra très
+peu de demandes malgré un profil
+correct. Et ces hommes moyens se
+retrouveront alors à lutter entre eux
+pour une poignée de femme non déjà
+accaparée. Excusez-moi pour
+l'expression. Puis laisse-moi aussi
+sortir le chiffre de l'horreur. Le taux
+de succès moyen d'un profil féminin sur
+Kinder, c'est environ 50 % alors que
+celui d'un profil masculin, c'est
+environ 2 %. Autrement dit, un profil
+féminin aura une chance sur deux de
+matcher avec un profil masculin qu'elle
+a liké, mais un homme n'en aura qu'une
+chance sur 50. Et c'est dans ce contexte
+algorithmique et statistique que va se
+créer des conséquences concrètes sur la
+psychologie des utilisateurs qui n'ont
+pas conscience de tout ça. Car pour un
+homme qui s'inscrit avec l'espoir de
+trouver quelqu'un, avoir très peu de
+réponse peut devenir très vite
+démoralisant. Et je pense que tout le
+monde le sait un peu au fond, mais des
+études ont effectivement montré un lien
+entre l'usage intensif d'application de
+rencontre et des niveaux plus élevé
+d'anxiété, de dépression, voire d'estime
+de soi plus fragile. Ça paraît vraiment
+évident avec le postulat de départ que
+c'est pas super simple pour la santé
+mentale, mais sache que ça lève vraiment
+encore moins que ce que tu peux penser.
+Pour les hommes en particulier, la
+situation crée un cercle vicieux où on a
+d'abord l'absence de match qui peut être
+vue comme un manque de valeur
+personnelle. Donc on perd confiance puis
+on finit par se comparer aux autres
+hommes plus populaires et cette baisse
+d'estime de soi va se répercuter hors
+ligne et dans la vie de tous les jours.
+Le système invite donc en quelque sorte
+les hommes à chercher des explications
+personnelles du style "Je suis pas assez
+beau, sociable ou drôle" alors que c'est
+la mécanique de l'application qui est en
+partie en faute. Mais gardons de la
+nuance, pas totalement non plus, mais en
+grande partie en tout cas. Inversement,
+les femmes subissent aussi des effets
+négatifs évidemment, mais ces effets
+sont un peu différents. Et par là, je
+veux dire que comme elles reçoivent
+énormément de sollicitations, elles
+deviennent souvent plus méfiantes et
+exigeantes. Chaque nouveau match
+s'accompagne de la crainte de tomber sur
+le relou de service. Puis d'autres, au
+contraire, ne se sentent plus pétés car
+elles ont l'impression d'être au sommet
+de la chaîne alimentaire alors qu'elles
+sont surtout au sommet des chiens
+affamés de l'application. Et ce climat
+tendu influe sur la relation entre les
+sexes hors application. Car oui, la
+dynamique sur les applications de
+rencontre génère finalement de la
+méfiance des deux côtés, amplifiant
+encore plus le problème. Du côté
+féminin, la surslicitation entraîne une
+forme de saturation et pas mal de femmes
+ont déjà subi une forme de harcèlement
+type insulte, demande indécente et même
+des pics à Valvolo. Donc après coup, les
+femmes sentent bien que liker un profil
+masculin a un coût potentiel au niveau
+du respect, voire de la sécurité et
+elles développeront donc un filtrage
+sévère plutôt naturellement. De l'autre
+côté, ce comportement des femmes va
+créer des frustrations parce que
+certains hommes qui perçoivent cette
+méfiance peuvent se sentir incompris ou
+rejetés sans explication. En outre, ils
+sont eux aussi souvent confrontés à une
+forme de manque de respectos ou se
+manger un lapin à un rendez-vous. Et on
+cherche pas à faire un concours
+victimaire ici. On cherche juste à
+constater parce que bingo, cette double
+insatisfaction nourrit méfiance et
+ranqueur. Un scénario typique, c'est
+celui où l'homme pense que la femme ne
+lui donne pas sa chance tandis que la
+femme pense que l'homme ne comprend pas
+ses craintes. Mais bref, derrière ces
+mécanismes, rappelons que les
+applications de rencontre sont des
+entreprises avec un modèle économique
+clair et qui aiment trop l'argent. Faut
+le dire à un moment. Les applications
+gratuites comme Tinder, In ou Bumble
+attirent massivement les utilisateurs et
+je suis prêt à parier que beaucoup qui
+regardent cette vidéo ont l'application
+sur leur téléphone. Donc soyez juste au
+courant que la majorité des revenus de
+ces entreprises viennent des abonnements
+payants et des achats intégrés. Or, ceux
+qui payent, bah c'est majoritairement
+des hommes. Et alors, si on fait un
+calcul super simple, on comprend que les
+plateformes ont intérêt à rendre une
+large part de leur base masculine
+frustré car c'est ce qui les pousse à
+payer pour regagner de la visibilité ou
+obtenir des trucs bonus. À nouveau, ce
+mécanisme est comparable à une machine à
+sous au casino. On joue et on obtient
+une petite récompense au départ, donc
+ici avec les applis et la visibilité du
+début. Puis on distribue ensuite des
+gains de manière sporadique, forçant
+l'utilisateur à insister souvent via
+l'achat. Au bout du compte, c'est un
+système super rentable car plus les
+hommes sont nombreux et actifs sans
+résultat, plus ils investiront
+financièrement pour tenter de se
+démarquer. Et voici un petit chiffre
+sympa pour terminer, mais Tinder par
+exemple, ça générait environ 800
+millions d'euros de chiffre d'affaires
+en 2018 grâce à cette stratégie de la
+frustration masculine. Donc la prochaine
+fois que tu sentiras que ton profil est
+invisibilisé, rappelle-toi que c'est pas
+parce que tu v rien, c'est surtout que
+tu joues à un jeu auquel tu ne connaît
+pas les règles ou que tu as mal compris
+comment jouer avec. En tout cas, si tu
+es très curieux, les sources sont en
+description. Sur ce, salut !

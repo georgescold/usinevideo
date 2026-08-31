@@ -61,6 +61,11 @@ Le hook se travaille séparément, avant le reste, et on en écrit **cinq** avan
 
 Un hook ne sert qu'à une chose : **faire réagir**. S'il peut être lu sans provoquer la moindre réaction interne — « tiens, c'est pour moi », « c'est faux », « comment ça ? » — il est mort.
 
+**La bibliothèque de moules est dans `references/formules-de-hooks.md`.** Une soixantaine de
+mécaniques classées par famille et par niveau de conscience, avec pour chacune ce que la charte
+de la chaîne autorise ou interdit. Va y piocher plutôt que de retomber sur les deux mêmes formes.
+Douze de ces formules sont interdites ici : lis le tableau en tête de fichier avant d'écrire.
+
 Mécaniques à faire tourner, jamais deux fois la même d'affilée sur la chaîne :
 
 - la vérité qu'on n'ose pas dire ;
@@ -74,11 +79,100 @@ Mécaniques à faire tourner, jamais deux fois la même d'affilée sur la chaîn
 Contraintes dures :
 
 - **Long format : 8 secondes maximum**, soit 20 à 25 mots. Le sujet est identifiable dès la première phrase.
-- **Short : 1,5 seconde**, soit 5 à 8 mots. Et l'image dit déjà quelque chose.
+- **Short : 6 à 8 secondes, soit 20 à 30 mots, en une seule phrase qui coule.**
+
+> ⚠️ **Cette règle a été corrigée le 26 août 2026, et c'est important.** Elle disait auparavant
+> 5 à 8 mots en 1,5 seconde, hérité de la doctrine générique des Shorts YouTube. Les transcripts
+> réels de la niche francophone montrent l'inverse : les ouvertures qui débordent font 20 à
+> 30 mots sur 6 à 8 secondes, et elles coulent **sans point**, avec des subordonnées.
+>
+> Verbatims mesurés : « Et puis aujourd'hui tu dis je t'aime et ça veut plus rien dire, en fait
+> moi j'ai vraiment mal au cœur parce que... » (1,6 M vues) · « Excusez-moi, aujourd'hui je jure
+> je m'énerve pas mais est-ce qu'on peut parler des gens qui ne sont jamais prêts pour des
+> relations sérieuses ? » (1,5 M vues).
+>
+> **La donnée mesurée l'emporte sur la doctrine générique.**
+
+**LA RÈGLE QUI PRIME SUR LA LONGUEUR : le sujet doit être nommé dans la première phrase.**
+Un hook qui dit « et c'est toujours au bout de trois mois » sans dire trois mois **de quoi** est
+mort, quelle que soit sa qualité par ailleurs. Sur un fil, personne n'attend la deuxième phrase.
+
+**Et le hook d'un court s'écrit parlé, pas écrit.** Les quatre marqueurs de l'oralité qui
+reviennent dans toutes les ouvertures qui performent :
+- des phrases **longues et coulantes**, avec subordonnées, jamais du télégraphe empilé ;
+- **du « je »** qui incarne : « moi j'ai mal au cœur », « je crois que », « je comprends plus » ;
+- **une adresse** : « les gars », « vous allez me dire », « est-ce qu'on peut parler de » ;
+- **les élisions** : « y'a », « t'avais », « c'est pas ». Elles s'écrivent telles quelles dans le
+  script, et se prononcent telles quelles.
+
+Si en relisant ton hook tu articules proprement, c'est qu'il est écrit et pas parlé. Réécris-le.
 - **Aucun bonjour, aucun logo, aucun « dans cette vidéo je vais vous ».**
 - Le hook emploie **les mots de l'avatar**, pas les tiens.
 
 Présente les cinq à l'utilisateur, dis lequel tu recommandes et pourquoi. Il tranche.
+
+---
+
+## Étape 2 bis — La syntaxe, et c'est elle qui fait la fluidité
+
+**C'est l'étape qu'on saute et qui rate le plus de scripts.** On peut avoir le bon angle, le bon
+avatar et le bon hook, et produire un texte qui ne s'écoute pas. La différence ne se joue pas sur
+les idées, elle se joue sur la **longueur des phrases et leur enchaînement**.
+
+### Ce que font les scripts qui performent
+
+Relevé sur les deux vidéos françaises impersonnelles au plus fort ratio du corpus, `Epm62VSAWBM`
+(474 494 vues / 16 500 abonnés, ratio 28,76) et `fkDZtdiy8jE` (181 501 / 4 520, ratio 40,16).
+
+**1. Des phrases de 20 à 35 mots. Jamais de six.**
+
+> « Pendant des années, on a entretenu une idée très rassurante, celle selon laquelle l'amour
+> serait toujours possible, quel que soit l'âge, comme si le temps n'avait aucune prise sur notre
+> manière d'aimer. » — 33 mots, une seule phrase
+
+Une suite de phrases courtes empilées est du télégraphe. Ça sonne écrit, et ça casse l'écoute.
+
+**2. La négation puis l'affirmation.** La structure la plus fréquente du corpus.
+
+> « Ce n'est pas une rupture brutale, **mais** une sorte de déplacement silencieux »
+> « Cette idée n'est pas totalement fausse, **mais** elle est profondément incomplète »
+
+**3. Les ternaires.** Trois éléments enchaînés, jamais deux ni quatre.
+
+> « son histoire biologique, émotionnelle et relationnelle »
+> « sans dispute, sans explication, sans que personne ait rien vu venir »
+
+**4. Les anaphores.** La même amorce répétée, qui installe un rythme.
+
+> « comment se protéger, comment éviter la douleur, comment maintenir un équilibre interne »
+
+**5. La modalisation douce.** « presque », « une sorte de », « comme si », « peu à peu »,
+« simplement », « seulement », « le moindre ». Elle évite l'affirmation brutale et laisse le
+spectateur arriver seul à la conclusion.
+
+### Le CTA n'est pas une exception
+
+**Il l'a été, et c'était une erreur.** La règle disait que le bloc d'appel à l'action gardait des
+phrases courtes, au motif qu'une action doit être nette. En production, ça donne un CTA en style
+administratif — « Un seul point important : il faut être abonné pour que l'envoi passe » — qui
+casse en six secondes tout ce que la vidéo a construit en quatre-vingts.
+
+**La fluidité vaut du premier au dernier mot.** Une action se demande naturellement, dans la même
+syntaxe que le reste. L'outil de contrôle mesure donc la syntaxe **CTA inclus**.
+
+La seule chose que le CTA a le droit de faire et que le reste n'a pas, c'est **l'adresse
+directe** : on peut y dire « tu » sur une chaîne impersonnelle partout ailleurs, parce qu'une
+action se demande à quelqu'un.
+
+### Le contrôle
+
+```bash
+node outils/controle-script.mjs <slug>
+```
+
+Il mesure la longueur moyenne des phrases, la plus courte, le nombre de phrases sous dix mots, et
+vérifie l'absence de première personne. **Cibles : moyenne entre 18 et 28 mots, aucune phrase sous
+10 mots hors CTA.**
 
 ---
 
@@ -93,8 +187,28 @@ Présente les cinq à l'utilisateur, dis lequel tu recommandes et pourquoi. Il t
 | `legitimite` | 20–35 s | Une phrase, pas un CV. |
 | `corps-1..n` | le reste | Trois à cinq blocs. Un bloc = une idée + une preuve + une conséquence. |
 | `relance` | au milieu | Une raison de rester, placée là où l'attention décroche. |
-| `chute` | −40 s | Une seule action. |
+| `cta-milieu` | **au point de bascule, 40 à 70 s** | Le CTA long. Voir ci-dessous. |
+| `cold-open` | **0 à 20 s, avant tout** | 8 à 10 punchlines prélevées dans le script final, ou 3 à 5 verbatims de douleur, montés serrés. Aucune mise en place. |
+| `chute` | −15 s | Le CTA court : une seule action, 10 à 15 s. Aucun récapitulatif. |
 | `sortie` | 20 dernières s | De quoi tenir l'écran de fin. |
+
+**Les deux CTA du format long, et leur placement.**
+
+`cta-milieu` se place **au point de bascule**, juste après le moment où le spectateur a compris
+quelque chose. **Pas au milieu chronométré** : si la démonstration bascule à 4 minutes, il est à
+4 minutes. Placé mécaniquement, il tombe au milieu d'une idée et casse la rétention.
+
+Quatre temps, et ils ne changent pas : on termine l'idée, on pose la question qu'il se pose déjà,
+on répond par le mécanisme plutôt que par la marque, puis on nomme et **on repart dans la vidéo**.
+On ne finit jamais sur le produit au milieu. C'est le seul endroit où on est précis : ce que
+c'est, ce que ça coûte, ce que ça ne fait pas.
+
+`chute` ne réexplique rien. Elle referme en une phrase et donne une seule action.
+
+**Pourquoi ça ne contredit pas le niveau de conscience.** Une vidéo qui entre au niveau 2 fait
+monter le spectateur d'une marche : au point de bascule, il est au **niveau 3**, et c'est à
+celui-là que le CTA parle. Une vidéo qui entre au **niveau 1** n'a aucun CTA produit, ni au
+milieu ni à la fin : sa chute est un CTA de chaîne.
 
 Un bloc de corps qui ne tient pas en une phrase résumable n'est pas un bloc : c'est deux.
 
@@ -102,10 +216,20 @@ Un bloc de corps qui ne tient pas en une phrase résumable n'est pas un bloc : c
 
 | Bloc | Durée | Ce qui s'y passe |
 |---|---|---|
-| `hook` | 0–1,5 s | Arrête le pouce. |
-| `tension` | 1,5–5 s | Pourquoi c'est un problème pour lui. |
-| `corps` | jusqu'à −5 s | **Une** idée. |
+| `hook` | 0–8 s | Arrête le pouce. **20 à 30 mots, une seule phrase qui coule** — voir étape 2. |
+| `tension` | 8–20 s | Pourquoi c'est un problème pour lui. Sur une chaîne qui vise la culpabilité, c'est ici que se place l'**absolution**, et pas plus tard. |
+| `corps` | jusqu'à ~75 % | **Une** idée. |
+| `cta` | **aux ~75 %, 8 à 12 s** | Un seul CTA. Une phrase de bénéfice, une action. |
 | `chute` | 5 dernières s | Referme, ou rouvre pour la boucle. |
+
+**Un seul CTA en format court**, contrairement au long qui en porte deux. Il se place **aux trois
+quarts, jamais à la toute fin** : la rétention y est encore haute, l'idée est déroulée, et la
+chute doit rester libre pour **boucler**. Chaque relecture compte comme une vue, et un CTA collé à
+la fin casse la boucle.
+
+Ni prix, ni mécanisme, ni deuxième argument : il n'y a pas la place. Sur une vidéo de niveau 1
+ou 2, ce CTA unique est un **CTA de chaîne** (la vidéo longue sur le sujet, ou l'abonnement), pas
+un CTA produit.
 
 ### Ce qui vaut pour les deux
 

@@ -11,8 +11,20 @@ import path from 'node:path'
 import fs from 'node:fs'
 import os from 'node:os'
 
-/** Racine du projet : deux niveaux au-dessus de pipeline/lib/. */
-export const RACINE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..')
+/**
+ * Racine du projet : deux niveaux au-dessus de pipeline/lib/.
+ *
+ * `STACK_RACINE` la déplace, et c'est la SEULE façon de le faire. Elle sert à un
+ * cas précis : faire tourner une commande récente sur une chaîne copiée avant
+ * que cette commande n'existe. L'interface s'en sert pour lire le trousseau
+ * d'une chaîne dont le dossier `outils/` date d'avant.
+ *
+ * Ce n'est pas une lecture du répertoire courant — c'est une demande explicite,
+ * posée par l'appelant, pour une exécution. Rien ne la lit par défaut.
+ */
+export const RACINE = process.env.STACK_RACINE
+  ? path.resolve(process.env.STACK_RACINE)
+  : path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..')
 
 const d = (...parts) => path.join(RACINE, ...parts)
 
@@ -54,6 +66,19 @@ export const CHEMINS = {
   veilleTiktokTranscripts: d('veille', 'tiktok', 'transcripts'),
   veilleTiktokMedia: d('veille', 'tiktok', 'media'),
 
+  // LES INSPIRATIONS SONT DE LA VEILLE, MAIS CHOISIE À LA MAIN.
+  //
+  // `youtube/` et `tiktok/` sont peuplés par un scraping : on ratisse une niche
+  // et on trie après. Une inspiration est l'inverse — on a vu passer UNE vidéo,
+  // on veut la garder sous la main, la revoir et relire ce qu'elle dit. Deux
+  // gestes différents, deux dossiers différents : mélanger la trouvaille et le
+  // ratissage rendrait les deux illisibles.
+  inspirations: d('veille', 'inspirations'),
+  inspirationsMedia: d('veille', 'inspirations', 'media'),
+  inspirationsTranscripts: d('veille', 'inspirations', 'transcripts'),
+  inspirationsRaw: d('veille', 'inspirations', 'raw'),
+  inspirationsIndex: d('veille', 'inspirations', 'index.json'),
+
   strategie: d('strategie'),
   videos: d('videos'),
   perf: d('perf'),
@@ -89,6 +114,9 @@ export function dossierVideo(slug) {
     scriptJson: path.join(base, '01-script.json'),
     tournage: path.join(base, '02-tournage'),
     audio: path.join(base, '03-audio'),
+    // La voix retenue pour CETTE vidéo. Elle vit avec l'audio qu'elle produira,
+    // pour que `--depuis=voix` la retrouve sans qu'on ait à la redonner.
+    voixChoisie: path.join(base, '03-audio', 'voix-choisie.json'),
     transcript: path.join(base, '04-transcript.json'),
     montage: path.join(base, '05-montage'),
     plan: path.join(base, '05-montage', 'plan.json'),
@@ -113,7 +141,14 @@ export function assureDossierVideo(slug) {
 /** Lit un JSON, ou rend `defaut` si le fichier n'existe pas. */
 export function litJson(chemin, defaut = null) {
   try {
-    return JSON.parse(fs.readFileSync(chemin, 'utf8'))
+    // LA BOM SE RETIRE AVANT L'ANALYSE, ET C'EST UN CAS WINDOWS COURANT.
+    //
+    // Le Bloc-notes, PowerShell (`Set-Content -Encoding UTF8`) et plusieurs
+    // éditeurs posent un marqueur d'ordre d'octets en tête de fichier.
+    // `JSON.parse` s'y arrête net, sur un fichier qui paraît pourtant normal à
+    // l'écran : un `config/chaine.json` corrigé à la main devenait illisible
+    // sans que rien ne le laisse voir.
+    return JSON.parse(fs.readFileSync(chemin, 'utf8').replace(/^﻿/, ''))
   } catch (e) {
     if (e.code === 'ENOENT') return defaut
     throw new Error(`JSON illisible : ${chemin}\n${e.message}`)

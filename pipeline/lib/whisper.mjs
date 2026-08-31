@@ -204,12 +204,24 @@ export async function transcris(fichier, { modele = null, langue = null, silenci
     if (!silencieux) process.stdout.write('\r' + ' '.repeat(30) + '\r')
 
     const { captions } = toCaptions({ whisperCppOutput: brut })
-    const mots = captions
+    const bruts = captions
       .map((c) => ({ texte: c.text.trim(), debutMs: c.startMs, finMs: c.endMs }))
       .filter((mot) => mot.texte.length > 0)
 
+    // Trois défauts connus du moteur, corrigés avant que quoi que ce soit ne
+    // soit construit dessus : le générique halluciné sur le silence de fin, les
+    // horodatages qui reculent, et les nombres coupés en deux.
+    const { mots, retires } = assainisMots(bruts)
+
     if (!silencieux) {
       journal.ok(`${mots.length} mots transcrits en ${duree((Date.now() - debut) / 1000)}`)
+      if (retires.hallucinations) {
+        journal.detail(`${retires.hallucinations} mot(s) hallucinés en fin de prise, retirés.`)
+      }
+      if (retires.recolles) journal.detail(`${retires.recolles} nombre(s) recollés.`)
+      if (retires.reordonnes) {
+        journal.detail(`${retires.reordonnes} horodatage(s) remis dans l'ordre.`)
+      }
     }
 
     return {
@@ -364,3 +376,250 @@ export async function etat() {
 }
 
 export { sonde }
+
+// ---------------------------------------------------------------------------
+//  Correction par le script : les homophones
+// ---------------------------------------------------------------------------
+
+/**
+ * Le squelette sonore d'un texte français.
+ *
+ * On ramène l'orthographe à ce qui s'entend : accents retirés, lettres muettes
+ * de fin supprimées, graphies équivalentes réduites à une seule, apostrophes et
+ * espaces effacés. « la voir » et « l'avoir » donnent tous deux `lavwar` — ce
+ * qui est exactement le problème qu'on cherche à trancher.
+ */
+export function squeletteSonore(texte) {
+  let s = String(texte)
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z ]/g, '')
+
+  // Lettres muettes en fin de mot, avant d'effacer les espaces. On épargne les
+  // mots courts : réduire « ces » à « c » écrase l'essentiel du mot, et deux
+  // squelettes trop courts finissent par se ressembler par accident — ce qui
+  // ferait corriger des passages qui ne sonnent pas pareil du tout.
+  // On répète jusqu'à stabilité : « cest » perd son t, devient « ces », et doit
+  // encore perdre son s pour rejoindre « ces » → « ce ». Un seul passage laissait
+  // les deux graphies à un caractère l'une de l'autre, donc non reconnues.
+  let avant
+  do {
+    avant = s
+    s = s.replace(/([a-z]{2,})(?:ent|es)\b/g, '$1').replace(/([a-z]{2,})[stdxzp]\b/g, '$1')
+  } while (s !== avant)
+
+  s = s
+    .replace(/\s+/g, '')
+    .replace(/qu|q/g, 'k')
+    .replace(/ph/g, 'f')
+    .replace(/eau|au/g, 'o')
+    .replace(/ai|ei|ay/g, 'e')
+    .replace(/oi/g, 'wa')
+    .replace(/ou/g, 'u')
+    .replace(/gn/g, 'n')
+    .replace(/c([ei])/g, 's$1')
+    .replace(/g([ei])/g, 'j$1')
+    .replace(/c/g, 'k')
+    .replace(/h/g, '')
+    .replace(/y/g, 'i')
+    .replace(/(.)\1+/g, '$1')
+
+  return s
+}
+
+/**
+ * Corrige la transcription là où elle a mal ENTENDU, sans écraser ce qui a été
+ * réellement dit autrement.
+ *
+ * La transcription se trompe régulièrement entre deux graphies qui sonnent
+ * pareil : « la voir » devient « l'avoir », « c'est » devient « ces ». Le script,
+ * lui, porte la bonne. Mais on ne peut pas simplement lui redonner la main :
+ * quand la personne improvise, c'est la transcription qui a raison.
+ *
+ * D'où la règle, et elle est stricte : **on ne remplace que si les deux versions
+ * ont le même squelette sonore.** Une divergence qui s'entend est une
+ * improvisation et reste intacte ; une divergence qui ne s'entend pas est une
+ * faute d'écoute et se corrige. Aucun jugement n'est nécessaire, donc aucun
+ * risque de réécrire la voix.
+ */
+export function corrigeParLeScript(mots, texteScript) {
+  const nu = (s) =>
+    String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '')
+
+  const attendus = String(texteScript).replace(/\[[^\]]*\]/g, ' ').split(/\s+/).filter(Boolean)
+  const A = attendus.map(nu)
+  const B = mots.map((m) => nu(m.texte))
+  const n = A.length
+  const p = B.length
+  if (!n || !p) return { mots, corrections: [] }
+
+  const dp = Array.from({ length: n + 1 }, () => new Int32Array(p + 1))
+  for (let i = n - 1; i >= 0; i--) {
+    for (let j = p - 1; j >= 0; j--) {
+      dp[i][j] = A[i] === B[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1])
+    }
+  }
+
+  const sortie = []
+  const corrections = []
+  let i = 0
+  let j = 0
+
+  const videSpan = (i0, i1, j0, j1) => {
+    const dits = mots.slice(j0, j1)
+    if (i1 > i0 && j1 > j0) {
+      const entendu = dits.map((m) => m.texte).join(' ')
+      const cible = squeletteSonore(entendu)
+
+      // On cherche le morceau de script qui SONNE comme ce qui a été entendu.
+      //
+      // Une divergence isolée est rare : autour d'un homophone, il y a souvent un
+      // mot que la personne a sauté. « la voir. Et » face à « l'avoir. » ne sonne
+      // pas pareil à cause du « Et » non dit, alors que « la voir. » si.
+      // On essaie donc tous les sous-ensembles contigus du côté script, du plus
+      // long au plus court, et on retient le premier qui correspond exactement.
+      let i0b = -1
+      let i1b = -1
+      for (let taille = i1 - i0; taille >= 1 && i0b === -1; taille--) {
+        for (let d = i0; d + taille <= i1; d++) {
+          if (squeletteSonore(attendus.slice(d, d + taille).join(' ')) === cible) {
+            i0b = d
+            i1b = d + taille
+            break
+          }
+        }
+      }
+      if (i0b !== -1) {
+        i0 = i0b
+        i1 = i1b
+      }
+      const attendu = attendus.slice(i0, i1).join(' ')
+      if (i0b !== -1 || squeletteSonore(attendu) === cible) {
+        // Même son, orthographe différente : le script tranche. Les temps du
+        // segment entendu sont répartis sur les mots du script.
+        const debut = dits[0].debutMs
+        const fin = dits[dits.length - 1].finMs
+        const nb = i1 - i0
+        const pas = (fin - debut) / nb
+        for (let k = 0; k < nb; k++) {
+          sortie.push({
+            texte: attendus[i0 + k],
+            debutMs: Math.round(debut + pas * k),
+            finMs: Math.round(debut + pas * (k + 1)),
+          })
+        }
+        corrections.push({ entendu, corrige: attendu })
+        return
+      }
+    }
+    sortie.push(...dits)
+  }
+
+  let i0 = 0
+  let j0 = 0
+  while (i < n && j < p) {
+    if (A[i] === B[j]) {
+      if (i > i0 || j > j0) videSpan(i0, i, j0, j)
+      sortie.push(mots[j])
+      i++
+      j++
+      i0 = i
+      j0 = j
+    } else if (dp[i + 1][j] >= dp[i][j + 1]) i++
+    else j++
+  }
+  videSpan(i0, n, j0, p)
+
+  return { mots: sortie, corrections }
+}
+
+// ---------------------------------------------------------------------------
+//  Assainissement de la transcription
+// ---------------------------------------------------------------------------
+
+/**
+ * Les phrases que whisper invente sur le silence de fin de prise.
+ *
+ * Le modèle a vu passer des milliers de sous-titres qui finissent par un
+ * générique. Quand la prise se termine sur deux secondes de rien, il « entend »
+ * donc ce générique. C'est une hallucination reproductible, pas un accident : on
+ * la retire d'office plutôt que d'espérer qu'elle ne revienne pas.
+ */
+const HALLUCINATIONS = [
+  'sous-titrage société radio-canada',
+  'sous-titrage st',
+  'sous-titres réalisés par',
+  'sous-titres par',
+  'amara.org',
+  'merci d\'avoir regardé',
+  'merci à tous',
+  'abonnez-vous',
+  'thanks for watching',
+  'subtitles by',
+  'thank you for watching',
+]
+
+/**
+ * Nettoie une liste de mots transcrits.
+ *
+ * Trois corrections, chacune motivée par un défaut observé :
+ *
+ *  1. **Les hallucinations de fin** (voir ci-dessus), coupées avec tout ce qui
+ *     suit — une fois que le modèle est parti dans le générique, il n'en revient
+ *     pas.
+ *  2. **Les horodatages non croissants.** whisper date par segments puis répartit
+ *     les mots dedans ; il arrive que deux mots partagent le même instant, ou
+ *     repartent en arrière. Deux sous-titres se superposent alors à l'écran.
+ *     On force un écart minimal strict.
+ *  3. **Les nombres éclatés.** « 5 000 » sort en deux mots, et la pagination des
+ *     sous-titres peut tomber entre les deux : on lit « 5 » sur une page et
+ *     « 000 » sur la suivante. On les recolle en un seul mot insécable.
+ */
+export function assainisMots(mots, { ecartMinMs = 50 } = {}) {
+  const retires = { hallucinations: 0, recolles: 0, reordonnes: 0 }
+
+  // 1. Hallucinations de fin. On ne regarde que le dernier tiers : la même
+  //    formule prononcée en plein milieu est un vrai propos.
+  let coupe = mots.length
+  const depart = Math.floor(mots.length * 0.66)
+  for (let i = depart; i < mots.length; i++) {
+    const suite = mots.slice(i, i + 8).map((m) => m.texte).join(' ').toLowerCase()
+    if (HALLUCINATIONS.some((h) => suite.startsWith(h))) {
+      coupe = i
+      break
+    }
+  }
+  if (coupe < mots.length) retires.hallucinations = mots.length - coupe
+  let sortie = mots.slice(0, coupe)
+
+  // 2. Nombres éclatés : un groupe de trois chiffres qui suit un nombre.
+  const recolle = []
+  for (const m of sortie) {
+    const precedent = recolle[recolle.length - 1]
+    if (
+      precedent &&
+      /^\d+$/.test(precedent.texte.replace(/[^\d]/g, '')) &&
+      /^\d{3}[.,]?$/.test(m.texte) &&
+      m.debutMs - precedent.finMs < 200
+    ) {
+      precedent.texte = `${precedent.texte}\u202f${m.texte}` // espace fine insécable
+      precedent.finMs = m.finMs
+      retires.recolles++
+      continue
+    }
+    recolle.push({ ...m })
+  }
+  sortie = recolle
+
+  // 3. Monotonie stricte.
+  for (let i = 1; i < sortie.length; i++) {
+    if (sortie[i].debutMs < sortie[i - 1].debutMs + ecartMinMs) {
+      sortie[i].debutMs = sortie[i - 1].debutMs + ecartMinMs
+      retires.reordonnes++
+    }
+    if (sortie[i].finMs <= sortie[i].debutMs) sortie[i].finMs = sortie[i].debutMs + ecartMinMs
+  }
+
+  return { mots: sortie, retires }
+}

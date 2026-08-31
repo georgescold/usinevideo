@@ -46,6 +46,13 @@ const A_COPIER = [
   'pipeline',
   'remotion/src',
   'outils',
+  // L'INTERFACE FAIT PARTIE DU MODÈLE, AU MÊME TITRE QUE LE PIPELINE.
+  //
+  // Elle manquait : une chaîne fraîchement copiée avait toutes les commandes et
+  // aucun atelier. `outils/atelier.mjs` était bien là, mais il servait un
+  // dossier `atelier/` inexistant — le serveur démarrait et rendait une page
+  // vide. Le défaut se voyait au premier lancement, c'est-à-dire trop tard.
+  'atelier',
   'assets/fonts',
   'config/keys.example.json',
   'config/chaine.json',
@@ -114,8 +121,7 @@ await principal(async () => {
     const cible = path.join(destination, relatif)
     assureDossier(path.dirname(cible))
     if (fs.statSync(source).isDirectory()) {
-      fs.cpSync(source, cible, { recursive: true })
-      fichiers += compte(cible)
+      fichiers += copieDossier(source, cible)
     } else {
       fs.copyFileSync(source, cible)
       fichiers++
@@ -186,6 +192,38 @@ await principal(async () => {
       `rien à retélécharger.`
   )
 })
+
+/**
+ * Copie un dossier, récursivement.
+ *
+ * `fs.cpSync` FAIT TOMBER NODE QUAND LE CHEMIN PORTE UN ACCENT.
+ *
+ * Sur Node 22.19 / Windows, `fs.cpSync(source, cible, { recursive: true })` où
+ * `source` contient un caractère non-ASCII tue le processus sur le coup —
+ * `STATUS_STACK_BUFFER_OVERRUN` (0xC0000409), sans exception à attraper, sans
+ * message, sans rien à consigner. Le dossier de cette chaîne s'appelle
+ * « Usine à vidéo » : la commande mourait donc systématiquement après avoir
+ * copié quatre fichiers, en laissant une chaîne à moitié faite.
+ *
+ * `readdirSync` + `copyFileSync` ne souffrent pas du défaut. On les emploie, et
+ * on gagne au passage de pouvoir compter au fil de la copie plutôt qu'après.
+ */
+function copieDossier(source, cible) {
+  fs.mkdirSync(cible, { recursive: true })
+  let n = 0
+  for (const e of fs.readdirSync(source, { withFileTypes: true })) {
+    const de = path.join(source, e.name)
+    const vers = path.join(cible, e.name)
+    if (e.isDirectory()) n += copieDossier(de, vers)
+    else if (e.isFile()) {
+      fs.copyFileSync(de, vers)
+      n++
+    }
+    // Les liens ne sont pas suivis : une chaîne doit être un dossier autonome,
+    // et recopier un lien vers ailleurs la rendrait dépendante de cet ailleurs.
+  }
+  return n
+}
 
 function compte(dossier) {
   let n = 0

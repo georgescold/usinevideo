@@ -1,0 +1,621 @@
+{
+  "id": "7462839208034585878",
+  "langue": "fr",
+  "mots": [
+    {
+      "texte": "Le",
+      "debutMs": 0,
+      "finMs": 90
+    },
+    {
+      "texte": "meilleur",
+      "debutMs": 90,
+      "finMs": 450
+    },
+    {
+      "texte": "conseil",
+      "debutMs": 450,
+      "finMs": 770
+    },
+    {
+      "texte": "que",
+      "debutMs": 770,
+      "finMs": 890
+    },
+    {
+      "texte": "j'ai",
+      "debutMs": 890,
+      "finMs": 1060
+    },
+    {
+      "texte": "lu",
+      "debutMs": 1060,
+      "finMs": 1150
+    },
+    {
+      "texte": "sur",
+      "debutMs": 1150,
+      "finMs": 1280
+    },
+    {
+      "texte": "les",
+      "debutMs": 1280,
+      "finMs": 1410
+    },
+    {
+      "texte": "relations",
+      "debutMs": 1410,
+      "finMs": 1810
+    },
+    {
+      "texte": "amoureuses,",
+      "debutMs": 1810,
+      "finMs": 2640
+    },
+    {
+      "texte": "écoute",
+      "debutMs": 2640,
+      "finMs": 3040
+    },
+    {
+      "texte": "bien",
+      "debutMs": 3040,
+      "finMs": 3310
+    },
+    {
+      "texte": "ça,",
+      "debutMs": 3310,
+      "finMs": 3640
+    },
+    {
+      "texte": "ça",
+      "debutMs": 3640,
+      "finMs": 3720
+    },
+    {
+      "texte": "pourrait",
+      "debutMs": 3720,
+      "finMs": 4210
+    },
+    {
+      "texte": "changer",
+      "debutMs": 4210,
+      "finMs": 4640
+    },
+    {
+      "texte": "ta",
+      "debutMs": 4640,
+      "finMs": 4750
+    },
+    {
+      "texte": "vision",
+      "debutMs": 4750,
+      "finMs": 5250
+    },
+    {
+      "texte": "de",
+      "debutMs": 5250,
+      "finMs": 5300
+    },
+    {
+      "texte": "l'amour.",
+      "debutMs": 5300,
+      "finMs": 5900
+    },
+    {
+      "texte": "Un",
+      "debutMs": 5900,
+      "finMs": 6050
+    },
+    {
+      "texte": "homme",
+      "debutMs": 6050,
+      "finMs": 6430
+    },
+    {
+      "texte": "qui",
+      "debutMs": 6430,
+      "finMs": 6680
+    },
+    {
+      "texte": "t'appelle",
+      "debutMs": 6680,
+      "finMs": 7340
+    },
+    {
+      "texte": "bébé,",
+      "debutMs": 7340,
+      "finMs": 7840
+    },
+    {
+      "texte": "ça",
+      "debutMs": 7840,
+      "finMs": 7920
+    },
+    {
+      "texte": "veut",
+      "debutMs": 7920,
+      "finMs": 8090
+    },
+    {
+      "texte": "rien",
+      "debutMs": 8090,
+      "finMs": 8180
+    },
+    {
+      "texte": "dire.",
+      "debutMs": 8180,
+      "finMs": 8600
+    },
+    {
+      "texte": "Un",
+      "debutMs": 8600,
+      "finMs": 8740
+    },
+    {
+      "texte": "homme",
+      "debutMs": 8740,
+      "finMs": 9110
+    },
+    {
+      "texte": "qui",
+      "debutMs": 9110,
+      "finMs": 9330
+    },
+    {
+      "texte": "emménage",
+      "debutMs": 9330,
+      "finMs": 9900
+    },
+    {
+      "texte": "chez",
+      "debutMs": 9900,
+      "finMs": 10190
+    },
+    {
+      "texte": "toi,",
+      "debutMs": 10190,
+      "finMs": 10600
+    },
+    {
+      "texte": "ça",
+      "debutMs": 10600,
+      "finMs": 10710
+    },
+    {
+      "texte": "veut",
+      "debutMs": 10710,
+      "finMs": 11150
+    },
+    {
+      "texte": "rien",
+      "debutMs": 11150,
+      "finMs": 11260
+    },
+    {
+      "texte": "dire.",
+      "debutMs": 11260,
+      "finMs": 11600
+    },
+    {
+      "texte": "Un",
+      "debutMs": 11600,
+      "finMs": 11720
+    },
+    {
+      "texte": "homme",
+      "debutMs": 11720,
+      "finMs": 12010
+    },
+    {
+      "texte": "qui",
+      "debutMs": 12010,
+      "finMs": 12240
+    },
+    {
+      "texte": "te",
+      "debutMs": 12240,
+      "finMs": 12310
+    },
+    {
+      "texte": "considère",
+      "debutMs": 12310,
+      "finMs": 12830
+    },
+    {
+      "texte": "comme",
+      "debutMs": 12830,
+      "finMs": 13120
+    },
+    {
+      "texte": "sa",
+      "debutMs": 13120,
+      "finMs": 13240
+    },
+    {
+      "texte": "petite",
+      "debutMs": 13240,
+      "finMs": 13590
+    },
+    {
+      "texte": "amie,",
+      "debutMs": 13590,
+      "finMs": 13840
+    },
+    {
+      "texte": "ça",
+      "debutMs": 13840,
+      "finMs": 14250
+    },
+    {
+      "texte": "veut",
+      "debutMs": 14250,
+      "finMs": 14260
+    },
+    {
+      "texte": "rien",
+      "debutMs": 14300,
+      "finMs": 14420
+    },
+    {
+      "texte": "dire.",
+      "debutMs": 14420,
+      "finMs": 14600
+    },
+    {
+      "texte": "Et",
+      "debutMs": 14600,
+      "finMs": 14760
+    },
+    {
+      "texte": "même",
+      "debutMs": 14760,
+      "finMs": 15080
+    },
+    {
+      "texte": "un",
+      "debutMs": 15080,
+      "finMs": 15240
+    },
+    {
+      "texte": "homme",
+      "debutMs": 15240,
+      "finMs": 15650
+    },
+    {
+      "texte": "qui",
+      "debutMs": 15650,
+      "finMs": 15890
+    },
+    {
+      "texte": "t'épouse,",
+      "debutMs": 15890,
+      "finMs": 16740
+    },
+    {
+      "texte": "ça",
+      "debutMs": 16740,
+      "finMs": 16830
+    },
+    {
+      "texte": "veut",
+      "debutMs": 16830,
+      "finMs": 16840
+    },
+    {
+      "texte": "pas",
+      "debutMs": 16880,
+      "finMs": 17260
+    },
+    {
+      "texte": "toujours",
+      "debutMs": 17260,
+      "finMs": 17500
+    },
+    {
+      "texte": "dire",
+      "debutMs": 17500,
+      "finMs": 17680
+    },
+    {
+      "texte": "quelque",
+      "debutMs": 17680,
+      "finMs": 18210
+    },
+    {
+      "texte": "chose.",
+      "debutMs": 18210,
+      "finMs": 18400
+    },
+    {
+      "texte": "Tu",
+      "debutMs": 18400,
+      "finMs": 18530
+    },
+    {
+      "texte": "sais",
+      "debutMs": 18530,
+      "finMs": 18800
+    },
+    {
+      "texte": "ce",
+      "debutMs": 18800,
+      "finMs": 18930
+    },
+    {
+      "texte": "qui",
+      "debutMs": 18930,
+      "finMs": 19130
+    },
+    {
+      "texte": "compte",
+      "debutMs": 19130,
+      "finMs": 19530
+    },
+    {
+      "texte": "vraiment",
+      "debutMs": 19530,
+      "finMs": 20070
+    },
+    {
+      "texte": "?",
+      "debutMs": 20070,
+      "finMs": 20300
+    },
+    {
+      "texte": "C'est",
+      "debutMs": 20300,
+      "finMs": 20570
+    },
+    {
+      "texte": "un",
+      "debutMs": 20570,
+      "finMs": 20680
+    },
+    {
+      "texte": "homme",
+      "debutMs": 20680,
+      "finMs": 20960
+    },
+    {
+      "texte": "qui",
+      "debutMs": 20960,
+      "finMs": 21130
+    },
+    {
+      "texte": "change",
+      "debutMs": 21130,
+      "finMs": 21470
+    },
+    {
+      "texte": "ses",
+      "debutMs": 21470,
+      "finMs": 21650
+    },
+    {
+      "texte": "mauvaises",
+      "debutMs": 21650,
+      "finMs": 22140
+    },
+    {
+      "texte": "habitudes",
+      "debutMs": 22140,
+      "finMs": 22910
+    },
+    {
+      "texte": "pour",
+      "debutMs": 22910,
+      "finMs": 22960
+    },
+    {
+      "texte": "te",
+      "debutMs": 22960,
+      "finMs": 23010
+    },
+    {
+      "texte": "garder.",
+      "debutMs": 23010,
+      "finMs": 23500
+    },
+    {
+      "texte": "C'est",
+      "debutMs": 23500,
+      "finMs": 23730
+    },
+    {
+      "texte": "un",
+      "debutMs": 23730,
+      "finMs": 23830
+    },
+    {
+      "texte": "homme",
+      "debutMs": 23830,
+      "finMs": 24140
+    },
+    {
+      "texte": "qui",
+      "debutMs": 24140,
+      "finMs": 24220
+    },
+    {
+      "texte": "évolue",
+      "debutMs": 24220,
+      "finMs": 24500
+    },
+    {
+      "texte": "à",
+      "debutMs": 24500,
+      "finMs": 24550
+    },
+    {
+      "texte": "tes",
+      "debutMs": 24550,
+      "finMs": 24700
+    },
+    {
+      "texte": "côtés,",
+      "debutMs": 24700,
+      "finMs": 25100
+    },
+    {
+      "texte": "qui",
+      "debutMs": 25100,
+      "finMs": 25280
+    },
+    {
+      "texte": "affronte",
+      "debutMs": 25280,
+      "finMs": 25700
+    },
+    {
+      "texte": "les",
+      "debutMs": 25700,
+      "finMs": 26160
+    },
+    {
+      "texte": "moments",
+      "debutMs": 26160,
+      "finMs": 26340
+    },
+    {
+      "texte": "de",
+      "debutMs": 26340,
+      "finMs": 26460
+    },
+    {
+      "texte": "doute,",
+      "debutMs": 26460,
+      "finMs": 26800
+    },
+    {
+      "texte": "qui",
+      "debutMs": 26800,
+      "finMs": 26990
+    },
+    {
+      "texte": "accepte",
+      "debutMs": 26990,
+      "finMs": 27440
+    },
+    {
+      "texte": "vos",
+      "debutMs": 27440,
+      "finMs": 27630
+    },
+    {
+      "texte": "différences",
+      "debutMs": 27630,
+      "finMs": 28340
+    },
+    {
+      "texte": "sans",
+      "debutMs": 28340,
+      "finMs": 28600
+    },
+    {
+      "texte": "vouloir",
+      "debutMs": 28600,
+      "finMs": 29180
+    },
+    {
+      "texte": "te",
+      "debutMs": 29180,
+      "finMs": 29460
+    },
+    {
+      "texte": "changer.",
+      "debutMs": 29460,
+      "finMs": 29900
+    },
+    {
+      "texte": "Et",
+      "debutMs": 29910,
+      "finMs": 30030
+    },
+    {
+      "texte": "ça,",
+      "debutMs": 30030,
+      "finMs": 30290
+    },
+    {
+      "texte": "ça",
+      "debutMs": 30290,
+      "finMs": 30420
+    },
+    {
+      "texte": "veut",
+      "debutMs": 30420,
+      "finMs": 30680
+    },
+    {
+      "texte": "dire",
+      "debutMs": 30680,
+      "finMs": 30960
+    },
+    {
+      "texte": "quelque",
+      "debutMs": 30960,
+      "finMs": 31430
+    },
+    {
+      "texte": "chose.",
+      "debutMs": 31430,
+      "finMs": 32000
+    },
+    {
+      "texte": "Et",
+      "debutMs": 32000,
+      "finMs": 32080
+    },
+    {
+      "texte": "surtout,",
+      "debutMs": 32080,
+      "finMs": 32450
+    },
+    {
+      "texte": "n'oublie",
+      "debutMs": 32450,
+      "finMs": 32770
+    },
+    {
+      "texte": "pas",
+      "debutMs": 32770,
+      "finMs": 32890
+    },
+    {
+      "texte": "de",
+      "debutMs": 32890,
+      "finMs": 33000
+    },
+    {
+      "texte": "t'abonner",
+      "debutMs": 33000,
+      "finMs": 33400
+    },
+    {
+      "texte": "pour",
+      "debutMs": 33400,
+      "finMs": 33590
+    },
+    {
+      "texte": "mieux",
+      "debutMs": 33590,
+      "finMs": 33830
+    },
+    {
+      "texte": "comprendre",
+      "debutMs": 33830,
+      "finMs": 34420
+    },
+    {
+      "texte": "les",
+      "debutMs": 34420,
+      "finMs": 34660
+    },
+    {
+      "texte": "hommes.",
+      "debutMs": 34660,
+      "finMs": 34900
+    }
+  ]
+}

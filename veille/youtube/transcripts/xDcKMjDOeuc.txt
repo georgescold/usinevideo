@@ -1,0 +1,906 @@
+# Dating Apps Destroyed A Generation
+# Front Page · 280 k vues · 00:31:53
+# https://www.youtube.com/watch?v=xDcKMjDOeuc
+
+February 11th, 2021, a Thursday morning
+in New York City. Whitney Wolfe Herd
+stands on the balcony of the Nasdaq
+building in Times Square, surrounded by
+confetti and camera crews. She's 31
+years old. She just rang the opening
+bell. Her company, Bumble, has gone
+public at a $13 billion valuation. That
+makes her the youngest woman in American
+history to take a company public, a
+self-made billionaire before her 32nd
+birthday. Five years later, that $13
+billion is now worth $335 million.
+Bumble stock trades at $3, down 96% from
+its peak. Whitney Wolfe Herd has stepped
+down as the CEO, come back as the CEO,
+stepped down again, and come back again.
+The company she built is circling the
+drain, and Bumble is not even the worst
+story here. Match Group, the company
+that owns Tinder, Hinge, OkCupid, and
+about 40 other dating brands, peaked at
+a $48 billion market cap in 2021. Today,
+it's worth about $7 billion,
+an 82% collapse. Spark Networks, the
+company behind Zoosk, Christian Mingle,
+and Jdate, didn't just decline, it went
+insolvent in January 2026, delisted.
+Shareholders wiped out entirely.
+Combined, dating app companies have
+destroyed roughly $54 billion in
+investor wealth since 2021. Those are
+the corporate numbers, but the human
+numbers are worse. In the United States,
+[music] 24% of adults under 30 report
+having zero sex in the past year. That
+figure has doubled since 2010. [music]
+Male virginity ages 22 and 34 have gone
+from 4% to 10% in a single decade. The
+average age of first marriage for men
+has climbed to 30.8, up eight full years
+since 1960. One in four Americans who
+turn 40 this year has never been
+married. In 1980, that number was one in
+17. And the fertility rate? The United
+States [music] now sits at 1.6 births
+per woman, well below the 2.1 needed to
+replace the population. South Korea is
+at 0.72, Japan is at 1.2, Italy at 1.24.
+The Congressional Budget Office projects
+the American rate will stay at 1.6 for
+the next three decades. The Institute of
+Health Metrics and Evaluation projects
+that by the year 2100, 198 out of 200 of
+the four countries on Earth will be
+below the replacement fertility. Only 6%
+remain above it. Samoa, Somalia, Tonga,
+Niger, Chad, Tajikistan. [music] The
+companies that promised to make finding
+love easier may have actually made it
+harder. And now those companies are
+collapsing, while the loneliness crisis
+they helped accelerate keeps getting
+worse. This is the story of how dating
+apps broke modern romance, and what
+happens next.
+Los Angeles, 2012. Inside a startup
+incubator called Hatch Labs, backed by
+IAC, the media conglomerate run by Barry
+Diller, a small team is building
+something they organically call
+Matchbox. Sean [music] Rad, the CEO,
+Justin Mateen, his college friend and
+chief marketing officer, Jonathan
+Biddeen, the engineer, and a 22 VP of
+marketing named Whitney Wolfe. Biddeen
+codes a mechanic that will change
+everything, [music] the swipe. Left for
+no, right for yes, a binary choice fast
+enough to be addictive, simple enough
+for anyone to understand. They rename
+the app Tinder. Wolfe figures out how to
+make it spread. She drives to sorority
+houses at the University of Southern
+California and Southern Methodist
+University. She throws pizza parties,
+hands out flyers, and at one event, she
+distributed branded thong underwear. Her
+pitch is simple, the cute people are
+already on the app. The double opt-in,
+where both people have to swipe right
+before a conversation can begin, makes
+women feel safe enough to try it. It
+works. Tinder goes from 5,000 users to
+over a million in a matter of months. By
+2015, it's the top grossing app in 99
+countries. Revenue is roughly doubling
+every year. There's just one problem.
+Sean Rad and Justin Mateen are dating
+the same coworker, and that coworker is
+Whitney Wolfe. Wolfe and Mateen had been
+in a relationship while he was her
+direct supervisor. When it ended, things
+got ugly. In June 2014, Wolfe filed a
+lawsuit alleging sexual harassment. She
+claimed Mateen called her a in
+front of the company leadership. She
+claimed her co-founder title was
+stripped because, and this is a direct
+quote from the lawsuit, having a young
+female co-founder makes the company look
+like a joke. The case settled in
+September 2014 for a reported million
+dollars plus. Mateen was suspended and
+eventually left. Wolfe was out. Within
+three months, she launched Bumble. The
+twist, only women can send the first
+message. The seed money, $10 million,
+came from Andrey Andreev, the
+Russian-British founder of Badoo, a
+European dating platform with 79%
+ownership of the new company. Match
+Group saw Bumble as a threat. In 2017,
+they offered $450 million to acquire it.
+Andreev turned them down, reportedly
+turned down offers approaching a billion
+dollars. Meanwhile, Sean Rad had his own
+grievances. In August 2018, he filed a
+$2 billion lawsuit against IAC and Match
+Group, alleging they deliberately
+undervalued Tinder to cheat early
+employees out of stock options. The suit
+claimed Match had hidden Tinder's
+financial projections from independent
+valuers and suppressed its growth
+metrics to keep the valuation
+artificially low. It settled in December
+2021 for $441 million,
+a fraction of what Rad had sought. Then
+in January 2019, Forbes published an
+investigation into Badoo's corporate
+culture under Andreev. Former employees
+described an environment of racism,
+sexism, and executives bragging about
+hiring prostitutes. Andreev denied the
+allegations, but sold his entire stake
+in Bumble to Blackstone at a $3 billion
+valuation. He walked away with over $2
+billion.
+And a quick footnote on how absurd this
+industry is, Markus Frind, a Canadian
+programmer, built Plenty of Fish in 14
+days in 2003, and never raised a single
+dollar of venture capital. He ran the
+entire operation mostly by himself for
+years. In 2015, Match Group bought
+Plenty of Fish for $575 million in cash.
+14 days of work, $575 million.
+That's the kind of money that was
+sloshing around in dating apps before
+everything fell apart. Dating apps have
+a structural problem that no amount of
+engineering can fix. A dating app that
+works perfectly, one that matches every
+user with their ideal partner quickly
+and efficiently, puts itself out of
+business. Every successful couple is two
+lost subscribers, which means the
+financial incentive is never to help you
+find love. The incentive is to keep you
+looking. Tinder originally ranked users
+with an Elo rating system, the same
+system used in competitive chess. The
+more people swiped right on you, the
+higher your score. The higher your
+score, the more visible your profile. In
+2019, Tinder quietly replaced this with
+what it calls a more sophisticated
+algorithm. It never disclosed how the
+new one works. What it did disclose is
+its pricing. [music] Tinder now runs
+four paid tiers, Plus at $25 a month,
+Gold at $40, Platinum at $50, and Tinder
+Select at $499
+a month. That's $6,000 a year for a
+dating app. Select gives you two
+messages per week to people you haven't
+matched with, one week-long profile
+boost, an unblurred photo of whoever
+liked you, and a little badge next to
+your name. The pricing wasn't even
+consistent. [music] A California class
+action lawsuit revealed Tinder was
+charging different prices based on age,
+gender, [music] and sexual orientation.
+Men over 50 were paying up to five times
+more than queer women under 30. The case
+settled for $60.5 million across 268,000
+users. But the underlying business model
+works like this. Women are the product.
+Men are the customers. Women need to be
+on the app in large enough numbers to
+keep men interested. Men need to pay for
+the privilege of being visible to those
+women. 80% of Tinder's paying
+subscribers are male. In February 2024,
+a class action lawsuit called Okisa Yon
+versus Match Group was filed in federal
+court. It alleged that Match uses
+recognized dopamine-manipulating product
+features to create gamblers locked in a
+search for psychological rewards that
+Match makes elusive on purpose. The suit
+claims Tinder gives more free likes to
+women than men, deliberately creating a
+barrier that men can only overcome by
+buying a subscription. Match called the
+lawsuit ridiculous. A federal judge sent
+it to arbitration under Match Group's
+terms of service. [music]
+Jonathan Biddeen, the engineer who
+invented the swipe, admitted in an
+interview that the mechanic was
+partially inspired by B.F. Skinner's
+pigeon experiments, where pigeons were
+conditioned to peck at a lever endlessly
+through random food delivery. The same
+psychological pattern that makes slot
+machines the most addictive form of
+gambling, variable ratio reinforcement.
+You never know when the next reward is
+coming, so [music] you keep pulling the
+lever. The average dating app user
+spends 55 minutes per day swiping.
+Tinder users average 90 minutes. One
+survey found 90% of singles describe
+themselves as addicted to dating apps.
+70% believe their use is harming their
+mental health. A 2016 meta-analysis
+covering 23 studies and over 26,000
+participants found that dating app users
+had significantly worse psychological
+health than non-users, including higher
+rates of depression, anxiety, and
+loneliness. A separate study found
+swipe-based app users had 2.5 times the
+odds of psychological distress compared
+to people who didn't use them. A woman
+on Tinder swipes right on about 5% of
+the profiles she sees. A man swipes
+right on about 61%. That difference,
+five versus 61, defines the entire
+economy. When a woman swipes right, she
+matches about 30% of the time. When a
+man swipes right, he matches about 2.6%
+[music] of the time. That is a 12-to-1
+gap. To get a single match, the average
+man needs roughly 38 right swipes. The
+average woman needs about three. But a
+match doesn't mean a date. Converting a
+match into an actual in-person meeting
+takes roughly 57 matches for the average
+man. So, do the math backward. That's
+about 6,000 right swipes for one date,
+and two-thirds of men's first dates
+don't lead to a second. Researchers
+calculated the Gini coefficient of the
+Tinder economy, the standard measure of
+inequality used by economics. The result
+was 0.58.
+For context, the Gini coefficient of US
+income inequality is 0.41. The Tinder
+dating market is more unequal than 95%
+of the world's national economies. In
+2009, OkCupid published a blog with the
+internal data showing that women rated
+80% of men as below average in
+attractiveness. The post went viral, it
+became the foundation of what the
+internet now calls the 80/20 theory, the
+idea that the top 20% of men get 80% of
+the attention. That theory took on a
+life of its own. In March 2025, Netflix
+released a mini-series called
+Adolescence, about a 13-year-old British
+boy accused of murdering a classmate
+after being radicalized by incel
+ideology built around the 80/20 [music]
+framework. It became the third most
+watched show on the platform. The actual
+data on whether sexual inequality is
+increasing is more nuanced than the meme
+suggest. General Social Survey data from
+2024 shows that 7.4% of American men had
+three and more sexual partners in the
+past year, down from 19% in earlier
+decades. Everyone is having less sex.
+It's [music] not that a small group of
+men is hoarding all the partners. The
+pool of sexual activity is shrinking
+across the board, which might actually
+be more alarming than the alternative.
+This subject matter can be hard to
+digest, but for most Americans, their
+personal financial situation is the
+hardest subject to approach and manage,
+but with the Dollarwise budgeting app,
+you can finally take control. And since
+there's a free trial, you can see for
+yourself. Get a full picture, automate
+your budget, get powerful insights, and
+set real goals that change your life.
+Download Dollarwise or go to
+dollarwise.com. In August 2025, the
+Federal Trade Commission ordered Match
+Group to pay $14 million for what it
+described as systematic deception. Three
+charges. First, Tinder advertised a free
+6-month guarantee that buried
+requirements so extreme that almost
+nobody could qualify. Second, the
+company sent promotional emails using
+profiles it knew belonged to scammers
+specifically to lure users into paying
+for subscriptions. Third, when users
+filed chargebacks with their credit card
+companies, Tinder locked their accounts
+as retaliation. $14 million sounds like
+a lot. It's 0.4% of Match Group's $3.5
+billion in annual revenue. For the
+company, that's just a rounding error.
+And then there's shadow banning, where
+the app makes your profile invisible to
+other users without telling you. You can
+swipe right, you can still send
+messages, you just don't exist anymore.
+>> [music]
+>> In 2023, Hinge confirmed to Gizmodo that
+it does this. It describes it as a way
+to reduce bad behavior. It did not
+define what constitutes bad behavior.
+The Better Business Bureau received over
+15,000 complaints about Match Group apps
+in 3 years. 7,000 of those came in a
+single year. Many described the same
+experience. Accounts banned with no
+explanation, no appeal process, and no
+refund of paid subscriptions. Match
+Group's cross-platform system means a
+ban on Tinder can follow you on Hinge,
+OK Cupid, and match.com using facial
+recognition and phone data. In 2023,
+Bumble announced that ghosting, simply
+not replying to someone, could result in
+a ban. Think about that for a second. A
+dating app threatened to punish women
+for not responding to men they didn't
+want to talk to in the first place.
+There's a number that doesn't get enough
+attention. 44% of Gen Z and millennial
+men say they refuse to approach a woman
+in public. Not because they lack
+confidence, though that's part of it.
+Because they've calculated the risk,
+getting filmed, getting posted on social
+media, getting screenshotted and shared,
+getting reviewed on an anonymous rating
+app. One of those apps was called Tea.
+It launched as a dating safety tool
+where women could leave reviews of men
+they dated. Within months, it became, in
+the words of multiple tech journalists,
+a cesspool of defamation. It suffered
+three data breaches in mid-2025. Apple
+pulled it from the App Store in October
+2025. Fewer than 50% of American high
+school seniors report being in any kind
+of dating relationship. In the 1980s and
+90s, that number was around 90%. After
+#MeToo in 2017, 65% of the public said
+the movement made everyday interactions
+between men and women more difficult.
+Workplace dating policies tightened.
+Some companies banned romantic
+relationships between co-workers
+entirely. Stanford researcher Michael
+Rosenfeld tracked how couples met.
+Between 1995 and 2021, meeting through
+work dropped from 19% to 11%. Meeting
+through friends dropped from 33% to 15%.
+Meeting through family dropped from 15%
+to 7%. Online dating filled the vacuum.
+By 2021, it was one way American couples
+met, accounting for over 50% of new
+relationships. Dating apps didn't just
+supplement the old systems, they
+replaced them, and now the replacement
+is failing as well. Something strange
+has happened to the politics of young
+Americans. Men and women aren't just
+disagreeing more, they're moving in
+opposite directions. According to the
+American Enterprise Institute, 46% of
+white Gen Z women identify as liberal.
+Only 28% of white Gen Z men do. NBC
+polling shows 55% of Gen Z women
+identify as Democrats versus 35% of men.
+Meanwhile, 38% of young men identify as
+Republican versus 20% of young women.
+This isn't men racing to the right. The
+data is clear on this. Women are moving
+left faster than men are moving to the
+right. The Gallup gender ideology gap
+has tripled since 1999, and now it's
+showing up directly in dating.
+match.com's own surveys showed that the
+share of users who say dating someone
+from the opposite political party would
+be impossible rose from 33% in 2012 to
+over 50% by 2020. Only 9% of users say
+politics doesn't matter at all. After
+the 2024 election, the split got
+sharper. Nine out of 10 single women who
+voted for Harris said they were less
+likely to date a Trump supporter.
+Three-quarters said a lot less likely.
+On the other side, 39% of single men
+said they were less likely to date a
+woman who identified as a feminist. If
+you voted for Trump, swipe left became
+its own genre of dating profile. So did
+no liberals. The apps turned into
+another battlefield in the culture war.
+In the UK, the pattern repeats. 41% of
+young British men say they support
+Andrew Tate's views on gender. 12% of
+young women do. The manosphere, Tate,
+Fresh and Fit, and the network of
+male-focused influencers that surrounds
+them gives voice to genuine male
+frustration about dating, but it also
+feeds the cycle. Men feel unheard, so
+they turn to provocative content. Women
+see those followers as threatening.
+Women become more selective, men feel
+more excluded, the pool of potential
+partners shrinks for everyone.
+Researchers now have a name for it, the
+sex recession. The data comes from the
+General Social Survey, one of the most
+respected studies in American social
+science, running since 1972. Adults aged
+19 to 29 reported having no sex in the
+past year. 12% in 2010, 24% in 2024.
+That is double. All adults aged 18 to 64
+reported weekly sex. 55% in 1990, 37% in
+2024, down by a third. The CDC's
+National Survey of Family Growth breaks
+it down further. Male virginity between
+ages 22 and 34 doubled from 4% to 10%
+between 2013 and 2023. Female virginity
+rose from 5% to 7%. Past year
+sexlessness among young men tripled from
+9% to 24%. Among young women, it rose
+from 8% to 13%. The gap between men and
+women is widening. Pew Research found
+that 63% of men under 30 are single
+versus 34% of women in the same age
+bracket. The definitions matter here.
+Women are more likely to describe
+themselves as in a relationship even in
+casual arrangements, but the gap is real
+and growing. In May 2023, the US Surgeon
+General declared loneliness a national
+epidemic, comparing its health effects
+to smoking 15 cigarettes a day. About
+half of American adults reported
+experiencing loneliness. Social
+isolation increases the risk of early
+death by 29%, heart disease by 29%,
+stroke by 32%, [music] and dementia by
+roughly 50%. Time spent with friends
+among young adults dropped from 12.8
+hours per week in 2010 to just over 5
+hours in 2024, a 2/3 decline. That
+decline started around 2010 to 2012,
+right when smartphones became universal
+and dating apps launched. Not during the
+pandemic, years before it. Dating has
+also become expensive in a way that
+previous generations never had to deal
+with. A standard evening now, dinner,
+drinks, maybe a movie, plus
+transportation, [music] costs an average
+of $156 in New York City, $145 in San
+Francisco, [music] and $127 in Miami.
+Even the cheapest major market, Oklahoma
+City, you're looking at nearly $88. For
+[music] someone actively dating, those
+costs add up to 2,000 $323 per year.
+That's before the cost of apps
+themselves. Hinge's basic subscription
+is now $45 a month, more than double
+what it charged back in 2020. Match
+Group is pouring [music] $30 million a
+year into AI features that will likely
+add even more premium tiers. Meanwhile,
+19% of Americans aged 25 to 34 live with
+their parents, about 8 and 1/2 million
+people. The median home price in the
+United States has risen 90% in a decade
+to over $400,000. The median age of a
+first-time homebuyer has climbed to 38,
+up from 31 a decade [music] ago. 53% of
+Gen Z adults spend exactly $0 per month
+on dating. In the UK, a third of young
+singles say the cost of living makes
+them less likely to go on dates. A
+quarter say it makes them less likely to
+look for a partner at all. In Canada,
+55% of young adults say the housing
+crisis is directly causing them to delay
+starting a family. The apps made dating
+into a marketplace, now the marketplace
+is too expensive for its own customers.
+Forbes Health surveyed dating app users
+in mid-2025. [music]
+78% reported burnout. Among Gen Z users,
+it was 79%. Among millennials, 65%, and
+61% said they hit burnout within their
+first 3 months on the apps. The turn is
+[music] staggering. 74% of users deleted
+dating app within the first month. Fewer
+than 15% of premium subscribers renew.
+Of the roughly 350 million people
+worldwide who have downloaded a dating
+app, only about 25 million, 7%, actually
+pay for one. Downloads are falling, too.
+Global dating app downloads dropped from
+287 million in 2019 to 237 million in
+2024, a 17.5% decline. In the US, Tinder
+downloads fell 14% between January 2024
+and January 2025. Bumble downloads fell
+19%. Match Group's paying users have
+declined for five straight quarters.
+Revenue per payer is up 5%, which means
+the company is squeezing more money from
+fewer, more desperate people. Bumble's
+paying users dropped 16% in a single
+quarter. It has cut a third of its total
+workforce, 350 people, in February 2024,
+and another 240 in June 2025. This is a
+company that is fighting for survival,
+and the leadership chaos at Bumble tells
+its own story. Whitney Wolfe Herd
+stepped down as CEO in November 2023.
+Her replacement, Lidiane Jones, lasted
+exactly 1 year. Wolfe Herd came back in
+January 2025, described the experience
+as ego death, and announced Bumble would
+rebrand The Love Company. The stock
+continued to fall. The Shaw Law Firm
+opened a fraud investigation into the
+company's disclosures. And it's not just
+the big names. Spark Networks, which
+operated Zoosk, Christian Mingle, Jdate,
+SilverSingles, and EliteSingles was
+delisted from the stock exchange in 2023
+and filed for insolvency in January
+2026. Shareholders received nothing.
+While every other dating app company
+collapses, one is growing. Grindr, the
+gay dating app, reported 30% revenue
+growth latest quarter. Revenue is
+approaching $440 million annually. Net
+income is roughly $100 million.
+EBITDA margins sit at 47%, the highest
+in the industry by a wide margin. The
+company has 15 million monthly active
+users served by just 151 employees. That
+works out to nearly $3 million in
+revenue per employee. Google's figure is
+$1.8 million.
+Grindr spends [music] $8 million on
+marketing, just 2% of revenue, and still
+grows at 30%. [music] That's almost
+entirely word of mouth. Three things
+explain why it works when nothing else
+does. First, there's no gender
+imbalance. Both sides of the market are
+the same gender with the same
+motivations, the same communication
+style, and the same willingness to
+initiate. The two-to-one male-to-female
+ratio that cripples straight dating apps
+doesn't exist here. Second, the dating
+app serves a community that needs it for
+reasons beyond dating. For LGBTQ+
+people, especially in less accepting
+regions, knowing who's nearby isn't just
+about romance. It has social value,
+safety value, identity value. Third,
+Grindr is built on utility, not
+gamification. It shows a grid of people
+near you. You tap on someone, you talk
+to them. There is no swiping, no
+algorithmic games, no blurred photos
+dingled behind a paywall. The app does
+what it says it does, and that turns out
+to be a viable business model. Take a
+moment and get some free, easy money.
+With a Chime checking account in my
+link, you can get $350 when you set up
+direct deposit, and pair that with a
+nation-leading high-yield savings rate.
+There's literally no reason not to sign
+up right now. chime.com/caleb
+or link in the description below. In
+October 2025, Grindr's largest
+shareholders proposed a $3.46 billion
+take-private deal at $18 per share. The
+offer was later withdrawn, but the
+message was clear. Investors saw more
+value in taking the company private than
+letting the public market its price. The
+lesson from Grindr is simple. [music] A
+dating app that prioritizes actually
+connecting people quickly with minimal
+friction can be widely profitable. The
+apps that built engagement traps and
+paywall labyrinths are the ones dying.
+What's happening in the United States is
+not unique. It's a pattern repeating
+across every developed economy on Earth.
+And some of the most extreme cases are
+in Asia. South Korea, the total
+fertility rate is 0.72, the lowest ever
+recorded by any country in human
+history. Births have dropped 70% in
+three decades. At the current rate, the
+country's population could half within
+60 years. The South Korean government
+has spent over $270 billion on programs
+to encourage people to have children.
+Cash bonuses, housing subsidies, [music]
+fertility treatments. The result? The
+birth rate fell further. In 2017, a
+movement called the 4B movement started
+gaining traction among young South
+Korean women. The four B's stand for no
+dating, no sex, [music] no marriage, and
+no childbirth. Young men, for their
+part, voted roughly 60% for conservative
+president Yoon Suk-yeol. When surveyed,
+men said women's worst quality was being
+a feminist. Women said men's worst
+quality was having sexist attitudes. And
+then there's Japan. 42% of single men
+aged 18 to [music] 34 are virgins,
+according to 2023 survey data. The
+population has been shrinking since
+2011. The term herbivore men, coined in
+2006, describes [music] young Japanese
+men who have lost interest in sex,
+dating, and relationships entirely. One
+in eight Japanese children is now born
+through IVF. Then China. The total
+fertility rate has fallen to 1.09,
+despite the government ending the
+one-child policy in 2016 and then moving
+to a two-child and then a three-child
+policy. The one-child era, combined with
+a cultural preference for sons, created
+35 million more men than women. Rural
+bachelor villages have formed in regions
+with gender ratios exceeding 130 men for
+every 100 women. Xi Jinping personally
+appealed to women at the 2023 National
+Women's Congress to stay home and have
+babies. The lying flat movement, tang
+ping, represents young Chinese people
+rejecting the pressure to work, marry,
+and reproduce entirely. Hungary offers
+the most aggressive Western experiment
+in pronatal policy. Viktor Orbán
+eliminated income tax for mothers of
+four or more children, offered
+interest-free housing loans forgiven
+upon a third child, and nationalized IVF
+clinics. He explicitly framed these
+policies as an alternative to
+immigration. The fertility rate rose 28%
+to 1.6 by 2021. Then it fell to 1.39 by
+2024, the [music] country's lowest in
+over a decade. A 2025 study in The
+Lancet found that cash incentives mostly
+shift the timing of births rather than
+increasing the total number of children
+a woman has. Countries that focused
+instead on gender equality, generous
+parental leave, subsidized child care,
+work-life balance, like the Nordic
+nations, maintained more stable
+fertility rates at about 1.7. But no
+government anywhere has solved this. Not
+with money, not with policy, not with
+propaganda. The decline in fertility, in
+partnering, in sex itself is
+civilizational. And the dating apps just
+accelerated what was already underway.
+The financial picture for dating apps is
+bleak. For Match Group, an all-time high
+of $170 per share, now about $31. Market
+cap from $48 billion to roughly $7
+billion. Revenue growth has gone from
+25% in 2021 to effectively zero in 2025,
+$3.49 billion,
+flat year over year. Paying users down
+for five consecutive quarters. Tinder
+subscribers fell from 10.8 million to
+9.6 million. The one bright spot was
+Hinge, which grew payers by 19 to 31%,
+but then Hinge founder Justin McLeod
+left in December 2025 to start an AI
+company called Overtone. And then
+Bumble. An all-time high of $79 per
+share, now about $3. [music] Market cap
+from roughly $13 billion to roughly $355
+million. Revenue peaked at $903 million
+in 2022 and has declined ever since.
+Paying users fell 16% in a single
+quarter. The company's stock hit an
+all-time low of $2.61
+in February 2026. But then there's
+Grindr. Revenue growing 30% annually for
+three straight years. 47% EBITDA
+margins. Analysts rate it buy with an
+average price target at around $19. It's
+the only publicly traded dating company
+that Wall Street is optimistic about.
+But going back to Match Group, its CEO,
+Spencer Rascoff, the co-founder of
+Zillow, joined in January 2025. Tinder
+announced its first ever product event
+called Sparks in 2026 for March 12th.
+Both Match and Bumble are betting
+heavily on AI features. The question is
+whether AI can fix what AI arguably
+helped break. Algorithmic matching that
+optimized for engagement instead [music]
+of connection. There's one more threat
+to dating apps that few people in the
+industry want to talk about publicly. AI
+companions. In the first half of 2025,
+AI companion apps generated $82 million
+in revenue and 60 million downloads, an
+88% increase over the previous year.
+There are now 337 AI companion apps
+generating active revenue worldwide with
+128 new ones launching in just 6 months.
+Google searches for AI girlfriend search
+2,400%
+between 2022 and 2024. Replika, the
+leading AI companion, has roughly 30
+million users. 65 to 72% are male.
+Average daily engagement is 2.7 hours.
+Heavy users spend 12 or more hours per
+day. 60% of premium subscribers report
+having a romantic relationship with
+their AI. character.ai has roughly 233
+million users who spend an average of 93
+minutes per day on the platform. That's
+18 minutes more than TikTok. Match
+Group's own internal data shows 16% of
+American singles have interacted with an
+AI companion romantically. Among Gen Z
+specifically, a third of single people
+have done so. Among teenagers 13 to 17,
+72% have used some kind of AI companion.
+One projection suggests 15% of people
+could choose AI partners over human
+marriage by 2035. Market projections for
+AI companions range from $140 billion to
+$521 billion by 2033, dwarfing the
+dating apps industry's $6 [music]
+billion.
+Italy has already banned Replika.
+California has passed a bill to regulate
+AI companions. A federal law called the
+Chat Act was introduced in September
+2025 targeting AI companions accessible
+to minors. The question is no longer,
+will dating apps recover? The question
+is now whether a meaningful share of the
+population will stop choosing human
+partners at all. Not everything about
+this story is bleak. Google searches for
+professional matchmakers nearly doubled
+between January 2025 and January 2026.
+Eventbrite recorded 1.5 million searches
+for dating and singles events in a
+single year. Board game speed dating
+events rose 400% between 2022 and 2023.
+Running clubs, hiking groups, coed book
+clubs, and fitness communities are being
+talked about openly as alternatives to
+the apps. The Thursday app, which only
+activates on Thursdays and focuses
+exclusively on real-world events, now
+operates in over 60 cities. Hinge itself
+spent $2 million to support over 100
+real-life social groups, which is a
+fairly remarkable admission that
+digital-only dating may not be enough.
+There's a cultural shift happening, too.
+Among Gen Z, not being on dating apps
+has become a status signal. Not having
+Instagram is considered attractive.
+Saying you met people in person is a
+flex. 90% of Gen Z respondents in one
+survey said they'd prefer to meet a
+partner offline. The irony is that an
+industry that helped kill organic
+meeting is now trying to recreate it.
+There are three scenarios for what comes
+[music] next. Scenario one, the apps
+adapt. They fix the algorithms, they
+stop optimizing for time on app and
+start optimizing for actual matches.
+They make pricing transparent. They
+implement real identity verification.
+They use AI to improve match quality
+instead of to extract more money. They
+stop banning people with no appeals
+process. Now, this requires accepting
+slower growth, lower engagement numbers,
+and shorter subscription periods. Wall
+Street would hate it, but it might save
+the industry. Scenario two, the apps
+decline and something else fills the
+[music] gap. Real-world matchmaking
+scales up. Community events become the
+primary way people meet. Churches,
+fitness groups, hobby communities, and
+professional matchmakers take back the
+territory that apps captured over the
+past decade. This is already happening
+in American and European cities. Angel
+investing in real-life social groups is
+an early signal. Scenario three, nothing
+fills the gap. The apps keep dying, cold
+approaches stay socially unacceptable,
+political polarization keeps shrinking
+the pool of acceptable partners, [music]
+men retreat deeper into the isolation
+and digital entertainment, women opt out
+of dating entirely, birth rates continue
+[music] to fall, loneliness becomes
+structural and permanent. AI companions
+absorb the demand that humans can't
+meet. Demographics decline accelerates,
+but the desire for connection hasn't
+gone away. 78% of Gen Z and 73% of
+Millennials say they still hope to get
+married someday. People want love. That
+hasn't changed. But people don't want to
+get canceled for trying to find [music]
+love. What actually changed is the
+infrastructure. Dating apps replaced
+friends, families, churches, bars, and
+workplaces as the number one way people
+meet. [music] They became the
+infrastructure of modern romance. And
+then the infrastructure started to rot
+from the inside because the companies
+that built it discovered there was more
+money in keeping people lonely than in
+helping them find somebody.
+>> [music]
+>> $54 billion in market cap destroyed. 24%
+of young adults are not having sex.
+Fertility below replacement in virtually
+every developed nation. The Surgeon
+General calling loneliness an epidemic.
+People getting canceled [music] for cold
+approaching. Women defaming men on apps
+like tea. AI girlfriends for the loser
+men with 233 million users. Whitney
+Wolfe Herd rang the Nasdaq bell five
+years ago for $13 billion, the youngest
+female self-made billionaire in the
+country. Today the company trades at $3
+a share and is under investigation for
+fraud. She helped destroy relationships,
+but hey, at least she girl bossed her
+way to the Nasdaq. The apps didn't break
+dating, and maybe even she didn't. The
+apps were supposed to fix something that
+was already broken. They made it worse,
+and they charged us for the privilege.
+them. her. Go out and get
+laid.

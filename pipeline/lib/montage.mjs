@@ -25,6 +25,7 @@ import {
 } from './chemins.mjs'
 import { journal, duree } from './journal.mjs'
 import { sonde, detecteSilences, intervallesDeParole, coupeEtRecolleAudio, ffmpeg } from './ffmpeg.mjs'
+import { reglagesPour, versTheme } from './soustitres.mjs'
 
 /** Cadence de travail. 30 images/s : le compromis lisibilité / temps de rendu. */
 export const FPS = 30
@@ -48,12 +49,19 @@ export const estVertical = (format) => format.startsWith('short')
 //  1. Les rushes
 // ---------------------------------------------------------------------------
 
-/** Les fichiers exploitables d'un dossier de tournage, dans l'ordre. */
+/**
+ * Les fichiers exploitables d'un dossier de tournage, dans l'ordre.
+ *
+ * Les extensions AUDIO comptent autant que les extensions video : un mode de
+ * production faceless ou screencast en voix off depose un rush sans image, et
+ * c'est un mode declare de la stack. N'accepter que de la video rendait ces
+ * modes impossibles a ingerer, alors que tout le reste du pipeline les gere.
+ */
 export function prendsLesRushes(dossier) {
   if (!fs.existsSync(dossier)) return []
   return fs
     .readdirSync(dossier)
-    .filter((f) => /\.(mp4|mov|mkv|webm|avi)$/i.test(f))
+    .filter((f) => /\.(mp4|mov|mkv|webm|avi|m4a|wav|mp3|aac|flac|ogg|opus)$/i.test(f))
     // `prise-01` avant `prise-02` avant `coupe-01` : on trie sur le nom, et on
     // met les prises avant les plans de coupe.
     .sort((a, b) => {
@@ -164,10 +172,28 @@ export async function fabriqueAudioCoupe(aGarder, destination) {
  * Le graphe de filtres part dans un fichier : au-delà d'une centaine de plans,
  * il dépasse la longueur maximale d'une ligne de commande Windows.
  */
-export async function fabriqueImage(aGarder, destination, { largeur, hauteur, fps = FPS }) {
+export async function fabriqueImage(
+  aGarder,
+  destination,
+  { largeur, hauteur, fps = FPS, fond = '#000000' }
+) {
   assureDossier(path.dirname(destination))
 
   const sources = [...new Set(aGarder.map((m) => m.src))]
+
+  // Un rush sans image n'est pas une anomalie : c'est un mode de production.
+  // Une voix off faceless ou un screencast commenté déposent un fichier audio,
+  // et la piste image se construit alors entièrement par-dessus, à partir des
+  // plans de coupe et du motion. On pose donc un fond neutre à la bonne durée
+  // au lieu de découper une piste vidéo qui n'existe pas — ffmpeg échouait
+  // jusqu'ici sur « Stream specifier ':v' matches no streams », un message qui
+  // ne dit pas ce qui manque.
+  const infos = await Promise.all(sources.map((s) => sonde(s)))
+  if (!infos.some((i) => i.aDeLaVideo)) {
+    const dureeMs = aGarder.reduce((a, m) => a + m.dureeMs, 0)
+    return fabriqueFondUni(destination, { largeur, hauteur, fps, fond, dureeMs })
+  }
+
   const index = new Map(sources.map((s, i) => [s, i]))
 
   const morceaux = aGarder.map((m, i) => {
@@ -213,6 +239,35 @@ export async function fabriqueImage(aGarder, destination, { largeur, hauteur, fp
   return { fichier: destination, dureeMs: Math.round(info.dureeS * 1000), nvenc }
 }
 
+/**
+ * Une piste image d'un seul aplat, à la couleur de fond de la chaîne.
+ *
+ * C'est le support des productions sans caméra : tout ce qui se voit est ensuite
+ * composé par-dessus. La couleur vient de `config/chaine.json`, jamais d'ici —
+ * un fond codé en dur ferait se ressembler toutes les chaînes.
+ */
+async function fabriqueFondUni(destination, { largeur, hauteur, fps, fond, dureeMs }) {
+  const { accelerationNvidia } = await import('./ffmpeg.mjs')
+  const nvenc = env('RENDU_ACCEL', 'auto') !== 'off' && (await accelerationNvidia())
+  const secondes = (dureeMs / 1000).toFixed(3)
+
+  await ffmpeg([
+    '-f', 'lavfi',
+    '-i', `color=c=${fond}:s=${largeur}x${hauteur}:r=${fps}:d=${secondes}`,
+    '-an',
+    ...(nvenc
+      ? ['-c:v', 'h264_nvenc', '-preset', 'p4', '-rc', 'vbr', '-cq', '18', '-b:v', '20M']
+      : ['-c:v', 'libx264', '-preset', 'veryfast', '-crf', '17']),
+    '-pix_fmt', 'yuv420p',
+    '-g', String(fps),
+    destination,
+  ])
+
+  const info = await sonde(destination)
+  journal.detail(`Rush sans image : fond uni ${fond} sur ${duree(info.dureeS)}.`)
+  return { fichier: destination, dureeMs: Math.round(info.dureeS * 1000), nvenc }
+}
+
 // ---------------------------------------------------------------------------
 //  3. Le calage des événements visuels
 // ---------------------------------------------------------------------------
@@ -235,27 +290,45 @@ const nu = (s) =>
  * sur celui de ce bloc-là.
  */
 export function trouveAncre(mots, ancre, plage) {
-  const cible = nu(ancre).split(' ').filter(Boolean)
-  if (cible.length === 0) return null
+  const cible = nu(ancre)
+  if (!cible) return null
 
   const [debut, fin] = plage
-  for (let i = debut; i <= fin - cible.length; i++) {
-    let correspond = true
-    for (let j = 0; j < cible.length; j++) {
-      if (nu(mots[i + j]?.texte) !== cible[j]) {
-        correspond = false
-        break
-      }
-    }
-    if (correspond) {
-      return {
-        debutMs: mots[i].debutMs,
-        finMs: mots[i + cible.length - 1].finMs,
-        index: i,
-      }
-    }
+
+  // On compare sur le TEXTE NORMALISÉ CONTINU, pas mot à mot.
+  //
+  // La normalisation transforme l'apostrophe et le trait d'union en espace :
+  // un seul mot du transcript peut donc valoir plusieurs mots dans l'ancre —
+  // « l'incompatibilité » vaut « l incompatibilite », « week-end » vaut
+  // « week end ». Une comparaison mot à mot ne peut alors JAMAIS aligner, et
+  // l'événement était silencieusement réparti dans le bloc au lieu de tomber
+  // sur son mot. En français, avec les élisions, ça touche une ancre sur six.
+  const bornes = []
+  let foin = ''
+  for (let i = debut; i <= fin && i < mots.length; i++) {
+    const m = nu(mots[i]?.texte)
+    if (!m) continue
+    if (foin) foin += ' '
+    bornes.push({ i, debut: foin.length, fin: foin.length + m.length })
+    foin += m
   }
-  return null
+
+  // Recherche sur frontière de mot, pour que « ans » n'accroche pas « dans ».
+  const bordé = ` ${foin} `
+  const pos = bordé.indexOf(` ${cible} `)
+  if (pos === -1) return null
+  const depart = pos
+  const arrivee = depart + cible.length
+
+  const premier = bornes.find((b) => b.fin > depart)
+  const dernier = [...bornes].reverse().find((b) => b.debut < arrivee)
+  if (!premier || !dernier) return null
+
+  return {
+    debutMs: mots[premier.i].debutMs,
+    finMs: mots[dernier.i].finMs,
+    index: premier.i,
+  }
 }
 
 /** Le temps de lire un texte à voix haute, plus une seconde pour respirer. */
@@ -271,14 +344,107 @@ export function tempsDeLecture(texte, { minimumMs = 1200, maximumMs = 6000 } = {
  * fait sur le texte du script, la correspondance est exacte. On y cherche les
  * ancres, et à défaut on répartit dans le bloc.
  */
-export function caleEvenements(script, mots) {
+/**
+ * Où chaque bloc du script commence et finit DANS LA TRANSCRIPTION RÉELLE.
+ *
+ * On ne peut pas se contenter de compter les mots de chaque bloc et d'avancer un
+ * curseur : ça ne vaut que si la personne a dit exactement le script. Dès qu'elle
+ * improvise — et c'est souhaitable, ça sonne plus parlé — un mot ajouté au bloc 2
+ * décale TOUS les blocs suivants, et chaque événement visuel tombe à côté.
+ *
+ * On aligne donc les mots du script sur ceux réellement dits (plus longue
+ * sous-séquence commune, qui encaisse ajouts, oublis et reformulations), et on
+ * lit les frontières de blocs sur cet alignement.
+ */
+/**
+ * Les instants où une phrase se termine, en millisecondes.
+ *
+ * Deux signaux, parce qu'aucun ne suffit seul : la ponctuation forte, que la
+ * transcription pose de façon fiable mais incomplète, et le silence, qui marque
+ * les respirations que la ponctuation ignore. C'est sur ces instants-là qu'une
+ * coupe se ressent comme voulue plutôt que comme un accident.
+ */
+export function frontieresDePhrase(mots, { silenceMinMs = 450 } = {}) {
+  const f = []
+  for (let i = 0; i < mots.length - 1; i++) {
+    const m = mots[i]
+    const s = mots[i + 1]
+    if (/[.!?…]$/.test(String(m.texte).trim()) || s.debutMs - m.finMs > silenceMinMs) {
+      f.push(s.debutMs)
+    }
+  }
+  return f
+}
+
+export function plagesDeBlocs(script, mots) {
+  const clef = (s) =>
+    String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, '')
+
+  const source = []
+  script.blocs.forEach((b, iBloc) => {
+    for (const m of String(b.texte).split(/\s+/).filter(Boolean)) source.push({ iBloc, c: clef(m) })
+  })
+  const cible = mots.map((m) => clef(m.texte))
+
+  const n = source.length
+  const p = cible.length
+  const dp = Array.from({ length: n + 1 }, () => new Int32Array(p + 1))
+  for (let i = n - 1; i >= 0; i--) {
+    for (let j = p - 1; j >= 0; j--) {
+      dp[i][j] = source[i].c === cible[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1])
+    }
+  }
+
+  const vus = new Map()
+  let i = 0
+  let j = 0
+  while (i < n && j < p) {
+    if (source[i].c === cible[j]) {
+      const e = vus.get(source[i].iBloc) ?? { debut: j, fin: j }
+      e.fin = j
+      vus.set(source[i].iBloc, e)
+      i++
+      j++
+    } else if (dp[i + 1][j] >= dp[i][j + 1]) i++
+    else j++
+  }
+
+  // Un bloc dont aucun mot n'a été retrouvé (entièrement reformulé) reçoit ce
+  // qui reste entre son voisin d'avant et son voisin d'après.
+  const plages = []
+  for (let k = 0; k < script.blocs.length; k++) {
+    const e = vus.get(k)
+    if (e) plages.push([e.debut, e.fin + 1])
+    else plages.push(null)
+  }
+  for (let k = 0; k < plages.length; k++) {
+    if (plages[k]) continue
+    const avant = plages.slice(0, k).reverse().find(Boolean)
+    const apres = plages.slice(k + 1).find(Boolean)
+    plages[k] = [avant ? avant[1] : 0, apres ? apres[0] : mots.length]
+    if (plages[k][1] <= plages[k][0]) plages[k] = [plages[k][0], Math.min(plages[k][0] + 1, mots.length)]
+  }
+  return plages
+}
+
+/**
+ * @param sansCamera  Le rush ne porte-t-il AUCUNE image ?
+ *
+ * C'est le rush qui décide, pas le champ `format` du script. Un fichier audio
+ * seul ne peut être qu'une voix off : la piste image doit alors être construite
+ * de bout en bout par des plans de coupe. Un fichier vidéo — capture d'écran,
+ * face caméra — porte déjà son image : la couvrir de plans de coupe reviendrait
+ * à cacher ce qu'on est venu montrer.
+ *
+ * Le script peut se tromper (il est écrit avant le tournage), le fichier non.
+ */
+export function caleEvenements(script, mots, { sansCamera = null } = {}) {
   const evenements = []
   const nonCalees = []
-  let curseur = 0
+  const plages = plagesDeBlocs(script, mots)
 
-  for (const bloc of script.blocs) {
-    const nbMots = String(bloc.texte).split(/\s+/).filter(Boolean).length
-    const plage = [curseur, Math.min(curseur + nbMots, mots.length)]
+  for (const [iBloc, bloc] of script.blocs.entries()) {
+    const plage = plages[iBloc]
     const blocDebutMs = mots[plage[0]]?.debutMs ?? 0
     const blocFinMs = mots[Math.max(plage[0], plage[1] - 1)]?.finMs ?? blocDebutMs
 
@@ -301,13 +467,232 @@ export function caleEvenements(script, mots) {
         (v.duree_s ? v.duree_s * 1000 : null) ??
         tempsDeLecture(v.texte ?? v.sousTexte ?? JSON.stringify(v.donnees ?? ''))
 
+      // `convertis` rend `null` pour un type banni : on ne le pose pas.
+      const converti = convertis(v)
+      if (!converti) continue
+
       evenements.push({
-        ...convertis(v),
+        ...converti,
         debutMs: Math.round(debutMs),
         dureeMs: Math.round(Math.min(dureeMs, Math.max(800, blocFinMs + 1500 - debutMs))),
       })
     }
-    curseur = plage[1]
+  }
+
+  // SUR UN FORMAT SANS CAMÉRA, LE B-ROLL EST LA PISTE IMAGE.
+  //
+  // Ailleurs, un plan de coupe est un insert : il vient couvrir un mot puis rend
+  // la main au visage. Ici il n'y a pas de visage à qui rendre la main — sous le
+  // plan de coupe il n'y a que le fond uni. Des clips de trois secondes espacés
+  // laissaient donc les deux tiers de la vidéo sur un aplat vide.
+  // Chaque plan tient donc jusqu'au suivant.
+  // La couverture continue ne vaut QUE pour une voix off sans image. Sur une
+  // capture d'écran ou un face caméra, elle recouvrirait le sujet de la vidéo.
+  const voixSeule = sansCamera ?? String(script.format ?? '').includes('faceless')
+  if (voixSeule) {
+    const finVideo = Math.max(...mots.map((m) => m.finMs), 0)
+    let brolls = evenements.filter((e) => e.type === 'broll').sort((a, b) => a.debutMs - b.debutMs)
+
+    // AUCUN PLAN NE DURE MOINS DE DEUX SECONDES.
+    //
+    // En dessous, l'œil n'a pas le temps de comprendre ce qu'il regarde : le plan
+    // passe, il n'apprend rien, et l'enchaînement se lit comme de la nervosité
+    // plutôt que comme du rythme. Deux ancres trop rapprochées ne donnent donc pas
+    // deux plans — on garde le premier, qui couvre les deux.
+    const MINIMUM_MS = 2000
+    const gardes = []
+    for (const e of brolls) {
+      const precedent = gardes[gardes.length - 1]
+      if (precedent && e.debutMs - precedent.debutMs < MINIMUM_MS) {
+        e._aRetirer = true
+        continue
+      }
+      gardes.push(e)
+    }
+    const jetes = brolls.length - gardes.length
+    if (jetes) journal.detail(`${jetes} plan(s) trop courts fondus dans le précédent (moins de 2 s).`)
+    brolls = gardes
+
+    // Le premier plan démarre à zéro AVANT qu'on calcule les durées.
+    // L'ordre inverse laissait un trou : le plan recevait sa durée depuis sa
+    // position d'origine, puis on le reculait à zéro — il s'arrêtait donc juste
+    // avant l'entrée du suivant, et l'écran était nu entre les deux.
+    if (brolls.length && brolls[0].debutMs > 0) brolls[0].debutMs = 0
+
+    for (const [i, e] of brolls.entries()) {
+      const suivant = brolls[i + 1]
+      e.dureeMs = Math.max(e.dureeMs, (suivant ? suivant.debutMs : finVideo + 1500) - e.debutMs)
+    }
+
+    // ON CHANGE DE PLAN QUAND ON CHANGE DE PHRASE.
+    //
+    // Un plan qui tient sur deux phrases donne l'impression que l'image a été
+    // oubliée : l'oreille passe à autre chose et l'œil reste sur la même chose.
+    // La coupe posée sur la fin de phrase, elle, se ressent comme une avancée —
+    // c'est ce qui tient l'attention, et donc la durée de visionnage.
+    //
+    // On découpe donc chaque plan sur les frontières qu'il traverse, tant que les
+    // deux morceaux respectent le plancher de deux secondes.
+    const frontieres = frontieresDePhrase(mots)
+
+    // On aimante le début de chaque plan sur la fin de phrase la plus proche.
+    //
+    // Une ancre tombe sur un mot, pas sur une respiration : le plan démarrait
+    // donc souvent une seconde après la vraie rupture, ce qui allongeait le plan
+    // précédent et faisait tomber la coupe au milieu d'une idée. Déplacer le
+    // départ de moins de deux secondes ne change rien à ce qu'illustre le plan,
+    // et met la coupe là où l'oreille l'attend.
+    const AIMANT_MS = 1800
+    for (const e of brolls.slice(1)) {
+      let meilleur = null
+      for (const f of frontieres) {
+        const ecart = Math.abs(f - e.debutMs)
+        if (ecart <= AIMANT_MS && (meilleur === null || ecart < Math.abs(meilleur - e.debutMs))) {
+          meilleur = f
+        }
+      }
+      if (meilleur !== null) e.debutMs = meilleur
+    }
+    brolls.sort((a, b) => a.debutMs - b.debutMs)
+
+    // L'aimantage peut rapprocher deux plans à moins de deux secondes : on refait
+    // donc passer le plancher, sinon il fabrique lui-même ce qu'il vient
+    // d'interdire quelques lignes plus haut.
+    const apresAimant = []
+    for (const e of brolls) {
+      const precedent = apresAimant[apresAimant.length - 1]
+      if (precedent && e.debutMs - precedent.debutMs < MINIMUM_MS) {
+        e._aRetirer = true
+        continue
+      }
+      apresAimant.push(e)
+    }
+    brolls = apresAimant
+
+    for (const [i, e] of brolls.entries()) {
+      const suivant = brolls[i + 1]
+      e.dureeMs = (suivant ? suivant.debutMs : finVideo + 1500) - e.debutMs
+    }
+
+    const morceles = []
+    for (const e of brolls) {
+      // Le plancher de deux secondes vaut AUSSI entre deux coupes ajoutées :
+      // deux fins de phrase rapprochées ne donnent qu'une coupe, sinon on
+      // fabrique en découpant les plans trop courts qu'on venait d'interdire.
+      const dedans = []
+      let dernier = e.debutMs
+      for (const f of frontieres) {
+        if (f <= e.debutMs + MINIMUM_MS) continue
+        if (f >= e.debutMs + e.dureeMs - MINIMUM_MS) break
+        if (f - dernier < MINIMUM_MS) continue
+        dedans.push(f)
+        dernier = f
+      }
+      // Un plan qui dépasse six secondes se coupe MÊME sans frontière utilisable.
+      // Une phrase très longue, ou un appel à l'action d'un seul tenant, n'offre
+      // aucune respiration où couper — mais laisser dix secondes sur la même
+      // image coûte plus cher en attention qu'une coupe au milieu d'une phrase.
+      const MAX_MS = 6000
+      const bornes = [e.debutMs, ...dedans, e.debutMs + e.dureeMs]
+      for (let k = bornes.length - 1; k > 0; k--) {
+        const largeur = bornes[k] - bornes[k - 1]
+        if (largeur <= MAX_MS) continue
+        const parts = Math.ceil(largeur / MAX_MS)
+        const pas = largeur / parts
+        const ajouts = []
+        for (let q = 1; q < parts; q++) ajouts.push(Math.round(bornes[k - 1] + pas * q))
+        bornes.splice(k, 0, ...ajouts)
+      }
+
+      // Puis on refait remonter le plancher : une borne qui laisserait un morceau
+      // de moins de deux secondes est retirée. Les deux règles se contredisent
+      // par construction, et c'est toujours le plancher qui tranche.
+      for (let k = bornes.length - 2; k >= 1; k--) {
+        if (bornes[k + 1] - bornes[k] < MINIMUM_MS || bornes[k] - bornes[k - 1] < MINIMUM_MS) {
+          bornes.splice(k, 1)
+        }
+      }
+      if (bornes.length <= 2) {
+        morceles.push(e)
+        continue
+      }
+      for (let i = 0; i < bornes.length - 1; i++) {
+        // Le premier morceau garde le plan déjà choisi. Les suivants reprennent
+        // la même recherche mais sur un AUTRE résultat : même intention, autre
+        // image, donc pas de répétition.
+        const part =
+          i === 0
+            ? e
+            : { ...e, src: e.src && /\.(mp4|mov|webm|mkv)$/i.test(e.src) ? null : e.src, variante: i }
+        part.debutMs = bornes[i]
+        part.dureeMs = bornes[i + 1] - bornes[i]
+        if (i > 0 && !part.src) delete part.dureeSourceMs
+        morceles.push(part)
+      }
+    }
+    const ajoutes = morceles.length - brolls.length
+    if (ajoutes > 0) {
+      journal.detail(`${ajoutes} coupe(s) ajoutée(s) sur des fins de phrase.`)
+      for (const e of morceles) if (!evenements.includes(e)) evenements.push(e)
+    }
+
+    // GARDE-FOU : L'ÉCRAN N'EST JAMAIS NU.
+    //
+    // Sur un format sans caméra, un trou dans la couverture n'est pas un plan
+    // sobre : c'est un aplat de fond, que le spectateur lit comme un bug. Aucune
+    // combinaison de règles ne doit pouvoir en produire un, donc on vérifie le
+    // résultat plutôt que de faire confiance au calcul — et on le dit quand on
+    // en bouche un, parce qu'un trou signale toujours une règle mal posée ailleurs.
+    const suite = morceles.sort((a, b) => a.debutMs - b.debutMs)
+    let bouches = 0
+    for (const [i, e] of suite.entries()) {
+      const suivant = suite[i + 1]
+      const finAttendue = suivant ? suivant.debutMs : finVideo + 1500
+      if (e.debutMs + e.dureeMs < finAttendue - 40) {
+        e.dureeMs = finAttendue - e.debutMs
+        bouches++
+      }
+    }
+    if (bouches) journal.attention(`${bouches} trou(s) dans la piste image, comblés.`)
+
+    // LA HIÉRARCHIE DES RACCORDS : coupe sèche dans une idée, poussée entre deux.
+    //
+    // Tous les raccords se ressemblaient — un fondu partout, c'est le langage du
+    // diaporama. Un montage professionnel hiérarchise : à l'intérieur d'un bloc
+    // du script, la coupe est sèche ; au passage d'un bloc au suivant, le
+    // nouveau plan POUSSE l'ancien. Le spectateur sent le changement de chapitre
+    // sans qu'on le lui dise. On marque donc le premier plan de chaque bloc
+    // (sauf l'ouverture, qui doit être une image parfaite immobile).
+    for (let iBloc = 1; iBloc < script.blocs.length; iBloc++) {
+      const blocDebutMs = mots[plages[iBloc]?.[0]]?.debutMs
+      if (blocDebutMs == null) continue
+      let proche = null
+      for (const e of suite) {
+        if (
+          Math.abs(e.debutMs - blocDebutMs) < 700 &&
+          (!proche || Math.abs(e.debutMs - blocDebutMs) < Math.abs(proche.debutMs - blocDebutMs))
+        ) {
+          proche = e
+        }
+      }
+      if (proche && proche.debutMs > 0) proche.entreeSection = true
+    }
+
+    // Le plan qui se fait pousser doit SURVIVRE sous la poussée. Les plans sont
+    // contigus : sans prolongation, l'ancien se termine à l'instant exact où le
+    // nouveau commence à monter, et la poussée se fait par-dessus le fond nu —
+    // un battement sombre à chaque changement de section. On prolonge donc le
+    // plan précédent d'une demi-seconde ; le nouveau, rendu au-dessus, le
+    // recouvre entièrement une fois posé.
+    for (const e of suite) {
+      if (!e.entreeSection) continue
+      const precedent = suite
+        .filter((x) => x !== e && x.debutMs < e.debutMs)
+        .sort((a, b) => b.debutMs - a.debutMs)[0]
+      if (precedent) {
+        precedent.dureeMs = Math.max(precedent.dureeMs, e.debutMs - precedent.debutMs + 500)
+      }
+    }
   }
 
   if (nonCalees.length) {
@@ -330,12 +715,42 @@ function convertis(v) {
       return { ...commun, type: v.type, texte: v.texte }
     case 'chiffre':
       return { ...commun, type: 'chiffre', de: v.de ?? 0, a: v.a, prefixe: v.prefixe, suffixe: v.suffixe }
+    // LE CARTON TOMBE AVEC L INFOGRAPHIE, ET POUR LA MEME RAISON.
+    //
+    // C est un bloc de texte plein ecran pose sur l image. Il souffrait en plus
+    // d un defaut de rendu : un texte plus long que son cadre debordait au lieu
+    // de s adapter, et l ecran affichait un rectangle de couleur avec une
+    // phrase coupee au milieu, par-dessus le sous-titre qui disait deja la meme
+    // chose. Deux fois le meme texte, dont une tronquee.
     case 'carton':
-      return { ...commun, type: 'carton', texte: v.texte, sousTexte: v.sous_texte ?? v.sousTexte }
+      return null
+    // LES INFOGRAPHIES SONT BANNIES. DECISION DU 28 AOUT 2026.
+    //
+    // Elles produisaient un bloc de couleur plein ecran avec du texte dedans,
+    // au milieu d une video par ailleurs filmee. L effet lisait « diapositive
+    // collee dans un montage », c est-a-dire exactement le contraire de ce
+    // qu on cherche. Un chiffre ou une liste se disent tres bien a la voix, et
+    // le sous-titre mot a mot les porte deja a l ecran.
+    //
+    // On les retire silencieusement plutot que d echouer : un vieux script qui
+    // en contient doit continuer a se monter.
     case 'infographie':
-      return { ...commun, type: 'infographie', modele: v.modele, donnees: v.donnees }
-    case 'broll':
-      return { ...commun, type: 'broll', src: v.src ?? null, requete: v.requete, source: v.source ?? 'pexels', ken: true }
+      return null
+    case 'broll': {
+      // Le faux travelling ne vaut que pour une IMAGE FIXE, où il remplace le
+      // mouvement absent. Sur un clip qui bouge déjà, il s'ajoute au mouvement
+      // du plan et donne une dérive molle qu'on ne sait pas attribuer.
+      const src = v.src ?? null
+      const ken = v.ken ?? (src ? /\.(jpe?g|png|webp|avif)$/i.test(src) : true)
+      // L'ANCRE SUIT JUSQU'AU MONTAGE, ET PAS SEULEMENT POUR LE CALAGE.
+      //
+      // Elle ne servait qu'à placer l'événement sur le bon mot, puis on la
+      // jetait. La bibliothèque de plans personnels en a besoin : ses mots-clés
+      // sont écrits en français, et c'est l'ancre qui porte le français — la
+      // requête, elle, est en anglais pour Pexels. Sans elle, un plan étiqueté
+      // « guide » ne pouvait accrocher sur « un petit guide ».
+      return { ...commun, type: 'broll', src, requete: v.requete, ancre: v.ancre ?? null, source: v.source ?? 'pexels', ken }
+    }
     case 'capture':
       return { ...commun, type: 'capture', src: v.fichier ?? v.src }
     case 'flou':
@@ -367,10 +782,13 @@ export function appliqueRythme(coupes, evenements, dureeMs) {
   const punchs = evenements.filter((e) => e.type === '_punch')
   const transitions = evenements.filter((e) => e.type === '_transition')
 
-  for (const p of punchs) {
-    const cible = coupes.find((c) => p.debutMs >= c.debutMs && p.debutMs < c.debutMs + c.dureeMs)
-    if (cible) cible.punchIn = p.amplitude
-  }
+  // Les punchs ne s'accrochent PLUS aux coupes. Ils partent en clair dans
+  // plan.punchs (construisPlan) et c'est l'étage image entier qui les rend —
+  // pour tous les formats. L'ancien accrochage restait actif en parallèle :
+  // sur un format avec caméra, PisteVideo appliquait un second zoom étalé sur
+  // tout le segment, et les deux transforms se MULTIPLIAIENT — un punch de 6 %
+  // devenait 12 % au pic, suivi d'une dérive de zoom pendant vingt secondes.
+  // Un effet ne doit avoir qu'un seul point d'application.
 
   for (const t of transitions) {
     // La transition marque une rupture : elle s'applique au segment qui commence
@@ -388,9 +806,17 @@ export function appliqueRythme(coupes, evenements, dureeMs) {
   }
 
   // Où l'écran ne bouge-t-il pas assez longtemps ?
+  //
+  // LES PUNCH-INS COMPTENT, ET LES OUBLIER FAISAIT MENTIR CE CONTRÔLE.
+  //
+  // Ils ont quitté `surcouches` le jour où le rendu s'est mis à les appliquer à
+  // l'étage image entier ; ce calcul, lui, n'a pas suivi. Un passage tenu par
+  // trois punchs était donc annoncé « rien ne bouge », et la réponse naturelle —
+  // ajouter des plans — chargeait un endroit déjà plein.
   const reperes = [
     ...surcouches.map((e) => e.debutMs),
     ...coupes.map((c) => c.debutMs),
+    ...punchs.map((e) => e.debutMs),
   ].sort((a, b) => a - b)
 
   const creux = []
@@ -453,7 +879,7 @@ const GRAISSES = [
 ]
 
 /** Construit le thème à partir de config/chaine.json, en embarquant les polices. */
-export function construisTheme(chaine, { vertical, dossierPublic: pub }) {
+export function construisTheme(chaine, { vertical, dossierPublic: pub, slug = null, format = null }) {
   const iv = chaine?.identite_visuelle ?? {}
   const polices = []
 
@@ -494,19 +920,30 @@ export function construisTheme(chaine, { vertical, dossierPublic: pub }) {
     texte: iv.couleur_texte || THEME_SECOURS.texte,
     accent: iv.couleur_accent || THEME_SECOURS.accent,
     accentSecondaire: iv.couleur_accent_secondaire || THEME_SECOURS.accentSecondaire,
+    // Le fond du mot actif : une variante assombrie de l accent, parce qu un
+    // seul ton ne peut pas a la fois se lire SUR le fond et porter du texte.
+    pastille: iv.couleur_pastille || iv.couleur_accent || THEME_SECOURS.accent,
+    // L ambiance regle la vignette et le grain : une chaine qui reconforte ne
+    // peut pas avoir l atmosphere d une chaine qui alarme.
+    ambiance: iv.ambiance || 'neutre',
+    // Les axes d une police variable. Sans eux, elle sort dans sa graisse par
+    // defaut — souvent bien trop legere pour un sous-titre de format court.
+    variationsAffiche: iv.variations_affiche || null,
     polices,
     policeTitres: iv.police_titres || texte,
     policeSousTitres: iv.police_soustitres || affiche,
     policeChiffres: iv.police_chiffres || texte,
-    sousTitres: {
-      style: iv.style_soustitres || 'mot-a-mot-pastille',
-      motsParPage: vertical ? 3 : 5,
-      casse: iv.casse_soustitres || 'majuscules',
-      taille: vertical ? 86 : 64,
-      // En vertical, on reste au-dessus de l'interface de TikTok et des Shorts.
-      positionBas: vertical ? 22 : 10,
-      contour: true,
-    },
+    // LES SOUS-TITRES NE SE REGLENT PLUS ICI.
+    //
+    // Ils avaient six valeurs codees en dur a cet endroit, dont trois derivees
+    // du seul fait que le format soit vertical. C'etait tenable tant que le
+    // style etait un choix de chaine ; ca ne l'est plus des lors qu'on veut le
+    // regler par video, avec un apercu, avant de fabriquer les plans.
+    //
+    // La resolution vit desormais dans `soustitres.mjs`, qui empile quatre
+    // niveaux — ligne de commande, cette video, ce format, identite de la
+    // chaine — exactement comme le fait deja le choix de la voix.
+    sousTitres: versTheme(reglagesPour(slug, { chaine, format, vertical }).reglages),
   }
 }
 
@@ -565,6 +1002,18 @@ export function construisPlan({
 
   const { surcouches, creux } = appliqueRythme(coupes, evenements, dureeMs)
 
+  // LES PUNCH-INS PARTENT AUSSI EN CLAIR DANS LE PLAN, avec leur instant exact.
+  //
+  // Les accrocher aux coupes (appliqueRythme) ne suffit plus : sur un format
+  // sans caméra, la piste est un fond uni caché sous les plans de coupe — un
+  // zoom dessus ne zoome rien de visible. Le rendu applique donc le punch à
+  // l'ÉTAGE IMAGE ENTIER (piste + plans), au mot précis où il a été ancré, pas
+  // au début du segment qui le contient.
+  const punchs = evenements
+    .filter((e) => e.type === '_punch')
+    .map((e) => ({ debutMs: e.debutMs, amplitude: e.amplitude ?? 0.06 }))
+    .sort((a, b) => a.debutMs - b.debutMs)
+
   const finParoleMs = mots.length ? mots[mots.length - 1].finMs : dureeMs
   const totalMs = Math.max(dureeMs, finParoleMs) + QUEUE_S * 1000
 
@@ -576,11 +1025,12 @@ export function construisPlan({
       hauteur,
       fps: FPS,
       dureeFrames: Math.ceil((totalMs / 1000) * FPS),
-      theme: construisTheme(chaine, { vertical, dossierPublic: pub }),
+      theme: construisTheme(chaine, { vertical, dossierPublic: pub, slug: script.slug, format: script.format }),
       voix: { src: voixSrc, volume: 1 },
       musique: musique ?? undefined,
       piste: piste ?? undefined,
       coupes,
+      punchs,
       mots,
       evenements: surcouches,
       titre: script.titre_travail,
@@ -588,4 +1038,145 @@ export function construisPlan({
     },
     creux,
   }
+}
+
+// ---------------------------------------------------------------------------
+//  La coupe intelligente : hésitations, bafouillages, faux départs
+// ---------------------------------------------------------------------------
+
+/**
+ * Les mots qui ne portent aucune information.
+ *
+ * Ils passent inaperçus quand on parle et sautent aux oreilles quand on écoute.
+ * On ne retire QUE ceux-là, et jamais un mot qui pourrait porter du sens :
+ * « bon » ou « alors » peuvent ouvrir une phrase, donc ils n'y sont pas.
+ */
+const REMPLISSAGE = new Set([
+  'euh', 'euhh', 'euuh', 'heu', 'hum', 'hmm', 'mmh', 'mh',
+  'bah', 'beh', 'ben', 'hein', 'quoi',
+])
+
+/**
+ * Retire d'un plan de coupe les hésitations et les bafouillages.
+ *
+ * Trois familles, et elles se traitent différemment :
+ *
+ *  1. **Le remplissage** — « euh », « hum », « bah ». On le retire toujours.
+ *  2. **Le bafouillage** — le même mot dit deux fois de suite. On garde la
+ *     SECONDE occurrence : c'est celle qui est enchaînée avec la suite, la
+ *     première est un départ avorté.
+ *  3. **Le faux départ** — un groupe de deux ou trois mots repris à l'identique
+ *     un peu plus loin. Même règle : on garde la reprise.
+ *
+ * Les instants viennent de la transcription de l'audio DÉJÀ recollé, donc dans
+ * le temps du montage ; on les reprojette ensuite sur les segments d'origine.
+ *
+ * @param aGarder segments {src, depuisS, jusquaS, debutMs, dureeMs}
+ * @param mots    transcription de l'audio recollé
+ */
+export function retireLesHesitations(aGarder, mots) {
+  const nu = (s) =>
+    String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]/g, '')
+
+  const aOter = []
+  const marge = 40 // on mord légèrement autour, sinon on laisse une amorce
+
+  for (let i = 0; i < mots.length; i++) {
+    const m = nu(mots[i].texte)
+    if (!m) continue
+
+    if (REMPLISSAGE.has(m)) {
+      aOter.push([mots[i].debutMs - marge, mots[i].finMs + marge])
+      continue
+    }
+    // Bafouillage : le mot précédent est identique et RECOLLÉ.
+    //
+    // Le seuil était à une seconde : beaucoup trop large. Un redoublement
+    // d'insistance — « très très », « tout tout », « non non » — se dit avec un
+    // espacement normal et porte du sens ; le supprimer abîme la phrase. Un vrai
+    // bafouillage, lui, est quasiment collé : moins de 250 ms, et sur un mot
+    // qui ne se redouble pas naturellement.
+    const REDOUBLEMENTS = new Set(['tres', 'tout', 'toute', 'non', 'oui', 'bien', 'plus', 'jamais'])
+    if (
+      i > 0 &&
+      nu(mots[i - 1].texte) === m &&
+      !REDOUBLEMENTS.has(m) &&
+      mots[i].debutMs - mots[i - 1].finMs < 250
+    ) {
+      aOter.push([mots[i - 1].debutMs - marge, mots[i - 1].finMs + marge])
+      continue
+    }
+    // Faux départ : un groupe de deux à quatre mots repris à l'identique juste
+    // après. On teste du plus long au plus court — « les vrais sujets » repris
+    // en entier doit se voir comme un groupe de trois, pas comme deux groupes
+    // de deux qui se chevauchent.
+    //
+    // Le mot de liaison qui précède la reprise ne compte pas dans la comparaison :
+    // « pour les vrais sujets, PUIS les vrais sujets » est un faux départ, même
+    // si « pour » et « puis » diffèrent.
+    let trouve = false
+    for (let n = 4; n >= 2 && !trouve; n--) {
+      // `saut` = un éventuel mot de liaison glissé entre les deux occurrences.
+      // « pour les vrais sujets, PUIS les vrais sujets » est un faux départ, et
+      // sans ce décalage on ne le voit pas : les deux groupes ne sont pas collés.
+      for (const saut of [0, 1]) {
+        if (i < n + saut || i + n > mots.length) continue
+        const avant = mots.slice(i - n - saut, i - saut).map((x) => nu(x.texte)).join(' ')
+        const apres = mots.slice(i, i + n).map((x) => nu(x.texte)).join(' ')
+        if (avant !== apres || avant.length <= 6) continue
+        if (mots[i].debutMs - mots[i - 1].finMs > 1500) continue
+        // On retire la PREMIÈRE occurrence, et le mot qui l'introduit s'il est
+        // court : sinon il reste un « pour » orphelin devant la reprise.
+        const debut = i - n - saut
+        const amorce = debut > 0 && nu(mots[debut - 1].texte).length <= 5 ? debut - 1 : debut
+        aOter.push([mots[amorce].debutMs - marge, mots[i - 1 - saut].finMs + marge])
+        trouve = true
+        break
+      }
+    }
+  }
+
+  if (!aOter.length) return { aGarder, retires: 0, retireMs: 0 }
+
+  // On fusionne les plages qui se touchent, puis on découpe les segments autour.
+  aOter.sort((x, y) => x[0] - y[0])
+  const plages = [aOter[0]]
+  for (const [d, f] of aOter.slice(1)) {
+    const dernier = plages[plages.length - 1]
+    if (d <= dernier[1] + 10) dernier[1] = Math.max(dernier[1], f)
+    else plages.push([d, f])
+  }
+
+  const sortie = []
+  let curseur = 0
+  let retireMs = 0
+
+  for (const seg of aGarder) {
+    // Les morceaux de CE segment qui survivent, en temps de montage.
+    let morceaux = [[seg.debutMs, seg.debutMs + seg.dureeMs]]
+    for (const [d, f] of plages) {
+      const suivants = []
+      for (const [a, b] of morceaux) {
+        if (f <= a || d >= b) { suivants.push([a, b]); continue }
+        if (d > a) suivants.push([a, d])
+        if (f < b) suivants.push([f, b])
+      }
+      morceaux = suivants
+    }
+    for (const [a, b] of morceaux) {
+      const duree = b - a
+      if (duree < 60) continue // un résidu de quelques images ne s'entend pas, il craque
+      sortie.push({
+        src: seg.src,
+        depuisS: seg.depuisS + (a - seg.debutMs) / 1000,
+        jusquaS: seg.depuisS + (b - seg.debutMs) / 1000,
+        debutMs: curseur,
+        dureeMs: duree,
+      })
+      curseur += duree
+    }
+    retireMs += seg.dureeMs - morceaux.reduce((n, [a, b]) => n + (b - a), 0)
+  }
+
+  return { aGarder: sortie, retires: plages.length, retireMs, dureeMs: curseur }
 }

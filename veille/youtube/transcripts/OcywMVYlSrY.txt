@@ -1,0 +1,442 @@
+# How Dating Apps Actually Work (From a Recommendation Engineer)
+# AI Stamp · 676 vues · 00:13:16
+# https://www.youtube.com/watch?v=OcywMVYlSrY
+
+Finding love is supposed to be deeply
+human. But today, millions of us hand
+that responsibility over to apps we
+barely understand. We swipe endlessly,
+chasing the feeling that the right
+person is always one profile away. One
+more swipe, one more match, one more
+tiny hint of hope. From Tinder's ELO
+scoring system to Hinga's stable
+matching algorithm to the rise of
+full-on AI matchmakers, these systems
+have become some of the most important
+algorithms affecting our daily lives.
+But almost no one today knows what's
+happening behind the scenes. Hi, I'm
+Dan. I work on large scale recommener
+systems at big tech and today I want to
+explain how dating algorithms actually
+work using Hinge as a case study and
+we'll also go into how modern
+breakthroughs in AI are reshaping the
+matchmaking and dating landscape. Let's
+get into it. To really understand why
+today's dating algorithms look the way
+they do, we have to go back to the
+beginning. While online dating existed
+in some form or another since the 1960s,
+it remained so incredibly niche until
+the start of the 21st century when with
+the rise of the internet, we started to
+see online matchmaking websites like
+match.com and DHarmony. At the time, the
+most popular algorithms were psychology-
+based compatibility questionnaires, such
+as e-harmony's 29 dimensions of
+compatibility. This was a long detailed
+questionnaire aimed at finding out as
+much information about you and pairing
+up people who fit your psychological
+profile. Mash.com took a more
+engineeringdriven approach. Their early
+algorithm essentially computed a
+weighted average of different user
+traits where engineers manually set the
+weights to traits like interests,
+psychological profile, or lifestyle
+based on what those engineers felt were
+more important to a final score. Despite
+these innovations, online dating still
+wasn't truly mainstream during this
+time. That was until 2012 when Tinder
+exploded onto the scene. With its simple
+app-based interface and dynamic scoring
+system that would define much of online
+dating in the coming decade with its
+intuitive swipe-based algorithm and its
+very low barrier to profile creation,
+Tinder quickly went viral, garnering
+millions of signups, particularly among
+millennials. Most surprisingly about
+Tinder was its extremely simple matching
+algorithm. A concept borrowed from
+chess, the ELO scoring system. Elo
+system worked like this. You were shown
+profiles with a similar score to yours.
+If you liked someone and they liked you
+back, your score went up. If they
+didn't, your score went down. From a
+user perspective, this system could be
+problematic, but we'll get into that
+later. For Tinder, however, it was
+brilliant. Instead of carefully crafted
+questionnaire based matching, Tinder
+introduced a high velocity feedback loop
+where millions of people were constantly
+swiping, generating a massive fire hose
+of behavioral data for the company. All
+this right as machine learning was
+taking off. By the early 2010s, machine
+learning and deep learning was being
+adopted by the tech industry, and dating
+apps quickly followed suit. For dating
+apps, machine learning models could be
+trained on user data to better predict
+who a user will swipe on or who they
+will match with. Between this [music]
+and the genius data collection mechanism
+that Tinder had and the profit potential
+from offering paid subscriptions, many
+of Tinder's competitors like Hinge and
+Bumble came onto [music] the scene. And
+with enough users and data, these
+companies, including Tinder, which
+reportedly abandoned its ecosystem in
+favor of a more sophisticated machine
+learning approach, shifted towards
+predictive recommendation systems
+similar to what YouTube, Netflix, or Tik
+Tok use. And with that, dating apps were
+no longer survey engines or simple swipe
+toys. They were full-on recommener
+systems. Today, 53% of adults under 30
+have used a dating app. And roughly one
+in five partnered young adults actually
+met their significant other on one. In
+fact, these apps are now the number one
+way couples meet in the US. In 2024
+alone, an estimated 380 million people
+globally were active on these platforms.
+And despite reports of dating app
+fatigue, the industry is still
+incredibly lucrative, generating over 6
+billion a year. That's why you see
+dozens of new competitors constantly
+hitting the market, each promising to
+finally fix the broken experience of
+their predecessors. Quick question for
+you all. Which dating apps have you
+tried? And more importantly, did you
+feel like the algorithm was working for
+you or against you? Let me know in the
+comments down below. So, given how
+massive the industry is, it's wild that
+we don't exactly know how these apps
+work. So, let's dive in. We'll use
+Hinge, [music] which has one of the more
+sophisticated dating algorithms as our
+case study to break down what is
+actually happening under the hood. On
+the surface, the goal of any dating
+algorithm should seem obvious. Show the
+user profiles they're likely to match
+with, go on a date with, and ideally end
+up getting into a long-term relationship
+with. However, for many apps, the
+incentives for the developers might not
+always be aligned with doing what's best
+for their users. What do I mean by this?
+You see, many apps have monthly paid
+subscriptions with each subscription
+promising more swipes, higher profile
+visibility, and possibly even more
+matches. However, as soon as a user
+actually ends up getting into a
+committed relationship from using the
+app, they are now incentivized to cancel
+their subscription service. So, this win
+for the user comes at a cost to the app
+as it's now losing a paying customer.
+This, of course, has led to some people
+accusing these apps of not optimizing
+for the user's best interests, but for
+maximizing revenue, swipes, and time
+spent on the app. But with that caveat
+out of the way, let's get back to Hinge,
+which markets itself as the app designed
+to be deleted, and does have several
+features which are lacking in many of
+its competitors, like enforcing
+high-profile quality, showing you your
+like Q, and having a very sophisticated
+algorithm and pretty interface. It's not
+perfect, but it is fair to assume that
+Hinge is genuinely trying to optimize
+for getting users on dates and making
+meaningful connections. With that in
+mind, let's look at how the algorithm
+actually works. Dating apps like Hinge
+rely on recommendation algorithms,
+similar to how apps like YouTube,
+Netflix, or Tik Tok recommend content.
+The difference is, of course, on those
+sites, recommendations only go one way.
+On YouTube, if you like or watch a
+video, you won't have to worry about it
+liking or watching you back. However,
+for dating apps, recommendations are a
+two-way street where you're both the
+user and the content being recommended
+to others. So, it's not enough for you
+to like another profile. That profile
+also has to like you back. This raises
+the question, how does Hinge match two
+people whose preferences both matter?
+The answer comes from a simple yet
+elegant algorithm from 1962, the Gail
+Shapely algorithm, also known as the
+stable marriage algorithm. Here's how it
+works in simple terms. Imagine a room
+with five men and five women, each
+looking for a heterosexual partner.
+Everyone creates a ranked list of
+preferences. The goal is to produce
+pairings where no unstable matches,
+meaning no two people would prefer each
+other over the partners they ended up
+with exist. The algorithm divides people
+into two groups, proposers and proposes.
+In our example, the men will be the
+proposers and the women the proposes.
+But either side can be the ones
+proposing and the algorithm will still
+work. The algorithm runs as follows. The
+men wait in line. The man at the front
+of the line starts in the first person
+on his list and proposes to that person.
+If the woman being proposed to hasn't
+matched, the two pair up. If the propose
+has already been matched but prefers the
+new proposer, they switch [music]
+partners and the man she originally was
+with will go to the back of the line. If
+the propose prefers their current
+partner, then they will reject the
+proposal. Either way, the proposer
+crosses that name off their list and if
+rejected goes to the back of the line.
+This continues until everyone is
+matched. The result, the proposing group
+gets its best possible matches. The
+propos group gets matches that are
+stable but not necessarily optimal for
+them. If you want to get a better feel
+for the algorithm, there are a lot of
+great videos that go over how this works
+in more detail. I'll be linking one of
+them in the description. Fun fact, this
+algorithm is used in a wide variety of
+other domains, including matching
+medical students with residency programs
+in the US. But now the big question, how
+does Hinge get your list of preferences
+in the first place? Well, imagine if
+Hinge asked each of its users to
+manually rank all the other users on the
+platform. That would give a perfect
+preference list for Gail Shapely. That
+would also be insane. So instead, Hinge
+uses recommener systems to estimate your
+preference list for you. Hinge builds
+out your ranking list by one, first
+applying all the filters you set like
+age, distance, religion, and of course,
+gender to narrow millions of profiles
+down to a manageable candidate pool.
+Two, extracting the following signals
+from both your profiles and the ones in
+the candidate pool. Explicit signals,
+your interests, your prompts, your
+photos, your job, your education, and
+your lifestyle info. and implicit
+signals. These are the behaviors that
+the system learns from, such as who you
+liked, who liked you, your match
+history, messaging behavior, time spent
+on certain profiles, and how selective
+you've been. These signals are fed into
+deep learning models such as
+collaborative filtering networks,
+embedding models, and multi-layer
+ranking systems. These models predict
+which profiles you would rank the
+highest if you had to sort them
+yourself. This results in your
+personalized ranked list, the closest
+thing to a preference order. Finally,
+Hinge runs a modified version of the
+Gail Shapely algorithm on your predicted
+list, ensuring that the profiles you see
+are high on your list and that you are
+reasonably high on their list. So, in
+summary, the algorithm is really doing
+two things. One, predicting attraction,
+and two, ensuring mutual interests via
+stable matching. By the way, if you're
+curious to learn more about how
+recommener systems work, I made a whole
+video on the topic using YouTube as a
+case study. So, feel free to check it
+out if you're curious to learn more.
+Although dating apps do have their
+benefit. After all, hundreds of
+thousands of people have ended up
+meeting their spouse on apps like Hinge,
+Coffee Meets Bagel, and even Tinder
+during its Elocore era, these apps do
+come with some serious side effects for
+both the user and society as a whole.
+The first problem is that these apps can
+end up gifying the dating experience.
+Swiping is designed to feel quick,
+rewarding, and a little addictive,
+almost like a slot machine. Every swipe
+has the possibility of a match, and that
+small burst of anticipation keeps people
+coming back. This paired with the
+monetary incentive for developers to
+keep users on their apps and we start to
+see a pattern where people are given
+just enough matches to keep them using
+the app but not enough to find the right
+person. These apps can also amplify some
+of the worst parts of modern dating
+especially for men and women looking to
+get into heterosexual relationships. For
+women, a popular internet analogy
+describes the average experience to that
+of drowning in the ocean. Even a very
+simple unoptimized profile can receive a
+flood of likes and messages. The real
+challenge becomes sifting through all of
+it, trying to figure out which profiles
+represent a genuine match and which are
+just low effort. I've heard many women
+describe this as like looking for a
+needle in a haststack, which can quickly
+lead to decision fatigue and burnout.
+For men, the experience is almost the
+opposite, often being compared to
+collapsing from dehydration on dry land.
+Most men swipe on way more profiles than
+they actually match with, and many
+receive little to no inbound interest.
+For young men in particular, this
+mismatch can lead to feelings of
+hopelessness and anxiety. And these
+problems feed into each other. When men
+get fewer matches, they compensate by
+swiping more broadly, which then
+increases the volume of likes that women
+receive, increasing the amount of
+profiles that they have to filter
+through. Meanwhile, the algorithm
+responds a predictable way. The majority
+of likes, matches, and visibility ends
+up concentrated in a small percentage of
+profiles. Studies on independent data
+analysis suggest that the top 10% of
+male profiles receive the majority of
+engagement while the bottom 50% receive
+little to none. If you'd like to learn
+more, this video by Memeable Data does a
+great job illustrating this phenomenon.
+Highly recommend checking it out. But
+honestly, one of the most fundamental
+issues with dating apps is the sheer
+shallowess of the experience. Even on
+Hinge, which genuinely tries to
+encourage depth and thoughtful prompts,
+many profiles still end up as a
+collection of sarcastic oneliners,
+quirky remarks, and curated aesthetics.
+When I used Hinge a few years back, I
+found that making my profile more casual
+and less serious actually increased the
+number of matches I got. That says
+something about what the system rewards.
+Most profiles don't list a person's core
+values, personality traits, behaviors,
+or much indication of who they truly
+are. Instead, what you often get is a
+polished persona, something more akin to
+a mini Instagram brand than a window
+into someone's actual character. Which
+brings us to the core of why I think so
+many people are put off by these apps.
+There is something to be said about
+taking a core part of the human
+experience, finding love and
+companionship, and turning it into an
+experience more akin to that of social
+media growth hacking or conversion
+funnel optimization. The difference, of
+course, is that no one deserves to have
+their hot takes go viral on Twitter/X.
+But given a reasonable amount of effort,
+everyone deserves a fair shot at finding
+love. And for people struggling to meet
+others in real life, being bad at these
+apps or feeling burnt out from them can
+be a major disadvantage. So what can we
+do about this? While trends are showing
+many people quitting the apps and moving
+on to meeting people in real life. Does
+this mean that dating apps are dead? No.
+But it does mean that the trend is
+shifting away from purely swipe based
+apps to something more akin to AI
+matchmaking. Matchmaking is of course
+nothing new. For most of human history,
+friends, family, and community networks
+were how people met. But in the last few
+decades, outside of a few cultural
+contexts, matchmaking became niche,
+mostly because it was expensive,
+time-conuming, and hard to scale. But
+the rise of LLMs, combined with the
+burnout many people have been feeling
+with endless swiping, has brought back
+matchmaking into the spotlight. And with
+that, new apps are popping up that blend
+the old school ideas of introductions
+with the modern capabilities of AI. For
+example, apps like Loop built out a
+dating based social network where you
+can meet friends of friends either by
+introductions from your friends or by
+searching manually from your side. Other
+apps have made use of hybrid AI human
+matchmaking strategies where human
+matchmakers can use AI tools to find
+matches for you. For example, Stitch
+advertises itself as one of those apps.
+And we're also starting to see the rise
+of AI dating coaches. Many new apps like
+your Move.AI now give users personalized
+feedback, suggesting profile
+improvements or when to loosen overly
+strict preferences. Will these AI
+matchmaking systems truly replace dating
+apps? It's too early to say, but demand
+is clearly shifting towards systems that
+feel more intentional, more curated, and
+less like slot machines. If you're on
+your own journey to find love, I
+genuinely wish you the best both online
+and offline. But if you made it this far
+in the video and you also happen to be
+on a journey to learn more about the
+world of machine learning, recommener
+systems, and the tech industry as a
+whole, then I'd love it if you
+subscribed. And if anything from this
+video didn't make sense to you, then do
+leave a comment down below. I'll answer
+every single one of them. Thank you so
+much for watching [music] and I'll see
+you in the next

@@ -1,0 +1,502 @@
+# The Soulmate Algorithm – When AI knows who’s truly right for you
+# My Thoughts on AI · 75 vues · 00:16:19
+# https://www.youtube.com/watch?v=GCrqkFxUhIU
+
+Welcome to Mythos AI, your source for
+Cliff's notes on complex subjects. Join
+Anna and Phil for yet another engaging
+conversation.
+>> Welcome to the deep dive. Today we're
+going to dig into something fascinating
+and maybe a bit unsettling, the online
+dating world. It's a huge industry,
+right? Around 10 billion dollars.
+>> But uh the sources we've looked at
+suggest it might be facing a massive
+disruption like an extinction level
+event potentially. Our goal today is to
+really understand how that could happen.
+So, let me start with the big question
+for you. Why do you think this whole
+dating industry, which let's be honest,
+seems pretty good at keeping people
+hooked, is suddenly vulnerable? And why
+isn't this threat coming from say
+another dating app startup? Why a
+general AI platform?
+>> Right. It's a really good question. The
+core reason is this convergence, almost
+an accidental one that the established
+dating apps just can't copy. And you hit
+it exactly. It's not a startup because
+building this kind of tech from zero is
+incredibly expensive and takes years.
+What's happening is a combination of two
+key things. First, this persistent
+long-term AI memory, the AI actually
+remembering you over time. And second, a
+really important policy shift. Uh, this
+move towards adult freedom, but
+crucially done within a strong agegated
+system.
+>> Okay, hold on. Persistent memory and
+adult freedom. Let's break that down a
+bit for everyone listening. So, you're
+saying it's not just about a slightly
+smarter matching algorithm. It's more
+fundamental.
+>> Much more fundamental. It's about the AI
+being able to gather way deeper, more
+meaningful data because it remembers
+conversations, preferences, everything
+over the long haul. And then the policy
+side allows people to actually be
+themselves in those conversations. You
+know, the real sometimes messy adult
+versions of themselves.
+>> Got it. So the AI isn't just matching
+based on what you say you want in a
+profile.
+>> Exactly. It's moving beyond that
+superficial stuff height hobbies. You
+know the drill. It's shifting to
+analyzing compatibility based on who you
+actually reveal yourself to be over
+time. Deep AIdriven analysis.
+>> Okay. So, how does this specific
+development AI getting into matchmaking
+fit into the bigger trend? We see AI
+changing work news.
+>> How does this connect?
+>> Well, we've already seen AI
+fundamentally change huge areas like you
+said, news feeds, how we search for
+information, even creative assistance.
+The shift here is structural, but in a
+really interesting way. Think about it.
+>> For a general AI assistant to be
+genuinely useful, especially with
+persistent memory, it has to build a
+really complex sort of highdimensional
+model of your personality. Just to do
+its main job well, it needs to
+understand your communication style,
+maybe your values, your sense of humor,
+even your anxieties to help you draft an
+email or summarize complex information
+effectively.
+>> Right. To be a truly personal assistant.
+>> Precisely. And the moment that deeply
+personalized model exists for the
+assistant function, well, it
+accidentally becomes the most powerful
+matchmaking engine imaginable, they set
+out to build a better assistant. But a
+side effect is potentially wiping out
+the current dating industry.
+>> That's quite a side effect. Okay, let's
+be fair, though. Apps like Tinder,
+Bumble, Hinge, they've connected
+millions of people, made billions.
+What's actually wrong with them? Why do
+so many users talk about burnout,
+frustration, uh cynicism even? Yeah, the
+user fatigue is real. The core failure
+is systemic. Really comes down to two
+things. The data they use is flawed and
+their basic business incentives are
+misaligned with user success. Think
+about the data first. Legacy apps rely
+on really shallow information. Static
+profiles. People fill out
+questionnaires.
+>> And let's be honest, people lie or at
+least exaggerate on those profiles,
+right? Age, height, income.
+>> Statistically, yes. Users openly admit
+to it. So the data pool is compromised
+right from the start and then the
+behavioral data they collect like
+swipes. It's very low signal. Swiping
+left or right tells the algorithm almost
+nothing about your deep values, your
+communication style or how you handle
+conflict.
+>> But surely with millions of users and
+billions of swipes, patterns must
+emerge. Doesn't volume help.
+>> It helps identify patterns of attraction
+maybe who you find visually appealing
+perhaps based on very basic
+demographics. But it doesn't reliably
+identify patterns of long-term
+compatibility.
+Which leads to the second big problem,
+the business model. These are mostly
+subscription platforms. Their financial
+success is directly linked to keeping
+you subscribed, keeping you swiping,
+prolonging engagement,
+>> not necessarily finding you a successful
+match, so you leave the app.
+>> Exactly. There's an inherent conflict of
+interest there. They make more money the
+longer you stay single and searching on
+their platform. I mean, one co-founder
+of a major platform basically admitted
+their matching algorithm was kind of
+like placebo AI. It worked partly
+because users believed it was working,
+not necessarily because it was making
+scientifically valid predictions.
+>> Okay. So, bad data, conflicting goals,
+and the user experience that results
+from that is this whole swipe economy
+thing.
+>> Yes. And that gamification has real
+consequences. We see the stats.
+Something like 79% of Gen Z, 80% of
+millennials report dating app burnout.
+It turns something deeply human and
+complex, finding a partner, into this
+rapidfire, often demoralizing game. And
+>> it leads to bad behavior, too. Right.
+Ghosting, catfishing.
+>> Absolutely. The stats are pretty stark.
+Ghosting experienced by over 40% of
+users. Catfishing affecting nearly as
+many. It breeds disillusionment. And all
+that dissatisfaction creates a huge
+market signal. People are clearly
+looking for something better, something
+that offers real curated highquality
+connections. The current model just
+isn't built to deliver that at scale.
+>> So if the shallow data is the problem,
+intimacy and deeper conversation must be
+part of the solution. Which brings us
+back to that policy change you
+mentioned, this adult freedom idea. Why
+was that the missing piece? Why couldn't
+the existing apps just allow for deeper
+chats?
+>> It comes down to the freedom to collect
+the necessary data without crippling
+constraints. This new policy,
+importantly, is combined with robust age
+verification. We're talking strictly 18
+plus users. That framework allows for
+consensual adult level conversation. And
+that's critical because let's face it,
+real human connection, real
+compatibility isn't built on completely
+sterile, brands safe, G-rated chat. It
+involves discussing complex emotions,
+fears, desires, maybe past experiences,
+sexuality, the stuff that actually
+reveals who you are and what you need in
+a partner. So the legacy apps by trying
+to keep everything super brand safe or
+familyfriendly to avoid controversy or
+losing advertisers, they essentially
+block the AI from accessing the most
+important data for matchmaking.
+>> Precisely. They're caught in a bind.
+They have technical debt, brand safety
+concerns, a broad user base, including
+younger users. They can't easily pivot
+to allow truly intimate conversations.
+The new flare by implementing strict age
+gating up front created a kind of
+compliance shield. That shield gives
+them the latitude to operate where
+authentic human connection actually
+happens. It's a space the incumbents are
+too constrained to enter effectively.
+>> Okay, that makes sense. So, the policy
+unlocks the type of data. Now, let's
+talk about the mechanism for using it.
+Memory. How does the AI use memory to
+get beyond that static profile?
+>> Memory is really the engine driving this
+whole thing. It's not just short-term
+recall. We're talking about a
+multi-layered system. And the key part
+is persistent memory. This means the AI
+has a long-term storage capability. It
+retains specific facts, preferences,
+goals, nuances from all your
+conversations, potentially over months
+or even years. It remembers you
+mentioned a difficult relationship with
+a family member last year or that your
+career goal shifted 6 months ago. It
+builds a cumulative understanding.
+>> Wow. So, how does remembering all that
+detail actually help find a match?
+>> All that rich longitudinal data is used
+to construct something called a
+highdimensional compatibility vector.
+Don't let the term scare you. Think of
+it less like a checklist of attributes,
+height, job, likes dogs, and more like a
+dynamic, incredibly detailed fingerprint
+of your personality, your values, your
+communication style.
+>> So, it's not built from what I say I am,
+but how I actually interact.
+>> Exactly. It's built from your revealed
+preferences, how you use humor, how you
+react to stress, your underlying
+political leanings, even if unstated,
+your emotional needs, all derived from
+analyzing thousands of your actual
+natural conversations with the AI
+assistant over time.
+>> Can you give a concrete example? Let's
+say I often talk to my AI assistant
+about feeling anxious about the future
+or maybe joke using a lot of sarcasm.
+How does the vector use that?
+>> Okay, good examples. It wouldn't just
+look for another user who lists anxious
+or sarcastic on a profile. That's the
+old way. Instead, the vector captures
+the pattern and texture of your anxiety
+or humor. For anxiety, it might identify
+that you consistently respond well to
+reassurance and structured planning. So,
+it would increase your compatibility
+score with potential partners whose own
+conversational patterns indicate they
+are naturally reassuring, stable, good
+at planning. For sarcasm, it might
+identify the type of sarcasm. Is it
+witty, dark, playful? And match you with
+someone whose vector shows they
+appreciate and engage with that specific
+style rather than someone who finds it
+off-putting. It's about the dynamic
+interaction, not static labels.
+>> So, the vector is constantly updating,
+too. As I change, it changes.
+>> That's the key difference. A profile is
+static until you manually update it. The
+compatibility vector is dynamic. It
+adapts in near real time based on your
+ongoing conversations. It reflects who
+you are now.
+>> This sounds incredibly powerful. Is
+there any proof that this kind of deep
+memory based approach actually works for
+curation in other areas?
+>> Yes, absolutely. We have very clear
+precedents particularly in sophisticated
+content curation like advanced news
+feeds or recommendation engines. Think
+about something like Pulse. The most
+successful modern curation platforms
+don't primarily rely on the social graph
+anymore. You know who your friends are,
+what groups you join. They rely almost
+entirely on the memory graph. That's the
+AI's internal map of who you are based
+on your individual interactions, your
+reading history, your questions, your
+expressed interests over time.
+>> So, it's less about my explicit
+connections and more about my implicit
+patterns of thought and interest.
+>> Precisely. The fundamental task for the
+AI is the same, whether it's curating
+news or potential partners. It's
+sophisticated pattern recognition and
+prediction based on deep longitudinal
+user data. If an AI can understand you
+well enough from your memory graph to
+consistently show you news articles that
+resonate or predict what you'll want to
+watch next, it's using the same
+underlying capability needed to predict
+which person might resonate with you on
+a much deeper level. The memory graph
+maps identity. The social graph just
+maps connections.
+>> Okay, so the tech exists, the policy
+allows it. Why is this combination so
+devastating for the existing dating
+apps? Can't Match Groupoup or Bumble
+just adapt, build their own memory
+systems?
+>> This is where the concept of the data
+moat comes in and why it's likely
+insurmountable for them. Match Group,
+Bumble, they have vast amounts of data,
+yes, but it's largely the shallow data
+we talked about. Swipes, profile info,
+maybe some limited messaging data. The
+new AI player through its core assistant
+business has already acquired billions,
+maybe trillions of conversational data
+points, rich longitudinal, high signal
+data. They got this incredibly valuable
+data almost as a byproduct. It's the
+perfect fuel for training these
+compatibility vectors. The dating apps
+don't have that fuel and they can't
+realistically acquire it at the same
+scale or depth.
+>> So even if the legacy apps try to pivot
+now,
+>> they're starting miles behind with the
+wrong kind of data.
+>> Exactly. They're trying to run a Formula
+1 race using regular gasoline when the
+competitor has rocket fuel. And
+remember, their user base is already
+feeling burnt out and looking for
+alternatives. So when an effective
+matchmaker appears, potentially bundled
+into an AI subscription they already pay
+for, offering vastly better results with
+less effort, the user exodus could be
+incredibly fast.
+>> A mass migration
+>> potentially. Yes, it could lead to a
+rapid catastrophic collapse in their
+subscription revenue. The market
+fundamentally shifts from buying a
+specific, often frustrating dating app
+to using an integrated life utility.
+What about the other players in this
+space like those AI companion apps that
+have emerged often focused on more
+intimate or NSSFU conversations? That
+market's worth billions too, right?
+>> Around $28 billion. Yes. And they are
+likely absorbed almost instantly. Their
+main differentiator, their moat, was
+often that permissiveness around adult
+or intimate conversation, which
+mainstream platforms avoided. But now if
+the general AI platform offers that same
+level of intimacy plus scale, security,
+superior AI models, and the potential
+for realworld connection, why would
+anyone stick with a standalone
+companion?
+>> The companion apps offered practice,
+maybe simulated connection. This new
+system offers the potential for the real
+thing.
+>> Precisely. The companions were selling
+the map. This new utility is offering
+the destination. Their primary value
+proposition evaporates.
+>> The efficiency is just striking. But if
+this system becomes so good, so
+efficient at finding our perfect
+matches, what are the downsides? What
+are the societal or ethical implications
+we need to start thinking about?
+>> That's crucial. There are major risks
+and they seem to cluster around three
+areas largely tied to centralizing all
+this intimate data and predictive power.
+First, obviously, is privacy and memory
+custody. This system holds the most
+intimate details of a person's life,
+their fears, hopes, desires,
+insecurities. Concentrating that depth
+of longitudinal personal data in one
+place creates an unprecedented privacy
+risk, a single point of failure with
+enormous consequences
+>> and raises huge questions about who
+actually owns and controls that intimate
+history of you
+>> exactly who is the custodian? How is a
+razor handled? It's a massive challenge.
+Second, there's a risk of emotional
+atrophy. Think about it. If the AI
+becomes a flawless digital wingman,
+constantly smoothing social
+interactions, helping you craft the
+perfect message, maybe even mediating
+disagreements, do we lose the ability to
+develop those crucial social skills
+ourselves? Skills like navigating
+conflict, expressing vulnerability
+directly, handling rejection,
+compromising things we learn through
+messy, unmediated human interaction.
+>> Right? If the AI always provides the
+optimal way to interact, we don't build
+our own emotional resilience or social
+toolkit.
+>> We might become dependent on the AI
+mediator. And the third big risk is what
+some are calling the algorithmic
+colonization of love. If the AI gets
+incredibly good at matching you with
+someone who perfectly reflects your
+existing biases, preferences, and
+worldview, does it inadvertently stifle
+personal growth? Often the relationships
+that challenge us, that expose us to
+different perspectives are the ones that
+help us grow the most.
+Overpersonalization could create a kind
+of echo chamber of the heart.
+>> So the AI gives us partners who make us
+feel comfortable and affirmed, but maybe
+prevents us from finding partners who
+push us to become better or different
+versions of ourselves.
+>> That's the potential danger. We trade
+the friction and unpredictability that
+often leads to growth for
+hyperefficient, comfortable
+compatibility. It's a profound
+trade-off. Okay, as we bring this deep
+dive to a close, what stands out to you
+as the single most revolutionary element
+driving all of this?
+>> For me, it's the fundamental shift away
+from representing identity online as a
+static, self-reported profile, often a
+carefully curated fiction. Instead,
+we're moving to a model where identity
+is understood as a dynamic, continuously
+evolving representation derived from
+actual behavior over time, capturing the
+true self, warts and all. That technical
+leap enabled by the policy change
+changes everything about how we model
+and match human beings online.
+>> So boiling it all down, what does this
+mean for us? For people looking for
+connection,
+>> it means we're likely heading towards a
+future where the same AI tool we use for
+work, for information, for entertainment
+might soon become the primary and most
+effective way we find romantic partners.
+It could spell the end of the swipe
+economy, replacing its friction and
+fatigue with something much more
+integrated and potentially much more
+successful. Which leaves us with a final
+powerful thought to consider. If AI
+becomes truly flawless at finding your
+perfect match, eliminating the struggle
+and uncertainty, what happens to the
+romance of serendipity? What happens to
+the personal evolution that often comes
+precisely from the messy, unpredictable,
+sometimes painful journey of searching
+for love ourselves?
+>> Thanks for listening to Mythos AI. Stay
+tuned for more concise insights. And
+remember to hit the like button and
+subscribe for future

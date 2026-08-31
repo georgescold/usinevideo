@@ -1,0 +1,1952 @@
+# The Business of Online Dating: Algorithms, AI & Emotional Attachment
+# Alexandria · 5,0 k vues · 01:03:35
+# https://www.youtube.com/watch?v=FhzVagVA6ek
+
+Welcome back to another episode of Love
+Sex LA Unfiltered where we take the
+filter off your dating life and
+sometimes your selfies. And today I'm
+here with a very special guest and we're
+going to be talking about kind of a
+controversial topic, modern dating and
+the technology behind it, right? Dating
+apps and the technology that is behind
+modern romance. I have a very special
+friend here. He is a co-founder and he
+has been an insider behind some of the
+biggest dating apps that all of us use.
+So, please welcome my friend Blake
+Curry.
+[music]
+>> Thank you very much, Alex.
+>> Thank you.
+>> Glad to be here. Uh, yeah, it's been a
+wild ride.
+>> Oh, for sure.
+>> I bet. I bet. I feel like you've seen it
+all.
+>> Uh, not not at all, but I've seen enough
+to to know like what's next.
+>> Yeah. and to what everyone's struggling
+with and dealing with right now. And
+it's it's not an easy environment to be
+in to be sure,
+>> right?
+>> I I know sometimes I'm like, okay, when
+it comes to like dating and romance and
+tech the technology behind it, the
+algorithm behind it, right? Is it are
+dating apps are they are they helping
+us? Are they hurting us? Are they just
+giving us carpal tunnel? I don't know.
+What do you think?
+>> Yeah. I mean, I think that like anything
+that is catering to your convenience.
+Yeah. Like that's absolutely what it
+does.
+>> Yeah.
+>> And it's now taken out a lot of the
+friction that has come from dating in
+general. Before like this was when I met
+my wife um way before dating apps really
+started to take hold. They were online
+dating has been around for a long time
+to be clear, right? It started with like
+websites and even dialup bulletin board
+systems if you're going back to like the
+90s like that sort of thing. But as far
+as apps go, like this is kind of a
+recent new phenomenon. So it's evolved
+to be sure over time. The thing is
+>> now apps are almost like a status um
+there there's a lot more status involved
+than before because you have such a huge
+choice and there's a niche for every
+single
+>> right
+>> every single category you can imagine.
+>> So now it's become to the point I think
+where it's it's almost like a membership
+club, right?
+um you look at what different uh apps
+from the league to Rya for example, but
+then is there going to be a new one of
+those that's coming out? And then are
+you on it? Um and then who is the most
+likely to even bother matching with you?
+And
+>> there's just so many uh unanswered
+questions I think when it comes to this.
+And at the end of the day, I mean, my
+personal philosophy is like you should
+try and do the leg work and move beyond
+that if you can. But you can't knock the
+fact that a lot of people also do it for
+different reasons. Some of them more
+nefarious than others,
+>> right?
+>> And some of them um just do as a ego
+confidence boost to see if they still
+got it sort of thing. See what's on the
+market. See how many um matches they
+get.
+>> Yeah. Um but trust and safety is another
+huge issue that I think is um not talked
+about often enough um within this space
+and it's something that you know I feel
+very strongly about and um I've done
+work in previous companies for um
+because you know there's just simply
+even to this day not enough
+accountability and protection for the
+users.
+>> Yeah. Yeah. Totally. Totally. Well, I
+can't wait to get into all of this with
+you. I feel like there's so much we're
+going to cover. Um, I start every
+episode with a game called date or
+ghost.
+>> Okay.
+>> Basically, I'm gonna give you a scenario
+and based on that scenario, you tell the
+viewers if they should date that person
+or ghost that person.
+>> I like it.
+>> Okay,
+>> let's go.
+>> All right, [laughter]
+let's go. Okay. They don't look like
+their profile picture like on a dating
+app, but they have a really great
+personality when you meet them.
+>> Ghost.
+>> Ghost.
+>> Yeah,
+>> cuz you got catfished.
+>> Exact. Well, I didn't get catfish, but
+[laughter]
+if uh they already didn't put out who
+they were initially,
+>> that's not a good sign. Like, if it
+looks nothing like it, really nothing.
+>> Yeah, I know. Do you think you could see
+past that
+>> or do you think people should see past
+that?
+>> Well, I mean, yeah, I think everyone
+should should give someone a second
+chance.
+>> Yeah,
+>> I really do. Unless you're at the point
+where you've been burned so much that
+you don't think it even applies anymore,
+but I I think that, you know, time will
+tell when it comes to that sort of
+thing.
+>> Anyway, okay. So, I still say
+>> ghost.
+>> Uh, I would No, I could if I could
+switch my answer. I would say maybe
+date. Yeah. Give him a give him a shot.
+Give him or her a shot.
+>> Okay.
+>> If it's really if it's because chemistry
+is something that you cannot fake. I
+mean, I think we talked about this
+before, like
+>> you either know you have it or you
+don't. And you generally know within the
+first,
+>> some would say a few seconds, others
+would say a few minutes.
+>> Yeah.
+>> Um, and that's something that it's
+either you you have it or you don't have
+it. And so if you got the chemistry and
+that's something you would never be able
+to know on an app. You'd have to meet in
+person, right?
+>> Like so that is and that's always been
+the biggest thing. Anyway, we can get
+into that later.
+>> No. Yeah, we were talking about the
+other day. You're right though. Yeah.
+Like you know a lot of the time we're
+swiping based on looks and appearance.
+Well, number one is always going to be
+attraction. That's just human nature,
+>> right?
+>> And that's to be expected,
+>> right? Right. Totally. Okay. So, we're
+dating. We're potentially dating.
+>> Yeah.
+>> Okay.
+>> Yeah. I'll switch my answer.
+>> Okay. [laughter]
+>> If I can.
+>> Okay. Um, they're very cute. You meet
+them on a dating app. And in their bio
+of the dating app, it says entrepreneur,
+but they won't elaborate on what
+entrepreneur means.
+>> They won't elaborate,
+>> right?
+even um h well I guess you would have to
+that's a tough one.
+>> It's a tough one, right? Because like is
+entrepreneur is it like drug dealer or
+is it just like crypto or is it like
+something like they just can't get into?
+>> Well, maybe there's a reason that
+they're not telling you right away,
+>> right?
+>> Because if they and you know what if I
+don't feel like you just like a
+someone's profession
+>> Yeah. or their their job should
+completely define, you know, and set the
+tone for everything else.
+>> That's true.
+>> Especially here in Los Angeles, like so
+much is defined by, you know, one of the
+first questions you always get asked is
+what do you do?
+>> Right. And like people want to cubby
+hole you put you in a pigeon cubby hole
+or pigeon hole you into a certain
+category and say okay well now I'm going
+to say and and attach all these
+different um qualifications
+or expectations based on what you do.
+So, if someone were apprehensive to say
+what they do and they're just an
+entrepreneur initially,
+um I would I would say you should give
+them a chance to see how it evolves.
+>> Yes.
+>> And if it works out, great. Like that's
+okay.
+>> Yeah.
+>> Um but if it starts you start seeing red
+flags,
+>> right?
+>> Then okay. But at some point they're
+going to need to tell you what they do,
+>> right? Then we have a problem. I mean,
+how I mean, I guess the question for you
+is how long would you wait for them to
+tell you what to do on the first date,
+the second date?
+>> Probably the first cuz if you know,
+you're out with someone on a first date
+and they can't tell you what they do for
+a living. That would just be a little
+strange. Unless they say something like
+it's just so complicated, it's very
+technical. Maybe like, you know what I
+mean? It's something not a lot of people
+do and wouldn't be able to comprehend.
+But if you could just give me like a
+little piece of like the industry maybe
+it's in,
+>> you know?
+>> Yeah.
+>> So, it's probably a case by case
+situation. Yeah. No, definitely.
+>> And you also have to as long as it's not
+>> going against your own personal
+integrity.
+>> Exactly.
+>> And it's not illegal.
+>> Cuz you don't want to be swept up in
+something like that.
+>> Um
+>> I think that it's it's kind of
+irrelevant, you know.
+>> Yeah, I agree. So, we'll give them a
+chance.
+>> Yeah,
+>> we'll give them a chance. Okay, we're
+dating. Okay. Um the chemistry is great
+in person. You get along great. great
+connection. Yes.
+>> But they're a horrible texter. Or at
+least they claim to be a horrible
+texter.
+>> They claim to be a horrible texter.
+>> Yeah. Like you'll text them and they
+won't respond for like a day.
+>> Oh yeah. H
+>> I mean you're an Aquarius like me. Yes.
+>> I kind of feel like I'm a bad texter.
+>> Yeah. I mean that's one of those things
+too that you would judge someone based
+on their response of time. Their
+response time. Um, and I that's just
+something that unfortunately we all deal
+with now. If someone's on vacation or
+they're out of the country or their
+phone got lost or stolen or their
+battery something, some kind of a issue
+like that,
+>> yeah,
+>> that's okay. Yeah,
+>> that's to be expected. But if it's a
+repeated behavior,
+>> yes,
+>> that's a problem. when something becomes
+a pattern.
+>> Yes.
+>> That's when you can probably
+>> I mean you can kind of give them a
+chance or two but it's it's also
+dependent upon how patient of a person
+you are. Maybe maybe you're okay with
+that.
+>> Yeah.
+>> Um for me I mean if it depends on also
+the response time.
+>> Yeah.
+>> Like what what's the satisfactory
+response time? I would say within 4
+hours. That's that's like the optimum.
+Optimum. Uh but at least a day if at all
+possible. Um, and if not, then
+maybe you can let it slide and like if
+you're the sender, maybe you should try
+and send them a message um within 48
+hours after that just to see if it's
+something important like you want to
+like say meet say you want to meet up on
+the weekend, you send a message on
+Monday and you don't hear a response and
+then um you know a day or let a day or
+two go by on Wednesday and see if
+there's availability or they're going to
+respond and if they don't even by
+Wednesday, now you're getting closer to
+the weekend where you want to hang out
+again. That's a problem. Like, and so
+they're not respecting your time
+essentially or respecting you initially
+when it comes to that.
+>> So, I I don't think it's something that
+you should continue to entertain.
+>> I agree. I agree. And I think it's
+different when it's a like romantic
+relationship, you know what I mean?
+Versus like maybe if it's something
+else. And I think the problem is why it
+becomes maybe offensive if someone takes
+a long time consistently like we're
+saying if it's a pattern is because
+we're all so chronically online, right?
+Like I know I am. I'm on my phone 24/7.
+>> But I mean I'm guilty of it too. I'm
+I'll sometimes look at a text and like
+think I answered it in my head for some
+reason and then like I forget to answer.
+But I think that's what it is. It's you
+know we all know we're all online,
+right? I mean, if someone doesn't
+respond, but then they're sitting there
+looking at your Instagram stories or
+whatever it is, you know, that's when it
+becomes like, but like you said, if it's
+a pattern,
+>> that's a really good point you just
+mentioned, Alex, like if you see that
+someone
+>> someone's active in another on another
+platform.
+>> Yeah.
+>> And they still haven't bothered to
+respond to you. That that hurts. I think
+that hurts everybody. That hurts
+everyone's feelings. Like, so this was
+important enough to do,
+>> but yet you weren't able to get back to
+me,
+>> right?
+>> Yeah. That's That's not cool.
+>> Yeah, I agree. I agree. And even if it's
+not meant to be like it's not
+intentional on their part, you can't
+help but take it personally sometimes.
+For sure. Now, if you don't see
+anything, and this is always I feel like
+this is a way that we judge this sort of
+thing. If you start seeing there's no
+activity at all
+>> that for any of their then maybe they're
+just truly busy or something has
+occurred that's keeping them. And so,
+you got to give them the benefit of the
+doubt.
+>> Yeah, I agree. I think that's a good
+answer. I think that's a good answer.
+Okay. Love it. Um,
+they only make plans after 9:00 p.m.
+>> Ooh.
+So, they only want to hang out after
+9:00.
+>> Exactly.
+>> And that's an initial like that's
+something that was proposed like that's
+a first.
+>> Yes.
+>> From the beginning.
+>> So, from the very beginning. So, let's
+hang out after 9. Yeah. No, I mean that
+I don't think that that's something it
+it depends on what you're after. If
+you're after what would most likely be
+the outcome that everyone thinks it
+would be in that instance, which is
+>> a booty call, um, probably not.
+>> Yeah.
+>> Um,
+it's just it's look, I always grew up,
+and I think a lot of us did, too, that
+my my parents and grandparents would
+always kind of uh say that as when it
+comes to etiquette, you're not really
+supposed to text or call anyone after
+9:00 p.m.
+>> Yeah.
+um let alone plan an event after 9:00
+p.m. [laughter] Um but if it's something
+like it's um uh I don't know, let's say
+a music release party, an album release
+party, those tend to be later like at
+10:00 p.m.
+>> And that's that's okay. You specify what
+it is, right?
+>> Like if so if you get a message say,
+"Okay, there's this event at this time
+and it's after 9 and you're very clear
+about it and and it's not just like a
+dinner or something. It's like an actual
+event that others are going to." I think
+that you can let slide. But if it's just
+say, "Hey, let's grab something to eat
+or let's hang out after,
+>> you know, like 10 p.m. or 11 p.m."
+>> Probably not. Like, there needs to, if
+you're smart about it, you need to at
+least have some kind of event where you
+know there's others that are attending,
+so there's a purpose for that time.
+>> Otherwise, it just looks like you have
+ulterior motives.
+>> I agree. I agree. So, like depending on
+what it is, if it's like a Okay, if it's
+a Netflix and chill situation, you know
+what you're getting yourself into
+probably, right? But, you know, like you
+said, if it's something cool, like maybe
+it's a show or something, it's late,
+whatever, I think that's acceptable. I
+think you could let that slide. Right.
+Of course.
+>> Right. So, again, that's it's dependent
+upon
+>> we're in a gray zone.
+>> What the venue is.
+>> Yeah. Yeah. Okay.
+>> If it's someone's place, no. If it's an
+actual like hanging out at um a specific
+event at a specific venue, maybe.
+>> Yeah. I think that makes sense. I think
+that's good. Love it. Okay. Um you've
+been going out with them for about a
+month. Huh?
+>> Things are going great. Good chemistry,
+great connection. They seem to be
+aligned with your values and all that,
+but you notice that they still have
+dating apps on their phone.
+>> Ah, and so you've been dating for
+several months.
+>> About a month.
+>> About a month.
+>> About a month.
+>> Well, it depends on if you have had the
+conversation of are you
+are we monogamous,
+>> right? Exclusive.
+>> Exclusive.
+>> Yeah. Right.
+>> That's true.
+And if if you still have that issue or I
+mean you would think that if you are
+Yes. then they shouldn't have that on
+there.
+>> Yeah.
+>> Um but if there conversation hasn't come
+up then maybe you should and that's a
+great pretext for it. Like if you see
+that they have dang apps like hey are
+are we exclusive because I can see on
+your phone that it looks like
+>> maybe we're not.
+>> Yeah.
+>> So
+>> you can use it as an opener.
+>> Exactly. So maybe let's have a a
+discussion about this. And now if if it
+is in fact they are you are exclusive,
+they agree that then okay then that
+needs to be something they need to get
+rid of.
+>> Yeah.
+>> If they keep it then you clearly know
+this is a problem.
+>> Yeah.
+>> And do you really want to continue?
+Um unless they're they have a really
+good reason. Like um for example, when I
+was working in the space, I would have
+to use all the dating apps.
+>> Oh, really?
+>> Yeah. I would have to Well, especially
+not all of them, but the ones that we
+were looking to do deals with. Yes.
+Because how else would you know a
+product? Well, unless you have have
+played with it and work with it and and
+know what the features are like. Now,
+would I use my own name? No. Would I use
+my own picture? No. I was a completely
+different
+>> That's so funny
+>> because I just wanted to sign up and and
+do it. But in this case, that sounds um
+like it's definitely worth a
+conversation. Um and if not, then
+>> yeah, it's probably time to
+>> well to consider where you stand cuz if
+it's
+>> if you're not exclusive, then you're
+probably not the only one that they're
+doing this to.
+>> Correct. I think so, too. I think that's
+definitely true. So, okay. To your point
+that you used to be on these apps
+because you had you were working with
+the company. Do we ever match then with
+people on these apps who are just simply
+like catfish? catfishes for the company.
+>> Uh well, in this case, uh I think that
+there are times where that does happen.
+Um
+>> that's so funny.
+>> But then it's up to I wouldn't say
+catfish. That's probably in this case,
+it's just like you match, but like you
+don't go any further than maybe just a
+couple platitudes like
+>> you know, and that and that wouldn't
+even be that's that's kind of it. Now I
+catfish is something where it's like
+more pronounced and drawn out and
+>> and more intentional
+>> intentional and also like you're you're
+planning um be going beyond just
+communicating a little bit on on an app
+like you're planning to either meet up,
+right?
+>> Um or you're planning on doing stuff
+like for example going to an event or in
+worst the worst case scenario is you're
+taken advantage of financially,
+physically, all these. So like that's
+>> craziness. Yeah,
+>> craziness. Okay. And on the other side
+of that question, in terms of like them
+still having apps on their phone,
+>> Mhm.
+>> date or ghost, if someone after one date
+says they're going to delete all their
+apps
+>> after one date.
+>> After one date,
+>> they should you continue dating them or
+ghost them?
+>> Like they're like, "Oh my gosh, I really
+like you." Like, I'm getting rid of all
+my dating apps.
+>> Well, how do you feel about it then?
+>> I mean, how do you feel about this
+person?
+>> That's a good point. That is a good
+point because someone did this to me
+once and
+>> if you Yeah. And
+>> I didn't like them so it kind of gave me
+the egg.
+>> Yeah. Yeah. [laughter] That's now Now
+that's borderline obsession, right?
+>> So probably that was a good idea to not
+continue,
+>> right? Yeah. I But I think you're right.
+I think it depends how you feel about
+the person because I'm sure if I liked
+this person, I'd be like, "Oh my gosh,
+>> that's that's so amazing."
+>> Yeah. I mean, that's quite a that's
+quite a revelation though after the
+first date for someone to say that
+they're just going to completely like
+you're now the center of their universe,
+>> right?
+>> That's a little much that's too much too
+soon.
+>> Way too much too soon. And especially,
+you understand as an Aquarius, I keep
+going back to this, but I really do
+believe like I am truly like an
+Aquarius. Like when you see it like at
+the core, that's what I am. That's too
+much for me.
+>> Yeah. you know,
+>> you have to leave a little bit of
+mystery and there there has to be um you
+know, something worth continuing the
+relationship for and the courtship. I
+mean, that's there's a whole reason why.
+>> So, for it to just be like, you know, an
+end all be all right after that, that's
+that's pretty heavy,
+>> right?
+>> Yeah. And I don't think everybody's
+really most people are not going to be
+okay with that,
+>> right? I think so, too. I think so, too.
+Oh my gosh. Well, that was our game.
+Thank you so much. So,
+>> what do I win? No, it's all right.
+>> You know what? You you educated the
+people.
+>> And you've been married a while, so I
+feel like you can you can give advice on
+dating and relationships.
+>> 12 years. Yes.
+>> But you guys were have known each other
+for what, like 20 years?
+>> Almost. Yes. Yeah.
+>> That's crazy.
+>> Yeah. So, we had about what an 8year
+courtship. Sevenyear.
+>> Wow.
+>> More than that. Yeah. Almost. We'll see.
+What's 12 years plus eight? So, yeah.
+Eight. I love that. I love that. That's
+honestly though, that's longer than most
+married people. So,
+>> I don't know. I mean, look, I come from
+a family that um unfortunately we both
+do.
+>> Yeah.
+>> There where our our parents and aunts
+and uncles and um they've been married
+for decades and decades and decades for
+I think I may have told you, but my aunt
+and uncle, they were married for um 75
+years.
+>> Wow. and [music] they just recently
+passed away. My uncle was 99, my aunt
+was 96. So, they were together for many,
+many years.
+>> Yeah.
+>> Um my um in-laws have just celebrated
+their golden wedding anniversary or 50
+years.
+>> Wow.
+>> Um we went to their 50th um anniversary,
+had a nice dinner in in Dallas, uh which
+is where we grew up and where we're
+from. And so, yeah, 50 years.
+>> That's a long time.
+>> Yeah. And so I mean it's something that
+you know if you know that this is the
+right person and you both love each
+other and you like each other's company
+and
+>> um you you see that like you make each
+other better then there's no reason not
+to. And
+>> and it's really tough. I mean especially
+in this environment like like we met in
+you know like I said almost 20 years ago
+well before you know dating apps were
+like the go-to. But that being said, I
+mean, there's countless stories of
+people that, you know, meet their
+significant other and that becomes their
+life partner, their spouse.
+>> Um, and we have friends that have done
+that, too. And,
+>> you know, but it's it's how you go into
+it. It's like anything. What's your
+intention? You have to set your It's
+like you have to set your intentions
+like it's uh like it's yoga or
+something. You need to know that okay,
+if this is what my intention is going to
+be,
+>> uh then this is what I expect to get out
+of it.
+>> Exactly. you know, and and I've heard,
+and I'm sure you have too, the the gamut
+of people who use it for just um hookups
+and then people who actually use it for
+real relationships.
+>> Right. Right. Yeah. Well, okay. So,
+we're going to get into that. The
+algorithm of love, the algorithm of
+love, how modern technology has played
+such a crucial role in dating, how it's
+evolved over time. So, like I mentioned
+earlier, you've worked with some of the
+biggest companies that we all know of
+and all use when it comes to dating
+technology, right?
+>> Right.
+>> So, do you think and you've worked you
+work a lot with AI as well,
+>> your current venture is a lot to do with
+AI. So, do you think that someone can
+find their perfect match through like AI
+technology and like the technology that
+these apps have that kind of like like I
+know with apps I've used before, they
+use AI now, some of them to basically
+find people that match with you. Do you
+think like it could be that simple like
+simply putting in things about yourself,
+finding a perfect match, or is it more
+complex than that?
+>> I think it's more complex than that and
+I I'll tell you this. So I think that
+the biggest limitation that AI has is it
+does not have emotion,
+>> right?
+>> And and love is all about emotion. And I
+say that because there was um a art
+installation in the Seoul airport uh
+that was AI generated. So the there were
+these massive talking heads and I can
+send you the video that you can zuk if
+you want to include it. But it was
+basically these heads were just like you
+would go up and you'd ask a question and
+they would use AI to formulate the
+answer and then physically speak it out.
+>> Yeah.
+>> So I asked a question about um it was
+something about how you feel about X. I
+can't remember what the question was
+>> but it basically just said I wish I
+could feel emotion but I but I I feel
+imprisoned or something that I can't do
+that. I thought wow that's very bleak
+and dark. I did not expect that that
+would be the answer that AI would say I
+wish I could feel emotion
+>> and instead I I feel like imprisoned
+like this was like this was dark like I
+I don't know what model they were using
+uh it certainly wasn't chat GPT
+>> maybe but it was there's so many
+different models out there
+>> so like at the very core of of what you
+know dating apps are and what love is is
+not something that it's because it's an
+emot question. I think that really um
+laid out what AI is all about when it
+comes to this. It's not going to be able
+to do that because it simply is
+artificial,
+>> right? And I think that's a key word
+that we forget AI, it's artificial,
+right? Intelligence. So, that's really
+interesting. So, you know, and I've seen
+too, I don't know if you've seen this,
+and I'm not really on the apps, but I go
+on just to like see like how they work
+and that kind of thing. And cuz I find
+it so interesting. I really do. Like I
+feel like the evolution of dating as a
+whole and how I feel like people don't
+feel like they can even meet someone in
+person anymore. Right.
+>> So I've noticed some apps even have now
+an AI where you when you message people
+on it. So like AI can write the message
+for you.
+>> Yes. This has been a big problem. Yeah.
+>> We see this. I mean this is happening
+across all apps where um they are using
+it to generate responses. In fact, you
+could Reddit is probably the best
+resource if you want to read accounts of
+>> I love a Reddit rabbit hole, right?
+[laughter]
+>> Oh, yeah. There's a lot of them,
+especially when it comes to this. It's
+like I can remember just um last week
+there was a a post about um someone who
+was being led on um it was a woman who
+was being led on by a guy and she
+eventually found out that he was using
+AI to communicate like
+>> in the entirety with her like through
+this conversation through this app. Um
+and she thought so much of him and then
+you know and this is the other thing
+when you know the words that you
+communicate like via text or DMs
+>> it's AI can't help you speak them in
+person. So when she finally did meet
+this guy in person,
+>> he was not nearly as
+>> um articulate or uh the words are as
+flowery. Um and he was he could barely
+speak. Like I mean, you know, he's a
+very antisocial guy. But um
+>> and some people are naturally like that.
+They're just writers or they just uh
+like to hide behind, you know, screen
+for something. Keyboard warriors as they
+were. But you should be able to match
+that to to some degree. Like if you see
+the way someone's communicating with you
+um and now you're going to meet them in
+person and that doesn't match up, that's
+a problem.
+>> Yeah.
+>> So that that so again it goes back to in
+real life. Like I still feel like
+>> the best thing that one can do whether
+that be dating, whether that be
+entertainment, it doesn't matter. It
+needs to be in real life for it to
+really hit home because you're we're all
+human and we need to experience.
+>> Yeah. and you know the
+capabilities for AI and for dating apps
+and all this is just through your phone
+and that's just a tool to get you
+>> yes
+>> to meeting another person
+>> um or to be in a like-minded environment
+that you're sharing experiences with
+other people at events, you know,
+concerts, whatever it may be. Like
+that's that's it's just a tool to get
+you there.
+>> Right. Right.
+>> Yeah. It almost sounds like she was like
+emotionally catfished in a sense, right?
+Yes. right? Which is something we don't
+think about,
+>> right? And it's kind of a a cheat code
+for for people to use this not just for
+um there was even another red article,
+this was just the other day where there
+was a new an entire newspaper article
+was was was literally created through
+chat GPT and and they published it in
+the newspaper. I think it was in
+Pakistan of all but it was an English
+newspaper. Yeah. It was about I was an
+automotive article and at the end the
+last uh paragraph was do you want me to
+create this uh with more bold headlines
+and snappy infographics just just say
+the word question mark. So like this was
+literally like at the end of the
+newspaper article [laughter] that that
+was published.
+>> So people are relying upon this in such
+a way that it's just
+>> uh laziness like the the convenience
+side of things is now becoming even
+worse.
+>> Yeah. Yeah, we all appreciate
+convenience, but now it's gotten to the
+point where, and there's been research
+that's proven this, that more and more
+use of AI, especially when it comes to
+chat bots and this chat interface, it
+actually is causing um intelligence to
+diminish
+>> among users
+>> because now you're actually literally
+having them think for you and all you're
+doing is just cutting and pasting
+>> more or less in a lot of things. So,
+>> it's kind of scary.
+>> It is. It's It's detrimental. It really
+is. And I absolutely see where when you
+have like almost like AI abuse in a
+sense, right? Like addiction to it like
+it you lose that just part of your brain
+that that critical thinking part of your
+brain, right? I mean, I feel like there
+was a point where like I was using it a
+lot and I was like, "Okay, I have to
+stop using this so much." Because it
+becomes convenient, right? Yes.
+>> And it also like when you're busy or
+you're just have stuff going on, it's
+easy to just like, "Okay, help me write
+this." But you have to be careful.
+>> Yeah, you do. It's the the reliance upon
+convenience is is really you probably
+shouldn't have even had it in the first
+place. One of those things
+>> totally
+>> like it's if you if something is so easy
+to come by then is it really even worth
+having.
+>> Yeah, I agree.
+>> Probably not.
+>> I agree. I know we have everything at
+our fingertips. I feel like we have
+everything at our fingertips and there's
+so many ways to meet people, right? But
+do you feel like in a sense even with
+everything at our fingertips, so much
+technology,
+>> I feel like everyone's very lonely in a
+way
+>> they still are. Yes. So great point that
+that above all else is the number one
+issue that all of these dating apps
+have, all the social media apps have.
+And some have said it, some have not.
+But the the ones that have said it are
+actually like looking in the mirror and
+realizing this is the reality that they
+all are facing and that no one can
+really be able to solve no one's able to
+solve this issue like
+>> but they're trying to cater to that.
+>> Yeah.
+>> And so
+a lot of ways it's insulting people's
+intelligence like the way that they're
+trying to
+>> distract them or to capture their time
+and their money. Um, and and it's sort
+of like an endless cycle. Um, do they
+really want because like you know the
+one thing that I always love to go back
+to is Hinge has always been said it's
+the app that's designed to be deleted,
+>> right?
+>> But is that really true?
+>> Well, so that was my next question for
+you actually. Are these apps designed to
+actually help people find the one or are
+they designed to just keep us swiping? I
+think the mission statement is differs
+from the reality,
+>> right?
+>> The mission statement, these are all
+businesses,
+>> right?
+>> These are not charities. [laughter]
+>> So, I hope that answers the question
+because
+>> they all a lot of these are mo public
+companies, private companies. The public
+companies are under much greater
+pressure because they have to report um
+publicly constantly all the time. um
+they have shareholder meetings, they
+have quarterly earning calls, right? Um
+they have a stock price that's being
+monitored um during trading hours. So
+they are beholden to shareholders and
+investors
+>> to generate revenue and above all
+profit. So um the mission statement is
+is one thing. Um but how are you going
+to go about getting that
+>> right? as long as it can make money.
+Sure.
+>> Yeah.
+>> Right. So, like that's that's something
+that um you know, but this also it's not
+just the dating apps that are um that
+are part of this business model. This is
+a larger issue uh that is going on in
+many different facets of the life that
+we are now living in in the past I would
+say this century.
+>> Yeah. It's less about ownership and more
+about uh subscriptionbased renting
+temporary because you never actually
+physically own something. It used to be,
+for example, I used to have a a massive
+compact disc collection.
+>> Um, that, you know, there were singles,
+they would before MP3s, before iTunes,
+before Spotify,
+>> there were like an Apple Music, they
+were like literally like physical media,
+>> like compact discs, and so audio was on
+CDs. Before that, they were on
+cassettes. Before that, they were on uh,
+you know, vinyl records,
+>> right?
+>> So, you would physically own this. And
+once you own it, you would have like the
+cover art and the album art. And this is
+not anything new that I'm talking about,
+right? This has been very common
+discourse right now.
+>> But the fact of the matter is like this
+is something that is not a subscription
+based model because once you buy this
+thing, like this particular album, you
+own it outright. It's yours to do
+whatever you want with, you know, as
+long as it's personal use.
+>> So
+>> you don't have to keep paying a
+subscription to listen to that song or
+to listen to that album, right? You
+don't have to keep paying a monthly fee
+for that. That's a that's ridiculous
+from a consumer perspective that I can't
+own something outright completely and
+it's it's one purchase and it's over.
+No, that's that's not the way that so
+many things are going. And these apps
+are
+>> transcend that, right? They transcend it
+in a way because it's not just a monthly
+subscription.
+>> Yeah.
+>> They're also microtransactions.
+And so that is where you literally top
+up your credit and your account so that
+you can buy
+>> virtual gifts for someone. This is
+especially uh prevalent in live
+streaming. Twitch does this, Tik Tok
+live does this um
+>> and to a large degree only fans does
+this. So, it's like you're essentially
+now going even beyond a subscription and
+you're buying um things that are uh
+literally like virtual gifts uh that are
+in the moments that are happening
+>> uh in real time.
+>> It's crazy.
+>> It's like a slot machine.
+>> Yes.
+>> So, there's a reason why you have to
+pull down your feed to refresh. It's
+just like pulling the lever on a slot
+machine.
+>> Wow.
+>> And this has been also documented
+>> like Yeah, you can look at this up.
+There's many, many different cases of
+this. Um, so yeah.
+>> Wow.
+>> You didn't know that, huh?
+>> No. I feel like I'm taking a crash
+course right now in like
+>> technology. I love it.
+>> Well, listen, gambling, gaming, it's
+like gambling's not way gaming has
+become now especially so fascinating in
+this space.
+>> Yeah.
+>> And that's what dating is. It's a game.
+>> That's so true. That's a great way to
+put it. It is. It's a game.
+>> So many things are gamified, though.
+Like even LinkedIn is a game. Um so many
+so much has been commoditized and um
+commodified and so things are gamified.
+Everything is gamified
+>> whether we like it or not. Yeah.
+>> And it's kind of nice to get away from
+that. I think there's going to be more
+and more of that getting away from. But
+when it comes to online like everything
+is on your phone. Everything is pretty
+much more or less the user experience
+has to be gamified. Otherwise the
+algorithm like it's you're you're going
+to lose interest. So it needs to learn
+from you. It needs to learn your
+behavior like when you're on, how much
+time you spend on it, how much money you
+spend on it.
+>> Um how many like interactions you have?
+>> Uh and all of this is fed into the
+algorithm that then will spit out
+>> personalized
+content for you based on your behavior,
+>> right? and to in order to really I mean
+to increase your your activity
+um which is visav revenue.
+>> So we're just little hamsters in a
+hamster wheel essentially.
+>> Users there's a reason why everyone's
+called a user, right?
+>> Yeah. I mean it's not a word that like
+people in we enjoy to hear but like it
+is something that is the truth like and
+what's another user a drug user?
+>> There you go.
+>> So like this is very much like a drug.
+It can be uh an addiction and for a lot
+of people it is an addiction.
+>> Well, I think that's why you see and
+hear about so often like people that get
+get addicted to video games, right? Yes.
+It's the same thing. So, so do you think
+dating is a game we can win at? I mean,
+can people use apps as a tool or does it
+become that you become a user, a hamster
+going around and around in their wheel?
+Yeah, I I think there's a clear line of
+those who are have it figured out.
+>> Yeah.
+>> I I know I would have conversations with
+some that would uh they would develop a
+system that would literally do all the
+swipes for them.
+>> Yeah.
+>> And they would just deliver the matches
+so they wouldn't even have to bother
+spending time on it. They would set up a
+bot to do it all for them.
+>> Wow.
+>> Yeah. So that they wouldn't have to
+worry. And then to they would gify even
+further and then they would have two
+dates in a day. They would have uh
+someone on the day shift and someone on
+the night shift. So they go on a date
+with someone say, "Oh, it was really
+fun. I had a great time, but got to go."
+And now if they made it past the day
+shift, the day dayshift person goes to
+the night shift now.
+>> Oh my gosh. So they have a system down.
+>> They have a system down. Yes.
+>> Wow. Interesting.
+>> So this is very like this is and this is
+just one example. There's so many
+different examples of this that that uh
+that because it's gamified, people are
+like, "Okay, well I'm going to be able
+to I'm going to play this game and I'm
+going to try and win or at least, you
+know, score high. Right.
+>> So, it depends on on how your your
+feeling is like well your intentions
+again. What are your intentions from
+this?
+>> Right.
+>> Um I I still think that the best way is
+in real life.
+>> I do too. Very organic.
+>> Yeah. If you find um whether it be a
+club or whether it be a gym or
+something, it it has to be where people
+are already naturally physically
+congregating.
+>> Yeah. and you can communicate beyond
+just your phone. If it's phone driven,
+then that's going to be an issue.
+>> Yeah.
+>> Um I think it's long as it's a tool to
+get you there, that's great. But if
+you're just using it solely for that
+purpose, that's where it's going to be a
+problem. Yeah.
+>> And you rely upon it too much. You
+shouldn't,
+>> right? Like anything in life, right?
+Moderation with everything is the way to
+go. Yeah. I mean, if nothing else, like
+I think it's good to see that it's I I
+kind of tend to I tend to agree with
+those that when I was like working for
+um within the online dating industry in
+these companies that um I would see that
+it does make sense. I we would look at
+profiles sometimes and see, okay, who's
+getting the most matches and then it's
+no surprise that it's generally the ones
+that are attractive and that look far
+younger than they actually are.
+>> Yeah. Nice little face turn action.
+Yeah, this is this is nothing new
+though, right? This is not rocket
+science. Everyone knows this already.
+So,
+>> yeah. So, let me ask you to that point.
+So, because you were behind the scenes
+on some of these apps, do you do you
+believe that like gender plays a role at
+all in terms of like
+>> who's getting
+matched with and not matched with the
+most? or like do you think that there
+are different intentions on these apps
+from what you've seen of why a male
+versus a female's on there or no?
+>> Absolutely. Yeah.
+>> Yeah.
+>> I mean
+>> I mean that might sound stereotypical
+because I in my head I'm like
+>> oh yeah it is.
+>> You know you feel like a guy's on there
+because it's easy, it's convenient,
+>> and and and he just wants to hook up,
+>> right?
+>> Um and female generally female users are
+on there because they want a
+relationship.
+>> Yeah. the majority. The majority, there
+are those that want to hook up as well.
+>> Um, but the one thing that both have in
+common is that they both are lonely and
+they both want to have
+>> some kind of
+>> um connection.
+>> Yeah, I think it's a really good way to
+put it. I think it's a really good way
+to put it. Do you think from your
+experience because I know you've worked
+within different apps and platforms. Do
+you think there's a specific medium in
+terms of like which app or which um like
+which capabilities the app has that work
+better than others? Like we were talking
+about there was an app that had to do
+with live streaming and dating, right?
+There's some that where the girl
+messages the guy first, whatever it is.
+Do you think there's certain
+capabilities that work better than
+others when it comes to these apps?
+>> Oh, yeah. Absolutely. I mean, like, and
+we could say it, maybe everybody knows,
+like Bumble is one where the the girl
+makes the first move. Um, and so that's
+their gimmick. That's their their
+mantra. That's what sets them apart.
+>> Um, you know, you look at uh an app like
+The League, they actually have live
+streaming embedded into it. They were
+one of the first to really do that, and
+I think they're kind of the biggest one
+to to use to utilize that. Um, and they
+were sort of like the elite kind of an
+app first. Then the you know and look
+look at Rya and now that's even more so
+like you're you're stepping up the
+elitist sort of um social status um
+because it's harder and harder to get
+into therefore people want it more and
+more.
+>> Yeah.
+>> Um I think that having those gatekeepers
+that's kind of that that makes it
+special like not anyone can join. So, I
+think that that that just having that
+premise and having that uh barrier is
+going to be helpful for an app um to to
+be successful and to be popular.
+>> Yeah.
+>> And for it to attract the right kind of
+people. Certainly, like for example, the
+people that are on Ry are going to be
+persistent.
+>> Yeah.
+>> Because they know that there's a waiting
+list. They know that it's uh very
+selective supposedly
+>> and so [laughter] everyone that's on
+there I is going to automatically know
+these are the things that there are
+already certain qualifications that are
+met,
+>> right?
+>> Okay. So you have that expectation going
+in. I think that helps that commonality
+where people can feel like okay um I
+already know this what to expect in this
+way and so I'm this isn't going to be a
+surprise. Yeah,
+>> if you look at the other apps like that
+have been around for a long time, I
+think they're just too generalized and
+they're it's like shopping at for
+example at um you know Walmart or um you
+know um Ralphs or like a Kroger like
+grocery store
+>> or specializing in going to a Trader
+Joe's. you know, it's much smaller
+footprint, um, more niche products, but
+still a good value. Or you just have
+kind of plain generic anything. This is
+available nationwide, just has
+different, you know, names maybe
+associated with it. It's the same thing
+with these dating apps. So
+>> like the pool of people that you're
+going to now jump into, do you want to
+be It's like a water park, too. It's
+like, do you want to be in a massive
+water park with everybody with families?
+Well, you know, with with people that
+are all like of all walks of life of
+every Or do you want to have like a
+really private pool uh at a rooftop in
+some fivestar hotel? I don't know. And
+>> that's a good way to put it.
+>> It's a Yeah, cuz it is a truly a pool,
+right, that you're that you're getting
+into a dating pool.
+>> I love that. That's so true. That's so
+true. I think that's a good way to put
+it because listen, I'm not a huge fan of
+water parks. I'm not going to lie.
+>> They're dirty.
+>> They're dirty. You got to take
+antibiotics probably after, right?
+>> Yeah. And people don't look their best.
+And um they can be fun. Look, they can
+be fun, [laughter]
+>> but they're they're not something that
+you would seek out unless you know
+>> there's no other option to to stay cool
+and and and beat the heat. And a lot of
+places, like a lot of people, like same
+thing with apps, like there's not a
+whole lot of options. They can't get
+into these other apps that maybe they
+they
+>> have heard about. Yeah. And so they have
+no choice but to stay on, you know,
+Tinder, for example.
+>> Yep. Yep. I agree. I agree. So, as
+someone that's been behind the scenes of
+these apps, been on there, you know,
+seeing like how things work and
+everything, do you think there are
+certain red flags or green flags that
+people should look out for who are
+trying to date intentionally, trying to
+find a husband or wife, that kind of
+thing on these apps? H
+I I mean from my experience it's like
+you would have to make sure that who you
+are who connecting with
+>> Yeah.
+>> Um
+uh like red flags are I think are kind
+of common sense first of all like
+>> I think so too. Usually
+>> like you would know like if someone's
+trying to you know rush to meet up
+that's a red flag. If someone's trying
+to talk about money and Bitcoin and
+trans I mean that's a red flag. They're
+just trying to extract money from you.
+um any kind of sense of urgency uh
+anytime, whether that be, you know,
+dating apps or something else is
+probably a red flag. So like in other
+words, we got to meet now or we got to
+meet can you meet within the next day or
+um I'm only in town for 2 days. Like
+that should tell you something right
+there. Yeah.
+>> Um there there there should not be such
+a pronounced sense of urgency. That
+that's probably one of the biggest red
+flags. And no matter what, you just have
+to be very very cautious. Um, you
+certainly don't want someone to uh try
+and say have you do anything that you're
+uncomfortable with doing. And and you
+should also trust your gut. You should
+also like really trust
+>> your instincts. And if you feel like
+something is off at all, like you
+probably should not pursue that.
+>> Yeah.
+>> Um those those are I mean and what you
+had mentioned earlier,
+>> you don't want to just go and hang out
+with this person immediately. you should
+at least have some checks and balances
+and vetting and familiarity.
+But red flags most of them are common
+sense like you would know
+>> not to proceed further with something if
+you're talking with someone. But those
+are some things to watch out for. Um,
+but green flags are
+>> um
+>> when there's not a rush, when someone's
+taking their time, um, when someone
+seems like it their answers are genuine
+and authentic and not chat GBT generated
+[laughter and gasps]
+>> and they want to uh have a um, you know,
+the right kind of meetup at the right
+time
+>> that's during daylight hours probably.
+That's always a plus
+>> to an extent at least the first one. I
+mean you got to do what makes you feel
+comfortable because you know it's it's
+something that you are now going to you
+can always progress but that first
+interaction
+>> is going to set the tone for the rest of
+them and then
+>> so true you set the standard from the
+very beginning. I agree with that. I
+think that's a great point. A really
+great point. Do you think people can
+still meet in real life? Do you think
+it's possible?
+>> Yeah, absolutely.
+>> I do I do. Where do you think
+>> where uh it can happen anywhere?
+>> That's true. It could when we're walking
+out right now, right? You know,
+>> it can happen anywhere. It's just a
+matter. It Yeah, exactly. It can happen
+in your just your normal routine. I you
+have But this is the thing. You have to
+be here. This is another thing I'm going
+to call out like if you really do want
+this to happen, you have to make
+yourself uh available and open to that
+interaction.
+>> I agree. So with certain, you know,
+instances, like for example, if you're
+walking around with headphones on,
+that's a clear sign to most people
+>> that you should, they don't want to
+talk. You don't want to talk to them and
+they don't want to talk to you.
+>> Not making eye contact. In some places
+that like Los Angeles, that's common.
+>> But in other places, people just do make
+eye contact. So these are these subtle
+little initial interactions. But if you
+close yourself off, like you you have
+AirPods in or you have headphones on,
+you're automatically sending a signal,
+don't talk to me.
+>> Yeah, that's very true.
+>> Now, there are going to be those that
+see that and they're still going to talk
+to you. [laughter]
+>> And now that's a question of they're
+really trying too hard, probably.
+>> Um, so you have to leave yourself
+literally open if you want to have
+engagement. And by the way, also for
+safety, too. I got I I'm gonna go back
+to those headphones. I see so many
+people here in LA that have them on that
+are walking around outside or riding a
+bike, right? And it's like you don't
+know. You're not first of all aware of
+your environment
+>> at all.
+>> So, it's not just a matter of getting an
+interaction from someone maybe you want
+to potentially date, but how about just
+prevent yourself from being a victim of
+crime or a victim of an accident? So
+anyway, not only go off on a tangent,
+but like you just have to basically like
+really allow yourself to
+>> use your powers of observation in your
+daily routine, in your daily life, and
+start there. Um the other um I would say
+the other venues are really good for
+that are um you know, obviously it
+should be kind of during the daytime.
+>> Yeah. If it's at night, it's going to be
+hard to really see who they are
+physically
+>> and then also maybe have a conversation.
+So, I think that any kind of day sort of
+activity is is probably good start and
+then you can progress from there.
+>> Yeah, I think that's good advice. I
+think that's very good advice. And you
+know, it's funny. It's funny. We talk
+about dating apps and the thing is
+because in my mind I'm like, is there
+certain people that use dating apps
+versus people who don't? But then I'm
+like I'm on Riot and even the league and
+I see people on there and I'm like why
+are they on here? like people that are
+wellknown or in the entertainment
+industry or whatever it is everyone
+obviously is seeking connection right so
+I don't think it is you know something
+specific to you know just any like just
+it's for everyone like everyone is are
+on these dating apps now you know what I
+mean so I find it so interesting but I
+kind of want to talk about you and your
+personal life and how you met your wife
+because you guys have been together so
+long I love that so
+>> you guys at well you were at Radio
+Disney, right?
+>> So I was working at the Walt Disney
+Company. That's what where I started my
+career.
+>> Yeah.
+>> Uh I was at u at that time um Disney
+owned uh all of the ABC they still own
+the ABC television network.
+>> Um but they also owned ABC radio
+stations. Yeah. And so I was working at
+um a radio station in in Dallas, Texas.
+Um that was sort of my first big break
+within the company too. and it was part
+of a a larger um portfolio of stations
+in Dallas Fort Worth market which I
+think is like number five. And so they
+had you know um a news talk station,
+they had two country stations, they had
+radio Disney um and so I was working at
+that time at the country station and um
+my wife was working for um Radio Disney
+now the affiliate because there were so
+many affiliates wasn't the network. So
+anyway, long story short, I saw her um
+>> picture on her cubicle before she was
+even there. I love this story. Surfing.
+[laughter]
+>> Well, because you know, like you're
+walking by people and it's an open pit
+area, so it's like you can't help but
+just like look like there's someone that
+literally posted a picture on their
+cabinet like but I just thought, you
+know, she looks really attractive. Um if
+that's the person that's sitting there,
+I want to meet her. Um, and so, you
+know, the next day, uh, I walked over
+and saw her in the copy room with all
+these copies spread out. She was an
+intern at the time.
+>> Um, and I just was out of university, so
+um, you know, I that's where Oh, yeah.
+She had um a hat, a bucket hat on, and
+like had was like spread all spread out
+all these uh copies. And so, I think I
+my opening line was um, what's up,
+Blossom? Because if you remember the
+show u with Mayalik, she would always
+wear these stupid hats.
+>> Um and so I think she caught the
+reference.
+>> Um didn't she just host Jeopardy for a
+minute or something? I think so.
+>> Did she? Yeah, maybe you're right.
+>> Anyway, so it was something like that.
+Anyway, so she caught the reference. It
+was sort of a as they call a neg like a
+negative remark that you would make um
+in hopes of
+>> deflating their ego but also trying to
+win over their confidence. Like in other
+words, I'm going to rather than give you
+a compliment, I'm going to find
+something a little like um you know,
+critical about you and make that remark
+and see how you react. It's sort of like
+a slight insult. And this is exactly
+what I did. And it works for some
+people.
+>> See, dating is a game, right?
+>> Right. I mean, it it worked for me, but
+you know, it was it was in good fun. So,
+yeah, after that, we Yeah, we've been
+together for
+>> almost two decades.
+>> I love that. And I said this to you the
+other day. It's the perfect example of
+if he wanted to, he would. Right. When
+it's the right person, a man will pursue
+it.
+>> I mean, I think that like everyone takes
+everything too seriously. Uh
+>> I agree.
+>> Really like this is not something that
+you if it doesn't work with this person,
+then it's meant to be. I think
+everything happens for a reason.
+>> You can find someone else. Um you should
+leave yourself open.
+is expecting
+your
+house or your
+>> to experience these things to meet these
+people. Um it's not going to happen
+>> inside with you on your couch on on your
+phone and they're not going to come to
+you like um a food delivery. It's just
+not gonna happen to a date. No.
+>> Sorry people. Right. No. Right. Although
+[laughter]
+although now that you said that,
+>> oh my
+>> um I actually believe that if the the
+path that we're continuing on Yeah.
+>> Um especially when it comes to dating
+apps,
+>> they would like nothing more than to do
+just that.
+>> I think you're right. I think you're
+right. Do you think that's what's next?
+What do you think is next dating and
+technology?
+>> Well, I I mean I think that if we
+continue on the path that we're on
+>> Yeah. And it's um it's definitely
+it wouldn't surprise me.
+>> Yeah.
+>> That that's what's next. In other words,
+that um you know, this is something
+where uh you can dating apps are going
+to because at the end of the day, so
+much of it is um basically selling sex.
+>> True. It's it's not just a matter of a
+connection or finding a relationship or
+a potential spouse, girlfriend,
+boyfriend. A big part of it is that. So,
+if you're doing that,
+>> what is the one obstacle that's really
+preventing you from cashing in on that?
+Well, the fact that it is not legalized
+>> right
+>> now. Once that becomes legalized or more
+mainstream, shall we say,
+>> uh then they are going to they're
+salivating over this, they now they will
+never say that. Um but and and it's not
+something I've been personally
+witnessed, you know, in my career, but
+uh I I can you can do the math like you
+can see
+>> like that this would be uh a huge boon
+for them.
+>> Yeah.
+>> And it might just be a waiting game.
+like this is kind of like just like so
+many like they're just waiting for
+something to um be either decriminalized
+or whatever you like the same thing with
+the progression of of cannabis and THC.
+What's next right now? It's um
+psilocybin
+>> mushrooms. And so when these things
+start changing then um regulations and
+laws start um loosening in their favor
+and then we have a completely different
+um I mean just look at the revenue
+that's been generated from for example
+Only Fans from this from this aspect.
+craziness.
+>> craziness.
+>> So, I mean, that's that's not the most,
+you know, savory conversation, but I
+mean, it is something that I I did want
+to at least touch on because um it's a
+big part of this.
+>> Yeah.
+>> Um I mean, I I can remember like even
+one of my um older friends uh who would
+say, and he's a serial entrepreneur um
+very good investor, runs great
+companies. Um, but years ago he told me
+that he loved Tik Tok so much because a
+it makes me a better cook.
+>> Oh my god.
+>> And B, I get to look at hot girls. So
+>> yeah,
+>> you know, there there is something to be
+said for these these apps, these
+platforms.
+>> Yeah.
+>> Um, but above all else, it is loneliness
+that that's what it's trying to cure.
+>> I think you're right. And I think it's
+actually creating more though to an
+extent. It's not useful.
+>> No, I do agree with you. It's it's it's
+not curing it. It's It's really just a
+void that's being filled.
+>> Yes. A temporary void. I think so, too.
+I think so, too. And I think we talked
+about the other day um how, you know,
+like we said, you know, dating apps, it
+can be very superficial because you're
+swiping because, you know, based on
+looks, appearance, that whole thing when
+in real life, like we've been saying,
+it's more organic because, you know, you
+are, you know, talking with someone
+because you feel the chemistry in person
+and there's the body language and the
+connection, right? So let me to that
+point. Do you think you and your wife
+would have match matched with each other
+on an app if it was you were dating in
+2025 or on apps in 2025
+>> back I mean if we were that age then
+like or our current age today?
+>> Well
+>> that's a tough one. I don't know. It's
+hard for me to to to take something that
+didn't exist back then and then at the
+age we were and fast forward to to where
+we are today. But
+>> do you think we would have matched back
+then? Probably not. No.
+>> But you would have met somehow cuz
+>> Yeah, but I don't think we would have
+matched like at that if there like if
+everything were the same and No, I don't
+think so. I don't think so. Interesting.
+No, because uh No, I just don't. And
+that's that's what's so great about like
+>> there's no substitute for in real life
+because
+>> how how is it fair that um an algorithm
+decides who you are going to see and who
+you are going to date with and like it
+should not it should never be their
+decision. Like you're basically giving
+them power to do that,
+>> right? I mean, and you're taking that
+they're taking the power away from you.
+Like remember that like
+>> you're for the sake of convenience,
+you're trading your own power and
+selection
+for an app to do it for you.
+>> Yeah, it's really crazy. It's kind of
+scary, but Okay. And also, I wanted you
+to touch on a little bit your current
+your current company that you're working
+on. And I know it's AI technology,
+right?
+>> Yeah. So, we're creating virtual
+influencers and digital doubles. And
+this is something that we've been doing
+now for over a year. Um, essentially,
+it's the way that you look at um
+influencers today. They are for brand
+from a brand perspective, from a company
+perspective, a lot of them tend to be
+very expensive. They tend to be um very
+unreliable, very controversial. Um, and
+so brands are like, we want to have more
+power and control over the messaging. So
+if you can take something that is
+completely created and you can then have
+more customization and do it that way,
+then they're going to be much happier
+clients for that. I mean, they're going
+to be and this is already the case in in
+Asian markets in like South Korea and
+Japan.
+>> Um, in the Western world, it's it's
+starting to take off. Um, but what we're
+really focused on with that and what I
+see a bright future for are more
+immersive experiences. So, this is going
+beyond the screen. This is actually
+taking you out of your home, a digital
+out of home experience, and you're
+literally experiencing something with
+others around you, real people.
+>> Um, even though it's completely virtual,
+something similar to what the Sphere is
+doing.
+>> Um, venues like that. COSM is also doing
+this. Um, you're going to start seeing
+this more and more. Um, and it doesn't
+necessarily even have to be a real
+person that you're seeing on stage. Um,
+but you're around real people. And
+that's kind of the takeaway. You can't
+substitute that kind of connection.
+>> That's wild. That's very cool. Very
+interesting. Wow. Oh my goodness. I
+know. Or eventually we all going to be
+dating robots soon or something. I don't
+know.
+>> AI.
+>> It's possible. Uh, I think there's a lot
+of people that are okay with that.
+>> I think so, too. I think some people
+prefer it. M
+>> I do in a scary way because I feel like
+people have gotten lazy and it's
+convenient and like I don't know.
+>> And then there's going to be a bill of
+rights and there's going to there's a
+lot of topics that come from that. But
+the biggest issue that's going to be is
+elder care. Like we're starting to see
+that in Japan with robots.
+>> Really?
+>> Yeah.
+>> Well, and I think either things are
+going to go one way or another, right?
+We said this the other day. are either
+going to be how deep down the rabbit
+hole of AI and technology or are we
+going to do a 180 and find find our way
+back to like human interaction again,
+right? I don't know.
+>> No, there's going to be a complete um
+it's already starting this the tide is
+already starting to turn in this way. Um
+what we're seeing unfortunately with AI
+more than anything else is too much
+reliance upon it.
+>> Yeah. um especially companies that are
+banking on it to rather than supplement
+the human experience almost replace it
+altogether.
+>> And then you're compounding that with
+these massive data centers that are
+being built in sometimes the most rural
+um areas in the United States um that
+have cheap land um and power subsidies
+that are basically subsidized by uh
+consumers. So that's why you look at
+utility bills have skyrocketed over the
+past 5 years because they're helping
+subsidize these data centers.
+>> Wow.
+>> And that's a real issue and that's going
+to become even more of one. So um
+there's a lot that that is is helpful
+from it. But u it's it's like anything.
+It's like what are you going to use this
+for?
+>> Yeah.
+>> And this is this is what you're using it
+for right now. There's too much AI slop
+out there is what it's called. Um where
+it's just generated garbage content
+that's just filler and it's cheap. And
+so, um, I think that there's going to be
+always a a market for, um, handcrafted,
+um, old school way of doing something.
+>> I think so, too.
+>> And there's going to be more of a
+yearning for it because it's going to
+be, um, unfortunately harder and harder
+to come by.
+>> Yep. I think so, too.
+>> But there's going to be more of a demand
+and more and it's going to cost more and
+there's going to be a bigger market for
+it.
+>> Yeah. I think you're right, though. I
+think you're right. I mean, I think
+about even little things about like
+movie theaters, bookstores, right? Even
+people like my age who didn't grow up
+with these, but like record players,
+right? Like people crave nostalgia. They
+crave tangible things. I think you're
+right. I think it's in a
+>> Yeah. And and the community aspect is so
+important, too. I think as long as we as
+a people um as a culture we don't really
+have unfortunately the amount of
+community um uh gathering places like we
+used to in terms of
+>> you know malls for example were sort of
+like the focal point for that and that's
+where you would see families and and
+couples and singles and they would
+mingle and and they would have you know
+a meal and they would shop and they
+would or just browse and it was a place
+to to gather
+>> and unfortunately in this country it's
+becoming less and less so I think so too
+>> and so but it's not like that everywhere
+in the world so if you go to for example
+to Asia you will see that that is not
+the case whatsoever so it is something
+that is uh cultural and
+>> um we just have to be resistant enough
+to not want that and you have to at the
+end of the day vote with your wallet
+like that's your best source of power if
+you don't agree with what a company's
+doing or just just don't sometimes and I
+won't mention But like if you are
+reliance upon convenient things can
+sometimes just be a detriment to
+yourself in the long term. And so
+>> um doing it the hard way and getting
+yourself putting yourself out there is
+sometimes better overall for for
+yourself and your well-being
+>> um and everyone.
+>> Yeah, I think that's very very well put.
+Oh my gosh. Well, thank you so much
+Blake for coming today.
+>> Thanks for having me. A pleasure.
+>> This was so much fun. So informative.
+You
+>> have a beautiful beautiful set by the
+way. So congratulations. This is not
+everyone can have this kind of a setup.
+So it looks great. You're doing a great
+job coming from you. Thank you so much.
+Oh my gosh. I'm so glad we did this. I'm
+so glad we did this.
+>> And like I said, it was very
+educational. Very interesting. Let's
+see, I guess, where the world is going
+to take us, right, with technology and
+how it's shaping modern romance. But
+thank you again. This was so so great.
+We got to do this again.
+>> Yes, absolutely.
+>> We got to do it again.
+>> Let's do it again.
+>> Let's do it again. I love it. I love it.
+And thank you guys so much for watching
+and I'll see you next week.

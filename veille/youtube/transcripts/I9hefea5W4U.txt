@@ -1,0 +1,179 @@
+# 11.7 Trait Theorists — From 4,500 Words to the OCEAN Model | Psychology 2e
+# Lesson Reach · 7 vues · 00:06:03
+# https://www.youtube.com/watch?v=I9hefea5W4U
+
+You know that feeling when like you take
+a personality quiz online and it somehow
+just nails exactly who you are?
+>> Oh yeah. It almost feels like magic
+honestly,
+>> right? But there is actual mechanical
+science behind it. So today on the deep
+dive, our mission is figuring out
+exactly how psychologists managed to
+take something as well invisible and
+chaotic as human personality and build a
+reliable system to measure it. Well,
+it's an incredibly ambitious puzzle to
+try and solve. And to tackle it today,
+we are pulling from section 11.7 of
+chapter 11 from psychology 2e. The core
+premise for trait theorists here is that
+we all have foundational traits, you
+know, characteristic ways of behaving
+that basically make up our unique
+signature. Okay, let's unpack this
+because since I am playing the curious
+student today and you are the lecturer,
+I really want to know where you even
+start building that system because I
+mean early on psychologists literally
+just opened a dictionary, didn't they?
+>> Yeah, they really did. Gordon Alport
+basically scanned the English dictionary
+and found um get this 4,500 words
+describing human traits.
+>> Wait, 4,500?
+>> Exactly. It was a massive messy pile.
+>> Mhm. But he tried sorting it into three
+buckets which were cardinal, central,
+and secondary traits
+>> which I mean looking at the textbook it
+feels a bit like analyzing a movie
+script.
+>> How do you mean?
+>> Well, a cardinal trait is like your main
+character trope. Like Ebenezer Scrooge
+being just uh entirely defined by his
+greed,
+>> right? Yeah. The classic example.
+>> But most real people aren't
+one-dimensional villains. You know, we
+operate on central traits instead, like
+being generally loyal or optimistic.
+>> Absolutely. And then those secondary
+traits are purely situational quirks.
+Like for me, how I absolutely must sleep
+on the left side of the bed.
+>> We all have those. But here's the thing.
+A dictionary list of 4,500 words is not
+exactly a manageable scientific tool.
+>> Yeah. You can't really put a hard number
+on that.
+>> Exactly. So Raymond Catel came along and
+used statistical analysis to shrink that
+list. It's sort of like an audio
+engineer taking a really noisy recording
+and isolating just the bass, the treble,
+and the vocals. Oh, I like that analogy.
+>> Yeah. And through that, Catel narrowed
+it down to 16 core factors of
+personality with his 16 PF assessment,
+and he measured things like warmth on a
+high to low continuum.
+>> Wait, so rather than just saying you
+have a trait or you don't, it's like a
+volume slider.
+>> Spot on. It gave a much higher
+resolution picture of a person.
+>> Okay, but playing the student here, I
+have a a a push back question. Isn't 16
+factors still a bit overwhelming? Like,
+what about plain old biology? If our
+brains are wired differently, shouldn't
+our personalities just reflect that?
+>> That is exactly the pivot that Hans and
+Cybil is made. They believed personality
+is fundamentally genetic. For instance,
+they argued extroverts naturally have a
+lower baseline of brain arousal, so they
+seek out social stimulation just to, you
+know, wake their brains up.
+>> Oh, really?
+>> Yeah. Because of that biological focus,
+the shrank those 16 sliders down to just
+two main spectrums. extroversion versus
+introversion and neuroticism versus
+emotional stability,
+>> which kind of echoes those four ancient
+Greek temperaments. Right.
+>> Exactly. It maps right onto them. And
+they did later add a third spectrum,
+psychoticism versus super ego control.
+>> Okay. Wait, I'm going to push back again
+though because while 16 was too broad,
+the two or three factors seem way too
+narrow to capture a whole person.
+>> It is. Yeah, it is a bit blunt,
+>> right? It's like trying to EQ a massive
+symphony using only a master volume and
+a bass knob. You're missing all the
+nuance.
+>> I completely agree. And that tension
+between too complex and too blunt is
+exactly why modern psychology settled in
+what you could call a Goldilock zone.
+The five factor model,
+>> the famous middle ground.
+>> Yes, it hit that perfect measurable
+middle ground. You could remember it
+with the acronym ocean. That stands for
+openness, conscientiousness,
+extraversion, agreeableness, and
+neuroticism. ocean. That is a great
+mental hook.
+>> It really is the most widely accepted
+standard today. Though I should mention
+some researchers prefer the hexac model,
+which takes those five ocean traits and
+adds one more crucial letter, H for
+honesty, humility.
+>> Oh wow. Separating out sincerity and
+greed from just basic agreeableness.
+Okay, so here is a highly practical
+question for you. If I take an ocean
+assessment today, are you basically
+stuck with your exact score for life?
+>> Not at all. Section 11.7 actually
+highlights that while these traits are
+relatively stable, they aren't frozen.
+As we age, our conscientiousness and
+agreeableness tend to increase.
+>> Wait, really? We just naturally get
+nicer.
+>> Yeah, we get better at managing
+relationships, likely because careers
+and parenting force us to adapt. And
+conversely, neuroticism and extraversion
+actually slightly decline over time. Oh,
+and here is a really surprising fact
+from the data regarding agreeableness.
+>> Get me. Men with low agreeableness
+scores, meaning they are more stubborn
+or uncooperative, actually tend to earn
+more money than highly agreeable men.
+>> You're kidding. So, being a bit
+difficult actually pays off financially.
+>> It seems there's a definite trade-off
+between social harmony and financial
+gain.
+>> That is wild. Well, it's been quite a
+journey from 4,500 chaotic words through
+Kel's 16 sliders past the Isinks
+biological dials to finally land on the
+stable shores of the ocean traits. the
+ultimate tool for self-awareness. Really
+>> definitely. So for you listening, take a
+second to reflect. Which of those ocean
+traits really dominates your life right
+now? Are you leading with openness or
+maybe conscientiousness?
+>> This is a great question to ask
+yourself.
+>> It is. And I want to leave you with one
+final thought. If our biological traits
+naturally shift as we age, adapting to
+our lives, is our true personality, who
+we are at age 20, raw and unfiltered, or
+is it who we become at age 70 shaped by
+a lifetime of experiences?

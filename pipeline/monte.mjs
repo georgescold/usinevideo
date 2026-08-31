@@ -9,7 +9,7 @@
  *   1. rushes        inventaire et sondage
  *   2. coupe         détection des silences, audio recollé
  *   3. voix          remplacement du timbre (ElevenLabs) ou normalisation seule
- *   4. transcris     alignement mot à mot sur la voix FINALE
+ *   4. transcris     transcription mot à mot de la voix FINALE
  *   5. cale          les événements visuels tombent sur leur mot
  *   6. plan          écriture de 05-montage/plan.json
  *
@@ -30,11 +30,12 @@ import {
   litChaine,
 } from './lib/chemins.mjs'
 import { journal, duree, compact } from './lib/journal.mjs'
-import { litArgs, aide, drapeau, principal } from './lib/args.mjs'
+import { litArgs, aide, drapeau, nombre, principal } from './lib/args.mjs'
 import * as M from './lib/montage.mjs'
 import { resoudBroll } from './lib/medias.mjs'
-import { sonde, normalise } from './lib/ffmpeg.mjs'
-import { aligne } from './lib/whisper.mjs'
+import { sonde } from './lib/ffmpeg.mjs'
+import { transcris, corrigeParLeScript } from './lib/whisper.mjs'
+import { voixPour, reglagesDeVoix } from './lib/choix-voix.mjs'
 
 const { options, positionnels } = litArgs()
 
@@ -43,12 +44,21 @@ aide(
   `
 npm run monte -- <slug> [options]
 
-  --voix=sts|brute        remplacer le timbre, ou garder ta voix (défaut : config)
+  --voix=sts|local|brute  remplacer le timbre chez ElevenLabs, avec un modèle
+                          entraîné en local, ou garder ta voix (défaut : config)
+  --modele=<id>           quel modèle local (défaut : le seul, ou celui de la vidéo)
+  --transpose=0           demi-tons, si les tessitures diffèrent (local seulement)
+  --voix-id=<identifiant> forcer une voix ElevenLabs pour ce montage
+                          (défaut : le choix de la vidéo, sinon celui de la chaîne)
   --depuis=<étape>        refait à partir de là : coupe | voix | transcris | cale
   --refais                refait tout, y compris transcription et voix
   --seuil-db=-34          seuil de détection du silence
   --silence-min=0.35      durée minimale d'un silence coupé, en secondes
-  --sans-coupe            garde tout, ne retire aucun silence
+  --coupe-silences        retire les silences (DESACTIVE par defaut : le son
+                          depose n'est pas modifie)
+  --coupe-hesitations     retire aussi « euh », bafouillages et faux départs
+                          (découpe dans la voix : à écouter après)
+  --modele=large-v3-turbo modèle de transcription (défaut : config de la chaîne)
   --oui                   passe les seuils de confirmation
 
 Sortie : videos/<slug>/05-montage/plan.json
@@ -105,8 +115,22 @@ await principal(async () => {
   let coupe = litJson(cheminCoupe, null)
 
   if (force('coupe') || !coupe) {
-    journal.etape(2, 6, 'détection des silences')
-    if (drapeau(options, 'sans-coupe')) {
+    // LA COUPE DES SILENCES EST DESACTIVEE PAR DEFAUT. CONSIGNE DU 28 AOUT 2026.
+    //
+    // Elle etait active, et c'est la doctrine du §10 : « aucun temps mort ».
+    // Mais elle DECOUPE DANS LA PISTE — elle retire des morceaux d'audio et
+    // recolle le reste — et la consigne du proprietaire est qu'aucune
+    // modification ne touche le son depose. Une coupe reste une modification,
+    // meme quand elle ne touche a aucun echantillon conserve.
+    //
+    // La contrepartie est reelle et il faut la connaitre : les silences de la
+    // prise restent dans la video, et le rythme est celui de l'enregistrement.
+    // Sur une prise ou l'on cherche ses mots, ca s'entend.
+    //
+    // On la rallume pour une video donnee avec `--coupe-silences`.
+    const coupeDemandee = drapeau(options, 'coupe-silences')
+    journal.etape(2, 6, coupeDemandee ? 'détection des silences' : 'piste intégrale, aucun silence coupé')
+    if (!coupeDemandee) {
       const aGarder = []
       let curseur = 0
       for (const rush of prises) {
@@ -122,6 +146,43 @@ await principal(async () => {
         silenceMin: options['silence-min'] ? Number(options['silence-min']) : undefined,
       })
     }
+    // COUPE INTELLIGENTE : hors service par défaut, sur demande explicite.
+    //
+    // Elle lit la transcription et retire hésitations, bafouillages et faux
+    // départs — ce que la détection de niveau ne peut pas voir, puisqu'un « euh »
+    // est un son comme un autre.
+    //
+    // Mais elle DÉCOUPE DANS LA VOIX, et une coupe posée deux dixièmes trop tôt
+    // ampute le mot d'à côté. Sur une prise propre, elle enlève une seconde ou
+    // deux et risque une phrase ; le rapport est mauvais. Elle ne se justifie que
+    // sur une prise réellement hésitante, et après écoute.
+    //
+    //   npm run monte -- <slug> --coupe-hesitations
+    if (drapeau(options, 'coupe-hesitations')) {
+      const brouillon = path.join(v.audio, '.brouillon.wav')
+      assureDossier(v.audio)
+      await M.fabriqueAudioCoupe(coupe.aGarder, brouillon)
+      const t = await transcris(brouillon, {
+        langue: chaine?.langue ?? 'fr',
+        modele: options.modele || chaine?.transcription?.modele || 'large-v3-turbo',
+        silencieux: true,
+      })
+      const affine = M.retireLesHesitations(coupe.aGarder, t.mots)
+      fs.rmSync(brouillon, { force: true })
+      if (affine.retires > 0) {
+        coupe = {
+          ...coupe,
+          aGarder: affine.aGarder,
+          dureeMs: affine.dureeMs,
+          retireMs: coupe.retireMs + affine.retireMs,
+        }
+        journal.detail(
+          `${affine.retires} hésitation(s) ou bafouillage(s) retirés — ` +
+            `${(affine.retireMs / 1000).toFixed(1)} s de plus.`
+        )
+      }
+    }
+
     ecritJson(cheminCoupe, coupe)
 
     const gain = coupe.brutMs ? Math.round((coupe.retireMs / coupe.brutMs) * 100) : 0
@@ -149,6 +210,39 @@ await principal(async () => {
     assureDossier(v.audio)
     await M.fabriqueAudioCoupe(coupe.aGarder, audioCoupe)
 
+    // LE NETTOYAGE EST DÉSACTIVÉ PAR DÉFAUT, ET CE N'EST PAS UN OUBLI.
+    //
+    // Deux versions ont été essayées, une agressive puis une douce. Les deux
+    // **déformaient la voix** : consonnes rabotées, syllabes de fin tronquées,
+    // et surtout une transcription qui n'entendait plus les mêmes mots — donc
+    // des sous-titres faux, en plus d'un son abîmé.
+    //
+    // La leçon vaut au-delà de ce réglage : sur une prise déjà correcte, un
+    // traitement de restauration a beaucoup plus à détruire qu'à réparer. Le
+    // souffle d'une pièce ne gêne personne ; une consonne mangée s'entend
+    // immédiatement, et un sous-titre qui ne correspond plus à la voix se voit.
+    //
+    // Le code reste disponible pour une prise réellement bruitée : mettre
+    // `audio.nettoyage` au-dessus de 0 dans config/chaine.json le réactive.
+    // Sur une prise normale, on n'y touche pas.
+    // AUCUN TRAITEMENT SUR LA PRISE. C'EST UNE REGLE, PAS UN REGLAGE.
+    //
+    // Il y avait ici un nettoyage optionnel (passe-haut, expandeur, compresseur)
+    // et, plus bas, une normalisation a -14 LUFS. Les deux ont ete retires : la
+    // consigne est de conserver l'audio fourni tel qu'il a ete enregistre.
+    //
+    // Ce n'est pas une precaution de principe. Sur cette chaine, deux essais de
+    // restauration ont ete rejetes a l'ecoute — la voix se deformait — et un
+    // troisieme effet de bord s'est ajoute : la transcription mot a mot se
+    // faisait sur un signal different de celui qu'on entend, donc les
+    // sous-titres se decalaient. Un son un peu brut s'accepte ; un sous-titre
+    // qui ne suit plus la voix, non.
+    //
+    // Ce qui reste sur la piste : le remplacement du timbre quand il est
+    // demande, et rien d'autre. La coupe des silences elle-meme est desactivee
+    // par defaut depuis le 28 aout 2026 — voir l'etape 2.
+    const propre = audioCoupe
+
     if (modeVoix === 'sts') {
       const { changeDeVoix } = await import('./lib/elevenlabs.mjs')
       const minutes = coupe.dureeMs / 60000
@@ -159,15 +253,97 @@ await principal(async () => {
             `Relance avec --oui, ou --voix=brute pour garder ta voix.`
         )
       }
-      const brut = path.join(v.audio, '.sts.wav')
-      await changeDeVoix(audioCoupe, brut, {
-        voiceId: chaine?.voix?.elevenlabs_voice_id ?? null,
+      // La voix se choisit par vidéo, et on dit LAQUELLE et D'OÙ elle vient :
+      // quand un montage sort avec le mauvais timbre, c'est la seule question.
+      const choisie = voixPour(slug, options['voix-id'])
+      if (!choisie.voice_id) {
+        throw new Error(
+          `Aucune voix ElevenLabs retenue pour « ${slug} ».\n` +
+            `Choisis-en une : node outils/choix-voix.mjs ${slug} --catalogue\n` +
+            `Ou garde ta voix telle quelle : npm run monte -- ${slug} --voix=brute`
+        )
+      }
+      // LE MONTAGE EMPLOIE LE RÉGLAGE ESSAYÉ, PAS UN DÉFAUT EN DUR.
+      //
+      // Il passait `{ voiceId }` seul : la stabilité retombait donc à 0,5 quoi
+      // qu'on ait écouté sur un extrait. On réglait à l'oreille pour rien.
+      const reglages = reglagesDeVoix(choisie)
+      journal.detail(
+        `Voix : ${choisie.nom ? `« ${choisie.nom} » · ` : ''}${choisie.voice_id} (${choisie.origine})`
+      )
+      journal.detail(
+        `Stabilité ${reglages.stabilite} · similarité ${reglages.similarite}` +
+          (choisie.stabilite === null || choisie.stabilite === undefined ? ' (défauts)' : ' (réglés sur cette vidéo)')
+      )
+
+      // La sortie du remplacement de timbre part telle quelle : aucun gain,
+      // aucune normalisation. Les plateformes ramenent de toute facon tout le
+      // monde a leur cible, et le faire ici ne ferait qu'ecraser la dynamique
+      // deux fois.
+      await changeDeVoix(propre, audioFinal, { voiceId: choisie.voice_id, ...reglages })
+    } else if (modeVoix === 'local') {
+      // LE MÊME GESTE QU'EN `sts`, MAIS SANS RIEN QUI SE PAIE.
+      //
+      // Pas de seuil, pas de crédits, pas de trousseau : le modèle vit dans
+      // `marque/voix/` et le calcul se fait sur la carte du poste. Le §7 ne
+      // demande d'annoncer que ce qui coûte, donc rien à annoncer ici.
+      //
+      // Ce qui reste identique, et c'est l'essentiel : la conversion est
+      // synchrone à la trame. La prise garde sa durée, donc les mots gardent
+      // leurs instants, donc les sous-titres restent calés. C'est la seule
+      // propriété qui rendait le speech-to-speech compatible avec ce pipeline,
+      // et le modèle local la tient aussi.
+      const { modelePour, convertitAvecModele } = await import('./lib/voix-locale.mjs')
+      const modele = modelePour(slug, options['modele'])
+      journal.detail(
+        `Modèle local : « ${modele.id} » (${modele.origine}) · ` +
+          `${modele.epoques} époques sur ${duree(modele.corpusS ?? 0)}`
+      )
+      const transpose = nombre(options, 'transpose', chaine?.voix?.transpose ?? 0)
+      if (transpose) journal.detail(`Transposition : ${transpose > 0 ? '+' : ''}${transpose} demi-tons`)
+
+      await convertitAvecModele(propre, audioFinal, modele, {
+        transpose,
+        index: nombre(options, 'index', chaine?.voix?.index ?? 0.3),
+        protege: nombre(options, 'protege', chaine?.voix?.protege ?? 0.33),
+        enveloppe: nombre(options, 'enveloppe', chaine?.voix?.enveloppe ?? 1),
       })
-      await normalise(brut, audioFinal, { lufs: -14 })
-      fs.rmSync(brut, { force: true })
+
+      // La durée est le seul contrôle qui compte : les sous-titres se calent
+      // mot à mot sur ce fichier. Si elle bougeait, rien d'autre ne le dirait —
+      // on le découvrirait au rendu, sur des sous-titres qui glissent.
+      const { sonde: sondeFin } = await import('./lib/ffmpeg.mjs')
+      const apres = await sondeFin(audioFinal)
+      const derive = Math.abs(apres.dureeS - coupe.dureeMs / 1000)
+      if (derive > 0.05) {
+        journal.attention(
+          `La conversion a changé la durée de ${derive.toFixed(2)} s. ` +
+            `Le calage des sous-titres va s'en ressentir.`
+        )
+      } else {
+        journal.detail(`Durée conservée à ${derive.toFixed(3)} s près.`)
+      }
     } else {
-      await normalise(audioCoupe, audioFinal, { lufs: -14 })
-      journal.ok(`Voix conservée telle quelle, normalisée à −14 LUFS.`)
+      fs.copyFileSync(propre, audioFinal)
+      journal.ok(`Voix conservée telle quelle, sans aucun traitement.`)
+    }
+
+    // La musique se pose en dernier, sur la voix définitive, et elle s'efface
+    // automatiquement sous elle. Elle est optionnelle : sans fichier déclaré, la
+    // vidéo sort en voix seule.
+    const musique = chaine?.audio?.musique
+      ? path.join(CHEMINS.racine, chaine.audio.musique)
+      : null
+    if (musique && fs.existsSync(musique)) {
+      const { poseMusique } = await import('./lib/ffmpeg.mjs')
+      const avecMusique = path.join(v.audio, '.musique.wav')
+      await poseMusique(audioFinal, musique, avecMusique, {
+        gainDb: chaine?.audio?.musique_gain_db ?? -16,
+      })
+      fs.renameSync(avecMusique, audioFinal)
+      journal.ok(`Musique posée sous la voix (${path.basename(musique)}), en atténuation automatique.`)
+    } else if (chaine?.audio?.musique) {
+      journal.attention(`Musique déclarée mais introuvable : ${chaine.audio.musique}`)
     }
   } else {
     journal.etape(3, 6, `voix finale déjà là (--depuis=voix pour la refaire)`)
@@ -185,17 +361,85 @@ await principal(async () => {
   // -- 4. transcription -----------------------------------------------------
   let transcript = litJson(v.transcript, null)
   if (force('transcris') || !transcript) {
-    journal.etape(4, 6, 'alignement mot à mot sur la voix finale')
-    const texte = script.blocs.map((b) => b.texte).join(' ')
-    const r = await aligne(audioFinal, texte)
+    journal.etape(4, 6, 'transcription mot à mot de la voix finale')
+
+    // ON TRANSCRIT CE QUI A ÉTÉ DIT, PAS CE QUI AVAIT ÉTÉ ÉCRIT.
+    //
+    // Forcer le texte du script sur l'audio ne marche que si la personne l'a
+    // récité mot pour mot. Dès qu'elle s'en écarte — et il vaut mieux qu'elle
+    // s'en écarte, ça sonne parlé — les mots divergents n'ont plus d'horodatage
+    // propre : ils sont interpolés entre leurs voisins, et le sous-titre glisse
+    // sur toute la suite. Le spectateur lit alors autre chose que ce qu'il entend.
+    //
+    // Le script garde son rôle : il structure les blocs et porte les événements
+    // visuels. Mais le sous-titre dit ce que dit la voix.
+    // LE MODÈLE DE TRANSCRIPTION SE CHOISIT DANS LA CONFIG DE LA CHAÎNE.
+    //
+    // Le défaut d'environnement était `medium`, et il PERD des mots : sur cette
+    // vidéo il en a laissé quatre de côté, dont un groupe entier que la voix
+    // prononce distinctement. Le sous-titre affichait alors une phrase à trous.
+    // `large-v3-turbo` les récupère, et il est plus rapide que `medium` — il n'y
+    // a donc aucun arbitrage à faire entre qualité et temps.
+    const r = await transcris(audioFinal, {
+      langue: chaine?.langue ?? 'fr',
+      modele: options.modele || chaine?.transcription?.modele || 'large-v3-turbo',
+    })
+
+
+    // DEUX OUTILS, DEUX RÔLES.
+    //
+    // La transcription libre donne les bons MOTS, mais ses horodatages sont
+    // approximatifs : whisper date des segments, puis répartit les mots dedans.
+    // À l'échelle d'un sous-titre mot à mot, ça se voit — le mot s'allume un peu
+    // avant ou un peu après la voix.
+    //
+    // L'alignement forcé, lui, date chaque mot d'un texte CONNU à la milliseconde.
+    // On lui donne donc le texte que whisper vient d'entendre, et on obtient les
+    // bons mots ET les bons temps. Si l'alignement échoue, on garde whisper
+    // plutôt que de perdre la vidéo.
+    // La transcription confond régulièrement deux graphies qui sonnent pareil
+    // — « la voir » entendu « l'avoir ». Le script porte la bonne, et on la lui
+    // reprend UNIQUEMENT quand les deux versions ont le même squelette sonore.
+    // Une divergence qui s'entend est une improvisation et reste intacte.
+    const { mots: corriges, corrections } = corrigeParLeScript(
+      r.mots,
+      script.blocs.map((b) => b.texte).join(' ')
+    )
+    if (corrections.length) {
+      journal.detail(
+        `${corrections.length} homophone(s) corrigé(s) : ` +
+          corrections.slice(0, 4).map((c) => `« ${c.entendu} » → « ${c.corrige} »`).join(', ') +
+          (corrections.length > 4 ? '…' : '')
+      )
+    }
+
+    let mots = corriges
+    let mode = 'dit'
+    try {
+      const { aligneForce } = await import('./lib/elevenlabs.mjs')
+      // On aligne le texte CORRIGÉ, pas celui sorti de whisper : sinon
+      // l'alignement réintroduit les homophones qu'on vient d'écarter, puisque
+      // c'est lui qui a le dernier mot sur la liste finale.
+      const a = await aligneForce(audioFinal, corriges.map((m) => m.texte).join(' '))
+      if (a.mots?.length) {
+        mots = a.mots
+        mode = 'dit, aligné à la milliseconde'
+      }
+    } catch (e) {
+      journal.attention(
+        `Alignement fin indisponible (${e.message.split('\n')[0]}). ` +
+          `Les sous-titres gardent les temps de la transcription, un peu moins précis.`
+      )
+    }
+
     transcript = {
       fichier: path.relative(CHEMINS.racine, audioFinal),
-      mode: 'calé sur le script',
+      mode,
       langue: r.langue,
       modele: r.modele,
       genereLe: new Date().toISOString(),
-      mots: r.mots,
-      texte,
+      mots,
+      texte: mots.map((m) => m.texte).join(' '),
     }
     ecritJson(v.transcript, transcript)
     journal.ok(`${transcript.mots.length} mots calés`)
@@ -205,14 +449,90 @@ await principal(async () => {
 
   // -- 5. calage des événements --------------------------------------------
   journal.etape(5, 6, 'calage des événements visuels')
-  const evenements = M.caleEvenements(script, transcript.mots)
+  // LE MODE DE PRODUCTION SE LIT SUR LE RUSH, PAS SUR LE SCRIPT.
+  //
+  // Un fichier audio seul ne peut être qu'une voix off : la piste image se
+  // construit alors entièrement en plans de coupe. Un fichier vidéo — capture
+  // d'écran, face caméra — porte déjà son image, et la recouvrir de plans de
+  // coupe reviendrait à cacher ce qu'on est venu montrer.
+  //
+  // Le script déclare un format avant le tournage : il peut se tromper. Le
+  // fichier déposé, non. On le dit quand les deux divergent.
+  const sondes = await Promise.all(prises.map((p) => sonde(p)))
+  const sansCamera = !sondes.some((s) => s.aDeLaVideo)
+  const formatDitFaceless = String(script.format ?? '').includes('faceless')
+  if (sansCamera !== formatDitFaceless) {
+    journal.attention(
+      sansCamera
+        ? `Le script annonce « ${script.format} » mais le rush n'a pas d'image : monté en voix off.`
+        : `Le script annonce « ${script.format} » mais le rush porte une image : ` +
+            `elle est conservée, aucun plan de coupe ne la recouvrira.`
+    )
+  }
+
+  const evenements = M.caleEvenements(script, transcript.mots, { sansCamera })
 
   // Les plans de coupe demandés par le script sont cherchés et rapatriés ici :
   // ils doivent être sur le disque avant que Remotion ne les lise.
   const pubBroll = path.join(v.montage, 'public', 'broll')
   const { largeur: L, hauteur: H } = M.dimensionsDe(script.format)
-  const broll = await resoudBroll(evenements, { largeur: L, hauteur: H, dossier: pubBroll })
+  const broll = await resoudBroll(evenements, {
+    largeur: L,
+    hauteur: H,
+    dossier: pubBroll,
+    direction: chaine?.identite_visuelle?.direction_plans ?? null,
+  })
+  // UN PLAN DE COUPE SANS FICHIER N'ENTRE PAS DANS LE PLAN.
+  //
+  // La resolution ne traite que les evenements qui portent une requete. Un
+  // evenement dont le fichier est fourni a la main, puis duplique par une
+  // decoupe de phrase, produit des copies sans `src` ET sans requete : elles
+  // traversaient tout le pipeline pour faire echouer le rendu a la premiere
+  // image concernee, apres plusieurs minutes de calcul.
+  const sansFichier = evenements.filter((e) => e.type === 'broll' && !e._aRetirer && !e.src)
+  if (sansFichier.length) {
+    journal.attention(
+      `${sansFichier.length} plan(s) de coupe sans fichier retire(s) du plan — ` +
+        `duplication d'un plan fourni a la main, sans requete pour le remplacer.`
+    )
+    for (const e of sansFichier) e._aRetirer = true
+  }
+
   const retenus = evenements.filter((e) => !e._aRetirer)
+
+  // LA COUVERTURE SE REVÉRIFIE APRÈS LE RAPATRIEMENT, pas seulement avant.
+  //
+  // Le garde-fou « l'écran n'est jamais nu » tourne dans caleEvenements — mais
+  // resoudBroll passe APRÈS lui, et peut retirer un plan dont la banque n'a
+  // rien rendu. Le trou qu'il laisse échappait alors à toute vérification. On
+  // rétend donc chaque plan jusqu'à l'entrée du suivant une fois la liste
+  // définitive connue : c'est le même geste, au seul moment où il est fiable.
+  if (sansCamera) {
+    const brolls = retenus.filter((e) => e.type === 'broll').sort((a, b) => a.debutMs - b.debutMs)
+    for (const [i, e] of brolls.entries()) {
+      const suivant = brolls[i + 1]
+      if (suivant && e.debutMs + e.dureeMs < suivant.debutMs) {
+        e.dureeMs = suivant.debutMs - e.debutMs
+      }
+    }
+  }
+
+  // La durée réelle de chaque plan animé, mesurée sur le fichier. Sans elle, le
+  // rendu ne peut pas savoir qu'un clip est plus court que son créneau, et il le
+  // fige sur sa dernière image au lieu de le ralentir.
+  for (const e of retenus) {
+    if (e.type !== 'broll' || !e.src || !/\.(mp4|mov|webm|mkv)$/i.test(e.src)) continue
+    const chemin = path.join(v.montage, 'public', e.src)
+    if (!fs.existsSync(chemin)) continue
+    const info = await sonde(chemin)
+    e.dureeSourceMs = Math.round(info.dureeS * 1000)
+  }
+  const etires = retenus.filter((e) => e.dureeSourceMs && e.dureeSourceMs < e.dureeMs)
+  if (etires.length) {
+    journal.detail(
+      `${etires.length} plan(s) animés ralentis pour tenir leur créneau sans se figer.`
+    )
+  }
   if (broll.resolus || broll.abandonnes) {
     journal.detail(`plans de coupe : ${broll.resolus} rapatriés, ${broll.abandonnes} abandonnés`)
   }
@@ -225,7 +545,11 @@ await principal(async () => {
 
   const cheminImage = path.join(pub, 'image.mp4')
   if (force('plan') || !fs.existsSync(cheminImage) || force('coupe')) {
-    const img = await M.fabriqueImage(coupe.aGarder, cheminImage, { largeur, hauteur })
+    const img = await M.fabriqueImage(coupe.aGarder, cheminImage, {
+      largeur,
+      hauteur,
+      fond: chaine?.identite_visuelle?.couleur_fond ?? '#000000',
+    })
     journal.detail(
       `piste image ${largeur}×${hauteur} · ${duree(img.dureeMs / 1000)} · ` +
         `${img.nvenc ? 'encodée sur GPU' : 'encodée sur processeur'}`

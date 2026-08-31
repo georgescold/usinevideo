@@ -1,0 +1,21 @@
+{
+  "aGarder": [
+    {
+      "src": "C:\\Users\\loysc\\Desktop\\Usine à vidéo\\videos\\court-difficile-a-obtenir\\02-tournage\\prise-01.mp3",
+      "depuisS": 0,
+      "jusquaS": 11.486,
+      "debutMs": 0,
+      "dureeMs": 11486
+    },
+    {
+      "src": "C:\\Users\\loysc\\Desktop\\Usine à vidéo\\videos\\court-difficile-a-obtenir\\02-tournage\\prise-01.mp3",
+      "depuisS": 11.937,
+      "jusquaS": 120.6,
+      "debutMs": 11486,
+      "dureeMs": 108663
+    }
+  ],
+  "dureeMs": 120149,
+  "retireMs": 451,
+  "brutMs": 120600
+}

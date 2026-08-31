@@ -28,6 +28,8 @@ export const ACTEURS = {
   transcriptSeul: { id: 'scrape-creators~best-youtube-transcripts-scraper', prixParVideo: 0.001 },
   tagsReels: { id: 'apidojo~youtube-scraper', prixParVideo: 0.0005 },
   tiktok: { id: 'clockworks~tiktok-scraper', prixParVideo: 0.004 },
+  // Reddit : posts ET commentaires comptent chacun pour un resultat facture.
+  reddit: { id: 'trudax~reddit-scraper-lite', prixParVideo: 0.004 },
 }
 
 /** En dessous de ce reste, on considère la clé épuisée et on passe à la suivante. */

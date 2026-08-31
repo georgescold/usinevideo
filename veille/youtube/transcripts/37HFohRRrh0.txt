@@ -1,0 +1,498 @@
+# The Dark Tetrad: analysis of profiles and relationship with the Big Five personality factors
+# krk91 · 6 vues · 00:18:33
+# https://www.youtube.com/watch?v=37HFohRRrh0
+
+Welcome to this research walkthrough on
+the dark tetrd. Analysis of profiles and
+relationship with the big five
+personality factors. This 2024 study
+published in scientific reports by Gomez
+Leil and colleagues from the University
+of Maaga in Spain takes a fresh approach
+to understanding dark personality
+traits. The researchers asked a
+fundamental question. How do dark tetrd
+personality profiles relate to the big
+five personality factors? What makes
+this study unique is its person-
+centered approach. Rather than analyzing
+each dark trait in isolation, as most
+previous research has done, this study
+treats individuals as whole people with
+combinations of traits. The sample
+included 1,149
+adults from a Spanish community with an
+almost equal gender split and ages
+ranging from 18 to 79 years. This large
+diverse sample allows for robust
+statistical analysis and meaningful
+subgroup identification. Let's first
+understand what the dark tetr actually
+is. The dark tetrd consists of four
+subclinical personality traits that
+share a common core. Manipulation, lack
+of empathy, deception, aggressiveness,
+and self-promotion. The first trait is
+Mchavelianism, named after the
+Renaissance political philosopher Nicola
+Mchaveli. People high in this trait use
+flattery and manipulation to achieve
+their goals. They tend to be cynical,
+engage in amoral behavior, and are
+intensely focused on their
+self-interest. Second is narcissism
+characterized by grandiosity, a
+superiority complex, constant admiration
+seeking, dominance over others and
+arrogance. Third is psychopathy marked
+by callousness, lack of empathy,
+impulsivity, superficial charm, and in
+extreme cases, criminal tendencies. The
+fourth trait, sadism, was added to the
+original dark triad concept. Sadistic
+individuals derive enjoyment from others
+suffering whether physical or
+psychological. This addition reflects
+growing research showing sadism's unique
+contribution to understanding dark
+personalities. Now let's examine the big
+five personality model also known as
+oceene which serves as the dominant
+framework in personality psychology.
+This model developed by Costa and McCrae
+has been validated across many cultures
+worldwide. The five factors are openness
+to experience which captures
+imagination, curiosity, flexibility, and
+creativity. Conscientiousness reflects
+dependability, organization,
+punctuality, and purposefulness.
+Extraversion describes social
+preferences, energy levels, positive
+emotionality, and outgoing behavior.
+Agreeableness encompasses kindness,
+trustworthiness, altruism, and
+compassion. Finally, emotional
+stability, the inverse of neuroticism,
+reflects low anxiety, low worry, and a
+calm demeanor. The key research gap this
+study addresses is that while many
+studies have examined relationships
+between individual dark tetr traits and
+big five factors, the results have been
+inconsistent and contradictory. No
+previous research had analyzed the dark
+tetrd as a unified construct using a
+person- centered approach. This brings
+us to the methodological innovation of
+this study. The difference between
+variable- centered and person- centered
+approaches. The traditional variable-
+centered approach analyzes traits in
+isolation. It focuses on relationships
+between variables such as the
+correlation between narcissism and
+extraversion. The problem? This approach
+has produced mixed and contradictory
+results across the literature. Different
+studies find different relationships
+making it hard to draw firm conclusions.
+The person- centered approach used in
+this study analyzes whole persons rather
+than isolated traits. It focuses on
+patterns of trait combinations,
+identifying groups of people who share
+similar dark tetride profiles. This
+approach better captures individual
+differences, recognizing that the same
+trait might function differently
+depending on what other traits accompany
+it. The researchers use cluster
+analysis, specifically Ward's method
+with squared uklitian distance to
+identify natural groupings in their
+data. This statistical technique finds
+homogeneous subgroups of individuals who
+share similar patterns across all four
+dark tetra traits. The study used three
+validated instruments to measure
+personality. For the dark triad traits,
+they used the short dark triad or SD3, a
+27 item questionnaire with nine items
+each for mchavelianism, narcissism, and
+psychopathy. For sadism, they use the
+assessment of sadistic personality, a
+nine item scale. Both use five-point
+liyker scales from strongly disagree to
+strongly agree. For the big five
+factors, they use the mini international
+personality item pool or mini IPIP, a 20
+item questionnaire measuring all five
+factors. All instruments showed
+acceptable reliability with chronbox
+alpha values ranging from 0 67 to 0. 86.
+The statistical analysis proceeded in
+stages. First descriptive statistics and
+gender comparisons, then Pearson
+correlations between all variables,
+followed by hierarchical cluster
+analysis to identify dark tetrad
+profiles, and finally multivariate
+analysis of coariance or MANOVA to test
+differences between profiles on big five
+factors while controlling for gender and
+age. The cluster analysis revealed five
+distinct dark tetrad profiles, which is
+a key finding of this study. First, the
+narcissism group with twin 24
+participants characterized by scores
+above the mean specifically on
+narcissism with relatively normal scores
+on other traits. This group had 57 5%
+women. Second, the mean dark tetrad
+group with 241 participants showing
+average scores across all four traits.
+Gender distribution was roughly equal at
+47, 7% women. Third, the Mchavelianism
+group with 317 participants, the largest
+cluster distinguished by elevated
+Mchavelianism scores. This group was
+predominantly male with only 36, 2%
+women. Fourth, the low dark tetride
+group with 290 participants, scoring
+below the mean on all four traits. This
+group was predominantly female at 69, 6%
+women. Fifth, the high dark tetride
+group with 78 participants, the smallest
+cluster showing elevated scores across
+all four dark traits. This group was
+overwhelmingly male with only 19 4%
+women. The discriminant analysis
+confirmed these clusters were well
+separated with 85% of cases correctly
+classified. Let's visualize the dark
+tetradit profiles across the five
+clusters. This chart shows standardized
+scores where zero represents the sample
+mean. The high dark tetred group shown
+in black has elevated scores across all
+four traits with particularly high
+psychopathy and sadism. The narcissism
+group shows a distinctive spike only on
+narcissism with other traits near
+average. The machavelianism group shows
+elevated machavelianism with moderate
+elevations on psychopathy and sadism.
+The mean group hovers around zero across
+all traits. The low dark tetride group
+shows consistently below average scores
+on all four traits. Notice the strong
+correlation between psychopathy and
+sadism across groups. When one is
+elevated, the other tends to be elevated
+as well. This supports the theoretical
+basis for including sadism in the dark
+tetrad as it shares substantial variance
+with psychopathy while still
+contributing unique information. Now
+let's examine the key findings. The
+first major result concerns
+agreeableness. As hypothesized, the high
+dark tetrd group showed the lowest
+agreeableness with a mean of three 24
+significantly lower than all other
+groups. This confirms that individuals
+high on all dark traits tend to be less
+kind, less trusting, and less
+compassionate. However, there was a
+surprising finding. The narcissism group
+actually showed the highest
+agreeableness at 398,
+even higher than the low dark tetrd
+group. This contradicts previous
+literature that found negative
+relationships between narcissism and
+agreeableness. The researchers suggest
+this might be because narcissism is
+multiaceted. Narcissistic individuals
+may display agreeable behavior
+strategically to gain admiration and
+achieve their goals. Their higher
+self-esteem might also contribute to
+more assertive but still socially
+appropriate behavior. This finding
+highlights the value of the person-
+centered approach as it reveals patterns
+that variable- centered studies might
+miss. The second key finding concerns
+extraversion. The high dark tetride
+group showed the highest extraversion at
+37, significantly higher than all other
+groups. This was unexpected and provides
+new insights. The researchers explain
+this through the characteristics of each
+dark trait. Narcissists are naturally
+extroverted, seeking social attention
+and admiration. Mchavelians need social
+connections to manipulate. Psychopaths
+display superficial charm. Even sadists
+show disinhibited social behavior. When
+all four traits combine in the high dark
+tetrd profile, these extroverted
+tendencies appear to compound. The
+narcissism group also showed elevated
+extraversion at 3 05. Consistent with
+prior research, the low dark tetrred
+group showed the lowest extraversion at
+2 37. This finding helps resolve
+contradictions in the literature.
+Previous studies found mixed results for
+extraversion because they examine traits
+in isolation. When you look at the whole
+person, the pattern becomes clearer.
+Dark personality profiles tend toward
+extraversion, but the strength of this
+relationship depends on the specific
+combination of traits. Let's examine the
+remaining big five factors. For
+conscientiousness, the narcissism group
+scored highest at 3 68, while the high
+dark tetrd group scored lowest at 3, 22.
+This supports the hypothesis that
+psychopathy and sadism, which are
+elevated in the high dark tetrred group,
+are associated with impulsivity and
+irresponsibility, traits incompatible
+with conscientiousness. For emotional
+stability, the narcissism group showed
+the highest scores at 2 93,
+significantly higher than the mean and
+low dark tetrd groups. This aligns with
+research showing narcissism is
+associated with lower anxiety and
+depression. Interestingly, the high dark
+tetrred group also showed high emotional
+stability, suggesting that the
+combination of dark traits may buffer
+against negative emotionality for
+openness to experience. The narcissism
+group again scored highest at 3, 41,
+followed by the machavelianism group at
+three 38. The low dark tetride group
+scored lowest at three. their go. This
+supports the link between narcissism and
+creativity, curiosity and imagination.
+Gender differences emerged as a
+significant finding. The distribution of
+men and women varied dramatically across
+dark tetrd profiles. The low dark tetrd
+group was predominantly female at 69, 6%
+women. The narcissism group was slightly
+female majority at 57, 5% women. The
+mean group was roughly balanced. The
+machavelianism group was male majority
+at 63 8% men and the high dark tetride
+group was overwhelmingly male at 80 6%
+men. This pattern confirms previous
+research showing that dark personality
+traits are more prevalent in men. The
+effect is particularly pronounced for
+psychopathy and sadism which explains
+why the high dark tetred group where all
+traits including psychopathy and sadism
+are elevated shows such a strong male
+predominance. Additionally, men scored
+significantly higher than women on all
+four dark tetra traits and on emotional
+stability and openness. Women scored
+higher on agreeableness and
+conscientiousness. These gender
+differences have important implications
+for clinical assessment and intervention
+design. Let's examine the correlation
+matrix between dark tetrad traits and
+big five factors. This provides the
+variable centered perspective that
+complements the cluster analysis. The
+strongest correlation was between
+narcissism and extroversion at 0.55, a
+large effect size. This confirms that
+narcissistic individuals are
+consistently extroverted. All four dark
+tetrd traits showed positive
+correlations with extraversion. Though
+the effect sizes for mchavelianism,
+psychopathy, and sadism were small. A
+consistent pattern emerged for
+agreeableness. Mchavelianism,
+psychopathy, and sadism all showed
+negative correlations with agreeableness
+with small effect sizes around negative0
+20 to0 28. Interestingly, narcissism
+showed no significant correlation with
+agreeableness in the variable centered
+analysis. Yet, the narcissism cluster
+showed the highest agreeableness. This
+discrepancy highlights why the person-
+centered approach adds value.
+Psychopathy and sadism both showed
+negative correlations with
+conscientiousness supporting the link
+between these traits and impulsivity.
+Now let's discuss the practical
+applications of these findings across
+different domains. In clinical
+psychology, understanding dark tetrad
+profiles can improve diagnosis and
+treatment. The finding that narcissism
+is associated with higher emotional
+stability and agreeableness suggests
+that narcissistic individuals may
+present differently in clinical settings
+than those with psychopathy or sadism.
+Treatment approaches may need to be
+tailored to specific dark tetrd profiles
+rather than treating all dark traits the
+same way. In forensic psychology and
+criminal investigation, the strong
+association between the high dark tetrd
+profile and low agreeableness combined
+with the male predominance in this group
+has implications for criminal profiling.
+The link between psychopathy, sadism,
+and low conscientiousness suggests
+impulsive criminal behavior patterns. In
+organizational settings, these findings
+inform personnel selection and team
+management. The high dark tetrad
+profiles combination of high
+extraversion and low agreeableness could
+manifest as charismatic but manipulative
+leadership. Understanding these patterns
+can help organizations identify and
+manage potentially toxic personalities.
+Every study has limitations and this one
+is no exception. Let me walk through the
+key methodological considerations.
+First, all measures were self-report
+questionnaires which are susceptible to
+social desiraability bias. This is
+particularly problematic when studying
+dark personality traits as individuals
+high in these traits are characterized
+by deception and manipulation. They may
+under reportport their dark tendencies.
+Second, the cross-sectional design
+prevents causal inferences. We cannot
+determine whether personality factors
+cause dark traits, dark traits, dark
+traits cause personality patterns, or
+both are caused by some third factor.
+Third, while the sample was large and
+diverse in age, it was limited to a
+Spanish community sample using snowball
+sampling. This may limit
+generalizability to other cultures or
+populations. Fourth, the study used
+general measures of narcissism and
+psychopathy, but these constructs have
+important subtypes. Grandiose versus
+vulnerable narcissism or primary versus
+secondary psychopathy might show
+different patterns with big five
+factors. Let me summarize the key
+takeaways from this research. First,
+five distinct dark tetride profiles
+exist in the general population. These
+are not arbitrary categories but emerge
+naturally from the data through cluster
+analysis. Each profile has a unique big
+five personality signature. Second, the
+high dark tetrd profile is characterized
+by the highest extraversion, lowest
+agreeableness, and lowest
+conscientiousness. This group is 80%
+male and represents individuals who are
+socially active but disagreeable and
+impulsive. Third, narcissism is unique
+among the dark traits. The narcissism
+group showed the highest agreeableness,
+emotional stability, openness, and
+conscientiousness. This suggests
+narcissism may function differently than
+the other dark traits potentially
+serving adaptive functions in some
+contexts. Fourth, the person- centered
+approach adds significant value to
+personality research. It reveals
+patterns that correlational analyses
+miss and helps resolve contradictions in
+the literature. Fifth, gender effects
+are strong and consistent. Dark traits
+are more prevalent in men with the
+effect strongest for the high dark
+tetrad profile. This has important
+implications for clinical and forensic
+applications. Using the research paper
+evaluation framework, let me provide my
+assessment of this study's value for
+practitioners. For the problem match,
+this paper addresses a real gap in
+understanding how dark personality
+traits combine and relate to general
+personality. The person- centered
+approach is genuinely novel in this
+domain. The core insight is that dark
+personality traits don't operate in
+isolation. The same trait like
+narcissism may function differently
+depending on what other traits accompany
+it. This has direct implications for
+assessment and intervention. For
+evidence quality, the study has strong
+statistical methodology with a large
+sample, validated instruments, and
+appropriate controls. The 85%
+classification accuracy for clusters is
+impressive. However, effect sizes for
+correlations were generally small, and
+the cross-sectional design limits causal
+inference. My recommendation is to track
+this research. The person- centered
+approach is promising and should be
+replicated in other populations. For
+practitioners, the key actionable
+insight is to assess dark tetra traits
+as a profile rather than in isolation
+and to recognize that narcissism may
+present differently than other dark
+traits in clinical and organizational
+settings. Thank you for watching this
+research walkthrough on the dark tetrd
+and big five personality factors. This
+2024 study by Gomez Leil and colleagues
+represents an important methodological
+advance in personality research. By
+adopting a person- centered approach,
+they revealed patterns that variable-
+centered studies had missed, including
+the surprising finding that narcissism
+is associated with higher agreeableness
+when examined as a distinct profile. The
+key contribution is demonstrating that
+dark personality traits should be
+assessed as profiles rather than in
+isolation. The five clusters identified
+narcissism, mchavelianism, mean, low,
+and high dark tetrad each have distinct
+big five signatures with important
+implications for clinical, forensic, and
+organizational psychology. Future
+research should replicate these findings
+in diverse populations, examine dark
+tetrat subtypes like grandiose versus
+vulnerable narcissism, conduct
+longitudinal studies to establish
+causality, and develop profile-based
+interventions. The full paper is
+available at the DOI shown on screen.

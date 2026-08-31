@@ -1,0 +1,24 @@
+# Install OpenCode: The FREE Local Alternative to Claude Code (Build a Dating App in Minutes)
+# ALMA STUDIO · 282 vues · 00:00:46
+# https://www.youtube.com/watch?v=FZDzJdIkgK8
+
+Stop paying for AI coding tools.
+There's now a free alternative to cloud
+code that runs locally on your computer.
+It's called Open Code and I'll show you
+how to install it in less than a minute.
+First, go to open code.ai. Find the NPM
+install command and copy it.
+Next, open your terminal.
+Paste the command and press enter to
+install Open Code. Once it's installed,
+run Open Code from your terminal.
+Now, you can start building apps with a
+simple prompt. For example, you could
+type create a dating app for dogs with
+three options. Just for a walk, looking
+for a love story, or skip. And Open Code
+will start generating the project
+directly on your computer. No cloud, no
+subscription.
+Just local AI coding.

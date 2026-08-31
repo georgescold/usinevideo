@@ -33,6 +33,11 @@ export function fonduEntreeSortie(
   fps: number,
   fonduMsMax = 220
 ) {
+  // Une séquence de trois images ou moins n'a pas la place d'un fondu : forcer
+  // fondu ≥ 1 y produit un inputRange non strictement croissant — [0,1,1,2] à
+  // deux images — et interpolate() jette, ce qui fait échouer le rendu ENTIER
+  // pour un seul événement trop court. On affiche plein, simplement.
+  if (dureeImages <= 3) return 1
   const fondu = Math.max(1, Math.min(msVersImages(fonduMsMax, fps), Math.floor(dureeImages / 3)))
   return interpolate(
     imageLocale,

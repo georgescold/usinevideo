@@ -1,0 +1,552 @@
+# Are Dating Apps Designed to Keep You Single?
+# Dr. Economist · 91 vues · 00:17:21
+# https://www.youtube.com/watch?v=ihhuvvlsJLQ
+
+The economics behind dating apps is
+interesting because the best possible
+outcome for the user is also the worst
+possible outcome for the app. You
+download it, make a profile, spend a few
+weeks meeting people, find someone you
+genuinely like, and then delete the app
+forever. From your perspective, it's
+perfect. The product has done exactly
+what you hired it to do. From the
+company's perspective, however, it has
+just lost an active user, possibly one
+who might otherwise have bought a
+subscription, paid to see who liked
+them, or purchased a temporary boost.
+Most businesses do not have this
+problem. A coffee shop wants you to
+enjoy its coffee so much that you come
+back every morning. Netflix wants you to
+finish one series and immediately begin
+another. Even a gym, despite what
+January attendance figures might
+suggest, would prefer that you keep
+renewing your membership. Dating up to
+selling access to a service that
+successful customers eventually stop
+needing. Their ideal testimonial is
+essentially, "This works so well, I will
+never have to use it again." That
+tension is real, but it doesn't
+automatically mean that apps need every
+individual user to remain single. A
+dating platform still needs success
+stories. If nobody ever met anyone, the
+app would develop a terrible reputation.
+People would stop recommending it and
+new users would eventually stop
+arriving. Dating apps, therefore, need
+to produce enough genuine relationships
+to demonstrate that the marketplace
+works while also maintaining a large
+active population of people still
+searching. The business is not built
+around permanently retaining every user.
+It is built around keeping the overall
+marketplace alive as individual users
+enter, match, leave, break up, return,
+or get replaced by new generations of
+singles. And despite the cynicism around
+them, dating apps clearly do create
+relationships. In a 2022 survey, one in
+10 partnered American adults said they
+met their current partner through a
+dating app. Among partnered adults under
+30, the figure was 1 in five. So, the
+apps are not simply elaborate slot
+machines in which nobody wins. People do
+meet, date, and form relationships. The
+economic question is not whether the
+apps ever work. It is what kind of
+system emerges when a company must help
+you some users leave while earning money
+from the process of everyone else
+continuing to search. To understand that
+system, it helps to stop thinking of a
+dating app as a piece of software and
+start thinking of it as a marketplace.
+The app itself does not create the thing
+people are looking for. It creates a
+place in which people can find one
+another. In that sense, it is closer to
+eBay, Uber or Airbnb than it is to an
+ordinary subscription service. The
+product is the network of the other
+users. This creates what economists call
+a network effect. The more relevant
+people who join the platform, the more
+useful it becomes to everyone already on
+there. A dating app containing 20 people
+is not particularly useful, even if it
+has beautiful animations and a perfect
+logo. An app with thousands of active
+users nearby, in the right age range,
+and interested in the same kind of
+relationships is far more valuable. The
+relevancy is important here. A den
+company might advertise it has millions
+of users worldwide, but someone living
+in Sydney does not gain much benefit
+from the presence of an extra million
+users in Brazil. The useful network is
+local, filtered, and fragmented. It
+depends on distance, age, sexuality,
+relationship intentions, activity
+levels, and the preference of the people
+involved. A platform can be enormous in
+total and still feel strangely empty for
+a particular user. This is why dating
+apps face a difficult version of the
+classic marketplace cold start problem.
+People will not join an app with no one
+to meet, but there will be no one to
+meet until people join. A new food
+delivery app can sometimes solve this by
+paying restaurants and drivers to sign
+up. Dating apps cannot simply order
+50,000 compatible single people from a
+supplier. They need to attract them,
+keep them active, and ensure that the
+marketplace does not become so
+imbalanced that one group receives no
+attention while another becomes
+overwhelmed. Giving the app away for
+free is a major part of solving that
+problem. Free users are not merely
+customers who have not paid yet. They
+are part of the product that makes the
+platform valuable to everyone else.
+Every active profile adds potential
+liquidity to the market. That that is
+the possibility that someone opens the
+app and finds a person they might
+genuinely want to meet. Charging
+everyone before they could even browse
+would shrink the network, which would
+make the service less valuable, which
+would make even fewer people willing to
+pay. And that is the logic behind the
+premium model. The basic marketplace
+remains accessible for free, while a
+smaller group pays for additional
+control, information, or visibility. You
+might pay to see people who have already
+liked you, send more likes, undo a
+decision, apply additional filters,
+appear more prominently, or signal
+unusually strong interest. The free
+product allows you to participate in the
+market. The paid product promises to
+make the participation less slow, less
+uncertain, or less competitive. This is
+a subtle but important distinction.
+Dating apps cannot directly sell you a
+relationship because another person
+still has to choose you. What they can
+sell is a better position from which to
+search. This can still generate a huge
+amount of money even when only the
+minority pays. 35% of Americans who had
+ever used online dating had paid for a
+platform or additional feature at some
+point. In 2025, MatchGroup reported
+approximately $3.49 billion in total
+revenue with Tinder alone generating
+$1.86 billion in direct revenue. Bumble
+reported roughly $966 million in total
+revenue for the same year. These
+companies closely track metrics such as
+paying users and revenue per payer
+because the model does not require every
+user to subscribe. It requires a large
+free network and a smaller number of
+people willing to spend within it.
+Advertising exists on some of these
+platforms, but direct payments are much
+more central to the economics of the
+largest dating businesses. That means
+the user is not simply providing
+attention to advertisers in the way they
+might on a social media platform. Two
+people can use the same app in the same
+city for the same amount of time and
+have completely different experiences.
+One opens the app to dozens of likes and
+finds the main problem is sorting
+through them. Another receives very
+little attention and begins wondering if
+anyone is being shown their profile at
+all. And there's research which captures
+this difference. Among people who had
+recently used online dating, 64% of men
+said they had at least sometimes felt
+insecure about receiving too few
+messages compared with only 40% of
+women. At the same time, 54% of women
+said they had sometimes felt overwhelmed
+by the number of messages they received
+compared with 25% of men. These figures
+describe American users across multiple
+platforms and should not be treated as
+universal rules. Experiences differ
+substantially by app, age, sexuality,
+location, and what people are looking
+for, but they illustrate an important
+economic feature of dating markets.
+Excess demand and excess supply can
+exist at the same time depending on
+where a user sits within the
+marketplace. This is not quite the same
+as selling an ordinary product. If a
+thousand people want the same concert
+ticket, the venue can raise its price or
+add another show. Attention in dating
+cannot be produced so easily. A popular
+profile has a limited amount of time and
+interest to distribute regardless of how
+many people swipe right. Sending that
+person 500 additional likes does not
+create 500 additional conversations. It
+often creates a larger queue from which
+they become more selective. Online
+dating is therefore a matching market,
+not simply a market in which more demand
+is always better. A very successful
+transaction requires mutual selection.
+You might be interested in someone, but
+your demand only matters if they are
+interested in you. This makes attention
+more valuable than the raw numbers of
+profiles. 10,000 people who you do not
+want or who do not want you are
+economically less useful than a singular
+match. Research using data from a large
+online dating service found a pronounced
+hierarchy of desiraability within
+heterosexual dating markets. Both men
+and women tended to contact people who
+were, by the researchers measure, around
+25% more desirable than themselves, and
+the probability of receiving a response
+declined as the gap between the sender
+and recipient grew. The researchers were
+not claiming that every person has an
+objective romantic score. Their measure
+was based on patterns of attention
+within the platform. The point is that
+attention was structured and unequal
+rather than randomly distributed. Once
+attention becomes unequal, users
+behavior can amplify the imbalance.
+Someone receiving very few matches may
+respond by liking more profiles because
+each individual swipe has a low expected
+return. But when large numbers of users
+adopt that strategy, the people
+receiving those likes are flooded with
+weak signals. They cannot tell whether
+someone is genuinely interested or
+simply approving almost everyone. They
+respond by becoming more selective,
+which lowers the first group success
+rate even further and gives them even
+more reason to cast a wider net. It
+almost resembles a crowded job market,
+which applicants begin submitting
+hundreds of nearly identical
+applications. Employees receive so many
+that they spend less time on each one
+and introduce harsher filters.
+Applicants then receive fewer responses,
+so they submit even more applications.
+What is rational for each individual can
+make the overall marketplace worse. This
+helps explain why dating apps place
+limits on free behavior and sell
+stronger signals. A limited number of
+likes forces users to spend attention
+more carefully. A super like rose or
+similar feature creates a cost signal
+because you cannot send an unlimited
+number without paying. The recipient can
+reasonably infer that it means more than
+an ordinary swipe. Whether people enjoy
+receiving those signals is another
+question, but the economic logic is
+clear. When ordinary attention becomes
+abundant, platforms can create premium
+versions of attention by making it
+scarce. The algorithm sits in the middle
+of all this. The details of modern
+recommendation systems are proprietary,
+so strong claims about exactly how an
+individual app ranks people should be
+treated cautiously. A major 2012 review
+of online dating concluded that the
+evidence available at the time did not
+support the grand claims some companies
+made about their ability to predict
+long-term romantic compatibility from
+profile information. Algorithms have
+obviously developed since then, and apps
+now have much more behavioral data. But
+independent evidence validating specific
+commercial matching systems remains
+limited because researchers generally
+cannot inspect the full models or test
+them against long-term relationship
+outcomes. They can see which profiles
+you pause on, whom you like, who likes
+you, whether matches become
+conversations, and whether you return
+tomorrow. That is useful for predicting
+future app behavior. It is much harder
+to predict whether two people will enjoy
+sitting across from one another for
+three hours, resolve disagreements well,
+or still be compatible 5 years later.
+The app has abundant data about choosing
+profiles and relatively little data
+about what happens after people leave
+it. This matters because the swipe is
+not merely a convenient way to display
+profiles. It changes the kind of
+decision users are making. Selecting a
+potential partner used to involve a
+messy combination of conversation,
+context, mutual friends, repeated
+exposure, and social consequences.
+Swiping compresses that into a fast,
+private, and reversible judgment. There
+is always another profile immediately
+behind the current one. So, the cost of
+projection feels close to zero. That low
+cost makes the app easy to use, which is
+good for growth. It also creates a high
+volume decision environment in which
+users can move from considering people
+to processing profiles. The difference
+is subtle. At the beginning of a
+session, you might be asking, "Could I
+enjoy meeting this person?" After enough
+swipes, the question can quietly become,
+"Is this profile good enough to stop me
+from seeing the next one?" A series of
+three studies published in 2020 found
+evidence of what the researchers call a
+rejection mindset. As participants
+viewed more dating profiles, they became
+increasingly likely to reject later
+options. Across the studies, the average
+chance of accepting a profile fell by
+about 27% from the beginning to the end
+of the task. The researchers connected
+this to declining satisfaction with the
+available pictures and pessimism about
+dating success. The experiments had
+limitations. They focused on
+heterosexual participants aged 18 to 30
+and cannot perfectly reproduce every
+real app. But they suggest that
+abundance can change the standard by
+which each new person is judged. Earlier
+experimental work produced a related
+finding. Giving online datas more
+potential partners encourage more
+searching but could reduce the quality
+of the final choice. More options
+theoretically increase the chance that a
+highly suitable person exists somewhere
+in the pool. They also increase the
+amount of comparison required and make
+it easier to imagine what an even better
+person is who's just one swipe away.
+This is where the psychology of swiping
+meets the economics of the platform. An
+effectively endless feed creates option
+value. Choosing to focus on one person
+means giving up the possibility of
+discovering someone apparently better.
+In economic terms, the perceived
+opportunity cost of commitment rises
+when alternatives remain constantly
+visible. Even after a good match, the
+marketplace does not disappear. It
+remains on your phone, fully stocked and
+requiring almost no effort to reopen.
+The certain timing of matches also
+encourages repeated checking. Most
+swipes produce nothing immediately.
+Occasionally, one becomes a match, a
+message, or a date. Comparisons with
+gambling and variable rewards are
+common, including from people involved
+in designing swipe based interfaces.
+However, it is worth being precise. That
+does not prove every dating app is
+clinically addictive or that companies
+can directly control romantic rewards in
+the way a casino controls the machine.
+Matches depend on other human beings.
+What the platform does control is the
+rapid sequence of decisions,
+notifications, and uncertain feedback
+surrounding them. The app does not
+necessarily need to hide good matches
+from you to keep you engaged. The
+structure of the market can do much of
+that work naturally. Mutual attraction
+is rare. Timing is inconsistent. Users
+have different intentions and
+conversations frequently go nowhere. Add
+a large menu of alternatives and people
+may become selective, less responsive,
+and less willing to invest in a single
+interaction. A platform can generate a
+great deal of activity without
+manufacturing failure because human
+dating already contains enough
+uncertainty. So, do dating apps want you
+to fail? At the individual level, not
+necessarily. A user who finds a
+relationship is evidence that the app
+works. They may recommend it to friends,
+return after a future breakup, or
+strengthen the company's brand by simply
+saying, "We met on Hinge or Tinder or
+Bumble." Successful couples are valuable
+marketing because they answer the
+biggest concern any new user has,
+whether spending time on the app could
+lead to anything real. At the level of
+the business model, however, the
+platform is not financially rewarded for
+finding every user the best possible
+partner as quickly as possible. Public
+dating companies report metrics such as
+active users, paying users, engagement,
+revenue per payer, and subscriber
+conversion. They do not primarily report
+the average number of days required to
+find a satisfyingly long relationship.
+That does not establish malicious
+intent. Companies report what they can
+reliably measure and monetize, but it
+reveals the basic incentive structure. A
+dating app needs the experience to be
+successful enough where people continue
+believing in the marketplace, but not
+necessarily efficient in the way an
+individual user would define efficiency.
+The user wants the smallest number of
+swipes required to meet the right
+person. The platform benefits when the
+search lasts long enough to create
+engagement and for some users a reason
+to pay. Those goals overlap because a
+completely useless app will lose its
+audience. But they do not overlap
+perfectly. Even the phrase designed to
+be deleted fits within this model. An
+app can genuinely focus on relationship
+seeking while still operating a
+profitable subscription business. It
+does not require one person to remain
+subscribed forever. It needs a
+continuing flow of new users and enough
+time between signup and deletion to
+generate revenue from some of them. In
+2025, Match Group reported strong growth
+at Hinge. Even though Hing's entire
+brand is built around eventually leaving
+it, the product can celebrate exits
+because the business operates across
+millions of overlapping searches rather
+than relying on one permanent customer.
+The more realistic criticism is
+therefore not that dating companies
+secretly prevent all successful
+relationships. It is that the measurable
+goals of the platforms can favor
+activity over resolution. More swipes
+are easier to measure than better dates.
+More matches are easier to measure than
+an emotionally healthy relationship. A
+subscription purchase is visible
+immediately. Couple becoming genuinely
+compatible over several years is not.
+The gap can shape design without
+requiring a room full of executives
+asking how to keep people lonely. A
+product team trying to increase daily
+activity might want to add more
+notifications. A revenue team might want
+to test a payw wall. A recommendation
+team might optimize for the probability
+that someone swipes, matches, or sends a
+message. Each decision can be reasonable
+in isolation. Together, they can produce
+an experience that is extremely good at
+sustaining search and less clearly
+optimized for helping people stop
+searching. Dating apps have still solved
+a genuine economic problem. They
+dramatically reduce the cost of
+delivering people outside of your
+existing social circle. They are
+particularly valuable for people whose
+dating pool is small, geographically
+dispersed, or difficult to identify
+online. They allow users to signal
+availability and basic preferences
+before anyone has to approach a stranger
+at a bar and discover several awkward
+minutes later that the stranger is
+married. But reducing the cost of
+searching has not eliminated the
+difficulty of choosing. In some ways,
+it's just transferred the problem. The
+old limitation was access. You could
+only meet the people who happen to cross
+your path. The new limitation is
+attention. You can access far more
+people than you could ever seriously
+evaluate. And that right there is the
+central paradox of the dating economy.
+The platforms become valuable by
+offering abundance, but abundance can
+make users less satisfied with
+individual options. They need large
+networks, but large networks create
+congestion and unequal competition. They
+need free access to build the
+marketplace, but then have to convert
+some of the inconvenience within that
+platform into premium features. They
+need users to form relationships, but
+their revenue is generated while those
+users are still searching. They need you
+to feel that success remains possible,
+that the next session might be more
+productive than the last, and that
+paying could improve your position.
+Sometimes that process ends in exactly
+what you wanted. Sometimes it ends with
+you deleting the app for a much less
+romantic reason. The most accurate way
+to understand them is not as evil
+machines designed to keep everyone
+single or as neutral match makers
+concerned with only finding love.
+They're marketplaces attempting to
+balance user success, network growth,
+and monetization at the same time. And
+the uncomfortable part is that the
+balance which works best for the
+marketplace may not always be the
+balance which works best for the person
+using it.

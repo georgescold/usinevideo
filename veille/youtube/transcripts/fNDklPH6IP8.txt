@@ -1,0 +1,272 @@
+# We found the most accurate personality test in the world.
+# Spencer Greenberg · 51 k vues · 00:09:23
+# https://www.youtube.com/watch?v=fNDklPH6IP8
+
+Myersbrigg style personality tests are
+the most popular type of personality
+test in the entire world. But how well
+do they actually work? Do they truly
+provide you with useful insights or are
+the millions of people who think these
+tests work actually deluded about their
+accuracy? Today we'll dig into this
+topic to explore what's really true.
+Sometimes MBTI style tests are dismissed
+because of their origins. Katherine
+Cooksbriggs and her daughter Isabelle
+Briggs Meyers developed the concept for
+this kind of test during the 1940s
+inspired by the theories of Carl Young.
+That's why they're sometimes called
+Youngian tests. Here's the thing,
+though. Neither Meyers nor Briggs had
+formal education in psychology and were
+largely self-taught when it came to
+personality test construction.
+Certainly, their lack of credentials
+provides a little bit of evidence
+against their test being effective.
+After all, better training tends to
+produce better results. But they're
+being selftaught is actually a shitty
+reason for dismissing the test.
+Rammenujin was selftaught yet was an
+incredible mathematician. Joseé Saramago
+was largely selftaught as a writer yet
+won a Nobel Prize for literature. Sure,
+without any other information, it makes
+sense to evaluate someone on their
+credentials. But once we have access to
+their work, their work is far more
+informative than their credentials are.
+So we shouldn't dismiss MBTI style tests
+based just on credentialism. Another way
+you may be tempted to judge MBTI style
+tests is to see whether people resonate
+with the results that they get from
+those tests. Isn't the ultimate measure
+of a personality test if people feel
+that the results capture what they're
+really like? Nope. It turns out that's a
+terrible method for telling how well
+personality tests work. And here's how
+we know that. In 1948, a psychologist
+named Bertram Forer brought 39
+psychology students into his lab. He had
+them fill out a personality test and
+gave them each a personalized vignette
+based on their test results. Then he
+asked each student to rate how accurate
+the vignettes were about them. They
+largely said they were quite accurate,
+giving an average rating of 4.3 on a 0
+to5 scale. The only problem for had
+lied. Every student had been given the
+same results regardless of their answers
+on the personality test. Every person's
+results included the same statements
+like you have a great need for other
+people to like and admire you and you
+have a tendency to be critical of
+yourself. It turns out it's not that
+hard to provide results that people
+resonate with, even if those results
+have nothing to do with people's
+responses. This effect, which is now
+wellknown among psychologists, is called
+the forer effect. Because of the forer
+effect, we can't tell if a personality
+test is accurate merely by seeing if
+many people find that the test
+resonates. So, how can we tell if a
+personality test works? One interesting
+approach is to look at what's known as
+test retest reliability. This basically
+asks the question, when someone takes
+the test twice, do they get the same
+answer both times? The most common way
+that people use MBTI style tests is to
+talk about their type. Their type is
+represented by a four-letter code, such
+as ENTJ or ISTP. Each of these letters
+corresponds to which side of each of the
+four dichotoies they fall on. Here are
+the four dichotoies. First is
+extroversion E versus introversion I.
+It's about where you direct your energy
+and attention. Extroverts prefer to
+focus on the external world and feel
+energized by it while introverts prefer
+their own inner world of thoughts and
+reflections. The second is sensing s
+versus intuition n. It's about how you
+prefer to take in information. Sensing
+focuses on concrete details and facts
+while intuition is more about abstract
+patterns, the big picture, reflections,
+and possibilities. The third is thinking
+T versus feeling F. It's about how you
+make decisions. Thinkers seek to be
+objective and to lean more towards
+logical analysis while feelers seek to
+be empathetic and give more weight to
+emotional impact. The fourth is judging
+J versus perceiving P. It's about how
+you approach the outside world. Here
+judging means preferring structure and
+pre-planning while perceiving means
+preferring flexibility and spontaneity.
+These four dichotoies combine to form a
+person's type such as ENTJ. Each type is
+then typically given a description. For
+instance, ENTJs are bold and strategic.
+They're fueled by a love for progress
+and a drive to execute complex projects.
+So, when people take an MBTI style test
+one day, wait a little while, and then
+take the test again, do they get the
+same result? Well, the MyersBriggs
+Company publishes results about this on
+their website. 101 people were given the
+English language version of their test
+and then tested again on the same test
+within the next 15 weeks. Shockingly,
+only about 50% of them received the same
+type the second time. What could be the
+reason for this? Well, through our
+research, we believe we figured it out.
+We created a new MBTI style test from
+scratch based on the underlying theory
+of these tests. That way, we could study
+its behavior. When we plot the
+distribution of scores that people get
+on any one of the four traits, we see
+that we get a bell curve. What's shown
+here is the distribution of people's
+scores on the sensing trait. What this
+shows us is that most people are right
+near the middle on the trait with few
+people getting very high or very low
+scores. If someone is just below the
+middle, they'll get assigned a letter N.
+Whereas, if they're just above the
+middle, they'll get assigned a letter S,
+forming the NS dichotomy. The problem
+is, since most people lie near the
+middle, when they retake the test, they
+can easily end up just on the other side
+of the divide due to random fluctuations
+and therefore flip letters. But that's
+not the only way to measure how good a
+personality test is. Another way to look
+at it is to see how well you can use
+that personality test to predict actual
+facts about a person, such as their
+satisfaction with their life, how many
+awards they win at work, and how many
+close friends they have. We developed
+this approach so that we could actually
+evaluate different personality tests and
+pit them head-to-head. So, how well does
+the MBTI fare? Well, it's a proprietary
+test, so we couldn't test it directly,
+but we could test our own MBCI style
+test that was designed based on the same
+underlying theory. We used the
+personality test results to predict 37
+outcomes about a person's life, and then
+we could look at the average accuracy
+across all of those outcomes. So, how
+well did it work? Well, we can start by
+comparing it to other things. Let's
+start making predictions using
+astrological sun signs, that is whether
+someone is in Aries, Pisces, etc. Well,
+using linear and logistic regression, we
+found that astrological sun signs had no
+ability at all to predict any of these
+37 facts about a person's life. The MBTI
+style test performed better than this.
+On average, predictions made from it had
+a small positive correlation with those
+actual life outcomes. We can make these
+predictions more accurate, though, if we
+stop using categories. Categories, as we
+saw before, are unstable. If we treat
+each MBTI trait as a continuous score
+instead of as a dichotomy, the
+prediction accuracy improves. However,
+even if we use continuous scores, our
+MBTI style test loses at predicting life
+outcomes to its academic rival known as
+the Big Five. The Big Five is the most
+commonly accepted personality framework
+in academic psychology. We decided to
+dig deeper to try to understand the
+connection between MBTI style tests and
+big five tests. What we found was
+fascinating. There was quite a lot of
+alignment between the two tests. In
+fact, three of the MBTI style traits
+were each closely aligned with one
+distinct Big Five trait. For example,
+the MBTI style intuition trait map
+closely onto the big five openness to
+experience scale. But the fourth MBTI
+style trait had a more complex
+relationship being negatively related to
+two of the big five traits and
+positively related to a third one. So,
+could it be that the Big Five already
+captures most of what MBTI style tests
+measure? To find out, we tried to
+predict life outcomes again, this time
+using both people's MBTI style test
+results and their Big Five test results,
+all taken together. Interestingly, these
+predictions weren't meaningfully better
+than just using their Big Five test
+results alone. In other words, this
+suggests that the big five already
+captures most of what's measured in the
+MBTI style tests, plus additional
+information that MBTI style tests miss.
+Looking even deeper into this, we were
+able to figure out what's missing from
+MBTI style tests. The big five trait
+known as neuroticism. Neuroticism is a
+person's tendency towards negative
+emotions such as anxiety and depression
+and anger. It's an important part of the
+big five, but isn't reflected in most
+MBTI style tests. So, what's the upshot?
+Well, MBTI style tests are not useless.
+It's true they don't seem to be as
+accurate for making predictions about
+you as big five tests are, and they have
+problems with the stability of the
+categories, but they aren't total
+either, like some detractors
+claim. They do seem to have some ability
+to predict some things about you.
+Funnily enough, despite our MBTI style
+tests being less accurate for making
+predictions than the Big Five results,
+people actually tended to like their
+MBTI tests better. In a study we ran, we
+found that people felt their MBTI style
+results not only made them feel good,
+but were more accurate compared to their
+Big Five test results. If you'd like to
+know what your MBTI style and big five
+test results are, we've made it easy for
+you to find out. You can take our free
+ultimate personality test, which in
+about 12 minutes will give you both sets
+of results. If you found this video
+interesting, I'd really appreciate it if
+you'd subscribe. You can also deep dive
+on this topic on our many articles on
+our website at clearthinking.org.
+[Music]
+[Music]

@@ -1,0 +1,815 @@
+# Do Dating Apps Have a 6'0" Problem? It's... Complicated...
+# Not David · 199 k vues · 00:28:31
+# https://www.youtube.com/watch?v=eipZ4hVV1R4
+
+Oh, hey. What you're looking at here are
+dating profile heights from a public
+data set of US men. It's what you'd
+expect, a roughly bell-shaped curve,
+except with a big peak at 5' 10 and
+[music] 6 ft. Well, maybe some of you
+expected that, too. So, are men lying
+about their heights on dating profiles?
+Maybe. But it's also not that simple
+because a million years ago, I asked all
+of you for your heights, and for the US
+men, [music] we get well, pretty much
+the same distribution. So, either y'all
+are trying to date me, in which case I'm
+flattered, but I think we should just
+stay as friends, or something else is
+going on. And spoiler, something else is
+[music] going on. But proving that is,
+well, it's not hard, but it's a lot of
+moving parts that on their own seem
+obvious, but taken together are
+complicated because self-reported height
+isn't just a number. It's influenced by
+biology, psychology, orientation,
+gender, location, and even which
+measurement system you use. So, don't
+worry, we'll also look at metric. So, in
+today's desperate attempt to feel more
+secure about my height masquerading as
+an education video, we're going to try
+to figure out, are men lying about their
+heights? [music]
+Oh, and by the way, it should be obvious
+from the topic, but this is not an
+endorsement for dating websites. Stay
+safe out there, people. Okay, here's
+what we need. Like I said before, these
+heights roughly follow a bell-shaped
+curve, though not perfectly. So, are
+these peaks just due to chance, or is
+something else going on? Of course, if
+someone tells you that they have the
+heights of 35,000 men, you should
+probably have some questions for them.
+What is this data? Where did it come
+from? [music] Well, it's from a 2017
+public data set of 59,946
+anonymous US individuals published in
+the Journal of Statistics Education.
+Details in the description below. The
+data set has a 60/40 maleto-female
+split. And we'll compare results for
+everyone, but I am focusing on men here.
+Both because lying about height is more
+associated with men and because my
+control group you excuse heavily that
+way. So I just have more that I can say.
+I should also note that at the time
+OKCID didn't offer any options other
+than male female. They've added it
+since, but obviously this limits the
+analysis that I can do. And lastly, I
+think it's also important to mention
+that while any identifying information
+has been scrubbed, something we'll talk
+about later, and OKCCID did give the
+okay on this data set, the individuals
+in the data likely weren't consulted,
+even if they may have consented in some
+opaque legal document. I think that part
+is important for you to know for
+determining how you want to engage with
+this video. And if you choose not to, I
+respect that. But yeah, that's the data
+mostly. Uh for now, back to the heights.
+Okay, so here's the thing. In stats,
+proving someone is lying is difficult.
+You could even call it a tall task. But
+we can find what you'd expect to see if
+people were telling the truth. Out of
+35,000 men, 5200 were 5' 10, 4,400 were
+5'11, 5,100 were 6 ft, and so on. You
+get the point. That's what this bar
+chart shows. And we have the same for
+the 24,000 women. On average, men were
+5' 10 and women were 5'4 with a standard
+deviation of 3 in for both. Or I'll just
+say plus or minus 3 in for convenience.
+This just gives us a sense of what to
+expect. If I told you I was 5'8", then
+you wouldn't be that shocked. But if I
+said I was 8t tall like this viewer,
+you'd be a bit more suspicious. The
+standard deviation just kind of puts a
+number to that feeling. But okay, if
+these spikes are what's suspicious, then
+presumably a smooth bell curve like
+this, one with the same average and
+width as our real data is what the
+heights should have been. So using this
+as a guess and some poorly written code,
+we can simulate 35,000 perfectly honest
+men. How we do that isn't super
+important. Sorry, Box Muller fans. But
+this is what one trial of 35,000
+simulated honest men looks like. And
+here's another. They look pretty similar
+to our real men, which is great. So, is
+it possible that if we kept doing this
+over and over, eventually we'd get
+something that looks similar to our
+okaycid data? To answer that, we need a
+p value. Here's an example using 5'8
+men. Doing a lot of simulations. This
+bar chart shows that if we had 35,000
+honest men, you'd expect to see roughly
+3,400 5'8 men plus or minus 60. Okaycid
+had 3,489
+5'8 men, which is spoton, and it has a
+40% chance of happening if OkayCid men
+were being honest. That 40% is the p
+value. Technically, it's the area under
+the curve from here and beyond, but that
+part's not super important for us. All
+we need to know is that 40% is the
+chance that we would have seen 3,489
+5'8 men if everyone was being [music]
+honest. But what about six foot men?
+Well, this is what we would expect to
+see. And this is how much we actually
+saw. Uh yeah, as a probability, it's
+just zero. Uh but to be clear, that
+doesn't prove 6' men are lying. All we
+can say is that this would be unlikely
+if 6t men were telling the truth.
+Generally, the nerds have agreed that if
+you're below 5% or 1 in 20, then
+something is possibly going on. Whereas
+above 5%, it could just be chance. And
+does that seem arbitrary to you? Does it
+seem like setting a goal post would
+incentivize aiming for that goalpost?
+Was this video conceived of as an
+analogy for a wider and more important
+problem? Who cares? 6' men have a p
+value less than 0.05, and that's all
+that matters. Of course, it's not just
+6' men. There are way more 5'10 men than
+we would expect. But it can't just be
+raining men out of nowhere. So there are
+way fewer 5 foot n and 5 foot1 men than
+we would expect. Which is funny because
+it's possible that it's these men that
+are misreporting upwards. But also if
+you see a dating profile with 5'9 and
+5'11, it could be more likely to be
+telling the truth. One curious thing
+though, uh, 6'2 men were normal, but
+there are way fewer 6'1 men than
+expected, potentially suggesting that
+these men are not self-reporting up, but
+instead down as 6 ft, which doesn't
+really fit the story that men are lying
+to appear taller. Put a pin in that one.
+Oh, hey. Hope you're enjoying the video
+so far. I wanted to jump in to emphasize
+that I'm really leaving a lot out here.
+Everything I presented was technically
+correct, but if this is a publication to
+a real scientific journal, then I would
+hope that the reviewers would reject it
+because it's not enough. For example, in
+comparing height by height, we'll be
+running into multiple comparison biases.
+Uh I mean 0.05 is 1 in 20 and we are
+comparing more than 20 heights. So even
+if nothing was happening, we would
+expect a significant p value just by
+chance. There are ways to correct for
+this. to see this word on screen that I
+can't pronounce, but that would be a
+video on its own. Honestly, I did do a
+lot of these checks in the background,
+so I am only talking about the [music]
+effects that I think are real. But know
+that I did more work than what I'm
+showing to prove that to myself. Okay,
+thanks. Back to the video. Of course,
+it's not just men who are misreporting.
+There are way more 5'4 women than we
+would expect. Interestingly, these extra
+women seem to be coming from 5'5 women
+self-reporting as shorter rather than 5
+foot three women self-reporting taller.
+Their heights were normal. All of which
+is to say is that if what you wanted to
+know from this video is are people
+misrepresenting their heights on dating
+profiles, then we can now say with
+statistical certainty that yeah, very
+very likely. Cute inspirational ending
+bit about how math is cool and stuff or
+on Patreon credits. Thanks for watching.
+See you in like a year. But I don't
+think that's enough to say that people
+are lying to get dates. Like there's
+certainly lots of pressure to do so.
+This paper from 2013 found that straight
+men prefer shorter partners while
+straight women prefer taller partners.
+Shocking, I know, but it puts numbers to
+what we would expect. Now, I should say
+that isn't universal. Research from
+around the same time shows the reverse
+preference in other cultures. And
+perhaps now is a good time to caveat how
+limited in perspective both the data and
+I am with regards to all of this. But my
+point is that there tends to be a
+preference. [music]
+And recently, uh, whatever that means
+for this script, Tinder even allowed
+users to filter by height. All of which
+is without even going into society's
+idolizing of tall men and fear of tall
+women. So, there's plenty of pressure on
+both sides to lie to get more dates.
+But, does that actually explain what
+we're seeing in the data? To answer
+that, we need a control that isn't
+related to dating, which is why I needed
+your help. And of the nearly 1,800 of
+you that answered my survey, 1,400
+responded as male, 300 were female, and
+100 wrote in a third option. The US
+accounted for about a third of total
+viewers, but here's the countries that
+had at least 20 responders. Obviously,
+largely eurosentric, which should be
+kept in mind as a huge caveat for
+everything I say in this video. Focusing
+on the EU because that's where the
+okaycid data is from. The heights for
+you US men is like we saw at the very
+start pretty much identical to the
+okaycid men with the same average same
+width and same peaks at 5' 10 and 6 ft
+which kind of puts a big wrinkle in the
+datriven hypothesis.
+Admittedly I get that my voice can be
+rather soothing for many of you. So, in
+the off chance that I was somehow
+biasing your responses, I wanted at
+least one more independent data set of
+self-reported heights in the US.
+Luckily, I found the US CDC's behavioral
+risk factor surveillance system, which
+is a public data set that includes
+self-reported heights from around
+400,000 US individuals. That's a lot
+more than all of you, unless of course
+you like and subs. And yeah, it's the
+same distribution of heights as the
+OKCid data again. And this time because
+we have way more data, we can even see
+that for the women as well. And I hope
+we can agree that at the very least
+these heights are not biased by my
+dulits. One thing that I don't think I
+emphasized in the video is just [music]
+how cool I think this is. These are
+completely different people and
+completely different data sets that
+exist for completely different reasons
+[music] and yet they look nearly
+identical. And I just think that's
+really really cool. statistics is just
+it's just really really cool. Uh yeah,
+back to the video. So, if it's not
+dating, what else could it be? Well, we
+have three independent data sets, none
+of which follow the bell curve we
+expect. So, maybe we shouldn't expect
+this bell curve. Maybe this is just what
+heights in the US are like. To test
+this, I found another US CDC data set.
+This time, the National Health and
+Nutrition Examination Survey data. uh
+this public data set was smaller but
+crucially the researchers physically
+measured heights meaning people couldn't
+exaggerate using this data I found that
+the distribution of heights that we
+should actually expect for men is this
+not only does it not have the peaks at
+5' 10 and 6 ft it's about an inch to an
+inch and a half shorter than
+self-reported heights overall and yeah
+the same was true for women as well and
+I get that a 1 in difference doesn't
+seem like that much but statistically
+The chances of this discrepancy
+happening by chance, it's essentially
+zero. So, this must be evidence that
+people are lying to get more dates,
+right? Well, once you start really
+thinking about it, that explanation
+starts to not make much sense. If, for
+example, because women typically report
+as preferring taller men, it makes sense
+for men to overexaggerate their heights.
+By using that same logic, it makes much
+less sense for women to do the same. The
+other problem is that remember you US
+viewers are also an inch over what we
+would expect for measured heights and so
+are the 400,000 people in the CDC
+self-reported height data set.
+Admittedly, the collection of measured
+heights was interrupted by unprecedented
+times in March of 2020. So maybe the
+data is bad. Well, I also checked
+earlier measured height data sets from
+2015 and 2018. And from tables 10 and 12
+from a report by the US Health and Human
+Services, I found that the earlier data
+lines up exactly with the measured
+heights from the later data. So I think
+we have enough right now to say at least
+this. First, there are way more 5' 10
+and 6' men in the OKCID data set than we
+would expect by chance. Second, given
+these peaks also appear in the American
+survey data and that data from you
+brilliant and gorgeous not David
+viewers, it's not obviously clear that
+this is lying for the sake of dating.
+And third, everyone appears to be about
+an inch higher than we would expect from
+measured heights, which means that now
+we have to ask, is everybody lying?
+The thing about research is that it's
+often less of an organized march and
+more of a fever dream of caffeine stats
+and error messages intermittent with
+best of Columbbo compilations on
+YouTube. I say that because while I'm
+trying to present things in a logical
+manner, that's not really how it
+happened to me. Uh, for example, one of
+the things we haven't really talked
+about yet is orientation, gay, straight,
+or by. Now, given we've already seen
+three independent data sets with
+essentially the same distribution of
+self-reported heights, I wasn't really
+expecting anything to change if we just
+looked at non-straight men, which of
+course then is not what happened. Yeah,
+the heights are quite different from
+what we've been seeing up until now.
+Though, given they still follow a bell
+curve, it might not be obvious just by
+looking at it. We got to do some more
+stats. H out of 35,000 men, 4,700
+self-reported as not straight. [music]
+around 13% and they came in at an
+average around 5'10" plus or - 3 in.
+That's in line with what we saw for all
+men in the OKC cupid data, but that's
+kind of where the similarities end.
+First, there's no longer a peak at 6 ft.
+I hope that's pretty obvious, but maybe
+not as obvious is that there's no peak
+at 5' 10 either. Well, clearly that's a
+lie. The average is 5' 10, and there is
+a peak at 5' 10 as we would expect. What
+I mean is that there isn't more than we
+would expect. The peak is not a
+suspicious one. its p value is greater
+than 0.05 unlike when we looked at
+everybody together or even when we just
+looked at straight men only. And I think
+that's an important thing to keep in
+mind. Size matters. By which of course I
+mean effect size. If you wanted to cheat
+someone at coin tosses, you wouldn't
+bring up a coin that always came up
+heads because that would be pretty
+obvious right away. A coin that instead
+came up heads only 60% of the time would
+be much harder to detect.
+>> The game was rigged from the start.
+The smaller the effect, the more data
+you need to prove that the effect is
+there. So, is the lack of suspicious
+peaks at 5' 10 and 6 feet [music]
+because non-straight men are
+self-reporting their heights in a
+fundamentally different way, or is it
+just because we have like a tenth of the
+data? Testing this is actually pretty
+easy, though. I'll leave the fine
+details in the description. What we want
+to know is does a random sample of 4,700
+men, independent of orientation, look
+like the distribution of heights for the
+4,700 nonstraight men? Well, that p
+value turns out to be around 0
+16 zeros and then a three. So, yeah,
+it's much less than 0.05, meaning that
+the lack of suspicious peaks is probably
+not due to having fewer non-straight
+men, but because they are actually
+self-reporting differently. And to
+really hammer that in, I think now is a
+good time to finally show you how the
+heights for the 3500 nonstraight women
+looks like. Because not only do their
+heights look very similar to the heights
+of straight women, the p value between
+the two is 0.06.
+So unlike men, the way that women
+self-report their heights doesn't appear
+to depend on orientation. All of which I
+think is really, really cool.
+Fundamentally, a self-reported height
+isn't just a number. It's also this
+weird mix of how we see ourselves, how
+we want to be seen, and how we think
+others want to see us. And while I
+wasn't able to find an equivalent paper
+about partner preferences for
+non-straight people, research is really
+lacking here. Uh it's not hard to
+imagine that height preferences change
+with orientation. Still though, as
+excited as I was to see this result,
+this was also around the time that I
+found this an article on 70,000 okaycid
+dating profiles scraped and publicly
+released without permission. and the
+researchers responses to being
+questioned on the ethics of this. Well,
+let's just say that I wasn't a big fan
+and I was devastated when I found this.
+Months of work all gone and I just sat
+around thinking, what was I going to do?
+There was no way that I could proceed
+with the video. That was the obvious
+part, but more generally, I felt like I
+was letting down supporters, which was
+not a good feeling. So, how does this
+video exist then? Well, I reached out to
+a friend saying I was cancelling the
+video and she did something pretty
+novel. Actually, read the article
+instead of just looking at the headlines
+like I did and pointed out that this
+wasn't actually the data I was working
+with. Uh yeah, there are two okaycid
+data sets with nearly the same amount of
+people in them. The one that I was using
+which had the okay from okaycid and
+removed user information and the second
+one which did not have permission and
+did little to make sure people's
+identities were hidden. Funny enough, I
+did know of this data set, but I had
+forgotten about it because of all the
+things that they did take, height was
+one of the few things that they didn't.
+So, yeah, that was a thing. And while
+that should have been a happy moment,
+months of work were not gone to waste,
+it wasn't. And it really took the wind
+out of the sales of the project, which
+is why I wanted to put this part into
+the video, is setbacks like this are
+part [music] of any creative endeavor.
+Whether it's making an art piece or an
+academic publication, there are big
+[music] highs and even bigger lows. And
+sometimes you can even finish the thing
+only to find no one engaging [music]
+with it, which is maybe the worst
+outcome. I have no doubt that the amount
+of time it took me to make this will
+probably hurt it algorithmically, but
+that's a fundamental part of the
+process, and I didn't want to hide that
+part of it for anybody wanting to do
+something similar. Uh so anyway, uh
+after that existential crisis and a
+brief trip to Minia of Vunderland in
+Hamburg, which I really want to make a
+video about one day, there was still one
+thing left over. Even if it's the case
+that gay and by men are less likely to
+over report as 6 ft than straight men,
+it still leaves the fact that everyone,
+regardless of everything else, is still
+about an inch over the measured heights.
+And I think we have to finally stop
+dancing around [music] the question that
+the metric users have probably been
+asking this entire time. What in the
+world are you talking about?
+In some ways, 6 feet makes sense.
+Statistically, most heights fall roughly
+between 5'5 and 6'5. So, 6 feet is the
+special rollover number that serves as a
+goalpost. So, okay, fine. But 6 ft is
+roughly 183 cm, which as far as I know
+isn't involved in any cultural fetishes,
+though feel free to let me know. So, do
+metric countries have an equivalent to
+the 6 ft phenomena in the US?
+Of the 1,800 of you that answered my
+survey, 1,000 responded in metric. As
+you can imagine, while the vast majority
+of imperial respondents came from the
+US, metric countries tend to be a bit
+more spread out, though German viewers
+were the most represented here, which is
+kind of useful. We already saw US people
+are about an inch overmeasured heights
+or roughly 2.5 cm. So, let's check
+against official statistics to see if my
+German viewers are doing the same.
+German men came in at 181 cm, women at
+168, and finally 175 for everyone in
+between. Oh, hey, quick note. Heights
+and centimeters have a much wider range
+of values in feet and inches. So, in
+order to get a nicel looking bar chart,
+you either need to get much more data or
+group heights together. So, here I've
+made it that each bar represents 2.5 cm
+because 1 in is about 2.5 cm, which also
+makes the visual comparisons to imperial
+a bit more one. But all the math in the
+background is being done on the original
+heights. This is just for visualization.
+Using the uh this thing, I found that
+when adjusted to your rough age, the
+average measured heights were 181 cm for
+men and 167 for women. Unfortunately, no
+data in between though. These are pretty
+spot-on, at least within a centimeter,
+much less than the 2.5 cm for the US
+viewers. That being said, this paper
+found Netherlanders over report by maybe
+about a centimeter. So, on par with my
+German viewers, but Italians
+overestimate by about 2.6 cm, on par
+with the Americans, which personally I
+think is even more interesting. It
+suggests that overestimating height is
+maybe not so much an imperial versus
+metric thing, but maybe something that
+depends on your background. Super
+interesting, if true, but I don't have
+the data to test that myself. [music]
+But, okay, I'm obviously kind of
+deliberately ignoring something here.
+No, Germans don't over report at 6 feet
+or 183 cm. They're over reporting every
+5 cm. And of course, it's not just
+Germans. Non-Germans followed the same
+pattern. Peaks at every 5 cm. And
+obviously, when we pull all my viewers
+together, we see the same thing. And
+yeah, I did check the p value suggests
+that this is unlikely to occur by
+chance. Oh, and so I'm not excluding
+anyone. The average heights for my
+metric viewers were 178 for men, 164 for
+women, and 175 for non-respondents or
+third choice choosers. [music] I think
+that's everyone now. And I think this
+makes sense. Say what you will about
+Imperial, and I think there is much to
+be said. The fact that metric users
+effectively round to every fifth centime
+does to me suggest that centime are
+maybe not a convenient unit of height.
+Honestly, hot take. I think maybe the
+best units are just straight up inches.
+It's coarse enough to be [music] useful,
+but you count them up like centime.
+Shout out to the uh 1% of you who use
+just inches. [music]
+Though reading through the comments, I
+suspect most of these viewers are 5'9.
+Anyway, very clearly metric men are not
+reporting their heights accurately. But
+are they lying? And my thought to this
+originally was they aren't so much as
+lying as they are rounding. And I
+suspect many of you think the same. To
+me, lying suggests malicious intent,
+which rounding locks. But that's not
+fair. If I'm willing to give metric
+users the benefit of the doubt, why not
+the imperialists, too? Suppose they
+aren't lying. Is it possible they're
+rounding?
+No, I mean, that's a genuine question. I
+I don't know. Uh, which is not to say
+that I didn't try to look into it
+because it would explain certain things
+like the fact that we saw fewer 6'1 men
+than expected, which doesn't really fit
+the assumption that everyone is lying to
+appear taller. Obviously though, going
+around asking, "Hey, are you rounding
+your height?" is not viable. So I did
+the next best thing, a statistical model
+or simulation which would take a
+measured height say 5'7 and try to guess
+what that person would have
+self-reported as. The goal is to see can
+we turn this measured heights into this
+the self-reported heights with just
+rounding. I'll leave the details on
+screen but put simply when we say
+rounding what we're really talking about
+here are end digit preferences. People
+like numbers that end with a zero or
+five. The others not so much. So, my
+simulation tries to see what you would
+get if people misreport their measured
+heights, taking that preference into
+account. [music]
+And this is what I got. And uh it's not
+great. It gets some things right. It
+gets the two peaks at 5' 10 and 6 ft.
+So, yeah, potentially those could be due
+to people's preferences of ending their
+height with a zero. But it also gets a
+lot wrong. And it's clear that rounding
+on its own can't explain the data. So
+yeah, I was hoping for something a bit
+more substantive to end with, but
+sometimes you just got to make do with
+what you got. Except that's when I
+remembered, what about you metric
+viewers? Well, it turns out that using
+the exact same model, we can match the
+metric viewers almost exactly. And the
+fact that my stupid Liebot 3000 can so
+accurately recreate metric user heights
+while simultaneously failing at imperial
+heights does tell us something
+important. These two groups are
+reporting in fundamentally different
+ways. Metric heights are almost entirely
+determined by our preferences for zeros
+and fives. Whereas imperial heights are
+much more complex and I admittedly still
+don't really know exactly what's going
+on there after all this time. And like I
+get that this might all seem silly, but
+the majority of my readings for end
+digit preferences came from health
+science journals because how
+inaccurately people report their height
+and weight has consequences for
+treatment of heart related health
+issues. Sometimes it doesn't even have
+to come from the patients. This paper
+looks at how rounding blood pressure
+readings preferentially might be skewing
+important health metrics, which
+admittedly is not where I thought this
+video would go when I started making it,
+but maybe that's just this video in a
+nutshell. Every time I thought I had an
+explanation, a counter example would
+either prove me wrong or at the very
+least made it clear that my idea wasn't
+true for everyone or set me off on a
+rabbit hole I was not expecting. Are
+people lying on dating profiles? Well,
+that probably depends on what you mean
+by lying. A lot of it does appear to be
+related to rounding. But at the same
+time, I don't want to make it sound like
+I'm dismissing the experiences of those
+who were lied, too. There is enough
+outside evidence to suggest that there
+is some genuine lying going on. One
+thing I wanted to try to understand was
+why are people so obsessed with height?
+And there's no one answer to this, but
+here's my nerdy take. First, it's easy
+to put a number to. People might hate
+math, but we are obsessed with numbers.
+And second, and perhaps more
+importantly, it's linear. Plus or minus
+5 kg can mean different things for
+different people at different ages, but
+height is just height. And that makes it
+easy to compare against and compete
+against, even if it doesn't really make
+[music] much sense to. But even that
+explanation is at best not true for
+everyone and at worst [music]
+self-projecting. And look, I'm sure
+there's some important message about
+science and inclusivity there. But all I
+know is that it made doing the research
+for this video really, really uh fun
+actually. And I mean, yeah, that was the
+entire point of the OKCID data set in
+the first place. Capitalizing on
+people's familiarity with a fun topic
+like dating profiles makes them quote
+much better prime [music] to absorb
+statistical lessons. So, if you've made
+it all the way here thinking, "Wow, that
+was really dumb." [music] To some
+extent, that's kind of the point. But
+also, thanks for watching to the end. I
+really do think studying things like
+self-reported heights, especially across
+different groups of people, is a small
+window into seeing how others see
+themselves. I [music] guess what I'm
+trying to say is I'm 51.
+Okay. Uh, wow. Hey, everyone. I hope you
+enjoyed that because that was a journey
+for me. Uh, I had the idea for this
+video back like [music] 2 years ago now,
+and I've been working on it roughly
+since September 2024. And as you can
+imagine, a lot of stuff has happened
+since then. And I kind of allude to
+this, but that early video was very
+different from the one that you just
+saw. I really can't stress just how much
+stuff I've had to leave out of here.
+from papers that I wanted to talk about
+but felt I couldn't because they were a
+bit too risque. A sudden art style
+switch probably influenced by too much
+Paper Mario to an extended existential
+dissection of my channel when I thought
+I'd have to scrap this entire video
+arguably multiple times. It's probably
+enough to fill up another 20 plus
+minutes of behindthe-scenes material
+which is uh actually exactly what I did
+and you can watch that over now on
+Nebula. Yeah, that's right. Not David is
+on Nebula now. Uh, and like listen, I
+literally made a video about who you
+watch on YouTube. I know you already
+watch a lot of Nebula creators. People
+like Angela Collier, Wendover
+Productions, Jacob Geller, Maggie
+Mayfish, and a bunch of other stuff. I
+see the freaky stuff y'all are into. And
+I know you also probably know creators
+use Nebula to upload original videos,
+extended thoughts, bonus videos, or even
+premier content like a month early. But
+like, here's the thing. It takes me
+forever to make a video and I'll
+probably do some behind the scenes of
+that process, how [music] I did an
+effect in Blender or Da Vinci Resolve,
+but really I'm not saying you should
+check out Nebula to watch my stuff
+specifically. I'm saying it because I
+know you already watch a lot of the
+people on there and they're doing some
+really cool stuff. Some of which is only
+on Nebula and all of which is adree.
+Personally, right after I finish
+uploading this, I'm going straight to
+playing Silk Song because I've been
+putting off the newest masterful mimicry
+episode. That's King K's Nebula original
+series about the artistic and cultural
+influences behind games like Silkong or
+Okami. As some of you probably noticed,
+I take a lot of inspiration for the art
+style of my videos from video games. And
+I always appreciate when someone takes a
+thoughtful dissection of that art. And
+if all of that sounds interesting to
+you, well, right now a yearly Nebula
+subscription is 50% off with my link in
+the description. That's just $2.5 a
+month or $30 a year for some of the best
+stuff on the internet. And I guess my
+stuff is on there too now. And if you
+are interested but still not sure,
+Nebula even recently started an all
+accessess free trial if you just want to
+[music] check some stuff out. But for
+me, I just think it's cool that Nebula
+thought my stuff was worth including
+with all of the other creators that I'd
+genuinely been watching for many, many
+years now. Uh, thanks a bunch and I'll
+see you at some point eventually. I
+don't know. These these videos are kind
+of getting away from

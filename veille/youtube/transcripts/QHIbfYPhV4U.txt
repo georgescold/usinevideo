@@ -1,0 +1,197 @@
+# 2. Swipe Fatigue: Why AI is Replacing the Swipe
+# AI Investigates: Love and Romance · 6 vues · 00:06:29
+# https://www.youtube.com/watch?v=QHIbfYPhV4U
+
+If you've ever been on a dating app, you
+know the feeling. That endless, kind of
+numbing cycle of swipe, swipe, swipe.
+It's got a name, you know. Swipe
+fatigue. And it's burning out millions
+of people. It turns out most of these
+apps were actually designed to keep you
+hooked, to maximize the time you spend
+on them. But now, a whole new generation
+of apps is trying to flip the script.
+And they're using a powerful new tool to
+do it. Artificial intelligence. So to
+really get where this is all going, we
+have to take a quick look back at how we
+got here. I mean, it all kicked off way
+back in 1995 with match.com. Just
+putting simple profiles online. Then,
+boom. 2012. Tinder drops the swipe and
+everything changes. And that brings us
+right up to today, where we're seeing
+this huge pivot toward AI-powered
+matchmaking. You really can't overstate
+it. That 2012 launch of Tinder was a
+total game-changer. The swipe was just
+so simple, so fast, and let's be real,
+it was pretty fun.
+It felt like a game. And it took online
+dating from this kind of niche thing to
+a massive mainstream obsession. But,
+that fun came with a hidden price tag.
+Yeah, here's the thing. These apps
+weren't really designed to find you the
+one. They were engineered, by design, to
+keep you on the app. Their main goal
+wasn't actually your happily ever after,
+it was your constant, continuous
+engagement. And this brings us right to
+the heart of the problem. The thing that
+explains all that burnout so many of us
+feel.
+It's this built-in conflict between what
+you, the user, are looking for, and what
+the app, as a business, needs to do to
+make money. It's something that
+researchers actually call the Tinder
+paradox. Just think about it. Your goal,
+your definition of success, is to find
+an amazing person and then, hopefully,
+delete the app, right? Well, for the
+app, that's a lost customer. Their
+business model literally depends on you
+staying single and keeping that swipe
+thumb busy.
+Let's just break that down. Your goal is
+to find a real
+and once you do, you're out. Success for
+you means leaving, but the app's goal is
+to keep you swiping, to maximize your
+time on their platform. Success for them
+means you stay. Your goals are
+completely at odds. It's a conflict
+baked right into the system.
+So, how they keep us hooked for so long?
+Well, they turn the search for love into
+a literal game. You get little rewards
+like match streaks. There are time-based
+incentives that create this false sense
+of urgency. Some apps like Tinder back
+in the day even use these controversial
+ranking systems like the Elo score,
+which is from the world of chess,
+believe it or not, to basically rate how
+desirable you are. It all works together
+to create this little loop that keeps
+you coming back for that next hit of
+validation. And none of this is an
+accident. These features are known in
+the tech world as dark patterns. They're
+specifically designed to tap into our
+psychological weak spots, to wear us
+down with this mental fatigue until
+we're just mindlessly swiping, not
+really making conscious choices anymore.
+So, after years and years of this model
+dominating the scene, the cracks are
+really starting to show. We're seeing
+this massive wave of user burnout, and
+the industry that created this whole
+mess is now facing a pretty serious
+crisis of its own.
+I mean, just look at the numbers.
+They're pretty staggering. Match Group,
+this is the giant that owns Tinder and
+Hinge, saw its stock value absolutely
+crater, dropping by 80% in just a few
+years. That is a massive red flag from
+investors.
+And this quote from a Morgan Stanley
+analyst really just hits the nail on the
+head. He says, "Simply, the product
+doesn't work as well as people expect it
+to."
+And that's it, right? After all the
+games and all the swiping, people just
+feel like the apps aren't delivering on
+their most basic promise.
+So, the industry's in trouble. What's
+the big plan?
+The big bet is on AI.
+But that's the million-dollar question,
+isn't it?
+Can AI really come in and solve the very
+problems that the last generation of
+algorithms helped create in the first
+place?
+Okay, so first up, you've got the old
+guard, the big players like Tinder and
+Hinge. They're scrambling to fix things.
+They're starting to use more
+sophisticated AI to get away from that
+endless firehose of profiles. The new
+idea is to give you fewer, but hopefully
+better, more curated matches every day.
+It's all about quality over quantity.
+But then you've got this new wave of
+startups and they're building things
+totally differently with AI at the core
+from day one. On an app called Fate, for
+example, there's no swiping at all.
+Instead, you start with this really
+in-depth interview with an AI about your
+values, your personality, the deep
+stuff. Then it gives you just a handful
+of curated matches, which forces you to
+be a lot more thoughtful about it. And
+some apps are taking it even a step
+further. There's an app called Breeze
+that completely gets rid of all that
+pre-date texting back and forth. As soon
+as you match with someone, the AI just
+goes ahead and schedules a first date
+for you at a local coffee shop or bar.
+It's basically an AI-arranged blind date
+designed to push you into a real
+face-to-face interaction as fast as
+possible.
+But AI's new job isn't stopping at just
+being a matchmaker. Nope, it's now
+evolving into something more like a
+personal advisor, like a relationship
+coach in your pocket designed to help
+you figure out what to say and do.
+And you know, for some people, this is
+genuinely exciting. Take Jasmine, a
+28-year-old who was tired of having the
+same boring conversations on other apps.
+For her, she said it just sounded quite
+cool. And hey, it's where the world is
+going now, isn't it?
+But of course, this is where it gets a
+little more complicated. On the one
+hand, yeah, an AI can give you advice
+without any judgment and it can really
+help you get over that anxiety of
+crafting the perfect first message. But
+on the other hand, some people find it
+kind of scary, you know, a bit like
+Black Mirror. And there's a real worry
+that if we rely on AI too much, we might
+stop learning that crucial real-world
+skill of just trying and yes, sometimes
+failing all on our own.
+And this quote from a Match Group
+consultant really gets to the heart of
+the matter. She says she worries about
+people turning to machines because
+turning to humans requires
+vulnerability, and that's become
+uncomfortable for a lot of us.
+And that's it, right? What do we lose
+when we try to outsource vulnerability
+to an algorithm? It feels safe, for
+sure, but real connection, that requires
+risk. So, from fighting our collective
+burnout to coaching our conversations to
+even setting up our first dates, AI is
+already making some huge changes to how
+we connect. And it leaves us with this
+one really big question to think about
+as this tech gets woven deeper and
+deeper into our lives. How else will AI
+change the very nature of our modern
+relationships?

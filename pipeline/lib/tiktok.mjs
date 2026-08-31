@@ -117,6 +117,96 @@ export async function telechargeAudio(url, destinationSansExtension) {
   return attendu
 }
 
+/**
+ * Télécharge la VIDÉO, pas seulement son audio.
+ *
+ * POURQUOI ON LA RAPATRIE AU LIEU DE L'AFFICHER EN LIGNE.
+ *
+ * Un lecteur embarqué de TikTok ou de YouTube demanderait d'ouvrir la politique
+ * de sécurité de l'atelier aux domaines de ces plateformes — donc d'y laisser
+ * entrer leurs scripts et leurs traceurs, dans une page qui affiche par
+ * ailleurs le contenu de la chaîne. Le fichier local évite ça, se relit hors
+ * connexion, et ne disparaît pas le jour où l'auteur retire sa vidéo. C'est ce
+ * dernier point qui tranche : une inspiration qu'on ne peut plus revoir n'est
+ * plus une inspiration.
+ *
+ * `hauteurMax` borne le poids. Une vidéo de référence se juge sur son montage
+ * et ses accroches, pas sur sa définition : 720 pixels suffisent, et au-delà de
+ * dix minutes on descend d'un cran parce que le fichier, lui, ne se borne pas.
+ */
+export async function telechargeVideo(url, destinationSansExtension, { hauteurMax = 720 } = {}) {
+  const bin = await trouveYtdlp()
+  if (!bin) throw new Error(`yt-dlp est introuvable. Renseigne YTDLP_PATH dans .env.`)
+
+  assureDossier(path.dirname(destinationSansExtension))
+  const h = Math.max(144, Math.min(1080, Number(hauteurMax) || 720))
+  const dossier = path.dirname(destinationSansExtension)
+  const base = path.basename(destinationSansExtension)
+
+  const trouveLeFichier = () => {
+    const f = fs
+      .readdirSync(dossier)
+      .filter((x) => x.startsWith(`${base}.`) && /\.(mp4|webm|mkv|mov)$/i.test(x))
+      .sort((a, b) => (a.endsWith('.mp4') ? -1 : 0) - (b.endsWith('.mp4') ? -1 : 0))
+    return f.length ? path.join(dossier, f[0]) : null
+  }
+
+  // DEUX TENTATIVES, ET LA SECONDE N'EST PAS UNE PRÉCAUTION DE PRINCIPE.
+  //
+  // Le premier sélecteur demande les flux séparés — image et son téléchargés à
+  // part, puis assemblés — ce qui donne la meilleure définition disponible.
+  // YouTube y répond aujourd'hui « 403 Forbidden » : ses flux adaptatifs sont
+  // protégés, et la parade change au fil des versions de yt-dlp. Mesuré le
+  // 29 août 2026 : `bestvideo+bestaudio` échoue, `best` passe.
+  //
+  // Le second sélecteur demande un flux progressif — image et son déjà réunis
+  // dans un seul fichier. YouTube le sert sans discuter, plafonné plus bas.
+  //
+  // On garde donc les deux dans cet ordre : la qualité quand elle est
+  // accessible, l'image quand elle ne l'est pas. Figer le second seul
+  // dégraderait TikTok, qui n'a jamais eu ce problème ; figer le premier laisse
+  // YouTube au bord de la route.
+  const tentatives = [
+    `bestvideo[height<=${h}][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=${h}]+bestaudio`,
+    `best[height<=${h}][ext=mp4]/best[height<=${h}]/best`,
+  ]
+
+  let dernierStderr = ''
+  for (const format of tentatives) {
+    const { code, stderr } = await lance(bin, [
+      // On vise le MP4 : c'est le seul conteneur que tous les navigateurs lisent
+      // sans extension. Un WebM VP9 passerait sur Chrome et pas ailleurs, et
+      // l'aperçu resterait noir sans rien expliquer.
+      '-f', format,
+      '--merge-output-format', 'mp4',
+      '--no-warnings',
+      '--no-playlist',
+      '-o', `${destinationSansExtension}.%(ext)s`,
+      url,
+    ])
+    dernierStderr = stderr
+    const fichier = trouveLeFichier()
+    if (code === 0 && fichier) return fichier
+    // Un essai raté peut laisser un fragment derrière lui : le suivant écrirait
+    // à côté, et on servirait un fichier tronqué en croyant l'avoir rapatrié.
+    //
+    // Le ménage ne vise QUE les conteneurs vidéo et les fragments. La couverture
+    // `<id>.jpg` porte le même préfixe et n'a rien à voir avec cet échec : la
+    // balayer ferait perdre, sur un simple `--refais`, une vignette que rien ne
+    // redemanderait.
+    const aJeter = /\.(mp4|webm|mkv|mov|part|ytdl|f\d+)$/i
+    for (const reste of fs.readdirSync(dossier)) {
+      if (reste.startsWith(`${base}.`) && aJeter.test(reste)) {
+        try { fs.rmSync(path.join(dossier, reste), { force: true }) } catch { /* rien à nettoyer */ }
+      }
+    }
+  }
+
+  throw new Error(
+    `Téléchargement de la vidéo impossible.\n${dernierStderr.trim().split('\n').slice(-3).join('\n')}`
+  )
+}
+
 /** Télécharge la couverture, utile pour comparer les premières images. */
 export async function telechargeCouverture(url, destination) {
   const bin = await trouveYtdlp()

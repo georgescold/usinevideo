@@ -1,0 +1,1651 @@
+{
+  "id": "7167121931328654598",
+  "langue": "fr",
+  "mots": [
+    {
+      "texte": "Si",
+      "debutMs": 80,
+      "finMs": 120
+    },
+    {
+      "texte": "tu",
+      "debutMs": 130,
+      "finMs": 240
+    },
+    {
+      "texte": "restes",
+      "debutMs": 240,
+      "finMs": 600
+    },
+    {
+      "texte": "coincé",
+      "debutMs": 600,
+      "finMs": 960
+    },
+    {
+      "texte": "sur",
+      "debutMs": 960,
+      "finMs": 1170
+    },
+    {
+      "texte": "la",
+      "debutMs": 1170,
+      "finMs": 1260
+    },
+    {
+      "texte": "même",
+      "debutMs": 1260,
+      "finMs": 1500
+    },
+    {
+      "texte": "personne",
+      "debutMs": 1500,
+      "finMs": 2000
+    },
+    {
+      "texte": "et",
+      "debutMs": 2000,
+      "finMs": 2090
+    },
+    {
+      "texte": "que",
+      "debutMs": 2090,
+      "finMs": 2220
+    },
+    {
+      "texte": "tu",
+      "debutMs": 2220,
+      "finMs": 2300
+    },
+    {
+      "texte": "n'arrives",
+      "debutMs": 2300,
+      "finMs": 2750
+    },
+    {
+      "texte": "pas",
+      "debutMs": 2750,
+      "finMs": 2830
+    },
+    {
+      "texte": "à",
+      "debutMs": 2830,
+      "finMs": 2870
+    },
+    {
+      "texte": "passer",
+      "debutMs": 2880,
+      "finMs": 3170
+    },
+    {
+      "texte": "à",
+      "debutMs": 3170,
+      "finMs": 3180
+    },
+    {
+      "texte": "autre",
+      "debutMs": 3220,
+      "finMs": 3480
+    },
+    {
+      "texte": "chose,",
+      "debutMs": 3480,
+      "finMs": 4660
+    },
+    {
+      "texte": "je",
+      "debutMs": 4660,
+      "finMs": 4780
+    },
+    {
+      "texte": "vais",
+      "debutMs": 4780,
+      "finMs": 5060
+    },
+    {
+      "texte": "t'expliquer",
+      "debutMs": 5060,
+      "finMs": 5680
+    },
+    {
+      "texte": "pourquoi",
+      "debutMs": 5680,
+      "finMs": 6160
+    },
+    {
+      "texte": "tu",
+      "debutMs": 6160,
+      "finMs": 6280
+    },
+    {
+      "texte": "fais",
+      "debutMs": 6280,
+      "finMs": 6650
+    },
+    {
+      "texte": "ça",
+      "debutMs": 6650,
+      "finMs": 6660
+    },
+    {
+      "texte": "et",
+      "debutMs": 6700,
+      "finMs": 6740
+    },
+    {
+      "texte": "je",
+      "debutMs": 6750,
+      "finMs": 6820
+    },
+    {
+      "texte": "vais",
+      "debutMs": 6820,
+      "finMs": 6990
+    },
+    {
+      "texte": "t'expliquer",
+      "debutMs": 6990,
+      "finMs": 7500
+    },
+    {
+      "texte": "comment",
+      "debutMs": 7500,
+      "finMs": 7830
+    },
+    {
+      "texte": "tu",
+      "debutMs": 7830,
+      "finMs": 7890
+    },
+    {
+      "texte": "peux",
+      "debutMs": 7890,
+      "finMs": 8110
+    },
+    {
+      "texte": "réussir",
+      "debutMs": 8110,
+      "finMs": 8760
+    },
+    {
+      "texte": "à",
+      "debutMs": 8760,
+      "finMs": 8850
+    },
+    {
+      "texte": "passer",
+      "debutMs": 8850,
+      "finMs": 9440
+    },
+    {
+      "texte": "à",
+      "debutMs": 9440,
+      "finMs": 9490
+    },
+    {
+      "texte": "autre",
+      "debutMs": 9490,
+      "finMs": 10030
+    },
+    {
+      "texte": "chose.",
+      "debutMs": 10030,
+      "finMs": 10480
+    },
+    {
+      "texte": "Salut",
+      "debutMs": 10480,
+      "finMs": 10720
+    },
+    {
+      "texte": "pour",
+      "debutMs": 10720,
+      "finMs": 10910
+    },
+    {
+      "texte": "ceux",
+      "debutMs": 10910,
+      "finMs": 11100
+    },
+    {
+      "texte": "qui",
+      "debutMs": 11100,
+      "finMs": 11240
+    },
+    {
+      "texte": "ne",
+      "debutMs": 11240,
+      "finMs": 11330
+    },
+    {
+      "texte": "me",
+      "debutMs": 11330,
+      "finMs": 11420
+    },
+    {
+      "texte": "connaissent",
+      "debutMs": 11420,
+      "finMs": 11950
+    },
+    {
+      "texte": "pas,",
+      "debutMs": 11950,
+      "finMs": 12240
+    },
+    {
+      "texte": "je",
+      "debutMs": 12240,
+      "finMs": 12360
+    },
+    {
+      "texte": "m'appelle",
+      "debutMs": 12360,
+      "finMs": 12690
+    },
+    {
+      "texte": "Choquette,",
+      "debutMs": 12690,
+      "finMs": 13160
+    },
+    {
+      "texte": "je",
+      "debutMs": 13160,
+      "finMs": 13270
+    },
+    {
+      "texte": "suis",
+      "debutMs": 13270,
+      "finMs": 13500
+    },
+    {
+      "texte": "en",
+      "debutMs": 13500,
+      "finMs": 13610
+    },
+    {
+      "texte": "licence",
+      "debutMs": 13610,
+      "finMs": 14010
+    },
+    {
+      "texte": "de",
+      "debutMs": 14010,
+      "finMs": 14120
+    },
+    {
+      "texte": "psychologie",
+      "debutMs": 14120,
+      "finMs": 14760
+    },
+    {
+      "texte": "et",
+      "debutMs": 14760,
+      "finMs": 14870
+    },
+    {
+      "texte": "j'ai",
+      "debutMs": 14870,
+      "finMs": 15130
+    },
+    {
+      "texte": "vécu",
+      "debutMs": 15130,
+      "finMs": 15290
+    },
+    {
+      "texte": "deux",
+      "debutMs": 15290,
+      "finMs": 15540
+    },
+    {
+      "texte": "grosses",
+      "debutMs": 15540,
+      "finMs": 15920
+    },
+    {
+      "texte": "relations",
+      "debutMs": 15920,
+      "finMs": 16440
+    },
+    {
+      "texte": "qui",
+      "debutMs": 16440,
+      "finMs": 16600
+    },
+    {
+      "texte": "m'ont",
+      "debutMs": 16600,
+      "finMs": 16880
+    },
+    {
+      "texte": "beaucoup",
+      "debutMs": 16880,
+      "finMs": 17340
+    },
+    {
+      "texte": "appris.",
+      "debutMs": 17340,
+      "finMs": 17840
+    },
+    {
+      "texte": "Dans",
+      "debutMs": 17840,
+      "finMs": 18060
+    },
+    {
+      "texte": "ce",
+      "debutMs": 18060,
+      "finMs": 18170
+    },
+    {
+      "texte": "genre",
+      "debutMs": 18170,
+      "finMs": 18450
+    },
+    {
+      "texte": "de",
+      "debutMs": 18450,
+      "finMs": 18550
+    },
+    {
+      "texte": "relations,",
+      "debutMs": 18550,
+      "finMs": 19200
+    },
+    {
+      "texte": "que",
+      "debutMs": 19200,
+      "finMs": 19490
+    },
+    {
+      "texte": "ce",
+      "debutMs": 19490,
+      "finMs": 19830
+    },
+    {
+      "texte": "soit",
+      "debutMs": 19830,
+      "finMs": 20070
+    },
+    {
+      "texte": "avec",
+      "debutMs": 20070,
+      "finMs": 20590
+    },
+    {
+      "texte": "un",
+      "debutMs": 20590,
+      "finMs": 20650
+    },
+    {
+      "texte": "ex",
+      "debutMs": 20650,
+      "finMs": 20880
+    },
+    {
+      "texte": "ou",
+      "debutMs": 20880,
+      "finMs": 21010
+    },
+    {
+      "texte": "avec",
+      "debutMs": 21010,
+      "finMs": 21280
+    },
+    {
+      "texte": "un",
+      "debutMs": 21280,
+      "finMs": 21410
+    },
+    {
+      "texte": "crush",
+      "debutMs": 21410,
+      "finMs": 21740
+    },
+    {
+      "texte": "qui",
+      "debutMs": 21740,
+      "finMs": 21940
+    },
+    {
+      "texte": "n'a",
+      "debutMs": 21940,
+      "finMs": 22120
+    },
+    {
+      "texte": "pas",
+      "debutMs": 22120,
+      "finMs": 22320
+    },
+    {
+      "texte": "abouti",
+      "debutMs": 22320,
+      "finMs": 22780
+    },
+    {
+      "texte": "ou",
+      "debutMs": 22860,
+      "finMs": 23020
+    },
+    {
+      "texte": "avec",
+      "debutMs": 23020,
+      "finMs": 23330
+    },
+    {
+      "texte": "une",
+      "debutMs": 23330,
+      "finMs": 23600
+    },
+    {
+      "texte": "situation",
+      "debutMs": 23600,
+      "finMs": 24430
+    },
+    {
+      "texte": "X",
+      "debutMs": 24430,
+      "finMs": 24520
+    },
+    {
+      "texte": "ou",
+      "debutMs": 24520,
+      "finMs": 24770
+    },
+    {
+      "texte": "Y",
+      "debutMs": 24770,
+      "finMs": 24790
+    },
+    {
+      "texte": "et",
+      "debutMs": 24820,
+      "finMs": 24970
+    },
+    {
+      "texte": "où",
+      "debutMs": 24970,
+      "finMs": 25150
+    },
+    {
+      "texte": "tu",
+      "debutMs": 25150,
+      "finMs": 25330
+    },
+    {
+      "texte": "te",
+      "debutMs": 25330,
+      "finMs": 25530
+    },
+    {
+      "texte": "retrouves",
+      "debutMs": 25530,
+      "finMs": 26320
+    },
+    {
+      "texte": "coincé",
+      "debutMs": 26320,
+      "finMs": 26880
+    },
+    {
+      "texte": "à",
+      "debutMs": 26880,
+      "finMs": 26970
+    },
+    {
+      "texte": "être",
+      "debutMs": 26970,
+      "finMs": 27560
+    },
+    {
+      "texte": "encore",
+      "debutMs": 27560,
+      "finMs": 27910
+    },
+    {
+      "texte": "à",
+      "debutMs": 27910,
+      "finMs": 27980
+    },
+    {
+      "texte": "penser",
+      "debutMs": 27980,
+      "finMs": 28600
+    },
+    {
+      "texte": "constamment",
+      "debutMs": 28600,
+      "finMs": 29540
+    },
+    {
+      "texte": "à",
+      "debutMs": 29540,
+      "finMs": 29630
+    },
+    {
+      "texte": "cette",
+      "debutMs": 29630,
+      "finMs": 30160
+    },
+    {
+      "texte": "personne,",
+      "debutMs": 30160,
+      "finMs": 31160
+    },
+    {
+      "texte": "le",
+      "debutMs": 31160,
+      "finMs": 31390
+    },
+    {
+      "texte": "problème",
+      "debutMs": 31390,
+      "finMs": 31970
+    },
+    {
+      "texte": "principal",
+      "debutMs": 31970,
+      "finMs": 32580
+    },
+    {
+      "texte": "c'est",
+      "debutMs": 32580,
+      "finMs": 32940
+    },
+    {
+      "texte": "que",
+      "debutMs": 32940,
+      "finMs": 33160
+    },
+    {
+      "texte": "ça",
+      "debutMs": 33160,
+      "finMs": 33310
+    },
+    {
+      "texte": "appuie",
+      "debutMs": 33310,
+      "finMs": 33910
+    },
+    {
+      "texte": "sur",
+      "debutMs": 33910,
+      "finMs": 33970
+    },
+    {
+      "texte": "tes",
+      "debutMs": 33970,
+      "finMs": 34190
+    },
+    {
+      "texte": "insécurités",
+      "debutMs": 34190,
+      "finMs": 35010
+    },
+    {
+      "texte": "et",
+      "debutMs": 35010,
+      "finMs": 35160
+    },
+    {
+      "texte": "sur",
+      "debutMs": 35160,
+      "finMs": 35380
+    },
+    {
+      "texte": "tes",
+      "debutMs": 35380,
+      "finMs": 35600
+    },
+    {
+      "texte": "blessures.",
+      "debutMs": 35600,
+      "finMs": 36580
+    },
+    {
+      "texte": "Avant",
+      "debutMs": 36580,
+      "finMs": 37010
+    },
+    {
+      "texte": "tout,",
+      "debutMs": 37010,
+      "finMs": 37520
+    },
+    {
+      "texte": "ça",
+      "debutMs": 37520,
+      "finMs": 37750
+    },
+    {
+      "texte": "appuie",
+      "debutMs": 37750,
+      "finMs": 38190
+    },
+    {
+      "texte": "sur",
+      "debutMs": 38190,
+      "finMs": 38570
+    },
+    {
+      "texte": "la",
+      "debutMs": 38570,
+      "finMs": 38610
+    },
+    {
+      "texte": "blessure",
+      "debutMs": 38620,
+      "finMs": 39330
+    },
+    {
+      "texte": "du",
+      "debutMs": 39330,
+      "finMs": 39460
+    },
+    {
+      "texte": "rejet",
+      "debutMs": 39460,
+      "finMs": 39880
+    },
+    {
+      "texte": "et",
+      "debutMs": 39880,
+      "finMs": 40050
+    },
+    {
+      "texte": "de",
+      "debutMs": 40050,
+      "finMs": 40250
+    },
+    {
+      "texte": "l'abandon.",
+      "debutMs": 40250,
+      "finMs": 41060
+    },
+    {
+      "texte": "Et",
+      "debutMs": 41060,
+      "finMs": 41300
+    },
+    {
+      "texte": "comme",
+      "debutMs": 41300,
+      "finMs": 41580
+    },
+    {
+      "texte": "dans",
+      "debutMs": 41580,
+      "finMs": 41880
+    },
+    {
+      "texte": "cette",
+      "debutMs": 41880,
+      "finMs": 42250
+    },
+    {
+      "texte": "histoire,",
+      "debutMs": 42250,
+      "finMs": 43050
+    },
+    {
+      "texte": "ton",
+      "debutMs": 43050,
+      "finMs": 43220
+    },
+    {
+      "texte": "ego",
+      "debutMs": 43220,
+      "finMs": 43430
+    },
+    {
+      "texte": "se",
+      "debutMs": 43430,
+      "finMs": 43590
+    },
+    {
+      "texte": "sent",
+      "debutMs": 43590,
+      "finMs": 43890
+    },
+    {
+      "texte": "menacé,",
+      "debutMs": 43890,
+      "finMs": 44520
+    },
+    {
+      "texte": "ce",
+      "debutMs": 44520,
+      "finMs": 44670
+    },
+    {
+      "texte": "que",
+      "debutMs": 44670,
+      "finMs": 44870
+    },
+    {
+      "texte": "ton",
+      "debutMs": 44870,
+      "finMs": 45070
+    },
+    {
+      "texte": "mental",
+      "debutMs": 45070,
+      "finMs": 45490
+    },
+    {
+      "texte": "va",
+      "debutMs": 45490,
+      "finMs": 45840
+    },
+    {
+      "texte": "chercher",
+      "debutMs": 45840,
+      "finMs": 46190
+    },
+    {
+      "texte": "à",
+      "debutMs": 46190,
+      "finMs": 46250
+    },
+    {
+      "texte": "faire,",
+      "debutMs": 46250,
+      "finMs": 46640
+    },
+    {
+      "texte": "c'est",
+      "debutMs": 46640,
+      "finMs": 46970
+    },
+    {
+      "texte": "à",
+      "debutMs": 46970,
+      "finMs": 47040
+    },
+    {
+      "texte": "te",
+      "debutMs": 47040,
+      "finMs": 47240
+    },
+    {
+      "texte": "protéger.",
+      "debutMs": 47240,
+      "finMs": 47960
+    },
+    {
+      "texte": "Mais",
+      "debutMs": 48040,
+      "finMs": 48250
+    },
+    {
+      "texte": "pour",
+      "debutMs": 48250,
+      "finMs": 48540
+    },
+    {
+      "texte": "ton",
+      "debutMs": 48540,
+      "finMs": 48760
+    },
+    {
+      "texte": "ego",
+      "debutMs": 48760,
+      "finMs": 48980
+    },
+    {
+      "texte": "te",
+      "debutMs": 48980,
+      "finMs": 49130
+    },
+    {
+      "texte": "protéger,",
+      "debutMs": 49130,
+      "finMs": 49950
+    },
+    {
+      "texte": "ça",
+      "debutMs": 49950,
+      "finMs": 49980
+    },
+    {
+      "texte": "veut",
+      "debutMs": 50000,
+      "finMs": 50260
+    },
+    {
+      "texte": "dire",
+      "debutMs": 50260,
+      "finMs": 50710
+    },
+    {
+      "texte": "rester",
+      "debutMs": 50710,
+      "finMs": 51000
+    },
+    {
+      "texte": "dans",
+      "debutMs": 51000,
+      "finMs": 51290
+    },
+    {
+      "texte": "cette",
+      "debutMs": 51290,
+      "finMs": 51650
+    },
+    {
+      "texte": "situation",
+      "debutMs": 51650,
+      "finMs": 52300
+    },
+    {
+      "texte": "à",
+      "debutMs": 52300,
+      "finMs": 52380
+    },
+    {
+      "texte": "tout",
+      "debutMs": 52380,
+      "finMs": 52740
+    },
+    {
+      "texte": "prix",
+      "debutMs": 52740,
+      "finMs": 53060
+    },
+    {
+      "texte": "de",
+      "debutMs": 53060,
+      "finMs": 53290
+    },
+    {
+      "texte": "manière",
+      "debutMs": 53290,
+      "finMs": 53870
+    },
+    {
+      "texte": "à",
+      "debutMs": 53870,
+      "finMs": 53920
+    },
+    {
+      "texte": "ne",
+      "debutMs": 53920,
+      "finMs": 54030
+    },
+    {
+      "texte": "pas",
+      "debutMs": 54030,
+      "finMs": 54270
+    },
+    {
+      "texte": "expérimenter",
+      "debutMs": 54270,
+      "finMs": 55230
+    },
+    {
+      "texte": "les",
+      "debutMs": 55230,
+      "finMs": 55470
+    },
+    {
+      "texte": "émotions",
+      "debutMs": 55470,
+      "finMs": 56110
+    },
+    {
+      "texte": "négatives",
+      "debutMs": 56110,
+      "finMs": 56920
+    },
+    {
+      "texte": "quand",
+      "debutMs": 56920,
+      "finMs": 57260
+    },
+    {
+      "texte": "j'endurerai",
+      "debutMs": 57260,
+      "finMs": 58040
+    },
+    {
+      "texte": "une",
+      "debutMs": 58040,
+      "finMs": 58250
+    },
+    {
+      "texte": "réelle",
+      "debutMs": 58250,
+      "finMs": 58720
+    },
+    {
+      "texte": "séparation.",
+      "debutMs": 58720,
+      "finMs": 59600
+    },
+    {
+      "texte": "Quand",
+      "debutMs": 59600,
+      "finMs": 59860
+    },
+    {
+      "texte": "je",
+      "debutMs": 59860,
+      "finMs": 60000
+    },
+    {
+      "texte": "dis",
+      "debutMs": 60000,
+      "finMs": 60120
+    },
+    {
+      "texte": "réelle",
+      "debutMs": 60120,
+      "finMs": 60430
+    },
+    {
+      "texte": "séparation,",
+      "debutMs": 60430,
+      "finMs": 61040
+    },
+    {
+      "texte": "c'est",
+      "debutMs": 61040,
+      "finMs": 61300
+    },
+    {
+      "texte": "une",
+      "debutMs": 61300,
+      "finMs": 61550
+    },
+    {
+      "texte": "séparation",
+      "debutMs": 61550,
+      "finMs": 61980
+    },
+    {
+      "texte": "émotionnelle,",
+      "debutMs": 61980,
+      "finMs": 62800
+    },
+    {
+      "texte": "un",
+      "debutMs": 62800,
+      "finMs": 62910
+    },
+    {
+      "texte": "détachement",
+      "debutMs": 62910,
+      "finMs": 63510
+    },
+    {
+      "texte": "de",
+      "debutMs": 63510,
+      "finMs": 63620
+    },
+    {
+      "texte": "ta",
+      "debutMs": 63620,
+      "finMs": 63740
+    },
+    {
+      "texte": "part.",
+      "debutMs": 63740,
+      "finMs": 64160
+    },
+    {
+      "texte": "Pour",
+      "debutMs": 64160,
+      "finMs": 64430
+    },
+    {
+      "texte": "te",
+      "debutMs": 64430,
+      "finMs": 64560
+    },
+    {
+      "texte": "préserver",
+      "debutMs": 64560,
+      "finMs": 65170
+    },
+    {
+      "texte": "et",
+      "debutMs": 65170,
+      "finMs": 65330
+    },
+    {
+      "texte": "pour",
+      "debutMs": 65330,
+      "finMs": 65570
+    },
+    {
+      "texte": "se",
+      "debutMs": 65570,
+      "finMs": 65700
+    },
+    {
+      "texte": "faire",
+      "debutMs": 65700,
+      "finMs": 66150
+    },
+    {
+      "texte": "ton",
+      "debutMs": 66150,
+      "finMs": 66240
+    },
+    {
+      "texte": "mental,",
+      "debutMs": 66240,
+      "finMs": 66910
+    },
+    {
+      "texte": "il",
+      "debutMs": 66910,
+      "finMs": 66960
+    },
+    {
+      "texte": "va",
+      "debutMs": 66960,
+      "finMs": 67040
+    },
+    {
+      "texte": "faire",
+      "debutMs": 67040,
+      "finMs": 67380
+    },
+    {
+      "texte": "deux",
+      "debutMs": 67380,
+      "finMs": 67650
+    },
+    {
+      "texte": "choses.",
+      "debutMs": 67650,
+      "finMs": 68380
+    },
+    {
+      "texte": "Premièrement,",
+      "debutMs": 68380,
+      "finMs": 69330
+    },
+    {
+      "texte": "il",
+      "debutMs": 69330,
+      "finMs": 69550
+    },
+    {
+      "texte": "va",
+      "debutMs": 69550,
+      "finMs": 69610
+    },
+    {
+      "texte": "embellir",
+      "debutMs": 69610,
+      "finMs": 70150
+    },
+    {
+      "texte": "et",
+      "debutMs": 70150,
+      "finMs": 70370
+    },
+    {
+      "texte": "idéaliser",
+      "debutMs": 70370,
+      "finMs": 70890
+    },
+    {
+      "texte": "la",
+      "debutMs": 70890,
+      "finMs": 71130
+    },
+    {
+      "texte": "personne",
+      "debutMs": 71130,
+      "finMs": 71580
+    },
+    {
+      "texte": "et",
+      "debutMs": 71580,
+      "finMs": 71720
+    },
+    {
+      "texte": "la",
+      "debutMs": 71720,
+      "finMs": 71860
+    },
+    {
+      "texte": "relation.",
+      "debutMs": 71860,
+      "finMs": 72500
+    },
+    {
+      "texte": "Deuxièmement,",
+      "debutMs": 72580,
+      "finMs": 73340
+    },
+    {
+      "texte": "il",
+      "debutMs": 73340,
+      "finMs": 73460
+    },
+    {
+      "texte": "va",
+      "debutMs": 73460,
+      "finMs": 73670
+    },
+    {
+      "texte": "complètement",
+      "debutMs": 73670,
+      "finMs": 74310
+    },
+    {
+      "texte": "minimiser",
+      "debutMs": 74310,
+      "finMs": 74870
+    },
+    {
+      "texte": "les",
+      "debutMs": 74870,
+      "finMs": 75250
+    },
+    {
+      "texte": "informations",
+      "debutMs": 75250,
+      "finMs": 75790
+    },
+    {
+      "texte": "qui",
+      "debutMs": 75790,
+      "finMs": 75970
+    },
+    {
+      "texte": "te",
+      "debutMs": 75970,
+      "finMs": 76110
+    },
+    {
+      "texte": "montrent",
+      "debutMs": 76110,
+      "finMs": 76570
+    },
+    {
+      "texte": "que",
+      "debutMs": 76570,
+      "finMs": 76750
+    },
+    {
+      "texte": "cette",
+      "debutMs": 76750,
+      "finMs": 77280
+    },
+    {
+      "texte": "personne",
+      "debutMs": 77280,
+      "finMs": 77610
+    },
+    {
+      "texte": "n'est",
+      "debutMs": 77610,
+      "finMs": 77850
+    },
+    {
+      "texte": "pas",
+      "debutMs": 77850,
+      "finMs": 78030
+    },
+    {
+      "texte": "faite",
+      "debutMs": 78030,
+      "finMs": 78330
+    },
+    {
+      "texte": "pour",
+      "debutMs": 78330,
+      "finMs": 78570
+    },
+    {
+      "texte": "toi.",
+      "debutMs": 78570,
+      "finMs": 79080
+    },
+    {
+      "texte": "Si",
+      "debutMs": 79080,
+      "finMs": 79190
+    },
+    {
+      "texte": "tu",
+      "debutMs": 79190,
+      "finMs": 79320
+    },
+    {
+      "texte": "veux",
+      "debutMs": 79320,
+      "finMs": 79520
+    },
+    {
+      "texte": "sortir",
+      "debutMs": 79520,
+      "finMs": 79850
+    },
+    {
+      "texte": "de",
+      "debutMs": 79850,
+      "finMs": 79970
+    },
+    {
+      "texte": "cette",
+      "debutMs": 79970,
+      "finMs": 80250
+    },
+    {
+      "texte": "situation,",
+      "debutMs": 80250,
+      "finMs": 80870
+    },
+    {
+      "texte": "fais",
+      "debutMs": 80870,
+      "finMs": 81090
+    },
+    {
+      "texte": "ça.",
+      "debutMs": 81090,
+      "finMs": 81420
+    },
+    {
+      "texte": "Premièrement,",
+      "debutMs": 81420,
+      "finMs": 82190
+    },
+    {
+      "texte": "limite",
+      "debutMs": 82190,
+      "finMs": 82590
+    },
+    {
+      "texte": "tout",
+      "debutMs": 82590,
+      "finMs": 82740
+    },
+    {
+      "texte": "contact",
+      "debutMs": 82740,
+      "finMs": 83130
+    },
+    {
+      "texte": "avec",
+      "debutMs": 83130,
+      "finMs": 83410
+    },
+    {
+      "texte": "cette",
+      "debutMs": 83410,
+      "finMs": 83630
+    },
+    {
+      "texte": "personne.",
+      "debutMs": 83630,
+      "finMs": 84280
+    },
+    {
+      "texte": "Deuxièmement,",
+      "debutMs": 84280,
+      "finMs": 85290
+    },
+    {
+      "texte": "essaie",
+      "debutMs": 85290,
+      "finMs": 85730
+    },
+    {
+      "texte": "de",
+      "debutMs": 85730,
+      "finMs": 85880
+    },
+    {
+      "texte": "porter",
+      "debutMs": 85880,
+      "finMs": 86320
+    },
+    {
+      "texte": "ton",
+      "debutMs": 86320,
+      "finMs": 86540
+    },
+    {
+      "texte": "attention",
+      "debutMs": 86540,
+      "finMs": 87250
+    },
+    {
+      "texte": "plus",
+      "debutMs": 87250,
+      "finMs": 87510
+    },
+    {
+      "texte": "au",
+      "debutMs": 87510,
+      "finMs": 87660
+    },
+    {
+      "texte": "défaut",
+      "debutMs": 87660,
+      "finMs": 88100
+    },
+    {
+      "texte": "de",
+      "debutMs": 88100,
+      "finMs": 88240
+    },
+    {
+      "texte": "la",
+      "debutMs": 88240,
+      "finMs": 88400
+    },
+    {
+      "texte": "relation",
+      "debutMs": 88400,
+      "finMs": 89080
+    },
+    {
+      "texte": "et",
+      "debutMs": 89080,
+      "finMs": 89170
+    },
+    {
+      "texte": "au",
+      "debutMs": 89170,
+      "finMs": 89390
+    },
+    {
+      "texte": "défaut",
+      "debutMs": 89390,
+      "finMs": 89540
+    },
+    {
+      "texte": "de",
+      "debutMs": 89540,
+      "finMs": 89650
+    },
+    {
+      "texte": "la",
+      "debutMs": 89650,
+      "finMs": 89800
+    },
+    {
+      "texte": "personne",
+      "debutMs": 89800,
+      "finMs": 90250
+    },
+    {
+      "texte": "qui",
+      "debutMs": 90250,
+      "finMs": 90450
+    },
+    {
+      "texte": "te",
+      "debutMs": 90450,
+      "finMs": 90670
+    },
+    {
+      "texte": "font",
+      "debutMs": 90670,
+      "finMs": 90960
+    },
+    {
+      "texte": "du",
+      "debutMs": 90960,
+      "finMs": 91050
+    },
+    {
+      "texte": "mal,",
+      "debutMs": 91050,
+      "finMs": 91320
+    },
+    {
+      "texte": "plutôt",
+      "debutMs": 91320,
+      "finMs": 91620
+    },
+    {
+      "texte": "qu'au",
+      "debutMs": 91620,
+      "finMs": 91870
+    },
+    {
+      "texte": "côté",
+      "debutMs": 91870,
+      "finMs": 92070
+    },
+    {
+      "texte": "romantique",
+      "debutMs": 92070,
+      "finMs": 92570
+    },
+    {
+      "texte": "de",
+      "debutMs": 92570,
+      "finMs": 92670
+    },
+    {
+      "texte": "la",
+      "debutMs": 92670,
+      "finMs": 92770
+    },
+    {
+      "texte": "relation",
+      "debutMs": 92770,
+      "finMs": 93310
+    },
+    {
+      "texte": "que",
+      "debutMs": 93310,
+      "finMs": 93320
+    },
+    {
+      "texte": "tu",
+      "debutMs": 93360,
+      "finMs": 93420
+    },
+    {
+      "texte": "es",
+      "debutMs": 93420,
+      "finMs": 93520
+    },
+    {
+      "texte": "d'ailleurs.",
+      "debutMs": 93520,
+      "finMs": 94220
+    },
+    {
+      "texte": "Troisièmement,",
+      "debutMs": 94220,
+      "finMs": 95390
+    },
+    {
+      "texte": "concentre-toi",
+      "debutMs": 95390,
+      "finMs": 96210
+    },
+    {
+      "texte": "sur",
+      "debutMs": 96210,
+      "finMs": 96420
+    },
+    {
+      "texte": "toi,",
+      "debutMs": 96420,
+      "finMs": 96970
+    },
+    {
+      "texte": "donne-toi",
+      "debutMs": 96970,
+      "finMs": 97410
+    },
+    {
+      "texte": "de",
+      "debutMs": 97410,
+      "finMs": 97550
+    },
+    {
+      "texte": "l'amour,",
+      "debutMs": 97550,
+      "finMs": 98300
+    },
+    {
+      "texte": "écoute",
+      "debutMs": 98300,
+      "finMs": 98670
+    },
+    {
+      "texte": "des",
+      "debutMs": 98670,
+      "finMs": 99000
+    },
+    {
+      "texte": "affirmations",
+      "debutMs": 99000,
+      "finMs": 99630
+    },
+    {
+      "texte": "positives",
+      "debutMs": 99630,
+      "finMs": 100220
+    },
+    {
+      "texte": "et",
+      "debutMs": 100220,
+      "finMs": 100390
+    },
+    {
+      "texte": "rebooste",
+      "debutMs": 100390,
+      "finMs": 100780
+    },
+    {
+      "texte": "ton",
+      "debutMs": 100780,
+      "finMs": 100950
+    },
+    {
+      "texte": "estime",
+      "debutMs": 100950,
+      "finMs": 101290
+    },
+    {
+      "texte": "de",
+      "debutMs": 101290,
+      "finMs": 101390
+    },
+    {
+      "texte": "toi-même.",
+      "debutMs": 101390,
+      "finMs": 101960
+    },
+    {
+      "texte": "Plus",
+      "debutMs": 102040,
+      "finMs": 102190
+    },
+    {
+      "texte": "tu",
+      "debutMs": 102190,
+      "finMs": 102300
+    },
+    {
+      "texte": "reboosteras",
+      "debutMs": 102300,
+      "finMs": 102930
+    },
+    {
+      "texte": "ton",
+      "debutMs": 102930,
+      "finMs": 103130
+    },
+    {
+      "texte": "estime",
+      "debutMs": 103130,
+      "finMs": 103440
+    },
+    {
+      "texte": "de",
+      "debutMs": 103440,
+      "finMs": 103550
+    },
+    {
+      "texte": "toi-même,",
+      "debutMs": 103550,
+      "finMs": 104200
+    },
+    {
+      "texte": "plus",
+      "debutMs": 104200,
+      "finMs": 104410
+    },
+    {
+      "texte": "tu",
+      "debutMs": 104410,
+      "finMs": 104510
+    },
+    {
+      "texte": "auras",
+      "debutMs": 104510,
+      "finMs": 104770
+    },
+    {
+      "texte": "de",
+      "debutMs": 104770,
+      "finMs": 104870
+    },
+    {
+      "texte": "facilité",
+      "debutMs": 104870,
+      "finMs": 105280
+    },
+    {
+      "texte": "à",
+      "debutMs": 105280,
+      "finMs": 105330
+    },
+    {
+      "texte": "t'extraire",
+      "debutMs": 105330,
+      "finMs": 105830
+    },
+    {
+      "texte": "de",
+      "debutMs": 105830,
+      "finMs": 105920
+    },
+    {
+      "texte": "cette",
+      "debutMs": 105920,
+      "finMs": 106190
+    },
+    {
+      "texte": "situation.",
+      "debutMs": 106190,
+      "finMs": 106920
+    },
+    {
+      "texte": "Tu",
+      "debutMs": 106920,
+      "finMs": 107150
+    },
+    {
+      "texte": "vas",
+      "debutMs": 107150,
+      "finMs": 107370
+    },
+    {
+      "texte": "y",
+      "debutMs": 107370,
+      "finMs": 107460
+    },
+    {
+      "texte": "arriver.",
+      "debutMs": 107460,
+      "finMs": 108360
+    }
+  ]
+}

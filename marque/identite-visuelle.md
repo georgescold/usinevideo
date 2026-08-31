@@ -1,119 +1,99 @@
-# Identité visuelle — <!-- NOM DE LA CHAÎNE -->
+# Identité visuelle — Conseils Relationnels
 
-> **État : à remplir.** Ce fichier est écrit par `/init-chaine`, **après** la veille (`/veille`, `/decode`). On ne choisit pas une direction artistique avant d'avoir vu ce qui fonctionne dans la niche.
->
-> Ce fichier explique. Les valeurs qui pilotent réellement le rendu sont dans `config/chaine.json` → `identite_visuelle`. Les deux doivent rester d'accord.
+Dérivée de `marque/identite/conseils relationnels logo.jpeg` par
+`node outils/da-depuis-image.mjs`. **Rien n'a été choisi au goût** : chaque teinte vient de
+l'avatar, chaque clarté est calculée pour la lisibilité.
 
-Rappel du contexte en une ligne, pour un agent qui ouvre ce fichier sans rien connaître du projet : *<!-- « Chaîne YouTube et TikTok de X, qui parle à Y à propos de Z. » -->*
+Pour la refaire ou la vérifier :
 
----
-
-## 1. Le parti pris
-
-Une phrase qui dit à quoi la chaîne ressemble et pourquoi. Pas une liste d'adjectifs : une décision.
-
-> *<!-- Exemple de formulation attendue : « Sobre et dense. Fond sombre, un seul accent, aucune fioriture : tout l'espace visuel sert à rendre un raisonnement lisible. » -->*
-
-**Ce qu'on ne fait jamais** — la liste des tics visuels de la niche qu'on refuse, relevés pendant la veille.
+```bash
+node outils/da-depuis-image.mjs "marque/identite/conseils relationnels logo.jpeg"
+```
 
 ---
 
-## 2. Couleurs
+## La palette
 
-| Rôle | Valeur | Où ça sert |
+| Rôle | Couleur | D'où elle vient |
 |---|---|---|
-| Fond | `#______` | fond des inserts, des infographies, des cartons |
-| Texte | `#______` | texte principal à l'écran |
-| Accent | `#______` | mot actif des sous-titres, chiffres, soulignements |
-| Accent secondaire | `#______` | second niveau, comparaisons, « avant/après » |
-| Alerte | `#______` | ce qui doit inquiéter (rare) |
+| **Fond** | `#0e1718` | le bleu pétrole nocturne de l'avatar, qui en occupe **46 %** — assombri jusqu'à porter du texte, mais sa teinte est intacte |
+| **Accent** | `#bf5b2c` | la terre cuite des vêtements et des chairs : la couleur la plus **saturée** de l'image |
+| **Pastille** | `#ae5328` | le même accent, assombri — voir plus bas pourquoi il en faut deux |
+| **Accent secondaire** | `#248db3` | le bleu du ciel étoilé, la teinte la plus éloignée de l'accent |
+| **Texte** | `#f5f3f2` | un blanc réchauffé de deux points vers l'accent, jamais un blanc pur |
 
-**Règle :** l'accent signe, il ne tapisse pas. S'il couvre plus d'un dixième de l'écran, ce n'est plus un accent.
+**Terre cuite sur bleu pétrole.** C'est la complémentaire chaud/froid la plus solide qui
+existe, et elle n'a pas été décidée : elle était déjà dans l'image.
 
-**Contraste :** tout texte à l'écran doit rester lisible sur un téléphone tenu à bout de bras, en plein soleil. En dessous d'un rapport de 4,5:1 sur son fond, on change la couleur, pas la taille.
+### Pourquoi deux tons d'accent
 
----
+L'accent doit tenir **deux emplois contradictoires** : se lire comme texte SUR le fond (donc
+être clair) et porter du texte blanc en pastille (donc être sombre). À la clarté qui satisfait
+le premier, aucun texte ne contraste correctement avec lui.
 
-## 3. Polices
+D'où une variante assombrie de la **même teinte** pour le fond du mot actif. L'identité est
+intacte — c'est la même couleur — et le texte redevient lisible.
 
-| Usage | Police | Graisse | Détail |
-|---|---|---|---|
-| Sous-titres | | 700–800 | interlettrage serré, jamais de police à empattement |
-| Titres à l'écran / cartons | | 700 | |
-| Chiffres et données | | 600 | chasse fixe, pour que les compteurs ne tremblent pas |
-| Annotations | | 500 | |
+### Les contrastes, mesurés
 
-Les fichiers de police vivent dans `assets/fonts/`. Une police non déposée là ne sera pas embarquée au rendu et le texte retombera sur une police système : le rendu changera sans prévenir.
+| | Rapport | Minimum |
+|---|---|---|
+| texte sur fond | **16,4 : 1** | 4,5 |
+| accent sur fond | **4,1 : 1** | 3 |
+| texte sur pastille | **4,7 : 1** | 4,5 |
+| second sur fond | **4,8 : 1** | 3 |
 
----
-
-## 4. Sous-titres
-
-C'est l'élément le plus vu de toutes les vidéos. Il se décide une fois.
-
-- **Style** : `<!-- mot-a-mot-pastille | ligne-karaoke | bloc-2-lignes -->`
-- **Mots affichés à la fois** : `<!-- 1 à 3 en vertical, 3 à 6 en horizontal -->`
-- **Casse** : `<!-- MAJUSCULES | Phrase normale -->`
-- **Ponctuation à l'écran** : `<!-- retirée sauf ? et ! -->` — la ponctuation reste dans le texte lu, elle pilote les respirations.
-- **Mot actif** : `<!-- pastille d'accent | couleur seule | échelle 1,08 -->`
-- **Position** : `<!-- hauteur en % depuis le bas -->` — au-dessus de la zone d'interface de TikTok et des Shorts.
-- **Ombre / contour** : indispensable dès que le fond bouge.
-
-**Ils sont calés mot à mot sur l'audio réel, jamais estimés.** C'est la transcription locale qui donne les temps.
+Les quatre passent. Une palette jolie mais illisible sur un téléphone au soleil n'est pas une
+palette, c'est une humeur.
 
 ---
 
-## 5. Rythme et montage
+## La typographie
 
-- **Événement visuel toutes les** `<!-- 2 à 4 -->` **secondes** : coupe, punch-in, mot-clé qui apparaît, insert, infographie.
-- **Jamais deux fois le même effet de suite.**
-- **Punch-in** : amplitude `<!-- 4 à 8 % -->`, sur une idée forte, jamais sur une transition.
-- **Transitions** : réservées aux changements de sujet. À l'intérieur d'une idée, on coupe sec.
-- **Silences** : tout ce qui dépasse `COUPE_SILENCE_MIN` saute. Sauf un silence volontaire, marqué dans le script par `[pause]`.
-- **B-roll** : `<!-- couvre X % du temps -->`, toujours en soutien d'un mot précis, jamais en papier peint.
+| Emploi | Police | Pourquoi |
+|---|---|---|
+| **Affiche** — sous-titres, infographies, cartons | **Fraunces** (variable, `wght 900`) | l'outil a classé l'image comme *chaleureuse* : palette saturée et contraste doux. Une serif douce, à l'opposé des condensées brutales du format court — c'est ce qui fait qu'on reconnaît la chaîne en une image |
+| **Lecture** — petits libellés, numéros | **Inter** | la personnalité nuit à la lisibilité en petit |
 
----
-
-## 6. Infographies
-
-Ce qui mérite d'exister à l'écran : un chiffre, une comparaison, une liste de trois éléments, une chronologie, un avant/après. Tout le reste se dit.
-
-- **Style** : `<!-- plat | verre translucide | trait fin | plein -->`
-- **Apparition** : `<!-- en cascade décalée, ressort court -->`
-- **Durée d'affichage** : au moins le temps de la lire à voix haute, plus une seconde.
-- **Une idée par infographie.** Deux idées = deux infographies.
+⚠️ **Ne régler que l'axe `wght`.** Les axes optiques (`opsz`) interagissent mal avec `font-size`
+au rendu et font s'effondrer le texte — constaté, corrigé.
 
 ---
 
-## 7. Étalonnage
+## L'atmosphère
 
-- **LUT** : `assets/luts/<!-- nom.cube -->`, appliquée à `<!-- 50 -->` %.
-- **Registre** : `<!-- pastel doux | contrasté chaud | froid cinéma | neutre -->`
-- Le visage prime : jamais de teinte qui verdit ou grise la peau.
+**Ambiance : `douce`.** Vignette légère, grain à peine perceptible. Une chaîne qui explique et
+déculpabilise ne peut pas avoir l'atmosphère d'une chaîne qui alarme.
 
----
+**Direction des plans**, ajoutée à *chaque* requête de banque d'images :
 
-## 8. Miniatures
+```
+soft warm light, intimate, cinematic, teal and amber, film grain
+```
 
-La miniature n'illustre pas la vidéo : elle **incarne la tension que le spectateur porte déjà**.
-
-- **Composition** : `<!-- gros plan visage regard caméra | objet + texte | avant-après -->`
-- **Texte** : `<!-- 3 à 5 mots maximum -->`, jamais la répétition du titre — il le complète.
-- **Récurrences** : ce qui reste identique d'une miniature à l'autre pour que la chaîne se reconnaisse au scroll.
-- **Test** : réduite à la taille d'un timbre, le sujet doit rester identifiable.
+C'est elle qui a remplacé le bonhomme au chapeau de fête par une table aux bougies. Le problème
+se règle **à la source** plutôt que requête par requête.
 
 ---
 
-## 9. Son
+## Ce que la chaîne s'interdit visuellement
 
-- **Musique** : `<!-- registre -->`, volume sous la voix `<!-- 6 à 10 % -->`, absente sur les passages à forte densité d'information.
-- **Effets** : whoosh sur les transitions de sujet, tick sur l'apparition des chiffres. Rares, sinon ils deviennent du bruit.
-- **Voix** : normalisée à −16 LUFS pour le long format, −14 pour les formats verticaux.
+Un interdit se vérifie ; une intention non.
+
+- **Le rouge vif d'alerte.** L'accent est une terre cuite, pas un rouge de signalisation. La
+  chaîne explique, elle n'alarme pas.
+- **Le noir pur** en fond. Le fond est un bleu pétrole très sombre : il a une teinte, et c'est
+  elle qu'on reconnaît.
+- **Les condensées d'affiche** (Anton, Bebas) — vues partout sur le format court, et en
+  contradiction avec la douceur de l'avatar.
+- **Les plans durs, cliniques ou surexposés.** Tout doit pouvoir exister à la lumière d'une
+  bougie.
+- **Le blanc pur** pour le texte. Sur une charte chaude, il fait tache.
 
 ---
 
-## 10. Habillage récurrent
+## Ce qui ne dépend pas de cette chaîne
 
-- **Intro** : `<!-- durée en secondes, ce qu'on y voit -->` — jamais de générique avant le hook.
-- **Sortie** : `<!-- écran de fin, durée, ce qu'on y met -->` — sur YouTube, les 20 dernières secondes portent l'écran de fin et deux vidéos suggérées.
-- **Logo** : `assets/logos/<!-- fichier -->`, `<!-- position, opacité, ou absent -->`.
+Le rythme des plans, la pagination des sous-titres, la hiérarchie des raccords, les règles
+d'infographie : tout cela vit dans la skill `montage-video` et vaut pour **toutes** les
+chaînes. Une nouvelle chaîne hérite d'un montage déjà au niveau et ne redéfinit que sa charte.

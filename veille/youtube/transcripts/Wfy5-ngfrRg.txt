@@ -1,0 +1,222 @@
+# VÉRIFIER SI VOTRE PC EST COMPATIBLE WINDOWS 11 (COURS INFORMATIQUE DÉBUTANT SÉNIOR)
+# Initiation Informatique · 5,2 k vues · 00:12:08
+# https://www.youtube.com/watch?v=Wfy5-ngfrRg
+
+À la fin de cette vidéo, vous saurez si
+votre ordinateur peut accueillir Windows
+11
+Chers aventuriers de l'informatique,
+bonjour à vous. C'est Thierry de la
+chaîne YouTube Initiation informatique.
+J'espère sincèrement que vous vous
+portez à merveille et aujourd'hui, nous
+allons parler d'un sujet qui en inquiète
+beaucoup, Windows 11.
+En effet, vous avez peut-être entendu
+dire que Windows 10 va bientôt s'arrêter
+et vous vous posez la question est-ce
+que mon ordinateur peut accueillir
+Windows 11 ? Et bien bonne nouvelle, je
+vais vous montrer comment vérifier cela
+très simplement même si vous débutez en
+informatique.
+Windows 11 c'est tout simplement la
+nouvelle version de Windows.
+Un peu comme avec votre téléphone, vous
+avez peut-être remarqué que de temps en
+temps, votre téléphone vous propose de
+mettre à jour vers une version plus
+récente. Et bien, c'est exactement
+pareil pour Windows sur votre
+ordinateur.
+Après Windows 10, Microsoft a sorti
+Windows 11.
+Alors, quelles caractéristiques
+doit avoir votre ordinateur pour
+accueillir Windows 11 ?
+Nous voici sur le site internet de
+Microsoft
+qui vous indique ce qu'il faut pour que
+Windows 11 puisse être installé sur
+votre ordinateur.
+Donc cette adresse ici, je vous la mets
+sous la vidéo. Vous n'aurez plus qu'à
+cliquer dessus pour y accéder si vous
+désirez la consulter.
+Donc si on descend sur cette page,
+vous voyez par exemple qu'il faudra que
+votre ordinateur dispose d'un processeur
+d'une puissance de 1 GHz ou plus avec au
+moins de cœurs et de 4 Go octam,
+autrement dit de mémoire vive. Donc ces
+termes peuvent vous faire peur mais ne
+vous inquiétez pas, on verra dans un
+instant un petit programme qui va
+analyser à votre place votre ordinateur
+pour vérifier que ce dernier est
+compatible avec Windows 11.
+Retenez simplement que cette page, c'est
+un peu comme une liste de courses. Elle
+vous indique ce que votre ordinateur
+doit avoir pour que Windows 11 puisse
+fonctionner correctement.
+Donc sachez que vous pouvez vérifier la
+configuration de votre ordinateur.
+Pour cela, je vous invite à consulter
+cette vidéo ici. Je mets aussi le lien
+sous cette vidéo et dans le commentaire
+épinglé sous cette vidéo. Donc cliquez
+dessus pour connaître la version de
+Windows que que possède votre
+ordinateur.
+Et ici, je vais vous montrer comment
+savoir si votre ordinateur est
+compatible
+d'une manière très simple et facile.
+Alors, on va télécharger ce petit
+programme dont le nom est PC
+check. En français, c'est le contrôle
+d'intégrité du PC.
+Donc pour vous simplifier la tâche, je
+vous mets le lien de la page internet
+qui propose ce programme. Il ne vous
+reste plus qu'à cliquer dessus pour vous
+y rendre. Donc ce lien, je le mets sous
+cette vidéo et dans le premier
+commentaire épinglé.
+Vous atérirez donc sur cette page
+internet.
+C'est le site internet officiel de
+Microsoft.
+Lorsque vous êtes dessus, glissez avec
+la molette de la souris vers le bas
+et là vous avez téléchargé l'application
+PC check.
+Donc cliquez dessus une fois
+pour le télécharger.
+Le téléchargement se lance ici.
+Voilà, c'est terminé.
+Maintenant, cliquez sur directement sur
+le nom du logiciel
+pour l'ouvrir.
+Voilà, vous voyez ici c'est la fenêtre
+d'installation du logiciel.
+cocher la petite case pour accepter les
+termes du contrat
+puis cliquer sur installer.
+Laisser l'installation se faire.
+Donc vous pouvez ouvrir l'application
+tout de suite et ajouter un raccourci
+sur le bureau si vous le voulez. Donc là
+je vais juste laisser ouvrir
+l'application. Il ne reste plus qu'à
+cliquer sur terminer.
+Donc nous sommes bien dans le contrôle
+d'intégrité du PC.
+Vous voyez, ce programme est très
+simple. Il y a un gros bouton bleu,
+vérifier. Maintenant, il vous suffit de
+cliquer dessus. C'est tout ce que vous
+avez à faire. Je clique
+et voilà, le résultat s'affiche. Donc il
+me dit que mon ordinateur répond aux
+exigences de Windows 11. Donc je peux
+installer Windows 11 dans ce cas.
+Si vous voulez en savoir plus sur
+Windows 11, vous pouvez cliquer sur ce
+bouton.
+Autrement, vous pouvez afficher tous les
+résultats en cliquant ici.
+Et là, on rentre alors dans les détails
+que nous avions aperçu tout à l'heure, à
+savoir la configuration requise pour
+pouvoir installer Windows 11 sur son
+ordinateur.
+Chaque petite coche verte indique que
+tous les composants sont parfaitement
+adaptés. pour accueillir Windows 11.
+Donc si vous avez ce même message, c'est
+super, votre ordinateur peut installer
+Windows 11.
+Si votre ordinateur n'est pas compatible
+avec Windows 11, ce n'est pas la fin du
+monde. Pourquoi ? Et bien, tout
+simplement parce que Microsoft a décidé
+récemment de prolonger les mises à jour
+de Windows 10 jusqu'en octobre 2026.
+Donc cela vous laisse encore beaucoup de
+temps et vous n'êtes pas obligé de
+changer d'ordinateur tout de suite. Vous
+avez le temps de réfléchir
+tranquillement.
+En effet, Microsoft va continuer à faire
+des mises à jour de sécurité pour
+Windows 10 pendant encore un an. Cela
+veut dire quoi concrètement ?
+Et bien ça veut dire que votre
+ordinateur avec Windows 10 va continuer
+à fonctionner normalement
+en toute sécurité jusqu'en 2026.
+Cette annonce concerne les utilisateurs
+européens.
+Il faudra s'inscrire au programme
+Microsoft a sorti un programme qui
+s'intitule
+ESU, un nom compliqué qui veut
+simplement dire mise à jour prolongée.
+Concrètement, ça veut dire quoi ? Et
+bien, Microsoft accepte de continuer à
+protéger votre Windows 10.
+pendant une année supplémentaire.
+Au début, ils avaient prévu de faire
+payer ce service une trentaine d'euros
+ou alors de demander aux gens de remplir
+certaines conditions comme créer un
+compte Microsoft ou utiliser leurs
+services de sauvegarde en ligne.
+Mais il y a eu un changement important
+et grâce à une règle européenne,
+Microsoft a finalement décidé que ce
+sera gratuit pour tous les Européens
+sans aucune condition.
+En clair, si vous habitez en Europe et
+que vous utilisez Windows 10, vous êtes
+protégé gratuitement jusqu'en octobre
+2026
+Pour vous inscrire à ce programme, il
+faudra vous rendre sur le bouton
+démarrer,
+puis cliquez sur les paramètres
+et rendez-vous dans la section mise à
+jour et sécurité.
+puis cliquez sur le bouton recherche de
+mise à jour et vous verrez dans la zone
+centrale un bouton s'inscrire maintenant
+sur lequel il faudra cliquer pour lancer
+la procédure d'inscription.
+Mais si ce bouton est indisponible,
+vous verrez alors un avertissement
+disant que la mise à jour sera bientôt
+disponible.
+Et voilà, vous savez maintenant si votre
+ordinateur est compatible avec Windows
+11 ou non. Donc je ferai une autre vidéo
+pour savoir comment installer ce fameux
+Windows 11. Pour ne pas la rater,
+n'hésitez pas à vous abonner à la
+chaîne, c'est gratuit et je vous
+remercie par avance et cela m'aide aussi
+à faire remonter cette vidéo pour
+qu'elle soit mieux référencée dans
+YouTube. Et si vous débutez en
+informatique, je vous invite à consulter
+cette formation gratuite sur les bases
+de l'ordinateur.
+Si vous êtes débutant en informatique,
+je vous propose gratuitement une
+formation sur les bases de l'ordinateur.
+Pour y accéder, rendez-vous en dessous
+de la vidéo
+et cliquez sur afficher plus pour
+accéder à la formation.
+Sur ce, prenez soin de vous. Bye bye.

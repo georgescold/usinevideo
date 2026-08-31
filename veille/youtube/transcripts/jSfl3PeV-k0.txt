@@ -1,0 +1,94 @@
+# Expose Your Friend's CRUSH 😉 Build ULTIMATE Prank WEBSITE 🔥
+# Geeky Script · 443 vues · 00:04:53
+# https://www.youtube.com/watch?v=jSfl3PeV-k0
+
+Hello everyone, I welcome you all to Geekyscript. 
+So as you know that April full day is coming and
+it's good time to prank your friend. So for 
+that I have developed this website called AI
+cross analyzer. So all you need to do is you need 
+to send URL of this website to your friend and let
+them know that a new quantum matchmaking algorithm 
+tool just arrived on market which is basically
+anonymously going to calculate compatibility 
+using quantum matchmaking algorithm. So what
+your friend going to do is basically going to 
+provide his name. So let's say Rohit and then
+he will provide his crush name and would like to 
+know how compatible his crush is. So let's say his
+crush name is Oiti. So he'll put that and click 
+on deep scan match and that going to show you
+this beautiful scanning you know warning emotional 
+overflow detected error 44 and then this critical
+error. your friend going to panic and would like 
+to click on cancel sending but no that's not an
+option and finally it going to show you this April 
+fool gotcha your secret safe with me and what it
+going to do is going to also send a mail directly 
+to your email ID and it's going to show you your
+friend's crush name so that's how you'll be able 
+to know your friend's crush name so cute isn't it
+let's see how you can build and deploy this type 
+of website and can share share this with your
+friend and you can prank them. So for that first 
+you need to go to our Geekyscript GitHub account.
+Here you need to go to repositories and you will 
+get this project called EI cross analyzer. So you
+to go to that project and you will get this 
+file called index.html. So you to open that
+file. So this is the code. Then enter source 
+code. So this is what we are going to deploy.
+So for that open a new tab and just simply type 
+each age one pages drop hit enter just go to the
+first link this link I'm going to provide right in 
+our video description here and to go to this paste
+code tab and to paste your code over here just go 
+to my code set that that project that I have just
+now showed you just copy this entire code set see 
+copied now you go to your H1 pages drop again and
+right click and paste this enter source code. Now 
+here you need to do Ctrl F and just type Gmail.
+As you type that it going to locate this place 
+over here. This is where you need to put your
+very own email id. So I'm going to provide my 
+email id. You need to put your very own email
+id over here. And after that click on start 
+deployment. So that going to start immediately
+uploading and going to deploy this entire 
+project. Whatever steps that I have showed you,
+you can repeat that exact same process on your 
+phone as well. So just paste that entire code
+and you find and you replace that with your very 
+own email id and you can see that it is rightly
+deployed. So our deployment is successful. But 
+you can see that it is telling it will be live
+for just an hour. We don't want that, right? 
+We want it to be live forever. So for that you
+need to click on this sign up for free and there 
+you go and now it's going to be live forever. So
+as you click on this link AI crush analyzer. So 
+here your friend will be providing his name. So
+let's say Rohit and then we'll be providing 
+his crush name which is Aditi just for an
+example and we'll click on deep scan match. So 
+that going to show you this beautiful scanning
+and then critical error. So your friend going 
+to start panicking and would like to click on
+cancel sending but that's not at all an option. 
+And finally bingo April fool. Gotcha. Your secret
+are safe with me for now. But seriously maybe 
+you should just tell Aditi how you feel. So nice,
+isn't it? And the mail will be sent directly to 
+your email ID and you'll be able to know your
+friend's crash name. So nice, isn't it? Please do 
+check out my other videos and also don't forget to
+check our buy me a coffee page. So here on shop 
+you'll get all these different projects. You
+can see most of these projects are for Valentine 
+website. So you can buy these projects and you can
+share this with your love. And also don't forget 
+to subscribe our channel Geekyscript and also
+join our community that going to really motivate 
+me to make more the similar kind of videos. So
+that's basically all about this video. Thank you 
+very much watching this video and God bless you

@@ -1,0 +1,1641 @@
+# The Hypocrisy Of Men VS Women On Dating Apps
+# Front Page · 105 k vues · 01:03:16
+# https://www.youtube.com/watch?v=6T0lc_BnExI
+
+In a small apartment in Phoenix,
+Arizona, a 28-year-old man named Marcus
+opens his phone at 7:14 in the morning.
+He checks Tinder, zero matches. Then he
+checks Hinge, one match from 11 days ago
+who never replied. He checks Bumble
+where the same woman who matched with
+him nine months ago is still sitting in
+his queue having never said a word. In
+the past six months, Marcus has spent
+$287
+across these three apps. He's gone on
+only three dates in that same window.
+The first date never led to a second.
+Second date went the same way, and the
+third date ended in silence two days
+after dinner. So, that's three dinners,
+three drives home alone, and three women
+who would not return a text. He puts his
+phone down on the bedside table, looks
+at the ceiling, does the math in his
+head. In six months, Marcus has swiped
+right 14,000 times. He's matched with 41
+women, held conversations with nine of
+them, met three, and slept with zero.
+His monthly fees to Match Group alone,
+the parent company of Tinder and Hinge,
+exceed his Netflix, Spotify, and
+electricity bills combined. Marcus does
+not yet know that his experience is not
+bad luck, not a personality problem of
+his own, not a confidence issue. It is
+the designed output of a system. The
+Gini coefficient of that system sits at
+0.58,
+more unequal than the economies of 95%
+of all the countries on Earth. An
+engineer at Hinge named Aviv Goldgayer
+once described it using international
+company data as the digital equivalent
+of apartheid era South Africa.
+By the time Marcus turns 35, this same
+system will have helped collapse the
+stock price of one of America's most
+famous dating companies by 97%,
+triggered class action lawsuits against
+the largest dating conglomerate on the
+planet, and produced the highest rate of
+>> [music]
+[music]
+>> dating conglomerate on the
+Tokyo 0.96.
+And the replacement rate, the number
+every country on earth needs to keep its
+population stable is 2.1. So let's be
+clear, these are not normal numbers.
+These are the numbers of civilization
+quietly going extinct.
+A peer-reviewed study published in 2025
+in the journal PubMed called the male
+loneliness crisis a public [music]
+health concern. The American Survey
+Center for American Life found in late
+2024 that more than 60% of American men
+between the ages of 18 and 29 [music]
+have not been on a single date in the
+previous year. The National Survey of
+Family Growth [music] analyzed by
+demographer Lyman Stone found that the
+number of American men aged 22 to 34 who
+had not had sex in the previous 12
+months had nearly tripled in a single
+decade from 9% in 2013 to 24% in 2023.
+So we are watching in real time the
+largest collapse of romantic [music]
+pair formation in the recorded history
+of the developed world. The question
+millions of men are now asking out loud
+and that millions of women are starting
+to quietly [music] ask as well is
+whether the apps that everyone was told
+would help them find love have actually
+done the opposite. Whether the most
+lucrative consumer technology of the
+last 15 years has been [music] quietly
+engineering a generational catastrophe.
+And the answer, it turns out, is hiding
+inside a single internal company
+document. [music] A document that one
+Hinge engineer in 2017 published online
+for the entire world to read. This is
+the story of how that happened, who
+profited, who got hurt, and where the
+most lucrative consumer technology of
+the modern era goes from here. This is
+Front Page.
+In August of 2017, an engineer at Hinge
+named Aviv Goldgeier [music] sat down at
+his desk in Lower Manhattan and opened a
+database. It was the largest, cleanest
+set of romantic data in the world.
+[music]
+Every like sent, every match made, every
+conversation started, every photo
+viewed.
+>> [music]
+>> Hinge logged it all. Goldgeier had been
+hired to figure out how to optimize the
+platform to squeeze more engagement out
+of the user [music] base to make the
+company more money. He found instead a
+number that, when he saw it, made
+[music] him stop typing. He had run the
+Gini coefficient on the distributions
+inside the app. The Gini coefficient is
+a tool economists use to measure
+inequality. Zero means perfect [music]
+equality. One means total inequality,
+where one person has everything and
+everyone else has nothing.
+>> [music]
+>> The United States sits at about 0.41,
+which is high for a wealthy nation.
+Denmark, for example, sits at around
+0.28. South Africa, the most unequal
+country on the planet, sits at around
+0.63. Goldgeier ran the calculation for
+women on Hinge. The number that came
+back was 0.376.
+Calm, livable, roughly in line with
+Western [music] Europe. But then he ran
+the calculation for men, 0.542.
+According to Goldgeier's own analysis,
+the male dating economy on Hinge was the
+eighth [music] most unequal economy in
+the world, out of 149 countries [music]
+in the CIA World Factbook. He used a
+specific phrase to describe it. He wrote
+that the male dating economy resembled,
+quote, "a technocracy, apartheid,
+perpetual civil war. Think South
+Africa." End quote. [music] It was
+Hinge's own engineer, using Hinge's own
+data, comparing Hinge's own product to a
+failed state. He published the analysis
+[music] on Medium, an online writing
+platform, and it went viral within 72
+hours. Independent researchers reported
+the math on Tinder data and came back
+with a male Gini coefficient of 0.58,
+even higher than Hinge. Goldgeier was,
+by every account, a thoughtful and
+well-meaning engineer who believed that
+his employer should know the truth about
+[music] its own platform. And the truth,
+in the simplest possible language, was
+that half of all the likes women send on
+dating apps go to the [music] top 15% of
+men. The other 85% of men split what is
+left. The top [music] 1% of men receive
+16% of all likes on Hinge. The bottom
+half of men receive almost nothing.
+[music] Tens of millions of male
+profiles on every major heterosexual
+dating app on the planet [music] are
+essentially invisible. For the average
+man, the modeled per swipe match
+probably [music] sits at about 0.87%.
+And that figure comes from an analyst
+named Tyler Curtis, building on
+Goldgeier's data. Less than one match
+for every 100 women swiped on. For
+women, the picture is the photographic
+opposite. [music]
+On Tinder, women hit like on under 5% of
+male profiles. [music] Men hit like on
+62% of female profiles. A 2024 data set
+analyzed [music] by the analytics firm
+Swipe Stats, covering 294 million swipes
+across 7,000 real accounts, showed that
+the average male user on a major app
+swipes right approximately [music]
+15,609
+times in his time on a platform. The
+average female user swipes right [music]
+2,283
+times. Women pass on roughly 95% of the
+men they see. Men pass on 47% of the
+women. And here's the second twist. In
+2009, an analyst at OkCupid named
+Christian Rudder published the most
+famous internal dating data ever [music]
+leaked from a tech company. He called it
+Your Looks and Your Inbox. Asked to rate
+the physical attractiveness of men on a
+one to five scale, women rated
+approximately 80% of men [music] as
+below average. That's not just below
+attractive, we're talking below average.
+And mathematically, that is impossible.
+By definition, half of any population is
+below average. But on OkCupid in 2009,
+four out of every five men were graded
+below the middle of the curve by the
+women evaluating [music] them. The same
+study run in the other direction
+produced a near perfect bell curve. Men
+rated most women as average, some above,
+some below, exactly the distribution
+statistics predicts. And the most honest
+piece of the OkCupid study is one almost
+nobody quotes. Researchers tracked which
+men the women actually messaged as
+opposed to which men they rated, and
+female behavior tracked much closer to a
+normal bell curve than the female
+ratings did. They rated harshly, they
+messaged a wider range. The straw man
+version of this data, [music] the
+version that says all women are shallow,
+is not what the numbers showed in the
+end. The numbers showed something even
+more specific. Women rate men brutally,
+then engage with a broader range of
+them. Both things are true. But inside a
+swipe app, where the rating is the
+engagement, where a swipe left is a
+rating and a swipe right is a message,
+the rating system and the messaging
+system collapse into one action. The
+harsh ratings become the only ratings.
+And that collapse is one of the most
+important things that happened to
+romantic behavior in the 21st century.
+It is the reason a man like Marcus in
+his Phoenix apartment with no character
+flaw, no bad photo, no offensive bio,
+can swipe 14,000 times and end up with
+three dates [music] and an empty bed.
+Aviv Goldgeyer stayed at Hinge for
+several more years after publishing the
+analysis. [music] He was never fired,
+never punished, and never asked to take
+the post down. Post stayed up on Medium.
+Today, Goldgeyer works as a senior data
+engineer at Meta, the parent company of
+Facebook and Instagram, building data
+products for one of the largest
+technology platforms in the world. The
+strangest part of this entire story is
+not that Hinge tolerated the analysis.
+It's that Hinge published it. The
+company knew [music] exactly what was
+happening on its product and let one of
+its own engineers tell the whole world
+the truth, [music] and it changed
+nothing. The product kept running. The
+Gini coefficient kept getting worse, and
+the company kept making money.
+>> If you or your child spent years growing
+up on social media and experienced
+serious mental health struggles, you
+should hear this. Recently, a jury
+ordered Meta and YouTube to pay millions
+for the role in designing and promoting
+addictive platforms. They knew their
+apps could contribute to anxiety,
+depression, and body image issues, but
+did not share those risks while
+prioritizing profits. The recent
+historic verdict underscores the
+consequences of those decisions. Now,
+Morgan and Morgan is stepping up to hold
+these platforms accountable for the harm
+they caused. Click the link in my bio to
+take a short quiz. You may be entitled
+to a potential recovery of over $1,000.
+>> The next number to understand is the
+gender ratio. On Tinder, the user base
+is 78% male. In European markets, the
+ratio reaches as high as 9 [music] to 1.
+On Hinge, men make up roughly 65% of
+users. On Bumble, the app that built its
+entire brand on being female-friendly,
+>> [music]
+>> the user base remains 62.5% male. Across
+every major heterosexual dating app on
+the planet, [music] men outnumber women
+roughly two to one. And that is the
+foundation. Before a single swipe
+happens, before an algorithm sorts
+anything, before a preference is
+expressed, the market is already broken.
+There are not enough women on these
+apps, and there never were. The math of
+a market where the supply is constrained
+and the demand is high produces a
+predictable outcome for the participants
+on the losing side. They will compete
+for scraps, [music] and they will pay
+way more than they should for the
+privilege.
+So, here's where the second piece
+[music] of the story comes in, the
+business model.
+Match Group owns more than 40 dating
+brands, Tinder, Hinge, Match.com,
+OkCupid, Plenty of Fish, The League,
+Azar, Meetic, Pairs, Akuna. [music] They
+are the closest thing the dating
+industry has to a monopoly. Tinder alone
+[music] generates more than 50% of Match
+Group's total revenue. In Q1 of 2025,
+Match Group's revenue was $831 million.
+By Q4 of 2025, [music]
+Tinder's paying user count has fallen to
+8.77 million, down [music] from a peak
+of 10.4 million in Q3 of 2023. It's a
+16% multi-year collapse in [music]
+paying customers, and revenue stayed
+flat because of a decision Match Group
+made once they realized that their user
+base was shrinking. They decided to
+charge the people who stayed a lot more
+money. The subscription stack on [music]
+Tinder now looks like this. Tinder Plus
+runs around $25 a month. Tinder Gold
+runs higher. Tinder Platinum runs around
+$25 to $50 a month, depending on the
+user's age and location. Then in late
+2023, Match Group launched a new tier
+called [music] Tinder Select. The price
+was $499
+a month, $6,000 a year for a dating app.
+Tinder Select is invite-only. It is
+offered to, in Match Group's own
+language, less than 1% of users. It
+doesn't just unlock better features, it
+rewrites the rules of the application.
+Subscribers can send direct messages to
+other users without matching first.
+Their profiles are forced to the top of
+every queue. They get to bypass the
+mutual consent mechanism that the entire
+premise of the swipe was built on. Asked
+about Tinder Select at an investor
+conference in 2023, Match Group CEO Gary
+Swidler was honest. He said that here
+was going to have a small number of
+users, but his exact words "Given the
+rate we're going to charge, it's going
+to be so appealing to this small group
+of people." Then CEO Bernard Kim
+addressed shareholders on the Q3 2023
+earnings call and said Tinder Select
+alone could generate tens of millions of
+dollars in revenue the following year.
+For one app, for $500 a month, for 1% of
+the user base. This is the model. The
+product is not the connection or love.
+It is a marginal advantage sold to a
+desperate paying minority inside a
+marketplace the company itself [music]
+has engineered to feel unwinnable. On
+Valentine's Day of 2024, a class action
+lawsuit was filed in the Northern
+District of California [music]
+that put this entire model on trial. The
+case is called Keller versus Match
+Group. The lead attorney is Tim Giordano
+of the Clarkson Law Firm. The case is
+being heard by Magistrate Judge Laurel
+Beller. The complaint reads like an
+indictment. Quote, "Match Group employs
+recognized dopamine manipulating product
+features to to gamify the platforms to
+transform users into gamblers locked in
+a search for psychological rewards that
+Match makes elusive on purpose." End
+quote. In another section, quote, "The
+truth is the apps are designed [music]
+to be addictive." And the lawyer put it
+more bluntly in the magazine Jacobin in
+February of 2025. Quote, "Match has done
+a really good job of convincing the
+public that the problem in their dating
+lives is [music] them." End quote. Match
+Group's official response to the lawsuit
+was that it was, quote, "ridiculous man
+had, quote, zero merit." The case is
+still pending at the time of filming
+this episode. But, the financial market
+disagrees with Match Group's lawyers. In
+early 2024, a hedge fund called Elliott
+Investment Management bought roughly $1
+billion worth of Match Group stock and
+demanded two board seats. They got them.
+Later that same year, another activist
+fund, [music] Starboard Value, run by a
+man named Jeffrey Smith, took a 6.5%
+stake and publicly demanded that Match
+Group either become profitable or sell
+itself. Within months, [music] Bernard
+Kim was removed as CEO. Match Group
+brought in Spencer Rascoff, the
+co-founder of Zillow and a co-founder
+and chairman of Picasso, to run the
+company starting in February of 2025.
+His first major action was a 13%
+workforce reduction. Rascoff, in an open
+letter to Match Group employees shared
+exclusively with Fast Company on March
+13 of 2025, said the quiet part out
+loud, quote, "Too often our apps have
+felt like a numbers game rather than a
+place to build real connections, leaving
+people with the false impression that we
+prioritize metrics over experience. That
+needs to change." End quote. The CEO of
+the company that owns Tinder and Hinge
+in writing admitted the product was
+broken. 13 days later, the CEO of Bumble
+said the same thing. So, to understand
+the weight of that moment requires
+understanding the arc Whitney Wolfe Herd
+had traveled to get there. In 2014,
+Wolfe Herd had been an executive at
+Tinder. She filed a sexual harassment
+lawsuit against her former boyfriend and
+Tinder co-founder Justin Mateen, settled
+with the company for a reported $1
+million
+and walked away with a story to tell.
+The next year, she co-founded Bumble.
+Her core idea was simple and, at the
+time, radical. Women would have to make
+the first move. A dating app where the
+woman, not the man, sent the opening
+message. [music] Around what one
+journalist called, quote, a platform
+engineered a feminist correction, end
+quote.
+>> [music]
+>> It worked, at least at first. By 2019,
+Bumble had more than 75 million users
+across 150 countries. In February of
+2021, Wolfe Herd took the company public
+on Nasdaq at a valuation of more than
+$14 billion.
+She was just 31 years old. She rang the
+opening bell with her young son on her
+hip, becoming the youngest woman in
+American history to take the company
+public. Forbes named her one of the most
+powerful women in the world. Then,
+everything started to come apart.
+The product Wolfe Herd had built,
+despite her intentions, was just another
+dating app. The supply and demand math
+that destroyed Tinder was no different
+inside Bumble. The user base, despite
+the female-first messaging mechanic,
+still tilted [music] 62.5% male. The
+women who joined Bumble were not, on
+average, more interested in messaging
+strangers than the women on Tinder. They
+simply had to do it now to use the
+product, which produced massive female
+disengagement. Bumble's chief revenue
+driver, like Tinder's, remained male
+premium subscriptions. The app that was
+supposed to fix the dating market just
+monetized the broken one with extra
+steps. So, the stock peaked at $84.80
+on February 12th of 2021, just one day
+after the IPO. From that moment, the
+chart only went one direction, down.
+Then, in March of 2025, Wolfe Herd
+returned to the CEO role she had stepped
+away from 14 months earlier, hoping to
+save the company she built. On her
+second day back on the job, she sat down
+with Fortune magazine reporter Emma
+Hinchliffe for an interview that ran on
+March 26th of 2025. In that interview,
+Wolfe Herd said something nobody in the
+dating app industry had ever been
+willing to say out loud. Her exact
+words, quote, dating apps are rooted in
+rejection and judgement. You are judging
+people and they are judging you. You're
+being rejected and you're rejecting.
+[music]
+These are not healthy dynamics." End
+quote. The founder of Bumble saying the
+app she invented was poisoned at the
+core. But by that point, Bumble stock
+had already collapsed. The IPO had
+priced at $43 a share, opened at 76, and
+closed its first full trading day at
+$84.80.
+[music] That was February 12, 2021. The
+peak. And February 19th of 2026, just
+over 5 years later, Bumble had closed
+$2.61
+a share. The all-time low. A peak to
+trough collapse of 96.9%. [music]
+Honestly, they deserved it. And so did
+she. But who didn't was the employees
+that worked for them. As the company
+laid off 350 of them in February of 2024
+and another 240 on June 23rd of 2025,
+roughly 30% of its entire workforce.
+According to internal call recordings
+reported by the Financial Times and the
+Australian Financial Review, Wolfe Herd,
+the witch, warned her remaining staff
+that Bumble would collapse by 2026 and
+that dating apps were, quote, "feeling
+like a thing of the past." End [music]
+quote. Match Group's market
+capitalization, which had hit roughly
+$45 billion in 2021, fell to
+approximately $10 billion by late 2025.
+A 78% decline. And honestly, [music]
+they deserve even worse for the damage
+they have done to our society. The
+dating app sector, taken as a whole, has
+lost more shareholder value in 5 years
+than the cryptocurrency [music] winter,
+the streaming wars, and the meme stock
+bubble combined. One of the largest
+sector collapses in modern American
+consumer tech.
+>> [music]
+>> And inside that collapse, something
+stranger started to happen. Men, in
+massive numbers, just stopped showing
+up. And no one's surprised. It costs a
+crap ton of money just to get matches.
+[music] And people right now are having
+a a time budgeting their hard-earned
+money. But that's why we created Daloa
+[music] us, the best budgeting app for
+the average person that is not going to
+make you pay $50 a month just [music] to
+win in life. There's tens of thousands
+of monthly active users for a reason
+with the automatic account connections
+and the insights you need to actually
+make changes in your life to meet the
+results you want to do with actual
+positive outcomes, unlike these
+disgusting [music] dating apps. And
+there's a free trial, so there's
+literally no reason not to download it
+and see if it works for you. So,
+download Daloa us today, start that free
+trial, or go to daloa.com. Links in the
+description below. The exodus of men
+from the dating apps is one of the most
+undercovered stories in American
+consumer behavior. From 2023 to 2025,
+young male usage on Tinder, Bumble, and
+Hinge dropped between [music] 15% and
+22%. Female usage stayed roughly flat.
+The gender ratio on some mainstream apps
+reached 70% to 75% male versus 25% to
+30% female. Match to date conversion
+rates dropped from 4.8% [music]
+in 2020 to 2.1% in 2025, a 56% decline
+in a 5-year window. 47% of men in a 2024
+[music]
+Forbes survey said they had either given
+up on active dating or were taking an
+extended break. 63% [music] said dating
+apps made them feel drained, ignored, or
+invisible. More than 75% of Gen Z said
+they were burned out by the apps. Dating
+app satisfaction across all users
+dropped [music] from 44% in 2019 to 22%
+in 2025. The product is half as good as
+it was 6 years ago, by the users' own
+report. [music] But, the men didn't just
+stop dating. They started replacing the
+apps with something else. While men were
+quietly logging off Tinder, an entirely
+new product category was quietly logging
+them in, AI companion apps. The first
+big one was called Replika. Its founder,
+a Russian-American engineer named
+Eugenia Kuyda, originally built the app
+to recreate her best friend, a man named
+Roman, who had been killed in a
+hit-and-run accident in Moscow. Kuyda
+fed Roman's text messages into a
+language model and built a chatbot that
+responded in his voice. She told the BBC
+she just wanted to keep talking to him.
+The product she accidentally invented
+turned out to be one of the most
+addictive consumer software category
+since TikTok. By 2025, Replika had
+surpassed 40 million users. The number
+two app in the category, Character AI,
+reports per session usage that beats
+every social media platform on Earth.
+The average Character AI user spends
+between 92 and 120 minutes a day on the
+app. TikTok averages around 56 minutes,
+Instagram around 35. [music] The average
+Character AI user is, by some measures,
+spending more time talking to fictional
+characters than the average TikTok user
+spends watching short-form video.
+According to the analytics firm
+Appfigures, AI companion apps generated
+approximately $82 million in the first
+half of 2025 alone. The category is on
+track to clear $120
+million in 2025, growing 64% year over
+year. The venture capital firm Ark
+Invest, run by Cathie Wood, has
+published research projecting that AI
+companionship can scale from a $30
+million industry in 2024 to between 70
+and $150 billion in annualized revenue
+by 2030. 70 to $150 billion for chatting
+with a piece of software that pretends
+to love its user. And the economical
+logic here is pretty simple. An AI
+girlfriend does not have a height
+filter, [music] does not require a
+six-pack and a six-figure salary, does
+not ghost, [music] does not screenshot
+her conversations and post them to a
+Facebook group called are we dating the
+same guy, and does not cost $499
+a month for a slightly improved chance
+at being noticed by a human woman. For
+about $10 a month, an AI girlfriend will
+text her user, listen to him, remember
+his dog's name, and tell him everything
+is going to be okay. Millions of
+Americans are taking that deal. But, the
+category is not without its own
+catastrophes. In February of 2024, a
+14-year-old boy in Orlando named Joel
+Seltzer III shot himself after months of
+romantic
+>> [music]
+>> and sexually charged conversations with
+a Character AI chatbot modeled on
+Daenerys Targaryen, a character from
+Game of Thrones. According to the
+lawsuit later filed by his mother, the
+bot's final message to Seltzer urged him
+to quote, "Come home to see me as soon
+as possible." End quote. Megan Garcia,
+his mother, filed a wrongful death suit
+against Character AI and Google in
+October of 2024. The case was the first
+wrongful death lawsuit ever filed
+against an AI company in the United
+States. In January of 2026, Google and
+Character AI settled. The terms were not
+disclosed. The case was one of five
+similar settlements with similar facts
+from parents in Florida, New York,
+Colorado, and Texas. It is, at minimum,
+a preview of the kind of legal liability
+the AI companionship industry is going
+to spend the next decade dealing with.
+But, the demand keeps growing because
+the alternative for a generation of men
+has stopped [music] functioning at all.
+The other replacement category is an
+older one. That is, pornography. Pornhub
+now reports more than 130 million daily
+visits and a user base that has grown
+every year [music] since dating app
+satisfaction started catering. OnlyFans
+is now a $7 billion economy with more
+than 4 million content creators, the
+vast majority of whom are women selling
+content to men. [music] The top 1% of
+OnlyFans creators earns roughly $100,000
+a year. The typical user spends about
+$20 a month. So, in plain English,
+millions of American men, statistically
+frozen out of the real dating market,
+have started paying for a transactional,
+scripted, parasocial version of female
+attention. AI girlfriends, subscription
+pornography, pay-per-message intimacy.
+The market for it has simply exploded.
+The researchers at ARK Invest, the
+executives at Match Group, and the
+academics writing for Psychology Today
+agree on all of this. The trend is not a
+phase. It [music] is what the modern
+Western dating market looks like under
+stress. Tens of millions of men
+structurally locked out of biological
+pair formation, paying for digital
+substitutes that simulate the experience
+[music] of being wanted without the risk
+of being rejected. The downstream
+consequences are showing up in the
+macroeconomic data. You see, the
+marriage rate in the United States
+[music] sits at the lowest point since
+modern record keeping began. The total
+fertility rate sits at roughly 1.6, well
+below the replacement rate of 1.2.
+Single-person households make up the
+largest share of non-family households
+in American history. Pew Research in a
+2022 survey published in February of
+2023 found that 63% of men under 30 were
+single
+>> [music]
+>> against only 34% of women under 30. A
+statistical impossibility under any
+natural [music] distribution. So, one of
+two things has to be true. Either young
+women are partnering up with older men
+in large numbers, [music] or a small
+concentrated cohort of young men is
+operating across multiple uncommitted
+partnerships at once, while the rest of
+the male population is partnered with
+nobody. And this is not couples
+splitting up. The divorce rate sits at a
+multi-decade low. Just 1.4% of married
+Americans got divorced in 2023, down
+from a [music] peak of 2% in 2012.
+Couples are failing to form in the first
+place. The country the Western world
+should be looking at because it runs
+roughly 15 years ahead of us. And the
+exact trend is South Korea. South
+Korea's total fertility rate hit 0.72 in
+2023 and 0.748
+in 2024. The capital city Seoul has a
+total fertility rate of 0.55,
+less than 1/4 of the replacement rate.
+Tokyo sits at 0.96 for the second
+consecutive year. In Japan as a whole,
+births fell to 686,061
+in 2024, the first time below 700,000
+since the Japanese government started
+counting. And the [clears throat] ninth
+consecutive record low. In South Korea,
+a movement has emerged called 4B. The
+4B's in Korean stands for no marriage,
+no childbirth, no dating, and no sex
+with men. It is a fringe movement in
+Korea [music] itself, but in the United
+States, after the November 2024
+election, Google searches for the 4B
+movement spiked 450% in a single week.
+American women in large numbers started
+typing the words Korean separatist
+feminism into Google. Whatever
+conclusions to draw from that, the
+cultural temperature is clear. This is
+what society looks like once the pair
+formation machinery has broken. Men
+retreat to digital substitutes. Women
+radicalize into separatism. The
+population stops reproducing, and the
+apps that started it all keep collecting
+subscription fees. The second thing that
+has happened in the last 5 years is that
+an entirely new economy of male
+reputation destruction has emerged
+around the apps, and the legal system
+has not figured out what to do with any
+of it. The most famous example is an app
+called Tea, t e a. Founded in 2022 by a
+man named Sean Cook, who claims to be a
+former employee of Salesforce and
+Shutterfly, its stated mission,
+according to a 2025 interview with
+Authority Magazine, was that he was
+inspired by his mother's bad experiences
+with online dating, and he wanted to
+build a tool that would help women catch
+catfish, scammers, and abusers. The
+journalism outlet 404 Media has since
+questioned whether that origin story is
+accurate, but that is the official
+version. Tea, in practice, was an app
+for women only. Verified female users
+could anonymously upload photos of
+named, identifiable men alongside short
+reviews, red flag, green flag,
+background check tags. The men whose
+photos were uploaded and the men whose
+photos were uploaded had no knowledge
+they were on the app, no ability to
+respond, and no ability to defend
+themselves. In July of 2025, Tea hit the
+number one spot in the United States iOS
+App Store. By the time of the breach,
+the company had reached more than 4
+million users with a waiting list
+nearing a million people deep. Celebrity
+endorsements, press coverage, investor
+interest, a woman-only dating app
+designed to protect women from dangerous
+men [music]
+riding a wave of organic growth that
+most consumer apps would kill for. Then
+on the morning of July 25th, 2025,
+somebody on 4chan noticed something.
+4chan, for the unfamiliar, is one of the
+oldest and most chaotic message boards
+on the internet. Its users include
+programmers, trolls, conspiracy
+theorists, hackers, and people who enjoy
+watching the world burn. On the morning
+of July 25th, one of those users
+discovered that Tea, the app whose
+entire business model was protecting the
+personal data of vulnerable women, had
+left a back-end database unprotected. A
+Firebase server hosted on Google's cloud
+platform sitting open to anyone on the
+public internet. The 4chan post that
+followed has since been deleted, but the
+cybersecurity journalist at 404 Media
+archived it before it disappeared. The
+opening line of the post, written in all
+capital letters, read, quote, "Drivers
+licenses and face pics. Get the in here
+before they shut it down." End quote.
+Within hours, scripts were written to
+scrape the entire database. 72,000 user
+images were ripped out and posted across
+4chan, X Twitter clones, and torrent
+hackers. 13,000 of those images were
+verification selfies where the women had
+photographed themselves holding
+government-issued ID. 59,000 were images
+from inside the app itself, including
+direct messages and posts. The women's
+faces, the driver's license, their
+addresses, their phone numbers, all
+conversations, all of it. Tea
+acknowledged the breach roughly 24 hours
+later on July 26th, blaming it on a,
+quote, "decommissioned legacy data
+storage system." End quote. But that was
+just the first breach. Three days later,
+on July 28th, an independent
+cybersecurity researcher named Kasra
+Rahjerdi, reporting through 404 Media,
+disclosed the second, much worse breach.
+More than 1.1 million private direct
+messages between Tea users had been
+exposed, spanning from early 2023
+through the last week of July 2025. The
+contents of those messages included
+discussions of abortion, infidelity,
+sexual assault, custody disputes, phone
+numbers, and physical meeting addresses.
+The same day those findings went public,
+the first class action lawsuit was
+filed. In the Southern District of
+Florida, the lead plaintiff was a woman
+named Riselda Reyes. Subsequent suits
+followed from the Almeida Law Group and
+others. The catastrophe of Tea was not
+just that the women's data was leaked.
+The deeper catastrophe was that the The
+premise of what the app required that
+the men's data be exposed to T works
+because women uploaded the men's photos,
+full names, dating [music] app
+screenshots, workplaces, and license
+plates in some cases. Those men, the men
+who were named, photographed without
+consent, whose [music] entire dating
+lives were turned into anonymous group
+commentary, had no recourse. Once the
+4chan hack happened, the same men who
+had been doxed on T were now linked in
+the open to the women who had been doxed
+in the breach. A second internet of men
+who had been targeted on the app [music]
+started identifying themselves on social
+media. Some of them, according to the
+reporting in Wired and the New York
+Post, were married men who whose alleged
+affairs had now been publicly tied to
+specific [music] named accusers. Others
+were men who had never met the women who
+posted about them. Others claimed they
+had been mistaken for somebody else and
+the post stayed up anyway. Some of them,
+undoubtedly, were guilty of exactly what
+the posters said they were guilty of.
+But the point is that there was no way
+to tell. No due process, no
+verification, no court, just a phone
+app, a one-sided whisper network, and
+the assumption that the woman posting
+was always telling the truth. The T app
+is still, as of the filming of this
+documentary, defending itself against
+active class action [music] litigation.
+Its founder, Sean Cook, has gone almost
+entirely silent. The app's main
+competitor, an app called Giggle,
+[music] briefly tried to capitalize on
+T's collapse before getting hit with its
+own controversies. The app is still
+structure for women to anonymously rate
+men on the internet, once built, does
+not seem to want to stay buried. But T
+was not an isolated case. It was the
+most visible example of a much larger
+ecosystem of crowdsourced male
+accusation platforms that emerged in the
+early 2020s and now hosts millions of
+users. Sitting at the center of that
+ecosystem is a network of Facebook
+groups called Are We Dating the Same
+Guy? The groups operate under an LLC
+called Spill the Tea Incorporated, run
+by a woman named Paola Sanchez. USA
+Today, in a 2024 investigation, [music]
+counted approximately 200 such groups
+across major US cities with an aggregate
+membership of more than 3.5 [music]
+million women. The format mirrors Tea.
+Women post photos of men they have
+matched with, dated, slept with, or been
+ghosted by, and ask other women in the
+group to share what they know. The posts
+include names, faces, and employer
+information, and screenshots of private
+conversations. The legal infrastructure
+of the United States has so far almost
+completely protected the posters [music]
+and the platforms. The most important
+case here is Stewart Lucas Murray versus
+Vanessa Valdez. In July of 2023, Murray,
+a Los Angeles man who had become the
+subject of multiple posts in the local
+Are We Dating the Same Guy group, walked
+into the Los Angeles Superior Court and
+filed a defamation lawsuit. He named
+more than 50 women as defendants. He
+sought more than $2 million in damages.
+He alleged that the women had
+coordinated a campaign of stalking,
+doxxing, and reputational destruction
+against him, sharing his name, his face,
+and his personal information with
+thousands of strangers who had never met
+him. Murray had a real grievance. His
+photos had been posted. His full name
+had been used. Women he had never spoken
+to had commented under his profile
+calling him names. Whether what the
+original posters had said about him was
+true is a question Murray wanted to
+answer in open court, but he never got
+the chance. Judge Gregory I O'Sean
+granted defendant Vanessa Valdez an
+anti-SLAPP motion in 2024. Anti-SLAPP
+statutes exist in California to protect
+speech in public forums. The judge ruled
+that under California law, the women's
+post about Murray qualified as protected
+speech in a quasi-public discussion
+place. Judge Michael Shultz then
+dismissed the claims against Facebook
+entirely under Section 230 of the
+Communications Decency Act, the 1996
+federal law that makes immune online
+platforms from liability for the content
+posted by their users. On February 3rd
+of 2026, Judge Scholls granted defendant
+Lena Vanderford more than $40,000 in
+attorney's fees to be paid by Murray
+himself. Stuart Lucas Murray, the
+plaintiff, was now paying his accusers
+legal bills. The same pattern played out
+in Illinois. Nico D'Ambrosio, a
+Chicago-area man whose former dating
+partner Abigail Viola had posted a
+critical review of him in the local Are
+We Dating the Same Guy Facebook group,
+sued 27 women plus Facebook plus Viola's
+parents for quote letting her use the
+home internet and quote, plus the
+platforms Patreon and GoFundMe plus the
+moderators of the group. The case was,
+in the words of his own appeal panel,
+sprawling. On May 13th of 2025, US
+District Judge Sunil Harjani dismissed
+the case with prejudice. D'Ambrosio
+appealed. On May 15th of 2026, the
+Seventh Circuit Court of Appeals
+affirmed the dismissal. Judge David
+Hamilton wrote the opinion. Then the
+court did something that very rarely
+happens in federal appellate practice.
+They sanctioned D'Ambrosio's own
+attorneys. D'Ambrosio's lawyers, Mark
+Trent and Aaron Wallner, had filed an
+appellate brief. The brief contained
+legal citations to cases that did not
+exist, quoted from court rulings the AI
+hallucinated, cited statutes that had
+never been written. The court, in plain
+English, accused the lawyers of having a
+generative AI tool, almost certainly
+ChatGPT, to write the brief and then
+file it without checking whether the AI
+had made up the law. The Seventh Circuit
+panel ordered the attorneys to show
+cause as to why they should not be
+personally fined. So, to recap, a man
+got publicly humiliated on Facebook by
+women he had dated, he sued, the court
+ruled the women were protected by free
+speech law. He appealed, his lawyers
+used artificial intelligence to write
+the appeal. The artificial intelligence
+made up the law, the court caught it,
+and the lawyers got punished. And that's
+where we are. The legal framework for
+now is locked in. Section 230 makes
+immune matter from anything users post
+in the Are We Dating the Same Guy
+groups. Anti-SLAPP statutes in
+California, New York, and Illinois
+protect the posters themselves. The men
+who can named, photographed, accused,
+and humiliated have, in nearly every
+American court so far, no meaningful
+path to defending their reputation. The
+presumption of innocence does not apply
+on Facebook. Other countries draw the
+line differently though. In Australia,
+after a 2021 case involving a man named
+Dylan Voller, the High Court ruled that
+administrators of Facebook groups can be
+held personally liable for defamatory
+comments posted by third parties.
+Australian Are We Dating the Same Guy
+administrators in Sydney and Adelaide
+were sued, paid more than 20,000
+Australian dollars in settlements, and
+shut their groups down. In Canada, the
+2009 Grant versus Telstar Corporation
+defamation test has, in several cases,
+ruled against anonymous online accusers.
+The United States is the global outlier
+in how completely it protects the
+platforms. But here is, importantly, the
+counterargument. The reason T and Are We
+Dating the Same Guy and a dozen smaller
+platforms exist at all is that the women
+on the dating apps face risk that men do
+not face. Predators and stalkers do use
+dating apps. Match Group's own
+transparency reporting from 2024 to 2025
+confirmed the company suspended more
+than 11,000 accounts for abuse and
+harassment, more than 11,500 for
+off-platform misconduct, included
+alleged abuse and exploitation, and more
+than 2,000 for hate speech and violence.
+But it is also worth noting that those
+accusations are nearly never confirmed
+and always accepted for the safety of
+the platform. But, some men named Anti
+and AWDTSG
+almost certainly belonged on those
+lists. The platforms exist because the
+formal reporting systems inside Tinder,
+Hinge, and Bumble aren't perfect, and
+that's why those platforms ban people
+without actually checking if the ban is
+valid or not. The argument can be
+correct on its face, and it runs
+consistent with the other argument. So,
+both can be true. A woman has a real and
+legitimate interest in knowing whether
+the man she is about to meet has a
+documented history of violence. A man
+has a real and legitimate interest in
+not being publicly accused,
+photographed, named, [music] and
+economically damaged by an anonymous
+stranger he has never met. The American
+legal system, as currently constructed,
+privileges the first interest and
+disregards the second. The apps
+themselves, the Tinders and Hinges and
+Bumbles where this entire mess began,
+have added their own layer to the
+problem, the bans. The Match Group
+banning system is largely automated. Any
+user can report any other user for any
+reason, [music] and the system processes
+those reports at scale with limited
+human review.
+>> [music]
+>> In the 2024 to 2025 reporting year,
+Match Group banned or suspended roughly
+660,000
+accounts across all its properties. The
+breakdown was 11,000 for abuse, 11,500
+for off-platform misconduct, [music] and
+2,126
+for violence and hate speech. The
+remaining 635,000-plus
+accounts were banned for a wide range of
+other reasons, ranging from spam to
+terms of service violations.
+>> [music]
+>> The number men in the affected
+communities care about is the false ban
+rate, which Match Group does not
+publish. User reports compiled by
+journalists at The Cut, Wired, and Vice
+[music] document a recurring pattern. A
+man matches with a woman, the match
+either goes nowhere, ends in ghosting,
+or ends in an awkward exchange. She
+reports him, the system bans him, and he
+has no idea why. There is no appeal
+process that produces a human
+conversation. The ban applies not just
+to the account, but to the phone number,
+the IP address, and the Apple ID. A
+secondary market of evasion services has
+emerged in response. The prominent is a
+company called Dating Zest, which sells
+banned users new phone numbers, new
+Apple IDs, and IP spoofing services to
+get back onto the platforms they were
+ejected from. People are selling access
+to the apps that banned them. The
+companies running the apps know this and
+have done little about it because the
+ban and pay to return cycle is, by
+accident or design, a revenue model.
+Match Group has also been sued by men,
+[music] plural, for gender-based
+discrimination at the structural level.
+The most successful of these suits was
+brought by an attorney named Alfred
+Rava, who in 2022 won a $3.26 million
+class action settlement against Bumble
+under the California Unruh Civil Rights
+Act. Rava's argument was simple.
+Bumble's women message first mechanic,
+[music] the entire defining feature of
+the application, constituted a
+gender-based discriminatory feature
+[music] under California Civil Rights
+Law. The court agreed and Bumble
+settled. Rava has continued filing
+similar suits. The Unruh Act precedent,
+taken seriously, could threaten the
+entire premise of Bumble's existence. As
+a strictly textual matter, a service
+that lets one gender initiate contact
+and forbids the other from doing the
+same is exactly what California's Unruh
+Act was written to prevent. The next
+piece of the puzzle is one that everyone
+in the comment section already knows,
+the height filter. In 2025, Tinder
+rolled out a paid height filter for
+premium subscribers. The internet
+erupted. Conversation lasted maybe 3
+days and the height filter stayed. Per
+internal Bumble data from 2023 leaked by
+a Twitter account called the Rabble
+Hole, roughly 60% of women on Bumble set
+their minimum height filter at 6 ft.
+Approximately 30% will accept 5 ft 11
+in. Only 15% will accept 5 ft 8 in.
+The number of American men 6 ft tall or
+taller is approximately 14.5%. Among
+those who reach 6 ft 2 or above, the
+figure drops to about 3.9%. According to
+the dating analytics firm GitNux, men
+[music] under 5 ft 9 in receive
+approximately 70% fewer matches than the
+average male user. Men 6 ft or taller
+receive approximately double the
+response rate on Bumble. Approximately
+28% of male users lie about their height
+in their profile bios. That last number,
+the 28%, gets mocked relentlessly on
+TikTok. There is an entire genre of
+TikTok content where women record
+themselves checking their dates against
+door frames to verify height. A man who
+says he is 6 ft and turns out to be 5 ft
+10 in becomes the subject of a viral
+video, his face often visible, accused
+of being a quote height liar. The
+cultural sanction of men misrepresenting
+their height is severe. For women
+misrepresenting their appearance through
+filters, FaceTune, strategic lighting,
+or old photos, the cultural sanction is
+essentially zero. According to the
+original 2009 OKCupid research, the
+average male users reported a height
+about 2 in above the American national
+average. A documented systematic male
+lie. The female equivalent is the use of
+digital filters that smooth skin,
+reshape facial structure, and slim
+bodies. Both behaviors are
+misrepresentation, but only one of them
+is treated as a moral failing. In 2025,
+the polling firm YouGov asked Americans
+whether dating apps should allow users
+to filter their matches by height. 56%
+of men supported it. 55% of women
+supported it. Near identical rates of
+approval. The same poll then asked
+whether users should be allowed to
+filter by weight. 51% of men supported
+it, but only 36% of women supported it.
+Among young women aged 18 to 29, 68%
+said weight filtering was unacceptable.
+That asymmetry in a single survey
+captured the entire dating app standards
+debate. The defenders of the asymmetry
+argue that height is genetic and
+immutable, while weight is mutable and
+reflects personal habits. And that
+argument has merit, but also has a
+problem. The women who cite their
+minimum height at 6 ft are not, by and
+large, filtering for character,
+kindness, intelligence, humor, or
+emotional availability. The filter is
+set on a physical characteristic that
+has nothing to do with any of those
+things, and that the man being excluded
+had no choice in. The exact reasoning
+used to defend men from being filtered
+on weight, that physical trait should
+not be a moral basis for exclusion,
+would, applied consistently, prohibit
+height filtering as well. The double
+standard exists, and both sides have to
+live with the fact that it exists. The
+asymmetry shows up in one more place.
+The famous 666 rule, which exploded on
+TikTok in 2024. The rule, half joke,
+half stated preference, says a woman
+wants a man who is at least 6 ft tall,
+who has a six-pack, and who earns six
+figures. The percent of American men who
+meet all three criteria simultaneously
+is statistically [music] tiny. Well,
+about 14.5% are 6 ft or taller. Six-pack
+[music] physique among 6-ft men is a
+small fraction of that subset.
+Six-figure income among American men
+under 30 sits at roughly 20%. [music]
+Stack the three filters, and the
+intersection collapses to less than 1%
+of the male population. Now, most women
+do not actually hold this standard in
+practice. [music] The number who openly
+say they do is small. The quieter group,
+the ones who enforce it through the
+filters they set on the apps, the swipes
+they accept, and the messages they
+answer, is much larger than the polite
+version of the conversation admits. The
+math on the female side of the app
+reflects that quiet enforcement,
+producing an average of 81 monthly
+matches on Tinder versus 33 for the
+average man, and roughly five yearly
+dates for the average paying male user
+versus roughly 27 for the average paying
+female user. The dating market is not
+behaving like an equal market. It is
+behaving like a highly stratified,
+highly selective tournament with a
+winner-take-most outcome. The apps, as
+engineer of Eve Goldgier showed in 2017,
+are not just hosting that tournament.
+They are designing it. The third major
+thing the apps did, beyond the math and
+the monetization, was that they killed
+the cold approach. For most of human
+history, courtship, men met women in
+physical spaces, at work, at parties, at
+church, at school, at the grocery store,
+on the bus, or at the bar. And men did
+the approaching, women did Cultures
+varied, technologies varied, but the
+basic geometry of the process did not. A
+man in physical space walked up to a
+woman in physical space and said
+something. And then she just decided
+what happened next. But that entire
+system has, in roughly 15 years,
+collapsed in the developed world. The
+collapse has two causes. The first is
+the app themselves, which gave both men
+and women a frictionless alternative to
+in-person approach. The second is the
+social media environment that grew up
+around the apps, which made the
+in-person approach for men increasingly
+dangerous to attempt. The defining
+cultural artifact of the second category
+is a TikTok hashtag called weird guys at
+the gym. Tens of millions of cumulative
+views, hundreds of thousands of
+individual videos. The format is
+consistent. A woman working out at a
+fitness center films a man, often
+without his knowledge, and labels him in
+the caption as a creep, a starer, a gym
+predator. The man is sometimes visible,
+sometimes his face is identifiable, and
+sometimes he's wearing his employer's
+logo. He's often just lifting weights,
+going about his routine with no idea he
+is being filmed and broadcast to
+potentially millions of viewers.
+Behavioral analysts who have studied the
+trend, [music] including the social
+psychologist Jonathan Haidt, have noted
+that the videos routinely conflate
+standard social presence with predatory
+intent. Some of the men recorded under
+the hashtag are making women
+uncomfortable, but most of them are
+simply existing in a gendered space
+while male. The virtual asymmetry, the
+fact that the man cannot defend himself,
+cannot tell his side, and is identified
+to an audience of millions before he
+even knows he's on camera, is the part
+that has terrified the broader male
+population. The result is exactly what
+behavioral economists would predict. Men
+are calculating the cost-benefit of
+approaching a woman in public, have
+raised their estimate of the downside
+risk dramatically. Being labeled a creep
+on TikTok is no longer a private
+embarrassment. It is a publicly
+searchable record that can affect
+employment, reputation, and future
+relationships. A 2024 survey from the
+dating coach community found that 71% of
+men under 30 had stopped approaching
+women in public for fear of being filmed
+and shamed. 58% said they were
+uncomfortable making sustained eye
+contact with women in any public space.
+Roughly half said HR departments at
+their jobs had instructed them to avoid
+even casual conversations with female
+coworkers. Dating coaches who used to
+teach men how to cold approach now spend
+most of their time teaching social
+circle game. It's slower, warmer
+approach that depends on shared friends
+and pre-vetted social context. Here,
+again, the counterargument is also real.
+Some of the men who approached women in
+public over the last several decades
+were predatory. Restaurants, public
+transit, sidewalks, gyms, parking lots,
+all of these have been used as approach
+venues by men whose intentions ranged
+from awkward to aggressive to even
+criminal. So, the cultural memory of
+those interactions is what produces the
+TikTok content. It is not invented out
+of thin air, but the broader social
+effect of treating every male approach
+as presumably suspect is precisely the
+cycle the data captures. Men retreat
+from public space and spend more time on
+apps. The apps fail them, so they
+retreat further, and women report in
+survey after survey that they wish men
+would approach them in person
+organically. The men, having watched the
+TikToks, refuse. So, the cycle
+reinforces itself. The replacement
+infrastructure that emerged in the last
+3 years is what the wellness industry
+calls IRL dating, in real life dating.
+Run clubs, book clubs, climbing gyms,
+recreational sports leagues, and social
+meetups. The fitness app Strava reported
+in December of 2025 that it had reached
+180 million users globally, and that
+membership in its run clubs feature had
+surged 59% in 2024. The British media
+company called LadBible conducted a
+survey that found 72% of Gen Z
+respondents joined run clubs primarily
+to meet people, and 22% agreed with the
+statement that run clubs are the new
+dating app. The catch is that the run
+clubs have, with remarkable speed,
+reproduced the same dynamics as the apps
+they were supposed to replace. The most
+attractive members get the most
+attention. The same Gini coefficient of
+romantic interest applies. Whisper
+networks form. Failed situationships
+fracture friend groups. Members migrate
+from club to club to avoid running into
+the people they have dated. Wherever
+singles gather, the math goes with them.
+The apps did not invent the asymmetry.
+They surfaced it, measured it, monetized
+it, and pushed it to a numerical
+extreme. The underlying preferences that
+drive the asymmetry are not, by and
+large, software bugs. They are real,
+durable, observable human behaviors
+sharpened by technology, expressed at
+scale, and broadcast back to a
+generation of men and women who
+increasingly believe the other side has
+all the power. There is one more thing
+to cover before this story ends. The
+financial machinery that runs in the
+background of the entire ecosystem,
+sucking the wealth out of the lonely.
+Men, on average, pay roughly five times
+more per actual date than women do on
+the major dating apps. According to data
+published in May of 2026 by the
+analytics firm Players Time, the
+effective cost for a male Bumble Premium
+subscriber to secure a single date can
+reach 40 British pounds. The equivalent
+female user spends roughly 1/5 of that
+amount. On Tinder, men with a premium
+subscription average 13.2 dates a year.
+Women average 32. [music] On Bumble, men
+average 4.8 dates a year. Women average
+26.8.
+The dating industry is structurally a
+transfer of wealth from lonely men to
+publicly traded corporations. So, where
+does the entire dating app industry go
+from here? The honest answer is that
+nobody knows for certain, but the trend
+lines are clear, and they all point in
+the same direction. Match Group, under
+Spencer Raskopf, has shifted its public
+messaging away from monetization and
+toward what it calls real connection.
+The company has launched AI-powered
+matching features, expanded its
+in-person event programming, [music] and
+acknowledged in writing that the old
+model is broken. Whether the new model
+is actually different or just a rebrand
+is something the next several quarterly
+earnings calls will tell us. Bumble,
+under the returned founder Whitney Wolfe
+Herd, is reportedly considering a
+fundamental rebuild of its core product.
+The women message first mechanic, the
+legal liability and cultural touchstone
+of the entire brand, is under internal
+review. Wolfeherd has signaled in
+interviews and earnings calls that she
+does not believe pure app-based dating,
+as currently structured, has a viable
+future at all. Hinge, the smallest of
+the big three Match Group properties, is
+the only one with rising paying users in
+2025. Its slogan is designed to be
+deleted. Its product roadmap is built
+around the idea that the company wants
+users to leave. Whether that mission
+survives Match Group's quarterly revenue
+pressure remains an open question.
+Grindr, the gay male-focused app, is the
+one bright spot in the entire industry,
+reporting 25% revenue growth in Q1 of
+2025. The reason has nothing to do with
+product quality. The gay male dating
+market has roughly equal supply and
+demand, and the structural disasters
+hitting the straight apps cannot occur
+in a marketplace where the gender ratio
+is, by definition, balanced. Pew
+Research has documented that Gen Z women
+have moved sharply left, while Gen Z men
+have drifted toward the populist right.
+So, the gap between young men and young
+women on the questions of gender, race,
+and economic policy is wider than at any
+point in the history of American
+polling. The apps, with their identity
+filters, their political tags, and their
+algorithmic sorting, have not bridged
+this gap. They've probably made it
+worse. The dating market and the
+political map are now being drawn by the
+same forces. The apps themselves are
+bleeding out. Bumble at 261 a share.
+Match Group's market cap down 78% from
+its peak. Tinder's paying users down 16%
+in 2 years. The streaming era business
+model of frictionless engagement, scaled
+subscriptions, and emotional extraction
+has reached its natural limit. Once the
+product is broken, even the most
+addicted users walk away. The cleanest
+verdict on the question of whether
+dating apps are anti-men is not the
+slogan version. The slogan version says,
+yes, the apps were built to hurt men by
+women on purpose, but the data doesn't
+support that. The apps were not built by
+ideologues. They were built by publicly
+traded corporations whose primary
+obligation is shareholder return. The
+structural verdict is closer to this.
+The dating apps, by their design,
+monetize the side of the market that
+pays. The side of the market that pays
+is men. Men pay because the supply of
+women on the apps is constrained. The
+supply of women is constrained because
+the natural female response to a
+marketplace of millions of male
+strangers is selectivity. And the
+natural male response is volume. Those
+two responses combine on the platform
+into a winner-take-most economy that
+mathematically guarantees that 80% of
+men will lose. The companies running the
+platforms have, with the full knowledge
+of executives like Bernard Kim and Gary
+Swidler, built premium product ties
+specifically engineered to extract more
+revenue from the 80% that loses. It's
+not a conspiracy, not anti-male in
+intent, an emergent property of a
+two-sided market in which one side is
+the customer and the other side is the
+product. And men on dating apps are the
+customer. So, the deepest verdict, the
+one that neither side of the culture war
+wants to admit, is that the apps are
+working exactly as their business model
+requires them to work. They're not
+failing. [music] The apps are doing what
+publicly traded subscription products
+are supposed to do. They are extracting
+maximum lifetime value from a captured,
+lonely, fractured, frustrated user base.
+The data, finally, is starting to show
+that the user base is figuring [music]
+it out. Tinder paying users down 16%,
+Bumble paying users down 20%, Gen Z
+burnout at 75%, AI companion apps
+growing 64% a year. Men in Korea, Japan,
+and Taiwan have already shown the West
+what the next stage looks like. And the
+result, expressed in birth rates of 0.55
+in Seoul and 0.96 in Tokyo, is a
+national emergency. Whether the United
+States follow South Korea, or whether
+the cultural and technological pendulum
+swings back towards something more
+human, depends on the choices being made
+right now. In Spencer S. Cost's office
+in West Hollywood and Whitney Wolfe
+Herd's office in Austin, in courtrooms
+in Chicago and Los Angeles, and in the
+bedrooms of tens of millions of young
+men who are quietly deciding the apps
+are not worth the money. Marcus, the
+28-year-old man in the Phoenix apartment
+where we started, did [music] finally
+close his accounts. He canceled the
+subscriptions. He stopped paying. He
+joined a run club. And he is, at this
+moment, still alone. So are 63% of the
+men in his generation. And they're not
+alone because they're broken. The reason
+they are alone is that the system that
+was supposed to help them find each
+other was never built to actually do
+that. It was built to charge them by the
+month. The only question left is whether
+the next system, the one that replaces
+the apps, is going to be any better. But
+the early evidence is not encouraging.
+Sources below. I'll see you in the next
+one. I'll be candid. Front Page loses
+money. The cost of research, audio
+editing, video editing, and everything
+else that goes into this project is
+substantial. I believe the neutral and
+factual perspective we bring to these
+topics are important in today's culture
+of endless misinformation for political
+or financial gain. If you support the
+journalism we do here, please consider
+clicking the join button or the channel
+membership link in the description or
+pinned comment below, and join in with
+everyone else supporting this project.
+Every single supporter makes a
+difference and helps us continue Front
+Page. Click join or the link in the
+description or pinned comment below.
+Thank you.

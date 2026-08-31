@@ -1,0 +1,443 @@
+{
+  "slug": "court-difficile-a-obtenir",
+  "format": "short-faceless",
+  "duree_cible_s": 121,
+  "titre_travail": "Pourquoi les personnes difficiles à obtenir captivent",
+  "mot_cle": "",
+  "intention": "informative",
+  "pilier": "H2. Attirance et compatibilité",
+  "angle": "L'incertitude augmente l'attraction : l'intensité d'une obsession peut venir de l'absence de réponse, pas de la valeur de la personne.",
+  "avatar": "Le Désabusé",
+  "niveau_conscience": 2,
+  "maillage": {
+    "vers": [],
+    "depuis": []
+  },
+  "notes": "Premiere video officielle. Script ecrit hors pipeline puis lu au micro : les blocs sont decoupes SUR LE TRANSCRIT de l enregistrement, mot pour mot. Registre en adresse directe, choisi par l enregistrement lui-meme. Voix Victoire.",
+  "blocs": [
+    {
+      "id": "hook",
+      "role": "hook",
+      "texte": "Si tu es célibataire depuis longtemps, il y a peut-être une chose que tu fais sans t'en rendre compte et elle peut complètement modifier la personne par laquelle tu vas être attiré.",
+      "intention": "posé",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "punch-in",
+          "amplitude": 0.05,
+          "ancre": "sans t'en rendre compte"
+        },
+        {
+          "type": "broll",
+          "source": "fal",
+          "ancre": "Si tu es célibataire",
+          "duree_s": 4.5,
+          "src": "broll/ia-hook.mp4",
+          "ken": false,
+          "requete": "woman sitting alone at home evening pensive"
+        },
+        {
+          "type": "broll",
+          "source": "pexels",
+          "requete": "woman scrolling phone bed night",
+          "ancre": "une chose que tu fais",
+          "duree_s": 3
+        },
+        {
+          "type": "broll",
+          "source": "pexels",
+          "requete": "blurred silhouette crossing street city night",
+          "ancre": "tu vas être attiré",
+          "duree_s": 3
+        }
+      ],
+      "notes_montage": ""
+    },
+    {
+      "id": "absolution",
+      "role": "tension",
+      "texte": "Et devine quoi ? Ce n'est absolument pas de ta faute.",
+      "intention": "constat",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "broll",
+          "source": "pexels",
+          "requete": "woman relieved closing eyes",
+          "ancre": "pas de ta faute",
+          "duree_s": 3.5
+        }
+      ],
+      "notes_montage": ""
+    },
+    {
+      "id": "croyance",
+      "role": "corps",
+      "texte": "Parce qu'on pense en général que l'attirance est très simple. Quelqu'un nous plaît, donc on est attiré, mais en réalité ton cerveau est beaucoup plus complexe que ça.",
+      "intention": "constat",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "broll",
+          "source": "pexels",
+          "requete": "two hands reaching toward each other warm light",
+          "ancre": "l'attirance est très simple",
+          "duree_s": 3
+        },
+        {
+          "type": "punch-in",
+          "amplitude": 0.06,
+          "ancre": "mais en réalité"
+        },
+        {
+          "type": "broll",
+          "source": "fal",
+          "ancre": "beaucoup plus complexe que ça",
+          "duree_s": 4.5,
+          "src": "broll/ia-cerveau.mp4",
+          "ken": false,
+          "requete": "woman frowning confused thinking"
+        }
+      ],
+      "notes_montage": ""
+    },
+    {
+      "id": "mecanisme",
+      "role": "corps",
+      "texte": "Il peut apprendre à associer certaines sensations à l'amour sans que tu t'en rendes compte. Et il existe notamment un mécanisme qui peut rendre une personne difficile à obtenir, beaucoup plus captivante.",
+      "intention": "constat",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "broll",
+          "source": "pexels",
+          "requete": "heartbeat monitor",
+          "ancre": "certaines sensations",
+          "duree_s": 3
+        },
+        {
+          "type": "punch-in",
+          "amplitude": 0.06,
+          "ancre": "difficile à obtenir"
+        },
+        {
+          "type": "broll",
+          "source": "pexels",
+          "requete": "unanswered message notification screen close up",
+          "ancre": "beaucoup plus captivante",
+          "duree_s": 3
+        }
+      ],
+      "notes_montage": ""
+    },
+    {
+      "id": "compare-1",
+      "role": "corps",
+      "texte": "Maintenant, imagine deux personnes. La première est claire avec toi, elle répond, elle te propose de te voir, elle te montre qu'elle est intéressée.",
+      "intention": "constat",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "broll",
+          "ancre": "imagine deux personnes",
+          "requete": "woman looking thoughtful comparing decision",
+          "duree_s": 3.5
+        },
+        {
+          "type": "broll",
+          "source": "pexels",
+          "requete": "two people laughing coffee shop daylight warm",
+          "ancre": "est claire avec toi",
+          "duree_s": 3
+        }
+      ],
+      "notes_montage": ""
+    },
+    {
+      "id": "compare-2",
+      "role": "corps",
+      "texte": "La deuxième est beaucoup plus difficile à comprendre. Parfois elle est adorable, parfois elle devient distante. Tu ne sais jamais vraiment où tu en es.",
+      "intention": "constat",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "broll",
+          "source": "fal",
+          "ancre": "plus difficile à comprendre",
+          "duree_s": 4.5,
+          "src": "broll/ia-instable.mp4",
+          "ken": false,
+          "requete": "woman ambiguous expression looking away"
+        },
+        {
+          "type": "punch-in",
+          "amplitude": 0.05,
+          "ancre": "parfois elle devient distante"
+        },
+        {
+          "type": "broll",
+          "source": "pexels",
+          "requete": "rain window",
+          "ancre": "jamais vraiment où tu en es",
+          "duree_s": 3
+        }
+      ],
+      "notes_montage": ""
+    },
+    {
+      "id": "obsession",
+      "role": "corps",
+      "texte": "Et bizarrement, c'est souvent la deuxième qui commence à occuper toute ta tête. Tu regardes ton téléphone, tu analyses ses messages, tu attends son retour et tu te demandes pourquoi est-ce que cette personne me plaît autant ?",
+      "intention": "constat",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "punch-in",
+          "amplitude": 0.07,
+          "ancre": "occuper toute ta tête"
+        },
+        {
+          "type": "broll",
+          "source": "fal",
+          "ancre": "Tu regardes ton téléphone",
+          "duree_s": 4.5,
+          "src": "broll/ia-obsession.mp4",
+          "ken": false,
+          "requete": "man checking phone anxiously waiting reply"
+        },
+        {
+          "type": "broll",
+          "source": "pexels",
+          "requete": "text conversation screen scrolling close up",
+          "ancre": "tu analyses ses messages",
+          "duree_s": 3
+        },
+        {
+          "type": "broll",
+          "source": "pexels",
+          "requete": "spiral light",
+          "ancre": "me plaît autant",
+          "duree_s": 3.5
+        }
+      ],
+      "notes_montage": ""
+    },
+    {
+      "id": "etude",
+      "role": "corps",
+      "texte": "Ce phénomène n'est pas simplement une impression. Dans une expérience publiée dans Psychological Science, les chercheurs Will Church, Wilson et Gilbert ont observé que l'incertitude concernant l'intérêt amoureux d'une personne pouvait augmenter l'attraction et amener les participants à davantage penser à elle.",
+      "intention": "constat",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "broll",
+          "source": "pexels",
+          "requete": "researcher reading document",
+          "ancre": "Psychological Science",
+          "duree_s": 3.5
+        },
+        {
+          "type": "broll",
+          "source": "pexels",
+          "requete": "book pages",
+          "ancre": "une expérience publiée",
+          "duree_s": 3
+        },
+        {
+          "type": "broll",
+          "ancre": "augmenter l'attraction",
+          "requete": "woman eyes widening realization surprise",
+          "duree_s": 3.5
+        },
+        {
+          "type": "punch-in",
+          "amplitude": 0.05,
+          "ancre": "davantage penser à elle"
+        },
+        {
+          "type": "broll",
+          "ancre": "ont observé",
+          "requete": "two researchers discussing serious"
+        },
+        {
+          "type": "broll",
+          "ancre": "l'intérêt amoureux",
+          "requete": "woman uncertain biting lip waiting"
+        }
+      ],
+      "notes_montage": ""
+    },
+    {
+      "id": "traduction",
+      "role": "corps",
+      "texte": "Autrement dit, ne pas savoir si quelqu'un nous veut peut parfois nous faire penser encore plus à cette personne.",
+      "intention": "constat",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "punch-in",
+          "amplitude": 0.05,
+          "ancre": "ne pas savoir"
+        },
+        {
+          "type": "broll",
+          "source": "pexels",
+          "requete": "empty chair opposite in cafe waiting",
+          "ancre": "encore plus à cette personne",
+          "duree_s": 3
+        },
+        {
+          "type": "broll",
+          "ancre": "nous faire penser",
+          "requete": "man staring into distance preoccupied"
+        }
+      ],
+      "notes_montage": ""
+    },
+    {
+      "id": "piege",
+      "role": "relance",
+      "texte": "Et c'est là que tu dois faire attention à quelque chose. Tu peux parfois prendre l'intensité de ton obsession pour la preuve que cette personne est exceptionnelle. Alors qu'une partie de cette intensité peut simplement venir du fait que tu n'as pas la réponse.",
+      "intention": "constat",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "punch-in",
+          "amplitude": 0.06,
+          "ancre": "l'intensité de ton obsession"
+        },
+        {
+          "type": "broll",
+          "source": "pexels",
+          "requete": "candle flame",
+          "ancre": "est exceptionnelle",
+          "duree_s": 3.5
+        },
+        {
+          "type": "broll",
+          "source": "pexels",
+          "requete": "foggy glass",
+          "ancre": "tu n'as pas la réponse",
+          "duree_s": 3
+        },
+        {
+          "type": "broll",
+          "ancre": "Alors qu'une partie",
+          "requete": "woman doubting expression second thoughts"
+        },
+        {
+          "type": "broll",
+          "ancre": "venir du fait",
+          "requete": "man realizing something uncomfortable"
+        }
+      ],
+      "notes_montage": ""
+    },
+    {
+      "id": "boucle",
+      "role": "corps",
+      "texte": "Ton cerveau cherche à résoudre l'incertitude et plus il cherche et plus cette personne prend de la place.",
+      "intention": "constat",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "broll",
+          "ancre": "prend de la place",
+          "requete": "man lying awake at night staring ceiling",
+          "duree_s": 3.5
+        },
+        {
+          "type": "broll",
+          "source": "pexels",
+          "requete": "gears",
+          "ancre": "résoudre l'incertitude",
+          "duree_s": 3
+        },
+        {
+          "type": "broll",
+          "ancre": "plus il cherche",
+          "requete": "woman restless turning in bed insomnia"
+        }
+      ],
+      "notes_montage": ""
+    },
+    {
+      "id": "test",
+      "role": "corps",
+      "texte": "Alors la prochaine fois que quelqu'un te plaît énormément, fait un test très simple, demande-toi si cette personne devenait soudainement totalement disponible et me disait clairement qu'elle voulait construire quelque chose avec moi, est-ce que je ressentirais toujours exactement la même intensité ?",
+      "intention": "constat",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "broll",
+          "source": "pexels",
+          "requete": "woman thinking looking away",
+          "ancre": "un test très simple",
+          "duree_s": 3.5
+        },
+        {
+          "type": "broll",
+          "source": "pexels",
+          "requete": "woman looking directly at camera calm open",
+          "ancre": "totalement disponible",
+          "duree_s": 3
+        },
+        {
+          "type": "punch-in",
+          "amplitude": 0.06,
+          "ancre": "la même intensité"
+        },
+        {
+          "type": "broll",
+          "ancre": "clairement qu'elle voulait",
+          "requete": "couple talking honestly face to face"
+        }
+      ],
+      "notes_montage": ""
+    },
+    {
+      "id": "chute",
+      "role": "chute",
+      "texte": "Si oui, alors très bien. Mais si ton excitation diminue fortement à cette idée, alors prends du recul.",
+      "intention": "constat",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "punch-in",
+          "amplitude": 0.06,
+          "ancre": "prends du recul"
+        },
+        {
+          "type": "broll",
+          "source": "pexels",
+          "requete": "sunrise sky",
+          "ancre": "diminue fortement",
+          "duree_s": 3.5
+        }
+      ],
+      "notes_montage": ""
+    },
+    {
+      "id": "cta",
+      "role": "corps",
+      "texte": "D'ailleurs, si tu es célibataire et que tu en as marre de ne pas trouver l'amour en 2026, on écrit un petit guide à ce sujet. Il est gratuit, il suffit simplement de commenter le mot guide et d'être abonné pour qu'on te l'envoie.",
+      "intention": "direct",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "broll",
+          "source": "pexels",
+          "requete": "writing notebook warm desk lamp night",
+          "ancre": "un petit guide",
+          "duree_s": 3
+        },
+        {
+          "type": "punch-in",
+          "amplitude": 0.05,
+          "ancre": "le mot guide"
+        }
+      ],
+      "notes_montage": ""
+    }
+  ]
+}

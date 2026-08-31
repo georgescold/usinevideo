@@ -1,0 +1,1306 @@
+/*
+ * style.css — la mise en page de l'atelier.
+ *
+ * SOMBRE, DENSE, ET SURTOUT LISIBLE.
+ *
+ * Le reproche fait à la version précédente tenait en une phrase : « au niveau
+ * des polices, c'est horrible, tout est petit ». La réponse n'est pas d'agrandir
+ * une valeur au hasard : c'est de poser un corps de base à 16 px et de ne jamais
+ * descendre en dessous de 14 px, y compris pour les étiquettes et les notes. Un
+ * atelier se regarde pendant une heure d'affilée ; ce qu'on y lit doit se lire
+ * sans se pencher.
+ *
+ * AUCUNE DÉPENDANCE, AUCUN RÉSEAU.
+ *
+ * Pas de CDN, pas de police distante, pas d'icône chargée ailleurs. Le poste
+ * doit fonctionner hors ligne, et la CSP posée par le serveur interdirait de
+ * toute façon la moindre requête sortante.
+ */
+
+/* --------------------------------------------------------------- polices --
+ *
+ * LES DÉCLARATIONS SONT POSÉES PAR `app.js`, PAS ICI.
+ *
+ * Il y avait à cet endroit neuf `@font-face` en `local()` seul : elles ne
+ * savaient employer une police que si le POSTE l'avait installée. Sur une
+ * machine neuve, aucune ne l'est — et l'aperçu se rabattait alors sur un
+ * substitut de chasse voisine, c'est-à-dire qu'il faisait choisir un dessin de
+ * lettres en en montrant un autre. Sur le seul écran dont c'est le rôle.
+ *
+ * L'atelier sert désormais `assets/fonts/` sous `/polices/`, et `app.js` en
+ * déclare les fichiers au démarrage, avec leur plage de graisse — ce sont
+ * exactement ceux que le rendu embarque. Ce qu'on voit ici est ce qu'on aura.
+ *
+ * La liste ne vit donc plus dans ce fichier : elle vient du disque, et une
+ * police déposée dans `assets/fonts/` apparaît sans qu'on touche à du CSS.
+ * ------------------------------------------------------------------------- */
+
+
+/* ------------------------------------------------------------------ socle -- */
+
+:root {
+  --fond: #0c0f14;
+  --panneau: #141a22;
+  --panneau-2: #1b232e;
+  --panneau-3: #222c39;
+  --bord: #2b3542;
+  --bord-vif: #3c4a5c;
+  --texte: #eaeff6;
+  --doux: #9daabd;
+  --accent: #5b8cff;
+  --accent-clair: #86a9ff;
+  --ok: #35c07a;
+  --attention: #e5a13c;
+  --erreur: #ff6b7a;
+
+  --r: 12px;
+  --r-grand: 16px;
+
+  /* Le damier de l'aperçu, repris tel quel de Scriptshort : un fond neutre
+     bicolore est le seul qui laisse juger d'un coup un texte clair ET un
+     contour sombre. Sur du noir, un contour noir est invisible ; sur du blanc,
+     du texte blanc l'est tout autant. */
+  /* LA HAUTEUR DE L'EN-TÊTE EST MESURÉE, PAS SUPPOSÉE.
+   *
+   * Trois éléments collants s'accrochaient au chiffre 86, écrit en dur. Or
+   * l'en-tête se replie en deux rangs dès que la fenêtre passe sous ~1060 px :
+   * elle monte alors à 137 px, et la première marche du rail se retrouve
+   * dessous, inatteignable, dans toute la bande 980–1060 px. Un nom de chaîne
+   * long élargit encore la bande. `app.js` mesure et écrit cette variable. */
+  --h-entete: 76px;
+
+  --damier-clair: #ced5e0;
+  --damier-fonce: #444c5e;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+html { color-scheme: dark; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(1400px 700px at 50% -18%, #18202b 0%, var(--fond) 62%);
+  color: var(--texte);
+  font: 16px/1.6 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { margin: 0; line-height: 1.25; letter-spacing: -0.01em; }
+p { margin: 0; }
+code { font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace; font-size: 0.94em;
+       background: var(--panneau-2); border: 1px solid var(--bord); border-radius: 6px; padding: 0.1em 0.4em; }
+b { font-weight: 700; }
+
+/* ----------------------------------------------------------------- entête -- */
+
+.entete {
+  /* ELLE NE SE REPLIE PLUS, ET C'EST UNE QUESTION DE HAUTEUR COLLANTE.
+   *
+   * `flex-wrap: wrap` la faisait passer sur deux rangs dès 1600 px de large —
+   * une largeur d'écran très ordinaire. Elle montait alors de 76 à 134 px, et
+   * comme trois éléments s'y accrochent en collant, c'est autant de moins pour
+   * le travail, en permanence. Le sélecteur de vidéo se rétrécit plutôt que de
+   * pousser le reste à la ligne ; en dessous de 980 px, la règle adaptative
+   * reprend la main et autorise à nouveau le repli. */
+  display: flex; flex-wrap: nowrap; gap: 20px;
+  align-items: center; justify-content: space-between;
+  /* L'en-tête tenait 188 px de haut pour un titre et un sélecteur. Sur l'écran
+   * de sous-titres, chaque pixel qu'il prend est un pixel de moins pour les
+   * réglages — et il est COLLANT, donc il les mange en permanence. */
+  padding: 12px 32px;
+  border-bottom: 1px solid var(--bord);
+  background: rgba(12, 15, 20, 0.72);
+  backdrop-filter: blur(8px);
+  position: sticky; top: 0; z-index: 20;
+}
+.identite { min-width: 0; }
+.identite h1 { font-size: 22px; white-space: nowrap; }
+.identite .chapo { color: var(--doux); font-size: 14px; margin-top: 1px; }
+
+.choix-video { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 0 1 auto; }
+.choix-video label { color: var(--doux); font-size: 14px; text-transform: uppercase;
+                     letter-spacing: 0.06em; font-weight: 700; }
+.choix-video select { min-width: 0; flex: 1 1 220px; max-width: 460px; }
+
+/* --------------------------------------------------------------- bandeau --- */
+
+.bandeau {
+  margin: 18px 32px 0;
+  padding: 14px 18px;
+  border-radius: var(--r);
+  font-size: 16px;
+  border: 1px solid var(--bord);
+  background: var(--panneau);
+  white-space: pre-wrap;
+}
+.bandeau.erreur { border-color: #5c2a33; background: #241419; color: #ffc9cf; }
+.bandeau.ok { border-color: #235340; background: #10231c; color: #b9f0d5; }
+
+/* ------------------------------------------------------------------ grille - */
+
+.atelier {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 32px;
+  /* LA MARGE BASSE NE SERT QU'AU JOURNAL, ET LE JOURNAL EST RAREMENT LÀ.
+   *
+   * Elle valait 140 px en permanence, pour qu'un bandeau posé en `fixed` au bas
+   * de l'écran ne recouvre pas la fin du contenu. Mais ce bandeau n'apparaît
+   * que pendant un travail : le reste du temps, c'étaient 140 px de vide qui
+   * repoussaient tout et obligeaient à faire défiler l'écran de réglages. On ne
+   * la pose donc que quand le journal est effectivement affiché. */
+  padding: 28px 32px 40px;
+  align-items: start;
+}
+
+/* -------------------------------------------------------------------- rail - */
+
+.rail { position: sticky; top: calc(var(--h-entete) + 10px); display: flex; flex-direction: column; gap: 8px; }
+
+.marche {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  width: 100%;
+  text-align: left;
+  padding: 13px 15px;
+  border-radius: var(--r);
+  border: 1.5px solid var(--bord);
+  background: var(--panneau);
+  color: var(--texte);
+  font: inherit;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+.marche:hover:not(:disabled) { border-color: var(--bord-vif); background: var(--panneau-2); }
+.marche:disabled { cursor: not-allowed; opacity: .78; }
+.marche.courante { border-color: var(--accent); background: var(--panneau-2); }
+
+.marche-num {
+  width: 30px; height: 30px; border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: 15px; font-weight: 800;
+  background: var(--panneau-3); color: var(--doux);
+  border: 1.5px solid var(--bord);
+}
+.marche[data-verdict="fait"] .marche-num { background: #12331f; border-color: #2c6b45; color: #7ee2a8; }
+.marche[data-verdict="perime"] .marche-num { background: #33270f; border-color: #6d541f; color: #f0c377; }
+.marche[data-verdict="bloque"] .marche-num { opacity: .55; }
+
+.marche-nom { display: block; font-size: 16px; font-weight: 700; }
+.marche-etat { display: block; font-size: 14px; color: var(--doux); margin-top: 2px; }
+.marche[data-verdict="perime"] .marche-etat { color: var(--attention); }
+.marche[data-verdict="fait"] .marche-etat { color: #7ee2a8; }
+
+/* ------------------------------------------------------------------ étapes - */
+
+.scene { min-width: 0; }
+
+.etape {
+  background: var(--panneau);
+  border: 1px solid var(--bord);
+  border-radius: var(--r-grand);
+  padding: 20px 26px 24px;
+  display: flex; flex-direction: column; gap: 20px;
+}
+.etape h2 { font-size: 26px; }
+.etape .chapo { color: var(--doux); font-size: 16px; max-width: 74ch; }
+.etape .chapo b, .etape .chapo em { color: var(--texte); font-style: normal; }
+
+.blocage {
+  border: 1.5px solid #6d541f;
+  background: #241c0c;
+  color: #f3d9a6;
+  border-radius: var(--r);
+  padding: 16px 18px;
+  font-size: 16px;
+  line-height: 1.55;
+}
+.blocage p { margin: 0; }
+/* Le bouton est la sortie : il se met au même niveau que la phrase, pas en
+   dessous — on lit la phrase et la main est déjà au bon endroit. */
+.blocage { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.blocage .bouton { flex: 0 0 auto; background: #37290f; border-color: #6d541f; color: #ffe6b8; }
+.blocage .bouton:hover:not(:disabled) { background: #4a3614; border-color: #8a6a28; }
+.blocage code { background: #37290f; border-color: #6d541f; color: #ffe6b8; }
+.blocage b { color: #ffe6b8; }
+
+.note { color: var(--doux); font-size: 15px; overflow-wrap: anywhere; max-width: 74ch; }
+.note.erreur { color: var(--erreur); }
+
+/* --------------------------------------------------------------- contrôles - */
+
+/* `input[type="url"]` MANQUAIT, ET DEUX CHAMPS D'ADRESSE SORTAIENT NUS.
+ *
+ * Le sélecteur listait les types un à un ; celui du lien d'inspiration et celui
+ * de la récolte d'empreinte n'y étaient pas, et tombaient sur le rendu par
+ * défaut du navigateur — vingt-et-un pixels de haut, sans bordure ni fond, au
+ * milieu de champs qui en font cinquante. */
+select, input[type="text"], input[type="number"], input[type="url"], input[type="range"] {
+  width: 100%;
+  background: var(--panneau-2);
+  color: var(--texte);
+  border: 1.5px solid var(--bord);
+  border-radius: 10px;
+  padding: 11px 13px;
+  font: inherit;
+  font-size: 16px;
+}
+select { cursor: pointer; }
+select:focus-visible, input:focus-visible, button:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px; border-color: var(--accent);
+}
+input[type="range"] { padding: 10px 0; accent-color: var(--accent-clair); cursor: pointer; border: none; background: none; }
+input[type="number"] { width: 6.5em; }
+
+.bouton {
+  font: inherit; font-size: 16px; font-weight: 700;
+  color: var(--texte);
+  background: var(--panneau-2);
+  border: 1.5px solid var(--bord);
+  border-radius: 10px;
+  padding: 11px 18px;
+  cursor: pointer;
+  transition: border-color .15s, background .15s, filter .15s;
+}
+.bouton:hover:not(:disabled) { border-color: var(--bord-vif); background: var(--panneau-3); }
+.bouton:disabled { opacity: .45; cursor: not-allowed; }
+.bouton.primaire {
+  background: linear-gradient(180deg, var(--accent-clair), var(--accent));
+  border-color: transparent; color: #08101f;
+}
+.bouton.primaire:hover:not(:disabled) { filter: brightness(1.08); background: linear-gradient(180deg, var(--accent-clair), var(--accent)); }
+/* `.bouton:hover` (0,3,0) battait `.bouton.telecharge` (0,2,0) : l'aboutissement
+   du pipeline repassait en gris sous la souris. `.primaire` s'était protégé, pas
+   lui. */
+.bouton.telecharge:hover:not(:disabled) {
+  background: linear-gradient(180deg, #5fe0a1, #2bbb78);
+  border-color: transparent; filter: brightness(1.06);
+}
+.bouton.discret { background: none; }
+.bouton.grand { padding: 15px 22px; font-size: 17px; align-self: flex-start; }
+.bouton.minuscule { padding: 6px 12px; font-size: 14px; }
+.bouton.telecharge { align-self: flex-start; text-decoration: none;
+  background: linear-gradient(180deg, #4fd493, #24a86a); border-color: transparent; color: #06170f; }
+
+.case { display: flex; gap: 12px; align-items: flex-start; cursor: pointer; font-size: 16px; }
+.case input { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--accent-clair); cursor: pointer; flex: 0 0 auto; }
+.case small { display: block; color: var(--doux); font-size: 14px; }
+
+.etiquette {
+  display: block;
+  font-size: 14px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--doux); margin-bottom: 8px;
+}
+.etiquette b { color: var(--texte); font-variant-numeric: tabular-nums; }
+
+.rang { display: flex; gap: 16px; align-items: flex-start; }
+.rang > .groupe { flex: 1; min-width: 0; }
+
+/* ------------------------------------------------- étape 1 : destination --- */
+
+.cartes { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+.carte {
+  display: grid; gap: 10px; justify-items: start;
+  padding: 22px; border-radius: var(--r-grand);
+  border: 2px solid var(--bord); background: var(--panneau-2);
+  color: var(--texte); font: inherit; text-align: left; cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+.carte:hover { border-color: var(--bord-vif); }
+.carte.retenue { border-color: var(--accent); background: var(--panneau-3); }
+.carte-forme { background: var(--panneau-3); border: 2px solid var(--bord-vif); border-radius: 6px; }
+.carte.retenue .carte-forme { border-color: var(--accent-clair); background: #1d2b46; }
+.carte-forme.paysage { width: 84px; height: 47px; }
+.carte-forme.portrait { width: 47px; height: 84px; }
+.carte-titre { font-size: 19px; font-weight: 800; }
+.carte-note { font-size: 15px; color: var(--doux); }
+
+/* ------------------------------------------------------- étape 2 : dépôt --- */
+
+.depot {
+  border: 2px dashed var(--bord-vif);
+  border-radius: var(--r-grand);
+  background: var(--panneau-2);
+  padding: 44px 24px; text-align: center; cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+.depot:hover, .depot.survol { border-color: var(--accent); background: var(--panneau-3); }
+.depot-titre { font-size: 20px; font-weight: 700; }
+.depot-note { color: var(--doux); margin-top: 6px; }
+.depot-hint { color: var(--doux); font-size: 14px; margin-top: 10px; letter-spacing: 0.04em; }
+.lien { color: var(--accent-clair); text-decoration: underline; }
+
+/* --------------------------------------------------------------- fiches ---- */
+
+.fiche {
+  border: 1px solid var(--bord); background: var(--panneau-2);
+  border-radius: var(--r); padding: 18px 20px;
+  display: grid; gap: 10px;
+}
+.fiche dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 18px; margin: 0; }
+.fiche dt { color: var(--doux); font-size: 15px; }
+.fiche dd { margin: 0; font-size: 16px; overflow-wrap: anywhere; }
+.fiche .titre-fiche { font-size: 17px; font-weight: 700; }
+.fiche .divergence { color: var(--attention); font-size: 15px; }
+
+/* ------------------------------------------------------- étape 3 : voix ---- */
+
+.filtres { display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-end; }
+.filtres label { display: block; font-size: 14px; font-weight: 700; text-transform: uppercase;
+                 letter-spacing: 0.05em; color: var(--doux); }
+.filtres label > * { margin-top: 8px; }
+.filtres input[type="text"], .filtres input[type="url"] { width: 12em; }
+/* L'adresse d'une vidéo ne tient pas en douze cadratins : on la voit en entier
+   pendant qu'on la colle, sinon on ne peut pas vérifier qu'on a le bon lien. */
+.filtres input[type="url"].large { width: 28em; max-width: 100%; }
+.filtres select { width: 12em; }
+/* Le fonds interrogé et le tri portent des libellés entiers, pas des mots :
+   « Bibliothèque ElevenLabs — des milliers » tronqué à douze cadratins ne dit
+   plus rien de ce qu'on choisit. */
+.filtres select.large { width: 21em; }
+.filtres #filtreTri { width: 19em; }
+.filtres #filtreAge, .filtres #filtreGenre { width: 9em; }
+.filtres label[hidden] { display: none; }
+
+/* « Charger 100 de plus » suit la liste qu'il complète, sur toute sa largeur :
+   le geste est « continuer vers le bas », pas « viser un bouton ». */
+.bouton.pleine { width: 100%; margin-top: 12px; }
+
+.reglage-essai { display: flex; gap: 22px; flex-wrap: wrap; align-items: center;
+                 border-top: 1px solid var(--bord); padding-top: 18px; font-size: 16px; }
+.reglage-essai > label { display: flex; align-items: center; gap: 10px; color: var(--doux); }
+.reglage-essai .case { color: var(--texte); }
+
+.liste-voix { display: grid; gap: 10px; max-height: 520px; overflow-y: auto; padding-right: 6px; }
+.liste-voix .vide { color: var(--doux); font-size: 16px; padding: 20px 0; }
+
+.voix {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px 18px; align-items: center;
+  border: 1.5px solid var(--bord); background: var(--panneau-2);
+  border-radius: var(--r); padding: 14px 18px;
+}
+.voix.retenue { border-color: var(--ok); background: #12231b; }
+.voix-nom { font-size: 17px; font-weight: 700; }
+.voix-meta { font-size: 15px; color: var(--doux); }
+/* Bornée à deux lignes : la description d'une voix de bibliothèque fait dix
+   lignes, et cent voix feraient dix écrans de texte à faire défiler avant
+   d'atteindre la suivante. Le titre natif donne le texte entier au survol. */
+.voix-desc {
+  font-size: 14px; color: var(--doux); opacity: .75; margin-top: 4px;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+/* La fiche garde une hauteur régulière : les actions restent alignées en haut
+   plutôt que de flotter au milieu d'une description de deux lignes. */
+.voix { align-items: start; }
+.voix-actions { align-items: start; }
+.voix-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+.voix-actions a.bouton { text-decoration: none; }
+
+.ecoute { border: 1px solid var(--bord); background: var(--panneau-2); border-radius: var(--r); padding: 16px 18px; }
+.ecoute-titre { font-weight: 700; margin-bottom: 10px; }
+.ecoute audio { width: 100%; }
+
+/* UNE VIDÉO VERTICALE NE SE BORNE PAS EN LARGEUR.
+ *
+ * La règle était `width: 100%`. Sur un master 1080×1920 posé dans un panneau de
+ * 1500 px, ça donne 2 667 px de haut : le lecteur occupait trois écrans et
+ * poussait le bouton de téléchargement hors de vue. Le défaut ne se voyait qu'en
+ * format court, c'est-à-dire sur tout ce que cette chaîne produit.
+ *
+ * On borne donc la HAUTEUR et on laisse la largeur suivre le rapport d'image.
+ * `max-width: 100%` reste, pour le cas horizontal où c'est la largeur qui
+ * contraint. */
+.master {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  /* Assez grand pour juger, assez petit pour que « Télécharger » reste sous
+     les yeux : c'est le geste qui suit, et le faire chercher n'a aucun sens. */
+  max-height: min(44vh, 430px);
+  margin: 4px auto 0;
+  border-radius: var(--r);
+  background: #000;
+}
+
+/* ---------------------------------------------- étape 5 : studio complet --- */
+
+.etape-large { max-width: none; }
+
+/* TROIS COLONNES, ET AUCUNE QUI N'ALLONGE LA PAGE.
+ *
+ * Le studio n'en avait que deux : les réglages, puis l'aperçu. Les onze
+ * vignettes de modèles et les huit rangées de contrôles empilées faisaient de
+ * la colonne de gauche un long ruban qu'il fallait dérouler pour atteindre les
+ * couleurs — sur le seul écran où l'on veut tout voir en même temps.
+ *
+ * Ce qui a changé, dans l'ordre du gain de place :
+ *   - les modèles sont passés d'onze pavés à une liste déroulante ;
+ *   - les contrôles sont sur deux ou trois colonnes au lieu d'une ;
+ *   - les favoris et les origines se replient ;
+ *   - la liste du texte défile DANS SON CADRE (`min-height: 0` + `overflow`),
+ *     ce qui est la seule façon d'empêcher une grille de s'étirer à la hauteur
+ *     de son contenu.
+ *
+ * Les trois colonnes tiennent leur hauteur au viewport : on scrolle à
+ * l'intérieur de la liste, pas dans la page.
+ */
+.studio {
+  display: grid;
+  grid-template-columns: minmax(280px, 330px) minmax(0, 1fr) minmax(260px, 340px);
+  gap: 20px;
+  align-items: start;
+}
+.controles { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.groupe { min-width: 0; }
+
+.grille2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 14px; }
+.grille3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+/* Les trois couleurs se replient plutôt que de se serrer sous la largeur utile. */
+.grille3.rang-couleurs { grid-template-columns: repeat(auto-fit, minmax(148px, 1fr)); }
+.curseurs { gap: 10px 14px; }
+.curseurs .etiquette { margin-bottom: 4px; }
+
+.note-modele { font-size: 14px; color: var(--doux); line-height: 1.4; margin: -6px 0 0; }
+.alerte-police { font-size: 14px; color: var(--attention); margin: -4px 0 0; line-height: 1.4; }
+
+.cases { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.cases .case { margin: 0; }
+
+/* Les replis : ce qu'on consulte rarement ne prend pas de place en permanence. */
+.repli {
+  border: 1px solid var(--bord); border-radius: var(--r);
+  background: var(--panneau-2); padding: 0 14px;
+}
+.repli > summary {
+  cursor: pointer; padding: 11px 0; font-size: 15px; font-weight: 700;
+  color: var(--doux); list-style-position: inside;
+}
+.repli > summary:hover { color: var(--texte); }
+.repli[open] > summary { border-bottom: 1px solid var(--bord); margin-bottom: 12px; }
+/* Fermé, `summary` EST le dernier enfant : la marge lui était appliquée et
+   laissait une bande vide sous chaque repli replié. */
+.repli[open] > *:last-child { margin-bottom: 14px; }
+
+.rang-couleurs { gap: 12px; }
+.paire { display: flex; gap: 8px; align-items: center; }
+.paire input[type="color"] {
+  width: 36px; height: 36px; flex: 0 0 auto; padding: 3px;
+  background: var(--panneau-2); border: 1.5px solid var(--bord); border-radius: 10px; cursor: pointer;
+}
+/* LA RÈGLE GÉNÉRIQUE `input[type="text"]` GAGNAIT SUR `.hexa`.
+ *
+ * Sa spécificité (0,1,1) bat celle d'une classe seule (0,1,0) : le champ gardait
+ * 26 px de remplissage et perdait sa police à chasse fixe. Dans une cellule de
+ * 112 px moins la pastille de couleur, il restait 62 px pour un `#5B8CFF` qui en
+ * demande 94 — on ne lisait pas la couleur qu'on posait. */
+input[type="text"].hexa {
+  font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  text-transform: uppercase;
+  padding: 10px 8px; min-width: 0;
+}
+.couleur.active input[type="color"] { border-color: var(--accent-clair); box-shadow: 0 0 0 2px #5b8cff55; }
+
+.tete-favoris { display: flex; align-items: center; justify-content: flex-start; gap: 12px; }
+.favoris { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; min-height: 30px; align-items: center; }
+.favoris .vide { color: var(--doux); font-size: 14px; }
+.favori {
+  position: relative; width: 30px; height: 30px; border-radius: 8px;
+  border: 1.5px solid #ffffff33; cursor: pointer; padding: 0;
+}
+.favori:hover { transform: scale(1.08); }
+.favori .croix {
+  position: absolute; top: -7px; right: -7px; width: 17px; height: 17px; border-radius: 50%;
+  background: #000; color: #fff; border: 1px solid #ffffff55;
+  font-size: 11px; line-height: 15px; text-align: center; display: none;
+}
+.favori:hover .croix { display: block; }
+
+/* ------------------------------------------- le texte, seconde par seconde -- */
+
+.textes {
+  display: flex; flex-direction: column; gap: 10px;
+  position: sticky; top: calc(var(--h-entete) + 10px);
+  /* La colonne se borne à la hauteur de la fenêtre pour que ce soit LA LISTE
+     qui défile, pas la page. Sans cette borne, deux cents lignes rallongent le
+     document et rendent les réglages inatteignables. */
+  max-height: calc(100vh - var(--h-entete) - 30px);
+  min-height: 0;
+}
+.textes-tete { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.textes-tete .etiquette { margin: 0; flex: 1 1 auto; }
+.textes-tete input[type="search"] { flex: 0 1 150px; padding: 8px 10px; font-size: 14px; }
+
+.liste-st {
+  flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+  border: 1px solid var(--bord); border-radius: var(--r);
+  background: var(--panneau-2); padding: 6px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+
+.page-st {
+  display: grid; grid-template-columns: 54px minmax(0, 1fr);
+  gap: 6px; align-items: start;
+  padding: 3px 5px; border-radius: 8px;
+}
+.page-st:hover { background: var(--panneau-3); }
+.page-st.en-cours { background: #5b8cff22; box-shadow: inset 2px 0 0 var(--accent); }
+.page-st.filtree { display: none; }
+
+.page-heure {
+  font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  font-size: 12.5px; color: var(--doux); font-variant-numeric: tabular-nums;
+  background: none; border: 0; cursor: pointer; text-align: left;
+  /* Aligné sur la première ligne du `textarea` voisin, qui porte 3 px de
+     remplissage et 1 px de bordure. `padding: 0` annulait le décalage posé
+     plus haut, et l'heure flottait au-dessus de son texte sur deux cents
+     lignes. */
+  padding: 4px 0 0;
+}
+.page-heure:hover { color: var(--accent-clair); }
+
+/* UNE LIGNE = UNE ZONE DE TEXTE, comme dans Scriptshort.
+ *
+ * Il y avait ici un champ PAR MOT, pour ne jamais toucher aux horodatages.
+ * C'était exact et c'était pénible : on corrige en lisant, et lire une phrase
+ * découpée en huit petites boîtes n'est pas lire.
+ *
+ * Le `textarea` accepte donc la ligne entière. `pipeline/texte.mjs` garde les
+ * instants intacts tant que le nombre de mots ne change pas — c'est-à-dire pour
+ * une faute d'accord ou un mot mal entendu, donc presque toujours — et les
+ * répartit dans la ligne sinon, bornes conservées.
+ *
+ * Le sélecteur est plus précis que la classe seule : la règle générique
+ * `select, input[type="text"], …` de ce fichier pose `padding: 11px 13px`, et
+ * une specificite (0,1,1) bat celle d'une classe (0,1,0). */
+.page-st textarea.texte-st {
+  width: 100%; resize: none; overflow: hidden;
+  font: inherit; font-size: 14.5px; line-height: 1.35;
+  color: var(--texte); background: transparent;
+  border: 1px solid transparent; border-radius: 6px;
+  padding: 3px 6px; margin: 0;
+}
+.page-st textarea.texte-st:hover { border-color: var(--bord); }
+.page-st textarea.texte-st:focus { outline: none; border-color: var(--accent); background: var(--panneau); }
+/* Whisper doutait quelque part dans cette ligne : à relire en premier. */
+.page-st textarea.texte-st.doute { border-left: 2px solid var(--attention); border-radius: 2px 6px 6px 2px; }
+.page-st textarea.texte-st.modifie { background: #f0b13322; border-color: var(--attention); }
+
+.textes-pied { display: flex; flex-direction: column; gap: 8px; }
+.textes-pied .bouton { width: 100%; }
+
+/* ------------------------------------------------------- l'aperçu direct --- */
+
+.apercu { position: sticky; top: calc(var(--h-entete) + 10px); display: flex; flex-direction: column; gap: 14px; }
+
+/* LE CADRE GARDE LES PROPORTIONS DE LA VIDÉO, QUOI QU'IL ARRIVE.
+ *
+ * `max-height` seul ne suffit pas : avec une largeur définie, `aspect-ratio`
+ * déduit la hauteur, et un plafond de hauteur écrase le rapport au lieu de
+ * réduire la boîte — le 9:16 devenait un carré. On borne donc la LARGEUR à
+ * partir de la hauteur voulue (`--ratio`, posé par `poseLeCadre()`), ce qui
+ * laisse `aspect-ratio` faire son travail dans les deux orientations. */
+.cadre {
+  position: relative; overflow: hidden;
+  border: 1px solid var(--bord); border-radius: var(--r-grand);
+  margin: 0 auto; width: 100%;
+  /* C'est un bouton maintenant : on lui retire ce qu'un bouton apporte et qui
+     n'a rien à faire sur un cadre d'image. */
+  padding: 0; background: none; color: inherit; font: inherit;
+  display: block; cursor: pointer;
+  --ratio: 0.5625;
+  aspect-ratio: var(--ratio);
+  max-width: min(100%, calc(62vh * var(--ratio)));
+}
+/* Le damier clair/foncé de Scriptshort, à l'identique : 26 px de carreau, deux
+   valeurs contrastées. Il ne décore rien — c'est l'outil de jugement. */
+.damier {
+  position: absolute; inset: 0;
+  background-color: var(--damier-clair);
+  background-image:
+    linear-gradient(45deg, var(--damier-fonce) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--damier-fonce) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--damier-fonce) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--damier-fonce) 75%);
+  background-size: 26px 26px;
+  background-position: 0 0, 0 13px, 13px -13px, -13px 0;
+}
+/* Le plateau est construit aux dimensions RÉELLES de la vidéo puis réduit par
+   `transform: scale()`. C'est ce qui garantit qu'un « 86 px » à l'écran est le
+   même 86 px au rendu, quelle que soit la largeur de la fenêtre. */
+.plateau { position: absolute; top: 0; left: 0; transform-origin: top left; }
+.ligne-st { position: absolute; left: 0; right: 0; display: flex; justify-content: center; }
+.bloc-st {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+  transform-origin: center center;
+  max-width: 86%;
+}
+.mot-st { white-space: pre; }
+
+@keyframes stFondu  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes stPop    { 0% { opacity: 0; transform: scale(.70); } 43% { opacity: 1; } 100% { transform: scale(1); } }
+@keyframes stRebond { 0% { opacity: 0; transform: scale(.45); } 21% { opacity: 1; } 44% { transform: scale(1); }
+                      72% { transform: scale(.91); } 100% { transform: scale(1); } }
+
+.transport { display: flex; align-items: center; gap: 12px; }
+.transport input[type="range"] { flex: 1; }
+.chrono { font-variant-numeric: tabular-nums; color: var(--doux); font-size: 15px; min-width: 4.5em; text-align: right; }
+
+
+/* ------------------------------------------------------- étape 6 : plans --- */
+
+.doctrine { margin: 0; padding-left: 22px; color: var(--doux); font-size: 16px; display: grid; gap: 8px; }
+.doctrine b { color: var(--texte); }
+
+/* ------------------------------------------------------------- journal ----- */
+
+body:has(.journal:not([hidden])) .atelier { padding-bottom: 160px; }
+
+.journal {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+  background: #0a0d12; border-top: 1px solid var(--bord);
+  max-height: 42vh; display: flex; flex-direction: column;
+}
+.journal header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 24px; border-bottom: 1px solid var(--bord);
+}
+.journal header code { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis;
+                       white-space: nowrap; background: none; border: none; padding: 0;
+                       color: var(--doux); font-size: 15px; }
+.journal pre {
+  margin: 0; padding: 16px 24px 24px; overflow: auto;
+  font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  font-size: 14.5px; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere;
+}
+.pastille-etat { width: 12px; height: 12px; border-radius: 50%; background: var(--doux); flex: 0 0 auto; }
+.pastille-etat.encours { background: var(--accent-clair); animation: pulse 1.1s ease-in-out infinite; }
+.pastille-etat.fini { background: var(--ok); }
+.pastille-etat.echec { background: var(--erreur); }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+
+/* -------------------------------------------------------------- dialogues -- */
+
+/* UN SEUL VOILE POUR DEUX USAGES, ET IL FAUT QU'IL SERVE LES DEUX.
+ *
+ * Il y en avait deux définitions : celle des dialogues de coût, centrée, et une
+ * seconde ajoutée pour les menus, alignée en haut. La seconde gagnait par ordre
+ * d'écriture et déplaçait le dialogue de coût — un panneau qui saute de place
+ * selon ce qu'on ouvre se lit comme un défaut.
+ *
+ * Le voile s'aligne donc en haut, ce qui convient à une longue liste, et les
+ * dialogues se recentrent eux-mêmes : ils sont courts et attendent une réponse
+ * immédiate. */
+.voile {
+  position: fixed; inset: 0; z-index: 40;
+  background: rgba(5, 7, 11, .78); backdrop-filter: blur(4px);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 8vh 20px 20px; overflow-y: auto;
+}
+.voile[hidden] { display: none; }
+.voile:has(> .dialogue) { align-items: center; padding: 24px; }
+.dialogue {
+  background: var(--panneau); border: 1px solid var(--bord-vif);
+  border-radius: var(--r-grand); padding: 26px 28px;
+  width: min(560px, 100%); display: flex; flex-direction: column; gap: 16px;
+}
+.dialogue h3 { font-size: 21px; }
+.dialogue .actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 4px; }
+dl.cout { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 8px 20px; margin: 0;
+          border: 1px solid var(--bord); border-radius: var(--r); padding: 16px 18px; background: var(--panneau-2); }
+dl.cout dt { color: var(--doux); font-size: 15px; }
+dl.cout dd { margin: 0; font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* ------------------------------------------------------------ adaptation --- */
+
+/* Sous 1500 px, la troisieme colonne passe sous les deux autres : trois
+   colonnes de moins de 300 px rendent les curseurs inutilisables. */
+/* 1440 px est la largeur de portable la plus courante : y renvoyer la colonne
+   de correction sous un aperçu de huit cents pixels de haut la rendait
+   invisible. Les 992 px utiles suffisent aux trois pistes. */
+@media (max-width: 1360px) {
+  .studio { grid-template-columns: minmax(280px, 340px) minmax(0, 1fr); }
+  .textes { grid-column: 1 / -1; position: static; max-height: 46vh; }
+}
+@media (max-width: 1100px) {
+  .studio { grid-template-columns: minmax(0, 1fr); }
+  .apercu { position: static; }
+  .cadre { max-width: min(100%, 420px, calc(70vh * var(--ratio))); }
+  .grille3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .grille2, .grille3 { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 980px) {
+  .atelier { grid-template-columns: minmax(0, 1fr); padding: 20px 18px 40px; }
+  /* Sept marches de 220 px font 1588 px de large : sans dégradé de bord ni
+     accrochage, rien ne dit qu'il y a une suite à droite. */
+  .rail {
+    position: static; flex-direction: row; overflow-x: auto; padding-bottom: 6px;
+    scroll-snap-type: x proximity; scroll-padding: 0 18px;
+    mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent);
+  }
+  .marche { min-width: 200px; scroll-snap-align: start; }
+  .entete { padding: 16px 18px; position: static; flex-wrap: wrap; }
+  .etape { padding: 22px 20px 24px; }
+  .rang { flex-direction: column; gap: 18px; }
+}
+
+/* -------------------------------------------------- tes propres plans ------ */
+
+.bibliotheque { margin-top: 4px; }
+.bibliotheque .compteur { color: var(--doux); font-weight: 400; }
+
+.depot-broll {
+  border: 1.5px dashed var(--bord-vif); border-radius: var(--r);
+  padding: 18px 20px; text-align: center; cursor: pointer;
+  background: var(--panneau-2); transition: border-color .15s, background .15s;
+}
+.depot-broll:hover, .depot-broll.survol { border-color: var(--accent); background: var(--panneau-3); }
+.depot-broll p { margin: 0; }
+.depot-broll .note { margin-top: 5px; }
+
+.ajout-broll {
+  margin-top: 12px; padding: 14px 16px;
+  border: 1px solid var(--accent); border-radius: var(--r); background: var(--panneau-2);
+}
+.ajout-nom { margin: 0 0 10px; font-weight: 700; }
+.ajout-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 12px; }
+
+.liste-broll { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+.liste-broll .vide { color: var(--doux); font-size: 15px; margin: 0; }
+
+.broll {
+  display: grid; grid-template-columns: 64px minmax(0, 1fr) auto;
+  gap: 12px; align-items: center;
+  padding: 10px; border: 1px solid var(--bord); border-radius: var(--r);
+  background: var(--panneau-2);
+}
+/* La vignette garde un rapport fixe : une bibliothèque dont les lignes
+   changent de hauteur au chargement des images se lit mal. */
+.broll-vignette {
+  width: 64px; aspect-ratio: 1; border-radius: 8px; overflow: hidden;
+  background: var(--panneau-3); display: flex; align-items: center; justify-content: center;
+  color: var(--doux); font-size: 20px;
+}
+.broll-vignette img { width: 100%; height: 100%; object-fit: cover; }
+.broll-corps { min-width: 0; }
+.broll-nom { margin: 0 0 6px; font-size: 15px; font-weight: 700; overflow-wrap: anywhere; }
+.broll .broll-mots { font-size: 14.5px; padding: 8px 10px; }
+.broll .broll-mots.vide { border-color: var(--attention); }
+.broll .note { margin: 6px 0 0; }
+
+.placement-broll { margin-top: 16px; }
+.placements { margin: 12px 0 0; padding-left: 20px; display: flex; flex-direction: column; gap: 7px; }
+.placements li { font-size: 15px; line-height: 1.45; }
+.placement-pourquoi { color: var(--doux); }
+
+/* ------------------------------------------------------ le menu des chaînes -- */
+
+/*
+ * LE TITRE EST LA PORTE DE RETOUR VERS LES CHAÎNES : IL DOIT SE VOIR SANS SURVOL.
+ *
+ * Le soulignement n'apparaissait qu'au passage de la souris. Un titre qui ne
+ * ressemble à rien de cliquable n'est pas cliqué : le menu des chaînes existait
+ * depuis le début et restait introuvable, ce qui a fait passer l'atelier pour
+ * une interface à une seule chaîne. Le trait discret est donc permanent, et
+ * l'accent ne sert plus qu'à confirmer le survol.
+ */
+.lien-chaines {
+  font: inherit; color: inherit; background: none; border: 0; padding: 0;
+  cursor: pointer; border-bottom: 2px solid var(--bord);
+}
+.lien-chaines:hover { border-bottom-color: var(--accent); }
+
+.panneau {
+  width: min(680px, 100%);
+  background: var(--panneau); border: 1px solid var(--bord); border-radius: var(--r-grand);
+  padding: 24px 26px 26px;
+}
+.tete-panneau { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.tete-panneau h2 { margin: 0; }
+
+.liste-chaines { display: flex; flex-direction: column; gap: 10px; margin: 18px 0 14px; }
+.chaine {
+  text-align: left;
+  padding: 14px 16px; border-radius: var(--r);
+  border: 1.5px solid var(--bord); background: var(--panneau-2);
+  color: var(--texte); font: inherit;
+  transition: border-color .15s, background .15s;
+}
+.chaine:hover { border-color: var(--bord-vif); }
+.chaine-nom { font-size: 17px; font-weight: 800; }
+.chaine-meta { font-size: 14.5px; color: var(--doux); }
+/* Le chemin ne s'affiche plus sur la ligne : il est long, il déborde, et on ne
+   le lit pas. Le bouton « Copier le chemin » le donne quand on en a besoin. */
+
+/* Les chaînes : une ligne par chaîne, avec l'action qui lui correspond.
+ * Tout était un bouton désactivé — trois cartes identiques, aucune cliquable,
+ * et rien pour dire quoi faire. Une chaîne qui ne peut pas s'ouvrir a un manque
+ * précis, et ce manque a une réponse précise. */
+.chaine {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px; align-items: center;
+}
+.chaine.courante { border-color: var(--accent); background: var(--panneau-3); }
+.chaine.bloquee { opacity: .72; }
+.chaine-texte { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.chaine-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+.chaine-ici { font-size: 14px; color: var(--accent-clair); font-weight: 700; }
+.chaine-manque { font-size: 14px; color: var(--attention); }
+
+/* ------------------------------------------------------ le menu des vidéos -- */
+
+.liste-videos, .liste-corbeille { display: flex; flex-direction: column; gap: 8px; margin: 16px 0 14px; }
+.liste-corbeille { margin: 12px 0 14px; }
+.liste-videos .vide { color: var(--doux); font-size: 15px; margin: 0; }
+
+.video-ligne {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px; align-items: center;
+  padding: 11px 14px; border-radius: var(--r);
+  border: 1.5px solid var(--bord); background: var(--panneau-2);
+}
+.video-ligne.courante { border-color: var(--accent); background: var(--panneau-3); }
+.video-texte { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.video-nom { font-size: 16px; font-weight: 700; overflow-wrap: anywhere; }
+.video-meta { font-size: 14px; color: var(--doux); }
+.video-actions { display: flex; align-items: center; gap: 8px; }
+
+.tete-actions { display: flex; align-items: center; gap: 10px; }
+
+/* ===========================================================================
+ *  LE MOUVEMENT
+ * ===========================================================================
+ *
+ * Une animation ne décore pas : elle dit ce qui vient de changer. Un panneau
+ * qui apparaît d'un coup ne dit pas d'où il vient ; un bouton qui ne réagit pas
+ * au clic laisse croire qu'on a raté sa cible ; une commande qui travaille sans
+ * rien montrer se fait cliquer deux fois.
+ *
+ * DEUX PROPRIÉTÉS SEULEMENT, ET C'EST UNE CONTRAINTE TECHNIQUE, PAS UN GOÛT.
+ * `transform` et `opacity` sont les seules que le navigateur peut animer sans
+ * refaire sa mise en page. Animer une hauteur ou une marge sur une liste de
+ * deux cents lignes fait tomber le rendu sous les trente images par seconde,
+ * et l'interface paraît alors plus lente qu'avant l'animation.
+ */
+
+:root {
+  --t-court: 140ms;
+  --t-moyen: 200ms;
+  --t-long: 280ms;
+  /* Entrer vite puis ralentir : c'est ce qui donne l'impression que l'objet
+     arrive de lui-même. Sortir fait l'inverse — on s'en va, on n'insiste pas. */
+  --entree: cubic-bezier(0, 0, .2, 1);
+  --sortie: cubic-bezier(.4, 0, 1, 1);
+  --duo: cubic-bezier(.2, 0, 0, 1);
+  --ressort: cubic-bezier(.34, 1.56, .64, 1);
+}
+
+/* Le système peut demander qu'on ne bouge pas. On obéit — et pas à moitié :
+   les animations sont ramenées à une durée nulle, pas seulement adoucies. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ------------------------------------------------------- la réponse au clic */
+/*
+ * Il n'y avait aucun `:active` dans tout le fichier. Un bouton qui ne s'enfonce
+ * pas laisse un doute d'un dixième de seconde — « est-ce que j'ai cliqué ? » —
+ * et c'est ce doute qui produit les doubles clics.
+ */
+.bouton, .marche, .carte, .chaine, .video-ligne, .broll, .favori {
+  transition: border-color var(--t-court) var(--duo),
+              background var(--t-court) var(--duo),
+              transform 90ms var(--sortie),
+              filter var(--t-court) var(--duo);
+}
+.bouton:active:not(:disabled),
+.carte:active,
+.marche:active { transform: translateY(1px) scale(.985); }
+.favori:active { transform: scale(.96); }
+.lien-chaines { transition: border-bottom-color var(--t-moyen) var(--duo); }
+
+/* --------------------------------------------- une commande qui travaille -- */
+/*
+ * Sept boutons lançaient une commande de trente secondes à huit minutes sans
+ * rien changer à l'écran, et restaient cliquables. Deux d'entre eux appelaient
+ * un service payant : cliquer deux fois demandait deux devis, et laissait la
+ * première promesse suspendue pour toujours.
+ *
+ * Le texte disparaît plutôt que d'être remplacé : la largeur du bouton ne bouge
+ * pas, donc rien ne saute autour de lui.
+ */
+.bouton.travaille {
+  color: transparent;
+  pointer-events: none;
+  position: relative;
+}
+.bouton.travaille::after {
+  content: '';
+  position: absolute; inset: 0; margin: auto;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--texte);
+  border-top-color: transparent;
+  animation: tourne 700ms linear infinite;
+}
+.bouton.primaire.travaille::after { border-color: #08101f; border-top-color: transparent; }
+@keyframes tourne { to { transform: rotate(360deg); } }
+
+/* ------------------------------------------------------ l'étape qui entre -- */
+/*
+ * Les sept écrans se remplaçaient d'un coup, sans dire si l'on avançait ou si
+ * l'on revenait. Le sens du déplacement est la seule information que cette
+ * animation transporte, et elle suffit à situer où l'on est dans la séquence.
+ */
+.etape { animation: etapeEntre var(--t-long) var(--entree) both; }
+@keyframes etapeEntre {
+  from { opacity: 0; transform: translate3d(0, 12px, 0); }
+  to { opacity: 1; transform: none; }
+}
+.scene[data-sens="arriere"] .etape { animation-name: etapeEntreArriere; }
+@keyframes etapeEntreArriere {
+  from { opacity: 0; transform: translate3d(0, -12px, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ------------------------------------------------------------ les marches -- */
+.marche-num { transition: background var(--t-moyen) var(--duo), border-color var(--t-moyen) var(--duo), color var(--t-moyen) var(--duo); }
+/* La pastille ne saute qu'au moment PRÉCIS où l'étape devient faite. Posée à
+   chaque redessin, elle sauterait à chaque retour dans la fenêtre. */
+.marche-num.vient-de-finir { animation: valide 420ms var(--ressort) both; }
+@keyframes valide {
+  0% { transform: scale(1); }
+  38% { transform: scale(1.24); }
+  100% { transform: scale(1); }
+}
+
+/* ------------------------------------------------- panneaux et dialogues -- */
+.voile { animation: voileEntre var(--t-moyen) var(--entree) both; }
+@keyframes voileEntre { from { opacity: 0; } to { opacity: 1; } }
+.panneau, .dialogue { animation: panneauEntre var(--t-long) var(--ressort) both; }
+@keyframes panneauEntre {
+  from { opacity: 0; transform: translate3d(0, -14px, 0) scale(.97); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---------------------------------------------------------- les listes ----- */
+/*
+ * Une liste qui apparaît d'un bloc ne se lit pas : l'œil ne sait pas par où
+ * commencer. Un décalage de vingt-cinq millisecondes par ligne donne un sens de
+ * lecture. Au-delà de la dixième, plus de décalage — sinon la dernière ligne
+ * d'une liste de deux cents arriverait cinq secondes après la première.
+ */
+.liste-voix > *, .liste-chaines > *, .liste-videos > *, .liste-broll > * {
+  animation: ligneEntre var(--t-moyen) var(--entree) both;
+}
+@keyframes ligneEntre {
+  from { opacity: 0; transform: translate3d(0, 6px, 0); }
+  to { opacity: 1; transform: none; }
+}
+.liste-voix > *:nth-child(1), .liste-chaines > *:nth-child(1), .liste-videos > *:nth-child(1), .liste-broll > *:nth-child(1) { animation-delay: 0ms; }
+.liste-voix > *:nth-child(2), .liste-chaines > *:nth-child(2), .liste-videos > *:nth-child(2), .liste-broll > *:nth-child(2) { animation-delay: 25ms; }
+.liste-voix > *:nth-child(3), .liste-chaines > *:nth-child(3), .liste-videos > *:nth-child(3), .liste-broll > *:nth-child(3) { animation-delay: 50ms; }
+.liste-voix > *:nth-child(4), .liste-chaines > *:nth-child(4), .liste-videos > *:nth-child(4), .liste-broll > *:nth-child(4) { animation-delay: 75ms; }
+.liste-voix > *:nth-child(5), .liste-chaines > *:nth-child(5), .liste-videos > *:nth-child(5), .liste-broll > *:nth-child(5) { animation-delay: 100ms; }
+.liste-voix > *:nth-child(n+6), .liste-chaines > *:nth-child(n+6), .liste-videos > *:nth-child(n+6), .liste-broll > *:nth-child(n+6) { animation-delay: 120ms; }
+
+/* -------------------------------------------------------- l'envoi d'un rush */
+/*
+ * Un rush peut peser deux gigaoctets. Il ne se passait RIEN à l'écran pendant
+ * la copie — pas même le message d'attente, que la fonction appelée juste après
+ * effaçait dans le même tour de boucle.
+ *
+ * `pointer-events: none` sur les enfants corrige au passage un battement du
+ * cadre pendant le glisser : `dragleave` remontait depuis les paragraphes
+ * intérieurs et retirait la classe de survol dès qu'on passait au-dessus d'eux.
+ */
+.depot, .depot-broll { position: relative; overflow: hidden; }
+.depot > *, .depot-broll > * { pointer-events: none; }
+.depot::after, .depot-broll::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: 0; height: 3px;
+  background: var(--accent-clair);
+  transform: scaleX(var(--avance, 0));
+  transform-origin: left;
+  transition: transform 120ms linear;
+}
+
+/* ------------------------------------------------------------- le journal -- */
+/*
+ * Un rendu dure huit minutes. Une barre indéterminée ne dit pas où l'on en est
+ * — le pourcentage n'atteint jamais le serveur, `NO_COLOR` coupe la fonction de
+ * progression du pipeline en amont — mais elle dit que ça travaille encore, et
+ * c'est la seule question qu'on se pose au bout de six minutes.
+ */
+.journal.encours::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-clair), transparent);
+  animation: glisse 1400ms linear infinite;
+}
+@keyframes glisse {
+  from { transform: translate3d(-100%, 0, 0); }
+  to { transform: translate3d(100%, 0, 0); }
+}
+
+/* ------------------------------------------------------------- le bandeau -- */
+/*
+ * C'est le seul canal de retour de l'atelier — trente-trois messages y passent.
+ * Il s'affichait en tête du DOCUMENT : dès qu'on avait déroulé l'écran, un
+ * échec s'annonçait hors champ. Et il poussait toute la page vers le bas à
+ * chaque apparition.
+ */
+.bandeau {
+  position: sticky; top: calc(var(--h-entete) + 2px); z-index: 30;
+  margin: 0 32px;
+  animation: bandeauEntre var(--t-moyen) var(--ressort) both;
+}
+@keyframes bandeauEntre {
+  from { opacity: 0; transform: translate3d(0, -8px, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+/* La pastille de travail : elle reste dans l'en-tête tant qu'une commande
+   tourne, même si l'on a fermé le journal. Sans elle, un rendu de huit minutes
+   se déroulait sur un écran qui avait l'air au repos. */
+.pastille-travail { border-color: var(--accent); color: var(--accent-clair); }
+.pastille-travail.travaille-doux::before {
+  content: ''; display: inline-block; vertical-align: -1px;
+  width: 8px; height: 8px; margin-right: 7px; border-radius: 50%;
+  background: var(--accent-clair);
+  animation: pulse 1400ms ease-in-out infinite;
+}
+
+/* -------------------------------------------------- la flèche de lecture -- */
+/*
+ * ELLE EST SUR L'IMAGE, PAS À CÔTÉ.
+ *
+ * Le bouton « Lire / Pause » vivait sous le cadre : il fallait quitter des yeux
+ * ce qu'on regarde pour aller viser ailleurs, sur un écran dont tout l'objet est
+ * de juger une image. N'importe quel lecteur vidéo résout ça depuis vingt ans —
+ * on clique là où l'on regarde.
+ *
+ * Elle n'apparaît QU'EN PAUSE. Une flèche posée en permanence sur un aperçu
+ * qu'on est en train de juger recouvre précisément ce qu'on juge.
+ */
+.fleche {
+  position: absolute; inset: 0; margin: auto;
+  width: 68px; height: 68px; border-radius: 50%;
+  background: rgba(8, 12, 20, .62);
+  backdrop-filter: blur(3px);
+  border: 1.5px solid rgba(255, 255, 255, .28);
+  display: grid; place-items: center;
+  opacity: 0; transform: scale(.86);
+  transition: opacity var(--t-moyen) var(--duo), transform var(--t-moyen) var(--ressort);
+  pointer-events: none;
+}
+/* Le triangle est dessiné en bordures : pas d'image à charger, et il suit la
+   couleur du texte quelle que soit la charte. */
+.fleche::before {
+  content: '';
+  border-style: solid;
+  border-width: 13px 0 13px 21px;
+  border-color: transparent transparent transparent #fff;
+  margin-left: 5px;
+}
+.cadre.en-pause .fleche { opacity: 1; transform: scale(1); }
+/* Au survol d'un aperçu qui tourne, la flèche s'annonce à mi-voix : on sait que
+   l'image est cliquable avant d'avoir cliqué. */
+.cadre:hover .fleche { opacity: .55; transform: scale(.96); }
+.cadre.en-pause:hover .fleche { opacity: 1; transform: scale(1.06); }
+.cadre:active .fleche { transform: scale(.94); }
+
+/* ===========================================================================
+ *  LES DEUX ESPACES : PRODUCTION ET INSPIRATIONS
+ * ===========================================================================
+ *
+ * L'atelier ne fabriquait qu'une chose : une vidéo. Le carnet d'inspirations ne
+ * relève pas de cette mécanique — il n'a ni étape, ni ordre, ni slug. Le poser
+ * en huitième marche du rail aurait menti sur ce qu'il est. Deux onglets disent
+ * la vérité : ici on fabrique, là on regarde ce que font les autres.
+ */
+
+.onglets {
+  display: flex; gap: 4px;
+  padding: 0 32px;
+  margin-top: 18px;
+  border-bottom: 1px solid var(--bord);
+}
+.onglet {
+  appearance: none; border: 0; background: none; cursor: pointer;
+  color: var(--doux); font: inherit; font-size: 17px; font-weight: 700;
+  padding: 12px 18px 14px;
+  border-bottom: 2.5px solid transparent;
+  margin-bottom: -1px;
+  transition: color var(--t-court) var(--duo), border-color var(--t-court) var(--duo);
+}
+.onglet:hover { color: var(--texte); }
+.onglet.actif { color: var(--texte); border-bottom-color: var(--accent); }
+.onglet:active { transform: translateY(1px); }
+
+/* ---------------------------------------------------------- le carnet ----- */
+
+.inspirations { padding: 28px 32px 40px; display: grid; gap: 22px; }
+
+.depot-lien { display: flex; gap: 12px; }
+.depot-lien input {
+  flex: 1; min-width: 0;
+  font-size: 17px; padding: 14px 18px;
+}
+
+/* Les vignettes en bandeau, pas en grille : le carnet se parcourt de gauche à
+   droite comme une pellicule, et garde sa hauteur quel que soit son contenu —
+   une grille qui grandit repousserait la loupe hors de l'écran à chaque ajout. */
+.carnet {
+  display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px;
+  scroll-snap-type: x proximity;
+}
+.carnet .vide { color: var(--doux); font-size: 16px; padding: 24px 0; }
+
+.vignette {
+  appearance: none; border: 1.5px solid var(--bord); background: var(--panneau-2);
+  border-radius: var(--r); padding: 0; cursor: pointer; color: inherit; font: inherit;
+  width: 168px; flex: 0 0 auto; overflow: hidden; text-align: left;
+  scroll-snap-align: start;
+  transition: border-color var(--t-court) var(--duo), transform 90ms var(--sortie);
+}
+.vignette:hover { border-color: var(--bord-vif); }
+.vignette:active { transform: translateY(1px) scale(.99); }
+.vignette.choisie { border-color: var(--accent); }
+.vignette img, .vignette .sans-image {
+  display: block; width: 100%; aspect-ratio: 9 / 12; object-fit: cover;
+  background: var(--panneau-3);
+}
+.vignette .sans-image { display: grid; place-items: center; color: var(--doux); font-size: 13px; }
+.vignette-texte { padding: 10px 12px 12px; display: grid; gap: 4px; }
+.vignette-nom {
+  font-size: 14px; font-weight: 700; line-height: 1.3;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.vignette-meta { font-size: 13px; color: var(--doux); }
+/* Une inspiration sans transcript se voit tout de suite : sinon on ouvre la
+   fiche, on trouve un cadre vide, et on croit à une panne. */
+.vignette-manque { font-size: 12px; color: var(--attention); }
+
+/* ----------------------------------------------------------- la loupe ----- */
+/*
+ * La vidéo et son texte CÔTE À CÔTE, c'est tout l'intérêt de l'écran : on lit
+ * une phrase, on regarde ce qui est à l'image au même moment. L'un au-dessus de
+ * l'autre obligerait à faire défiler entre les deux, donc à ne jamais les voir
+ * ensemble.
+ */
+.loupe {
+  display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); gap: 22px;
+  align-items: start;
+}
+.loupe-video { display: grid; gap: 14px; }
+.loupe-video video {
+  width: 100%; max-height: 62vh; border-radius: var(--r); background: #000;
+  border: 1px solid var(--bord);
+}
+.loupe-fiche { display: grid; gap: 8px; }
+.loupe-fiche h3 { font-size: 18px; line-height: 1.35; }
+.loupe-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+.loupe-actions a.bouton { text-decoration: none; }
+
+.loupe-texte {
+  display: grid; gap: 12px;
+  background: var(--panneau); border: 1px solid var(--bord);
+  border-radius: var(--r-grand); padding: 20px 22px;
+}
+.tete-texte { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.tete-texte h3 { font-size: 18px; }
+/* Une zone de texte plutôt qu'un paragraphe : Ctrl+A y sélectionne le
+   transcript ENTIER, et lui seul. Sur un `<p>`, la même touche prend toute la
+   page — l'en-tête, les vignettes, le reste — et le collage est à nettoyer. */
+.loupe-texte textarea {
+  width: 100%; min-height: 52vh; resize: vertical;
+  font-size: 16px; line-height: 1.7;
+  background: var(--panneau-2); color: var(--texte);
+  border: 1px solid var(--bord); border-radius: var(--r);
+  padding: 16px 18px;
+}
+
+@media (max-width: 1100px) {
+  .loupe { grid-template-columns: minmax(0, 1fr); }
+  .loupe-video video { max-height: 46vh; }
+  .loupe-texte textarea { min-height: 34vh; }
+}
+
+/* Les curseurs de conversion : la valeur se lit À CÔTÉ du curseur, pas en
+   dessous. Un réglage qu'on compare à l'oreille se change vingt fois de suite,
+   et chercher le chiffre ailleurs à chaque fois casse la comparaison. */
+.curseur-essai {
+  display: grid; grid-template-columns: auto; gap: 4px;
+  font-size: 14px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .05em; color: var(--doux);
+}
+.curseur-essai b { color: var(--texte); font-variant-numeric: tabular-nums; }
+.curseur-essai input[type="range"] { width: 13em; margin: 0; }
+.curseur-essai small {
+  font-size: 12px; font-weight: 400; text-transform: none; letter-spacing: 0;
+  color: var(--doux); opacity: .8;
+}
+
+/* ------------------------------------------------- les empreintes de voix -- */
+/*
+ * Le repli des empreintes tient sur toute la largeur de l'étape, contrairement
+ * à « Couleurs favorites » : il porte un formulaire de trois champs et une
+ * liste, pas une palette. Sans ça, la ligne d'adresse se replie sur trois rangs
+ * dans une colonne étroite.
+ */
+.repli-large { margin-top: 18px; }
+.repli-large > summary { font-size: 16px; }
+.repli-large .filtres { margin: 14px 0; }
+.repli-large > .note { margin-bottom: 4px; color: var(--doux); }
+
+.liste-empreintes { display: grid; gap: 10px; margin-bottom: 14px; }
+.liste-empreintes .vide { color: var(--doux); font-size: 16px; padding: 14px 0; }
+
+.empreinte {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  border: 1px solid var(--bord); border-radius: var(--r);
+  background: var(--panneau-3); padding: 12px 14px;
+}
+.empreinte-nom { font-size: 16px; font-weight: 700; overflow-wrap: anywhere; }
+/* La durée pousse les boutons à droite et absorbe seule le rétrécissement :
+   c'est la seule ligne qu'on peut tronquer sans perdre un geste. */
+.empreinte-note { flex: 1 1 220px; min-width: 0; font-size: 14px; color: var(--doux); }
+.empreinte-actions { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+
+/* Le repli des empreintes porte une zone de texte multi-lignes : les adresses
+   se collent par paquets, pas une par une. */
+.etiquette-bloc {
+  display: block; margin-bottom: 8px;
+  font-size: 14px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.05em; color: var(--doux);
+}
+.repli-large textarea {
+  width: 100%; resize: vertical; min-height: 92px;
+  background: var(--panneau-2); color: var(--texte);
+  border: 1.5px solid var(--bord); border-radius: 10px;
+  padding: 11px 13px; font: inherit; font-size: 15px; line-height: 1.5;
+}
+.repli-large textarea:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px; border-color: var(--accent);
+}
+
+/* Le badge dit d'un coup d'œil qu'une empreinte porte deja un modele : sans
+   lui, il faudrait lire la ligne de duree pour le deviner. */
+.empreinte-badge {
+  display: inline-block; vertical-align: 2px;
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--accent-clair); background: #5b8cff22;
+  border: 1px solid #5b8cff55; border-radius: 999px; padding: 2px 9px;
+}

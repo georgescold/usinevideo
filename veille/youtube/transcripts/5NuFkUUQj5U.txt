@@ -1,0 +1,166 @@
+# How the Hinge Algorithm Truly Works (And How to Beat It)
+# Jerrad Ross · 5,2 k vues · 00:06:14
+# https://www.youtube.com/watch?v=5NuFkUUQj5U
+
+So, you might have heard that Hinge uses
+the Gail Shappley [music] algorithm. It
+is being repeated constantly on YouTube
+and even a Hinge employee confirmed that
+this is what their algorithm is based on
+during an AMA.
+But that's the clue what it is based on
+[music] because it's not how it really
+works. Because the textbook Gail
+Shappley algorithm is kind [music] of
+like a school dance where the gym doors
+are locked, there's 10 boys, 10 girls,
+[music] and even though they all have
+their list of preferences,
+mathematically, everybody gets a match,
+even if it's not who they want it to be.
+But Hinge doesn't actually work that way
+because somebody can keep getting
+rejected and somebody can just keep
+getting [music] shown new profiles over
+and over like the gym doors are open and
+there's a line going around the block.
+[music] So for the algorithm to actually
+be effective, there has to be something
+else going on to fix this exact problem.
+But to understand it, you should know
+first how the algorithm used to work
+when it used something called ALO score.
+Essentially, it was just an
+attractiveness rating. If you had a lot
+of likes and a lot of attention, you
+would get a higher rating and get shown
+to other people who also got a high
+rating. But the problem with this is
+that it ignores the fact that people
+have types. If a guy was just covered in
+tattoos and piercings to the masses, his
+rating would be lower. But there is a
+type of attractive woman who's actually
+into that sort of thing. And using the
+old ELO system, that would never happen.
+They would never see each other. And
+this is where something called
+collaborative filtering comes in. And
+understanding this is a big advantage
+because unlike it just being some beauty
+contest, this is something that you can
+actually take advantage of and to train.
+And basically, it's kind of like what
+Netflix and Spotify use to understand
+the types of shows and music that you're
+in and how it tries to recommend you
+something that you actually like. And it
+doesn't just recognize that you happen
+to like women with horses in their
+pictures, but it actually compares your
+behavior to other guys who do as well.
+And if they happen to like women who are
+religious,
+uh, into country music, posing by their
+truck, and all that sort of thing,
+the algorithm goes like, "Oh, you're one
+of those guys. Here's a bunch of
+profiles that you're very, very likely
+to like. So, how can you actually use
+this to your advantage? Well, the
+algorithm wants to show you people who
+have the highest likelihood of liking
+you back. But for that to happen, it
+actually has to have confidence [music]
+in knowing exactly who you are. And if
+you can put yourself into a bucket like
+this horse country girl, and actually
+have pictures and prompts that present
+that yourself as that way, you can
+expect a noticeable boost in likes and
+[music] matches. And it could be any
+type as well, like a Patagonia hiking
+Subaru camping type guy or a mechanic
+like a really heavy blue collar type or
+some like tech city bro with high
+ambitions. And it can be less obvious
+too. Like I'm working with a guy and
+he's a little bit older, a little bit
+bigger, but he we've recognized that he
+just kind of has this like very
+welcoming almost like a big teddy bear
+type of vibe. Like a guy that women
+would feel safe with even though he's
+kind of like bigger and his appearance
+would probably use some more. Um he just
+gives off that vibe really well and we
+just kind of doubled down on it. We
+leaned into it and it's working very
+very well. That's a big green flag to a
+specific type of woman. And this is just
+like clarity that helps take your
+profile to the next level. Now, this is
+not necessary by any means and that's
+very important to know because
+this is like we're kind of like getting
+deep down into just maximizing and just
+optimizing to the highest degree. But if
+you are in a position where you [music]
+are needing new pictures and you know
+you have a type of lifestyle that you
+fit reasonably well, then yeah, it makes
+sense to lean on this. And of course,
+you don't need to like be absolutely
+obsessed with camping or whatever it is.
+It's just lean into something that is a
+factor about you that would appeal to a
+specific type of woman. Just kind of
+like double or triple down on it. And
+you know, this is like Hing's ability to
+understand types. Even though it's not
+perfect, it's what made it mainstream.
+[music] And since the parent company of
+Hinge, who also owns Tinder, um, can
+[music] see how it is effective, they
+had a statement saying that they are now
+doing the exactly same thing. They said
+they dropped Elo score [music] and are
+now doing things like suggesting
+profiles with similar photos to ones
+members have liked before, which is
+essentially it. Now, that's not the only
+thing. There is still more to the
+algorithm. For instance, [music] we know
+other things from that exact same
+statement, which is from Tinder, but
+definitely applies to Hinch, too, like
+how they value potential matches who are
+active and active at the same [music]
+time, and how they track how you swipe,
+which is important. So, don't just like
+power swipe right. You want to actually
+swipe left and try to like curate your
+feed. And it also gives new accounts a
+boost because it needs data on who you
+like and it needs data on who likes you.
+And you [music] know, you can do this
+yourself
+if I've mentioned it a few times before,
+but if you go into Hinge to settings, go
+to pause account, it gives you the
+option to actually restart it, like
+restart, like reset the algorithm
+rather. Something else, it also knows if
+you get a match and never respond,
+things like that, that's like
+very confident that it's it's having
+some sort of impact on your visibility.
+That alone is probably not a lot, but
+things like that, it is 100% tracking. I
+mean, it knows everything that's in your
+chat. But yeah, if you need any help, I
+go a lot deeper into doing well on Hinge
+in a video here. And I also have some
+resources linked below if you need my
+help. Otherwise, I'll talk to you again
+soon.

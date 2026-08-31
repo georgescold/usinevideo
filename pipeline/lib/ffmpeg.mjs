@@ -1,5 +1,5 @@
 /**
- * ffmpeg.mjs — sonder, extraire, découper, normaliser.
+ * ffmpeg.mjs — sonder, extraire, découper, encoder.
  *
  * Aucune décision éditoriale ici : ce module ne fait que manipuler des fichiers.
  * Ce qui se coupe et pourquoi se décide dans `montage.mjs`.
@@ -167,12 +167,28 @@ export function intervallesDeParole(silences, dureeTotaleS, { marge = 0.08 } = {
   return fusionnes
 }
 
-/** Découpe un morceau, sans réencoder la vidéo quand c'est possible. */
+/**
+ * Découpe un morceau, sans réencoder la vidéo quand c'est possible.
+ *
+ * LE CODEC AUDIO SUIT L'EXTENSION DE SORTIE, ET CE N'EST PAS UN DÉTAIL.
+ *
+ * Cette fonction forçait `-c:a aac` pour toute destination. Vers un `.wav`,
+ * ffmpeg accepte sans broncher : il écrit un flux AAC dans un conteneur WAV.
+ * Le fichier a l'air correct — ffprobe annonce la bonne durée, lue dans
+ * l'en-tête — mais aucun décodeur n'en tire plus d'une fraction de seconde.
+ * Cinq secondes découpées ainsi partaient à ElevenLabs comme trois dixièmes,
+ * et la conversion se payait quand même.
+ *
+ * Un conteneur sans compression veut du PCM. On le lui donne.
+ */
 export async function decoupe(source, destination, debutS, finS, { reencode = true } = {}) {
   assureDossier(path.dirname(destination))
   const args = ['-ss', String(debutS), '-to', String(finS), '-i', source]
-  if (reencode) args.push('-c:v', 'libx264', '-preset', 'veryfast', '-crf', '18', '-c:a', 'aac')
-  else args.push('-c', 'copy')
+  if (reencode) {
+    const sansCompression = /\.(wav|aiff?|au)$/i.test(destination)
+    args.push('-c:v', 'libx264', '-preset', 'veryfast', '-crf', '18')
+    args.push('-c:a', ...(sansCompression ? ['pcm_s16le'] : ['aac']))
+  } else args.push('-c', 'copy')
   args.push(destination)
   await ffmpeg(args)
   return destination
@@ -224,21 +240,13 @@ export async function coupeEtRecolleAudio(source, intervalles, destination) {
   return destination
 }
 
-/**
- * Normalise la voix. −16 LUFS pour un long format, −14 pour un vertical :
- * les plateformes normalisent de leur côté, mais partir trop bas fait perdre
- * en présence.
+/*
+ * `normalise` (loudnorm) a ete retiree en meme temps que le reste du traitement
+ * audio, et elle n'avait plus d'appelant. On livre le son tel qu'il entre : les
+ * plateformes ramenent de toute facon chaque video a leur propre cible, et
+ * normaliser en amont ne fait qu'ecraser la dynamique une fois de trop.
  */
-export async function normalise(source, destination, { lufs = -16 } = {}) {
-  assureDossier(path.dirname(destination))
-  await ffmpeg([
-    '-i', source,
-    '-af', `loudnorm=I=${lufs}:TP=-1.5:LRA=11`,
-    '-ar', '48000',
-    destination,
-  ])
-  return destination
-}
+
 
 /** Applique une LUT .cube. Se fait en post, pas dans Remotion : c'est plus rapide et plus fidèle. */
 export async function appliqueLut(source, destination, cube, { force = 1 } = {}) {
@@ -284,4 +292,128 @@ export async function verifieFfmpeg() {
     journal.detail(e.message)
     return { present: false, version: null }
   }
+}
+
+/*
+ * IL Y AVAIT ICI `nettoieVoix`, UNE CHAINE DE RESTAURATION DE LA VOIX.
+ *
+ * Passe-haut, declic, debruitage, de-esseur, compresseur. Elle a ete retiree le
+ * 28 aout 2026, sur consigne : on conserve l'audio fourni tel qu'il a ete
+ * enregistre, sans modificateur ni ameliorateur.
+ *
+ * Ce que trois essais avaient deja montre, et qui vaut d'etre garde en memoire
+ * si l'envie revient : sur une prise correcte, une chaine de restauration a
+ * beaucoup plus a detruire qu'a reparer. La porte de bruit tronquait les fins
+ * de phrase peu energiques ; `anlmdn` lissait les consonnes sourdes avec le
+ * souffle ; et surtout, la transcription mot a mot travaillait alors sur un
+ * signal different de celui qu'on entend, ce qui decalait les sous-titres.
+ *
+ * Le remede etait pire que le mal, et le mal etait un peu de souffle de piece.
+ */
+
+/**
+ * Pose une musique de fond sous une voix.
+ *
+ * La règle qui prime : **la voix ne baisse jamais.** C'est la musique qui
+ * s'efface sous elle, automatiquement, via `sidechaincompress` — le procédé du
+ * ducking, celui de la radio. Une musique posée à volume fixe oblige à choisir
+ * entre l'entendre et comprendre la voix ; le ducking supprime le choix.
+ *
+ * Entrée et sortie en fondu : une musique qui démarre net s'entend comme une
+ * erreur de montage.
+ */
+export async function poseMusique(voix, musique, destination, { gainDb = -16, fonduS = 1.5 } = {}) {
+  const { dureeS } = await sonde(voix)
+  const filtre = [
+    `[1:a]aloop=loop=-1:size=2e9,atrim=0:${dureeS.toFixed(3)},` +
+      `volume=${gainDb}dB,` +
+      `afade=t=in:st=0:d=${fonduS},afade=t=out:st=${Math.max(0, dureeS - fonduS).toFixed(3)}:d=${fonduS}[m]`,
+    `[m][0:a]sidechaincompress=threshold=0.03:ratio=12:attack=8:release=420:makeup=1[duck]`,
+    `[0:a][duck]amix=inputs=2:duration=first:dropout_transition=0,alimiter=limit=0.95[out]`,
+  ].join(';')
+
+  await ffmpeg([
+    '-i', voix,
+    '-i', musique,
+    '-filter_complex', filtre,
+    '-map', '[out]',
+    '-c:a', 'pcm_s16le',
+    destination,
+  ])
+  return { fichier: destination }
+}
+
+/**
+ * Mesure la sonie d'un fichier rendu : sonie intégrée et vrai pic.
+ *
+ * On mesure le FICHIER FINAL, pas la voix avant mixage. C'est la seule mesure
+ * qui compte : c'est elle que les plateformes liront pour décider de remonter ou
+ * de baisser la vidéo, et un pic qui dépasse s'entend en distorsion sur un
+ * téléphone même quand la sonie moyenne est correcte.
+ */
+export async function mesureSonie(fichier) {
+  const { stderr } = await lance(FFMPEG, [
+    '-hide_banner', '-nostdin',
+    '-i', fichier,
+    '-af', 'loudnorm=I=-16:TP=-1.5:LRA=11:print_format=json',
+    '-f', 'null', '-',
+  ])
+  const bloc = stderr.slice(stderr.lastIndexOf('{'))
+  try {
+    const d = JSON.parse(bloc.slice(0, bloc.indexOf('}') + 1) || bloc)
+    return {
+      lufs: Number(d.input_i),
+      vraiPic: Number(d.input_tp),
+      plage: Number(d.input_lra),
+      seuil: Number(d.input_thresh),
+    }
+  } catch {
+    return null
+  }
+}
+
+/**
+ * Le verdict de sonie, en clair.
+ *
+ * La cible est −14 LUFS, celle qu'appliquent YouTube et TikTok. Une vidéo plus
+ * forte sera BAISSÉE par la plateforme : tout ce qu'on aura gagné en compression
+ * sera perdu, en ayant abîmé la dynamique pour rien. Plus faible, elle sera
+ * remontée, et le souffle avec.
+ *
+ * Le vrai pic doit garder une marge : un fichier à 0 dBTP distord après
+ * ré-encodage par la plateforme, alors qu'il passait à la lecture locale.
+ */
+export function verdictSonie(m, { cibleLufs = -14, picMax = -1 } = {}) {
+  if (!m) return { ok: false, lignes: ['Mesure impossible.'] }
+  const lignes = []
+  let ok = true
+
+  // LA SONIE SE CONSTATE, ELLE NE SE JUGE PLUS.
+  //
+  // Cette fonction traitait tout écart de plus d'un décibel à -14 LUFS comme un
+  // défaut à corriger. Ce verdict avait un sens quand le rendu normalisait :
+  // il vérifiait que la normalisation avait fait son travail. Depuis qu'on
+  // livre le son tel qu'il entre, il se déclenche à chaque rendu et ne dit
+  // plus rien — un avertissement qui sonne toujours n'avertit de rien.
+  //
+  // On garde la mesure, qui reste utile : elle dit de combien la plateforme va
+  // remonter le fichier, et une sonie très basse annonce un master qu'on
+  // trouvera faible en écoute locale.
+  const ecart = m.lufs - cibleLufs
+  lignes.push(
+    `sonie ${m.lufs.toFixed(1)} LUFS` +
+      (Math.abs(ecart) <= 1
+        ? ` — déjà à la cible des plateformes (${cibleLufs})`
+        : ` — les plateformes ${ecart > 0 ? 'baisseront' : 'remonteront'} de ${Math.abs(ecart).toFixed(1)} dB vers ${cibleLufs}`)
+  )
+
+  if (m.vraiPic <= picMax) {
+    lignes.push(`vrai pic ${m.vraiPic.toFixed(1)} dBTP — marge suffisante`)
+  } else {
+    ok = false
+    lignes.push(`vrai pic ${m.vraiPic.toFixed(1)} dBTP — au-dessus de ${picMax}, risque de distorsion`)
+  }
+
+  lignes.push(`plage dynamique ${m.plage.toFixed(1)} LU`)
+  return { ok, lignes }
 }

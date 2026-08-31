@@ -1,0 +1,164 @@
+# Why Dating Apps Are Designed to Keep You Single
+# The Social Autopsy · 1 vues · 00:07:26
+# https://www.youtube.com/watch?v=VE_lQ0-pEGQ
+
+Tinder's entire pitch is four words. It
+starts with a swipe. Notice the slogan
+never tells you where it's supposed to
+end. The company behind Tinder makes
+over $3 billion a year. It also owns
+Hinge, okaycid, Match, and Plenty of
+Fish. Almost every app you'd use to
+escape Tinder belongs to the same
+company. And here's the problem. Every
+time two people delete the app because
+they found each other, that company
+loses two paying customers. However,
+their revenue keeps growing, which means
+one of two things. Either they're
+terrible at their stated mission, or the
+mission was never the mission.
+The story you've been sold goes like
+this. Dating apps are neutral
+matchmakers, algorithms working day and
+night until they find your person. And
+to be fair, the apps do work sometimes.
+Roughly one in 10 American adults in a
+committed relationship met their partner
+online. And for younger generations,
+it's the default way to meet anyone at
+all. That's exactly why nobody questions
+the design. When something becomes
+infrastructure, we stop asking who built
+it and why. But think about what you're
+actually holding. a product with a
+subscription model, quarterly earnings
+calls [music] and shareholders who
+expect growth. Your loneliness is the
+recurring revenue. And the moment you
+understand that, everything about how
+these apps behave starts making a
+different kind of sense.
+Meet Jonathan Bedin, co-founder of
+Tinder and the inventor of the swipe.
+He's spoken openly about where the
+mechanic came from. Variable rewards.
+The same psychological principle behind
+slot machines. The research goes back to
+psychologist BF Skinner in the 1950s.
+When a reward arrives unpredictably,
+[music] the behavior becomes compulsive.
+Pigeons peck levers until exhaustion.
+Not for guaranteed food, for maybe food.
+[music] That's your swipe. Most cards
+are nothing, but every so often a match,
+a little burst of validation [music]
+delivered on a random schedule, your
+brain cannot resist. Tinder's own team
+has compared the experience to a game,
+and Bedin has referenced Skinner style
+reinforcement when explaining the
+design.
+Now, ask yourself the obvious question.
+If the goal is to get you into a
+relationship, why would the core
+mechanic be engineered for repetition, a
+matchmaker wants you matched, a casino
+wants you seated, the swipe is a chair,
+but the design of the deck is only the
+surface. What runs underneath it is
+worse.
+For years, Tinder secretly assigned
+every user an internal rating. They
+called it the L score, borrowed from
+chess rankings. The company confirmed
+its existence in 2019, claiming it had
+since moved on to a newer system. Here's
+what that meant in practice. The app
+decided how attractive you were, then
+showed you people in your bracket. The
+full pool stayed invisible. You got the
+slice an algorithm believed you
+deserved. And the replacement system,
+still a black box, still deciding who
+gets seen.
+In 2019, the Federal Trade Commission
+has sued online dating service
+Matchgroup, Inc., Match, the owner of
+match.com, Tinder, okaycid, plenty of
+fish, and other dating sites, alleging
+that the company used fake love interest
+advertisements to trick hundreds of
+thousands of consumers into purchasing
+paid subscriptions on Match.com.
+According to the FTC, Match.com sent
+notifications to free users, saying
+someone had expressed interest in them
+when the company's own systems had
+already flagged many of those accounts
+as likely fraudulent.
+Free users would pay for a subscription
+to read the message, and in many cases,
+the FTC alleged the message came from a
+scammer or led nowhere at all. The
+manufactured hope was the product.
+Tinder was caught charging users over
+30, nearly double for Tinder Plus in
+California. The Candelaw lawsuit forced
+a settlement. The pricing logic was
+never really disputed, just defended.
+Older users were willing to pay more, so
+they were charged more. However, the
+strongest evidence requires no lawsuit.
+Open the app right now and look at the
+subscription tiers. Boosts, super likes,
+gold, platinum. Every paid feature sells
+the same thing, visibility. Which means
+the free experience has to be engineered
+scarcity. They built the wall, then sold
+you the ladder.
+Step back and look at the machine as a
+whole. One company controls most of the
+market. When you burn out on Tinder and
+switch to Hinge, you've simply moved to
+a different room in the same casino.
+Even the anti- Tinder positioning of
+Hinge is a match group product decision.
+A brand for people who got tired of
+their other brand. And the incentive
+structure is brutally simple. A user in
+a happy relationship, generates zero
+dollars. A user who is perpetually
+almost successful, matched enough to
+stay hopeful, starved enough to stay
+swiping, generates revenue for years.
+And a sociologist saw this condition
+coming decades before the first swipe.
+Ziggmund Bowman called it liquid love.
+Relationships [music] loosened into
+connections. Easy to enter, easier to
+exit, never quite solid. The apps didn't
+invent that world. They just
+industrialized it because a solid
+relationship is a finished sale. And no
+subscription business survives on
+finished sales. So yes, dating apps can
+produce couples. They do every day. But
+the real question is what they're
+optimized for. And optimization always
+tells the truth, even when the marketing
+doesn't. Hinge says it's designed to be
+deleted. Maybe, but match group is
+designed to be needed, and you can't
+serve both designs at once. Skinner's
+pigeons never figured out the lever was
+the point. You just did. The swipe was
+borrowed from casinos, but the deeper
+playbook, the one about engineering
+habits and selling the cure to a
+manufactured [music] problem, was
+written years earlier inside a different
+set of companies. If you want to see how
+every app on your phone eventually
+becomes a casino, that video is on
+screen now.

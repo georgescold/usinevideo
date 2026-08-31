@@ -1,0 +1,967 @@
+# CTO Fired Me for Being 'Too Slow' – I Owned the Master License ♟️ | #CorporateChess
+# Revenge of the Coffee Pot · 41 k vues · 00:31:11
+# https://www.youtube.com/watch?v=MPOmdowGapE
+
+If you walk into a server room, really
+walk into it, past the biometric
+scanners and the authorized personnel
+only signs that act as suggestions to
+upper management, you'll hear a hum.
+It's a specific frequency. To a layman,
+it sounds like air conditioning. To me,
+it sounds like a heartbeat. For 15
+years, I kept that heart beating. I was
+the pacemaker, the surgeon, and the
+blood bank for Apex Logistics. I wrote
+the code that routed the trucks, scripts
+that managed the payroll, and the
+firewalls that kept the Russians and the
+Chinese from turning our logistics
+network into a crypto mining farm. I was
+invisible. And in the corporate world,
+invisible is usually a synonym for
+expendable. But here's the thing about
+being the person who builds the house
+foundation. You know exactly where the
+bodies are buried because you're the one
+who poured the concrete over them. I
+knew this day was coming. I smelled it
+six months ago when the board started
+using words like pivot and optics
+instead of profit and uptime. I'm 45. In
+the tech world, that makes me a
+prehistoric relic. I don't wear hoodies.
+I don't micro dosily for creativity. I
+drink black coffee that tastes like
+battery acid. And I write code that
+doesn't break. But I knew they were
+looking for a shiny new hood ornament.
+By the way, before I get into how I
+effectively nuked a Fortune 500 company
+from my garden patio, do me a solid. If
+you like stories where the competent,
+quiet person absolutely destroys the
+loud idiot. Hit subscribe and drop a
+like. It keeps the caffeine flowing for
+the team and helps these stories reach
+the people who need to hear them. Okay,
+back to the carnage. The backstory is
+crucial here, so pay attention. This
+isn't some oops, I deleted a file
+accident. This was premeditated
+architectural warfare. 7 years ago, the
+company was going through a hostile
+takeover scare. The CEO at the time, a
+guy named Marcus who actually had a
+brain, was terrified of losing the
+intellectual property. He came to me in
+a panic. He wanted the core system
+protected, separated from the main
+assets so it couldn't be liquidated. I
+suggested a solution. We create a
+separate entity holding company for the
+tech stack. I called it our robbero
+systems LLC. The company Apex Logistics
+wouldn't own the code. They would
+license it from our robberos. It was a
+defensive move to protect the company.
+Marcus signed off on it. Legal stamped
+it. It was a standard vendor agreement.
+Here is the kicker. Marcus retired three
+years ago. The legal team turned over.
+The new board members didn't read the
+dusty contracts from seven years ago.
+And nobody, absolutely nobody, realized
+that our Robbero Systems LLC wasn't a
+shell company owned by Apex. It was a
+single member LLC owned by me, Hannah
+Vance. Technically, for the last 7
+years, I haven't just been the lead
+systems architect. I've been the
+landlord. And Apex has been renting the
+very floor they stand on. I never
+brought it up. Why would I? As long as
+they paid the licensing fee, which was
+buried in the IT infrastructure budget
+line item that nobody scrutinizes,
+everything was fine. I kept the lights
+on. They kept signing my paycheck. Then
+came the rumors, the whispers in the
+breakroom. New blood, Silicon Valley
+vision. They wanted to turn our boring,
+profitable logistics company into a tech
+platform. That's corporate speak for
+we're going to burn cash and fire the
+people who actually work. I sat in my
+office, a windowless box that smelled of
+ozone and stale pretzels, and I watched
+the stock price tick up on the rumor of
+a new CTO. I wasn't scared. Panic is for
+people who don't have backups. I have
+backups of my backups. I looked at the
+framed picture of my dog, Buster, on my
+desk, and I looked at the thick folder
+in my drawer labeled do not discard. I
+decided to do a little audit of my own.
+I logged into the billing system.
+Aro<unk>'s license was set to autorenew
+on the 15th of next month. It was a
+perpetual autorenew, cancellable only by
+written notice from the CTO. I leaned
+back in my chair, the mesh creaking
+under the weight of 15 years of carrying
+this department. If they wanted to play
+games, they should have checked who
+owned the board. Most people think it is
+about fixing printers. It's not. It's
+about control. And the person with the
+root password is God. I was just waiting
+for the atheists to show up and try to
+tear down the church. The mood in the
+office was shifting. The younger devs,
+kids fresh out of boot camps who
+copypasted code from Stack Overflow,
+started acting twitchy. They stopped
+making eye contact. They knew the
+executioner was coming. I just didn't
+expect the executioner to be wearing a
+vest made of recycled plastic bottles
+and a smile that cost more than my car.
+I prepared. I didn't delete anything.
+That's illegal. I didn't plan a virus.
+That's amateur hour. I just made sure
+that every single protocol, every
+dependency, and every API call was
+strictly compliant with the licensing
+agreement held by our robbero systems.
+If they wanted to fire me, they were
+going to have to fire the vendor, too.
+And usually when you evict the landlord,
+he takes the keys with him. I waited.
+Silence is a weapon. I sharpened mine.
+His name was Braden. Of course, it was
+Braden. He looked like he was
+manufactured in a lab funded by venture
+capitalists who think disruption is a
+personality trait. He walked into the
+Open Plan office on a Tuesday, wearing
+Common Project sneakers and a t-shirt
+that said, "Code is poetry." He was 32,
+had ex Google in his Twitter bio. He was
+there for six months as a contractor and
+he smelled like sandalwood and unearned
+confidence. The first all hands meeting
+was a masterclass in cringe. He jumped
+on the stage, literally jumped like a
+golden retriever with a caffeine
+addiction and clapped his hands. Team,
+he said, his voice projecting without a
+microphone. We are too slow. We are
+dinosaurs. I looked at the stack and
+frankly it smells like a museum. We're
+running on legacy code. We're running on
+fear. From now on, we move fast and
+break things. I sat in the back row
+sipping my lukewarm coffee. Move fast
+and break things. Motto of people who
+don't have to clean up the mess. In
+logistics, if you break things, trucks
+don't move. Medicine doesn't get to
+hospitals. Food rots in warehouses. But
+Braden didn't care about the trucks. He
+cared about the stack. He didn't
+introduce himself to me. I was just the
+middle-aged woman in the corner with the
+resting murder face. He spent the first
+week meeting with the product ninjas and
+the UX wizards. He ignored the
+infrastructure team entirely. He called
+us the plumbers. We need to get off this
+on-remise garbage. I heard him say to a
+sickoffen in the hallway, "Cloud native,
+serverless, blockchain integration for
+supply chain transparency." I almost
+laughed out loud. Blockchain for a
+company that ships cardboard boxes. It's
+like putting a spoiler on a tractor. My
+first direct interaction with him
+happened on day four. He barged into my
+office without knocking. He looked
+around at my dual monitor setup and the
+whiteboard covered in network topology
+diagrams with a sneer. "Hannah, right?"
+he asked, not waiting for an answer.
+"I'm looking at the budget." "Who is our
+robbero systems? We're paying them a
+fortune for what is this core logic
+licensing? My heart did a slow steady
+thud. This was it. He was pulling the
+thread. That's the core architecture,
+Braden. I said, keeping my voice level.
+It's the proprietary engine that runs
+the routing algorithms. It's licensed
+middleware. Why are we renting
+middleware? He laughed. A short barking
+sound. We have a team of 50 devs. We can
+build this in-house. It's just routing,
+right? Google Maps API. A little Python.
+Boom. Done. It's not just routing, I
+explained, trying to use small words.
+It's compliance. It's load balancing for
+10,000 concurrent trucks. It's 15 years
+of edge case handling. You can't just
+Google maps hazardous material transport
+regulations. He waved a hand
+dismissively. You're thinking in
+constraints, Hannah. That's the problem
+with the old guard. You see walls, I see
+doors. I'm canceling this contract.
+We're going to rebuild the core and go.
+Make it lean. The license is the only
+thing keeping the legacy database
+talking to the new front end. I warned
+if you cancel it, the API keys revoke
+automatically. The system is designed to
+fail safe into a locked state to protect
+the IP. Stop. He held up a hand. Just
+stop. You're using fear tactics to
+justify lazy vendor management. I'm
+canceling it. And frankly, Hannah, this
+attitude. It's toxic. It's blocking the
+synergy I'm trying to create. Synergy.
+God, I hated that word. I advise against
+that, Braden, I said, turning back to my
+screen strongly. Noted, he said, and
+walked out. I watched him go. He was a
+peacock strutting into a coyote den,
+convinced his feathers were armor. He
+didn't know I was the coyote. He didn't
+know our robberose was me. He just saw a
+line item to cut so he could show the
+CEO he was optimizing burn rate. I
+opened my personal laptop, never used
+company hardware for the real work, and
+checked the Our Robbero admin panel. The
+user admin Apex was active, status, good
+standing, and I saw the notification pop
+up on the company Slack. Braden had
+created a new channel called Hash
+Project Phoenix. The description read,
+"Rebuilding the legacy trash from
+scratch. No more expensive vendors. Pure
+code. He was mocking my life's work in a
+public channel. He called it legacy
+trash. I felt a coldness settle in my
+chest. It wasn't sadness. It was the
+feeling of a sniper adjusting for
+windage. He wanted to rebuild it. Fine.
+But first, he had to tear it down. And
+he was about to realize that the trash
+he was so eager to throw out was
+actually the loadbearing wall holding
+the roof up. I started organizing my
+files. I downloaded my personal
+performance reviews from the last
+decade. I saved every email where I had
+warned previous management about the
+fragility of the system. I created a
+paper trail so dense it would choke a
+grand jury. Braden thought he was the
+hero of this story. He thought he was a
+lawn musk. He was about to find out he
+was just the guy who unplugged the
+freezer because he didn't like the
+humming sound. The meeting invite hit my
+inbox on Friday morning. Subject roll
+realignment/transition.
+Location glass fishbowl conference room.
+The fishbowl. the room with glass walls
+in the center of the office so everyone
+could see the execution happen in real
+time. It was a power move. Braden wanted
+an audience. He wanted to show the tribe
+that he was killing the matriarch. I
+walked in at 10:00 a.m. sharp. Braden
+was sitting at the head of the table,
+flanked by a nervous HR rep named
+Tiffany, who looked like she wanted to
+be literally anywhere else. Braden
+didn't stand up. He was scrolling on his
+phone. "Have a seat, Hannah," he said,
+not looking up. "I sat. I placed my
+folder on the table. The folder
+contained two things. the termination
+clauses of my employment contract. A
+copy of the Aabro systems master license
+agreement highlighted in neon yellow. So
+Braden started finally locking his
+phone. We're making changes, big
+changes. H# Project Phoenix is moving
+faster than anticipated. We've got some
+Rockstar Junior devs who are churning
+out code or velocity you just can't
+match. Velocity isn't quality, Braden, I
+said softly. See that? He pointed a
+finger at me. That negativity, that
+resistance to speed. That's exactly why
+we're here. Hannah, you've been here a
+long time. may be too long. You're
+entrenched in the old ways, and frankly,
+your salary is hefty. We can hire three
+hungry juniors for what we pay you to
+maintain a system we're deleting.
+Tiffany from HR cleared her throat.
+Hannah, the company has decided to
+eliminate your position effective
+immediately. We're offering 2 weeks of
+severance in exchange for signing a
+non-disparagement agreement. 2 weeks, 15
+years of service, late nights, missed
+birthdays, saving the company from
+ransomware attacks on Christmas Eve. And
+they offered me 2 weeks. I'm not signing
+anything, I said. Braden laughed. Suit
+yourself, then you get nothing. Look,
+Hannah, take some advice. Go find a nice
+government job. Something slow.
+Something where you can push paper and
+retire. You're just You're too slow for
+this industry, sweetheart. Sweetheart.
+The word hung in the air like a fart in
+an elevator. I saw Tiffany wse. I stood
+up slowly. I didn't yell. I didn't flip
+the table. I channeled every ounce of
+ice cold rage into my posture. I
+smoothed my skirt. I picked up the
+folder. I expected this, I said. So, I
+prepared this for you. I slid the folder
+across the mahogany table. What's this?
+Recipes? Braden smirked. It's the
+documentation for the third party
+dependencies. I lied. And the contact
+info for the vendors, specifically
+licensing agreement for the core
+architecture, the one I'm cancelelling,
+he didn't even open it. He just pushed
+it to the side. We don't need it. We're
+going native. You really should read the
+fine print, Braden. Especially the part
+about termination of service and data
+lockout protocols. I don't read legacy
+contracts, Hannah. I shred them. He
+stood up signaling the meeting was over.
+Please have your desk cleared in 30
+minutes. Security will escort you out. I
+walked out of the fishbowl. The entire
+office was silent. Heads were bowed over
+keyboards, but I knew they were
+watching. The young devs looked
+terrified. The older ones, the few that
+were left, looked defeated. I went to my
+desk. I grabbed my bag. I grabbed the
+picture of Buster. I left the company
+laptop. I left the passcard. I walked to
+the elevator. Braden was standing near
+the coffee machine, high-fiving a
+22-year-old product ninja. He looked at
+me and gave a little mock salute. Good
+luck in the slow lane, he called out.
+The elevator doors closed, cutting off
+his grin. I got into my car, a sensible
+Toyota Camry that I paid for in cash. I
+sat there for a moment, my hands
+gripping the steering wheel. I wasn't
+crying, I was vibrating. I pulled out my
+phone. I opened the Uber Eats app and
+ordered $50 worth of sushi to my house.
+Then I opened my email app, my personal
+one. There was a notification from the
+automated billing system for our Robro
+systems. Subject: Cancellation request
+received from Braden, CTO at Apex
+Logistics message. Cancel this
+immediately. We are not paying for this
+trash anymore. He had done it. He had
+actually sent the email. He hadn't read
+the folder. He hadn't checked the LLC
+registration. He just fired the vendor.
+The system was programmed to respond
+automatically. Response cancellation
+accepted. Service will terminate at the
+end of the current billing cycle. Sunday
+at 11:59 p.m. Today was Friday. He had
+48 hours. I put the car in drive. You
+want speed, Braden? I whispered to the
+empty car. I'll show you speed. There's
+a specific kind of joy in doing
+absolutely nothing while knowing a
+catastrophe is barreling toward your
+enemies. The Germans probably have a
+word for it. I call it the weekend. I
+spent Saturday gardening. I pruned my
+hydrangeas. I mulched the flower beds.
+My hands were covered in dirt. Real
+dirt, not the metaphorical filth of
+office politics. My phone buzzed
+occasionally. Texts from former
+co-workers asking if I was okay. I'm
+fine, I replied. Better than fine. I
+didn't tell them to run. They needed the
+paycheck. Besides, they couldn't stop
+what was coming. Saturday night, I
+poured a glass of terrifyingly expensive
+Cabernet bottle I had been saving for my
+retirement or my wedding, whichever came
+first. Spoiler, it was the retirement
+and I opened my laptop on the patio. I
+wasn't logged into Apex's systems. I
+didn't need to be. I was logged into my
+system, the Abero's dashboard. It was a
+beautiful thing, minimalist, clean. A
+single countdown timer was ticking away
+in the center of the screen. Time
+remaining until license expiration. 28
+hours 14 minutes. I checked the logs.
+Braden's team was busy. The traffic on
+the Apex servers was spiking. They were
+trying to rip and replace. I could see
+the API calls. They were trying to
+bypass the Aabaro's authentication
+layer. Good luck, boys, I muttered,
+swirling my wine. The Aabro's code
+wasn't just a plugin. It was the nervous
+system. The database schema was
+encrypted with a key that generated
+dynamically based on the active license.
+If the license died, the key died. If
+the key died, the data became gibberish.
+It was a dead man's switch designed to
+prevent IP theft. Marcus, the old CEO,
+had insisted on it. If they steal the
+company, he had said, "I want them to
+inherit a brick." Braden was currently
+trying to perform a heart transplant
+with a plastic spoon. I saw a flurry of
+activity around 2:00 a.m. They were
+deploying code to production on a
+Saturday night. Rule number one of it,
+never deploy on a Friday or Saturday
+unless the building is on fire because
+if you break it, you ruin everyone's
+weekend. Braden was breaking it. I saw
+error rates climbing 0.5%
+1.2% 3% small numbers to a layman.
+Catastrophic numbers for a logistics
+company. That meant 3% of the trucks
+were getting the wrong coordinates. 3%
+of the invoices were failing to
+generate. I went to bed and slept like a
+baby. A baby who had just set a delayed
+blast fuse under the crib of a monster.
+Sunday morning, I went to brunch. I had
+eggs benedict and two mimosas. I checked
+my phone. No missed calls from the
+company. Of course not. They were too
+proud. They thought they were hitting
+minor turbulence. I scrolled through
+LinkedIn. Braden had posted a picture of
+the team eating pizza in the conference
+room at 4:00 a.m. Caption: The hustle
+never stops. Crushing legacy bugs #
+project Phoenix # disrupt. I zoomed in
+on the photo. In the background on a
+monitor, I could see a terminal window
+full of red text. Red text is never
+good. He was posting his own failure and
+calling it hustle. The irony was
+delicious. It tasted better than the
+Hollandday sauce. Sunday evening, time
+remaining 4 hours. I sat in my living
+room knitting. Yes, knitting. I was
+making a scarf. It was meditative. Knit
+one, pearl two. Destroy a corporation.
+The phone rang at 8:00 p.m. It was Greg
+from DevOps. Greg was a good guy. He had
+three kids in a mortgage. I picked up
+Hannah, he whispered. He sounded like he
+was hiding in a closet. "Hey, Greg, I'm
+knitting. What's up? It's bad, Hannah.
+It's really bad." Braden had us bypassed
+the licensing check. He hard-coded a
+true value into the O module. "Oh dear,"
+I said, figning surprise. "That sounds
+risky. It worked for like an hour, Greg
+said, his voice trembling, but now the
+database is acting weird. It's
+returning. Garbage characters that look
+like wingings. We can't read the
+customer manifests. Sounds like an
+encryption mismatch, I said calmly.
+Braden is screaming that you sabotaged
+the code. He's threatening to sue you. I
+didn't touch the code, Greg. I haven't
+logged in since Friday. Braden canceled
+the license. He's driving a car after
+the insurance and cutting the brake
+lines. He says he's going to fix it by
+morning. He's rewriting the schema.
+Greg, I said gently, go home. Tell him
+you're sick. Just go home. Why? Because
+at midnight, the hard lock kicks in.
+When the license officially expires, the
+system doesn't just return garbage. It
+shuts down the ports. It locks the
+servers. It's a security feature. Go
+home, Greg. He hung up. I looked at the
+clock. 9:00 p.m. 3 hours to go. I poured
+another glass of wine. I put on some
+smooth jazz. I waited for the fireworks.
+Monday morning. The sun rose, birds
+chirped, and Apex Logistics ceased to
+exist as a functional entity. I woke up
+at 7:00 a.m., made coffee, and turned on
+the local news. Nothing yet. The supply
+chain moves slowly until it stops moving
+entirely. Then it becomes headline news
+very fast. I checked my email. Still
+nothing from official channels, but my
+LinkedIn inbox was exploding. Messages
+from recruiters heard you're on the
+market. Messages from former colleagues,
+WTF is happening. And one message from a
+major client's operations manager, a guy
+I'd known for 10 years. Dave from Pharma
+Corp. Hannah, I can't get anyone at Apex
+on the phone. Our tracking portal shows
+all our shipments are located in null,
+Antarctica. We have insulin on those
+trucks. Call me. I didn't call him. I
+couldn't. I wasn't an employee.
+Liability is a tricky thing. If I
+offered help now, I could be blamed for
+interfering. I had to let it burn. I
+logged into the public facing tracking
+site for Apex. Error 5003. Service
+unavailable. Beautiful. Inside the
+building, as I later learned from Greg,
+it was chaos. At 8:00 a.m., the drivers
+started calling in. Their handheld
+scanners weren't working. They couldn't
+scan packages onto the trucks. They
+couldn't get route updates. Thousands of
+drivers sitting in idling trucks across
+the country staring at black screens.
+Braden was apparently running around the
+office like a headless chicken in
+designer sneakers. He was blaming the
+cloud provider. He was blaming the ISB.
+He was blaming Russian hackers. He
+called an emergency meeting with the
+CEO, Robert. Robert was a money guy. He
+didn't know Python from a Python. It's a
+legacy bug. Braden reportedly shouted.
+Hannah left a logic bomb. She sabotaged
+us on her way out. Robert, to his
+credit, asked a simple question. Can you
+fix it? Yes, we just need to migrate to
+the new stack. I need 24 hours. He was
+lying. He didn't need 24 hours. He
+needed a miracle or a time machine. The
+license had expired at midnight. The
+Aurora robbero system had done exactly
+what it was designed to do. It detected
+an unauthorized instance because the
+license was invalid. It initiated the
+data shield protocol. It encrypted the
+entire database at the storage level and
+locked the API keys. To unlock it, you
+needed a valid license key. To get a
+valid license key, you needed to pay
+Aurabro Systems. To pay our Robro
+Systems, you needed to not be an
+arrogant tech bro who canled the
+contract 2 days ago. Around 10:00 a.m.,
+the first big domino fell. Major
+automotive client threatened to pull
+their contract instantly if the line
+wasn't moving by noon. That contract was
+worth $50 million a year. I was sitting
+on my couch watching the prices right
+when my phone finally rang with the
+number I was waiting for. It wasn't
+Braden. It wasn't HR. It was legal.
+Specifically, the general counsel, a
+woman named Elener. Elener was sharp,
+ruthless, and the only person in that
+building I respected besides myself.
+Miss Vance, she said. Her voice was
+tight. Hello, Elener. Enjoying your
+Monday? Cut the crap, Hannah. The
+building is on fire. Braden says you
+planted a virus. Braden is a
+Alina, you know that. He says the system
+is locked. It's asking for a master key.
+Correct. It's a security feature. Anti-
+theft. Anti- theft. Who's stealing it?
+Technically, Apex Logistics. You're
+using unlicensed software. License for
+the core architecture expired yesterday.
+I believe the CTO canceled it explicitly
+via email on Friday. Would you like me
+to forward you the receipt? There was a
+long silence on the other end. I could
+hear Elena typing furiously. She was
+pulling up the contract. The one she
+probably signed off on 7 years ago
+without reading the vendor name closely.
+Our Robro Systems, she muttered. That's
+that's an external vendor. Single member
+LLC, I said. Sipping my coffee managed
+by Hannah Vance. Oh my god. Alina
+whispered. You own the stack. I own the
+IP. Elener, you guys were just renting
+the furniture and Braden decided to stop
+paying rent. Hannah, this is extortion.
+No, Elener. Extortion is forcing someone
+to pay for something they don't need.
+This is just business. You have a
+disruptive service outage because your
+CTO failed to maintain critical vendor
+relationships. I'm just a vendor
+standing by to assist for fee. What do
+you want? I want Braden out of the room
+and I want the CEO on the line. And
+Aliener, I charge double for emergency
+consulting. Hold on. While Elener put me
+on hold, I imagined the scene in the
+server room. Usually, server rooms are
+cold and loud with fan noise. Today, it
+would be hot and loud with human noise.
+Developers huddled around terminals,
+sweating through their hoodies. Typing
+pseudo restart as if that would
+magically fix a legal encumbrance. The
+silence of the technology was the
+loudest thing. The screens were static.
+Access denied. License invalid. Contact
+vendor. It's a chilling phrase. Contact
+vendor. It implies there is a higher
+power. A gatekeeper. For years, they
+thought the gatekeeper was just a
+middle-aged woman named Hannah who
+brought donuts on Fridays. They didn't
+realize Hannah was the one holding the
+keys to the gate. Liner came back on the
+line. Her voice was different now, less
+accusatory, more desperate. Robert wants
+to see you now. I'm not an employee.
+Alaner, I don't respond to wants to see
+you. I respond to consultation requests.
+Fine. We are formally requesting an
+emergency consultation with our robbero
+systems. What's your rate? My standard
+rate was in my salary. My consultant
+rate is $500 an hour, but for an
+emergency lockout recovery, it's a flat
+fee. We can discuss it when I arrive.
+And a leaner, tell Braden if he touches
+one more line of code, the price goes
+up. Just get here, Hannah. I hung up. I
+didn't rush. I took a shower. I put on
+my best suit, a sharp charcoal blazer
+that I usually save for board meetings.
+I put on lipstick, wore paint. I drove
+to the office. The parking lot was full,
+but there was a strange energy. People
+were pacing outside on their phones,
+drivers loading docks. Looking bored and
+angry, I walked into the lobby. The
+receptionist, a sweet girl named Sarah,
+looked at me with wide eyes. Hannah,
+you're back. Thank God. The coffee
+machine is broken, too, but that's the
+least of our problems. I'm just visiting
+Sarah. I smiled. I need a visitor badge.
+Don't be silly. Your badge still. My
+badge was deactivated Friday. Sarah, I
+need a visitor badge. Vendor. She
+blinked, confused, but printed it out. I
+slapped the sticker on my lapel. Hannah
+Vance, visitor vendor. I walked through
+the security gates. I didn't go to the
+IT department. I went straight to the
+executive suite on the top floor. The
+elevator ride was slow. I checked my
+reflection in the mirrored walls. I
+didn't look like a disgruntled ex
+employee. I looked like a CEO. When the
+doors opened, the noise hit me. The
+executive floor was usually a library.
+Today, it was a trading floor during a
+crash. Assistants were running with
+papers. Owns were ringing off the hook.
+I saw Braden. He was standing outside
+the CEO's office looking pale. His hair
+was messy. The code is poetry t-shirt
+had sweat stains. He saw me. His eyes
+narrowed. You he hissed marching over.
+You did this. You locked us out. I'm
+going to have you arrested for cyber
+terrorism. Hello, Braden, I said, my
+voice cutting through the noise. I hear
+you're having some trouble with your
+legacy systems. I thought they were
+trash. Undo it, he shouted, grabbing my
+arm, I pulled away sharply. Don't touch
+me and don't shout at the talent.
+Talent, you're a hacker. I'm the
+copyright holder. I corrected him. And
+you are the unauthorized user. Elener
+stepped out of the boardroom. She looked
+exhausted. Braden, shut up. She snapped.
+Hannah, come in. Braden tried to follow.
+Not you, Braden. Alener said, "I'm the
+CTO." He screamed, "I need to be in
+there. You're the reason we're in
+there," Alener said coldly. "Wait here."
+I walked past him. I caught his eye. I
+didn't smile. I didn't smirk. I just
+looked at him with the detached pity one
+has for a bug on a windshield. I entered
+the boardroom. Robert, the CEO, was
+sitting at the head of the table. He
+looked 10 years older than he had on
+Friday. "Hannah," he said, rubbing his
+temples. "Fix it." "Hello, Robert," I
+said, taking a seat. "I didn't open my
+folder this time. I didn't need to. We
+have a bit of a contract dispute to
+settle first." The boardroom smelled of
+fear and stale coffee. Robert stared at
+me, his eyes bloodshot. He was a man who
+was used to solving problems with money
+or intimidation. He was realizing that
+neither would work quickly enough to
+save him. "This is blackmail," Robert
+said, his voice low. "No, Robert," I
+said, placing my hands on the table.
+"Blackmail is illegal. This is contract
+law." Specifically, section 14.
+Paragraph B of the vendor agreement
+signed 7 years ago by your predecessor.
+In the event of contract termination,
+all licensed software licenses are
+immediately revoked and data access is
+suspended to protect the intellectual
+property of our robbero systems. You are
+our robbero systems, Robert shouted,
+slamming his hand on the table. You
+worked for us. I worked for you as a
+systems architect, I said calmly. Our
+robbero systems is a separate legal
+entity that licensed technology to you.
+My employment contract specifically
+carved out pre-existing IP. I declared
+it. Legal signed it. You guys just got
+comfortable and forgot that you didn't
+own the engine in your car. Elina slid a
+document across the table to Robert.
+She's right, Bob. I pulled the file.
+It's watertight. Marcus signed it. We've
+been paying the licensing fee for years.
+It's not her fault Braden canceled it
+without checking the vendor details.
+Robert looked at the paper then at me.
+Why didn't you warn him? I did, I said.
+I handed him a folder with the contract
+in it on Friday. He told me he doesn't
+read legacy contracts. He told me I was
+too slow. He told me to leave. So, you
+let the company crash? I let the company
+experience the consequences of its
+leadership decisions. I corrected. I
+didn't press a button. I just stopped
+holding the door open. Robert sank back
+into his chair. How long to turn it back
+on? 5 minutes. I said, "It's just a
+license key." I input the code. The
+encryption decrypts the APIs unlock.
+Everything goes back to normal. Do it.
+Not yet. What do you want, Hannah? Your
+job back. I laughed. A dry, genuine
+laugh. God, no. Why would I want to work
+for a company that treats 15 years of
+loyalty like baggage? I don't want a
+job. Want a contract? Fine. We reinstate
+the old contract. No, I said the old
+contract was a friends and family rate.
+That rate is gone. You fired the friend.
+Now you're dealing with the market. I
+slid a single sheet of paper across the
+table. I had printed it that morning.
+Here are the new terms for the master
+license. Robert picked it up. His eyes
+widened. This is This is triple the
+previous rate. Inflation. I shrugged.
+And a stupidity tax for the weekend I
+spent worrying. And a 5-year guaranteed
+term. Non-cancellable. Stability is
+important, Robert. You don't want
+another Braden coming in and unplugging
+the life support. This is robbery. This
+is the cost of doing business. You have
+trucks sitting still. You're losing
+what? $100,000 an hour. My yearly fee is
+what you lose in a morning. It's a
+bargain. Robert looked at Elener. Elena
+nodded slightly. She knew I had them.
+One more thing, I added. What? Robert
+snapped. The CTO. Raten. What about him?
+He goes, "Today for cause. Gross
+negligence resulting in critical system
+failure." Robert hesitated. He's the
+board's golden boy. He's a liability. I
+said he canceled a critical vendor
+contract without due diligence. He
+caused a catastrophic outage. If you
+keep him, I walk. and our robbero
+systems walks with me. You can rebuild
+your stack from scratch. It'll take six
+months, maybe a year. You have a year,
+Robert. Robert closed his eyes. He knew
+the answer. The board would eat him
+alive if the stock tank tomorrow. Elena,
+Robert said quietly. Draft the
+termination letter for Braden. He looked
+at me and signed the damn contract. I
+pulled a pen from my pocket. I'll need a
+counter signature. And the wire transfer
+for the first year upfront. Bank details
+are on the bottom. 10 minutes later, the
+wire transfer hit my business account. I
+checked it on my phone. The number was
+long, very long. Was enough to pay off
+my mortgage, buy a vacation home, and
+keep me an expensive wine for the rest
+of my life. I stood up. Pleasure doing
+business with you, Robert. Just fix the
+damn servers, he grumbled. I walked out
+of the boardroom. Braden was still
+waiting in the hallway, pacing. When he
+saw me, he puffed out his chest. Well,
+he sneered. Did they arrest you?
+Actually, I said, "They just paid me."
+Eler stepped out behind me. She was
+holding a piece of paper, not a folder,
+just a single sheet. Brad and Elena
+said, "We need to talk." "Not now,
+Elena. I need to get in there and manage
+the crisis. There's no crisis anymore. I
+said I'm handling it. You You're fired.
+Actually, I leaned in close. You are.
+Braden froze. What? Elena handed him the
+paper. Effective immediately. Cause
+gross negligence. Security will escort
+you out. Please hand over your badge and
+phone. Braden looked at the paper then
+at me. Then at the closed door of the
+CEO's office. His face went through the
+five stages of grief in about 6 seconds.
+Denial, anger, bargaining. He skipped
+depression and went straight to shock.
+But hash project Phoenix, he stammered.
+is canceled," I said. Turns out the
+phoenix didn't rise. It just burned to
+death. I walked past him towards the
+server room. I didn't look back. I could
+hear him shouting, "Do you know who I
+am?" As security approached him. I
+walked into the IT department. The
+silence was still heavy. Greg saw me
+come in. He looked like he'd seen a
+ghost. Hannah, he asked, "What are you
+doing here consulting Greg?" I said, I
+sat down her terminal, my old terminal.
+It felt familiar. I cracked my knuckles.
+I opened the command line. I typed in
+the command our robber unlock key. New
+license key. I hit enter. The screen
+flashed green. License verified,
+restoring system access, decrypting
+data. The cheer didn't go up
+immediately. It was a slow ripple.
+First, one screen flickered to life,
+then another. Then the phone started
+ringing, not with complaints, but with
+confirmations. Truck 4004 is back
+online. Invoices are printing. Greg
+looked at me, his jaw on the floor. You
+You just fixed it in 10 seconds. It
+wasn't broken, Greg, I said, standing
+up. It was just locked. Never forget the
+difference. I looked around the room.
+The young devs, ones who had ignored me
+last week, were staring at me with awe.
+They realized what had happened. They
+realized who the real boss was. I didn't
+stay to mentor them. I didn't stay to
+explain how the code worked. They could
+read the documentation. I had updated it
+after all. I walked out of the server
+room, through the lobby, and out the
+front door. I passed Braden being
+escorted to his Tesla by two security
+guards. He was holding a box of his
+personal effects, mostly succulents and
+participation trophies. He didn't look
+at me. He was too busy crying on the
+phone to his dad or his lawyer or
+whoever listens to people like him. I
+got into my Camry. I felt lighter. So,
+here I am 3 months later. I don't go
+into the office anymore. I don't have
+to. Our Robro Systems is now a strategic
+partner for Apex Logistics. I have a
+remote dashboard that tells me
+everything is running green. Hired a new
+CTO. He's 60 years old, wears
+suspenders, and hates the cloud. We get
+along great. He calls me once a month to
+ask permission to change a variable. I
+usually say yes. Robert, the CEO,
+survived, but he's grayer. The board
+kept him on a short leash. They know how
+close they came to total collapse. As
+for Braden, I heard he's at a startup in
+Austin now. Something about AI generated
+dog food. Good luck to those dogs. I
+didn't get my job back and thank God for
+that. I got something better. I got
+freedom and I got respect. Not the kind
+of respect they give you with a plaque,
+but the kind of respect that comes from
+fear. They know that at any moment if
+the check doesn't clear, the lights go
+out. I'm sitting on my patio right now.
+It's Tuesday at 11:00 a.m. I'm not
+coding. I'm not sitting in a meeting
+listening to someone use the word
+synergy. I'm drinking an iced tea and
+watching my dog chase a squirrel. Some
+people might say I played dirty, that I
+held the company hostage, that I was
+ruthless. To them, I say this. When you
+build the house, you keep a key. And
+when someone tries to throw you out into
+the cold, you don't beg to be let back
+in. You just change the locks and wait
+for them to realize it's cold outside. I
+checked my bank account again this
+morning. The quarterly retainer just
+hit. My dignity is intact. My bank
+account is full and my code, it's
+running perfectly because unlike Braden,
+it actually works. Cheers. Big thanks
+for watching you sneaky seniors.
+Subscribe to keep the coffee pot brewing
+revenge.

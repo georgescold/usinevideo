@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atelier</title>
+<!--
+  L'atelier ne remplace pas la conversation.
+
+  Ce qui se décide — l'angle, le script, le titre — n'a pas de bouton ici et n'en
+  aura pas : CLAUDE.md §2 dit pourquoi. L'atelier ne prend en charge que la
+  partie mécanique, celle où l'on dépose un fichier, on écoute une voix, on
+  déplace un curseur et on regarde le résultat. Chaque bouton lance une commande
+  du terminal, jamais autre chose.
+-->
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="entete">
+  <div class="identite">
+    <h1>
+      <button type="button" class="lien-chaines" id="btnChaines" title="Changer de chaîne">Atelier</button>
+    </h1>
+    <p class="chapo" id="nomChaine"></p>
+  </div>
+  <div class="choix-video">
+    <select id="selVideo" aria-label="La vidéo sur laquelle on travaille"></select>
+    <button type="button" class="bouton discret pastille-travail" id="btnTravail" hidden>En cours…</button>
+    <button type="button" class="bouton discret" id="btnVideos">Gérer</button>
+    <button type="button" class="bouton" id="btnNouvelle">Nouvelle vidéo</button>
+  </div>
+</header>
+
+<p class="bandeau" id="bandeau" role="status" aria-live="polite" hidden></p>
+
+<!-- DEUX ONGLETS, ET ILS NE FONT PAS LE MÊME MÉTIER.
+     « Production » fabrique une vidéo, étape par étape, et tout y est lié au
+     slug ouvert. « Inspirations » est un carnet de références qui appartient à
+     la CHAÎNE : ce qu'on y garde resservira sur la dixième vidéo comme sur la
+     première. Le sélecteur de vidéo de l'en-tête n'a donc rien à y faire, et
+     s'efface quand on passe de ce côté. -->
+<nav class="onglets" id="onglets" role="tablist" aria-label="Les deux espaces de l'atelier">
+  <button type="button" class="onglet actif" id="ongletProduction" role="tab"
+          aria-selected="true" data-espace="production">Production</button>
+  <button type="button" class="onglet" id="ongletInspirations" role="tab"
+          aria-selected="false" data-espace="inspirations">Inspirations</button>
+</nav>
+
+<!-- Le menu des chaînes. Une chaîne est un dossier : rien n'est à déclarer, on
+     liste les dossiers voisins qui portent un `config/chaine.json`. En changer
+     relance le serveur, `CHEMINS.racine` étant figé à l'import. -->
+<div class="voile" id="voileChaines" hidden>
+  <div class="panneau">
+    <div class="tete-panneau">
+      <h2>Chaînes</h2>
+      <div class="tete-actions">
+        <button type="button" class="bouton" id="btnNouvelleChaine">Nouvelle chaîne</button>
+        <button type="button" class="bouton discret" id="btnFermeChaines">Fermer</button>
+      </div>
+    </div>
+    <div class="liste-chaines" id="listeChaines"></div>
+    <p class="note" id="noteChaines"></p>
+  </div>
+</div>
+
+<!-- Le menu des vidéos : la seconde marche de l'entrée, l'historique de la
+     chaîne, et de quoi en retirer une. Une vidéo retirée part dans
+     `videos/.corbeille/` — un rendu se refait en huit minutes, un tournage
+     jamais.
+
+     « Nouvelle vidéo » est répété ici, et ce n'est pas un doublon : ce panneau
+     est ce qu'on voit en entrant dans une chaîne, et celui de l'en-tête est
+     alors derrière le voile. On n'ouvre pas un menu pour le refermer afin
+     d'atteindre le bouton qu'on y cherchait. -->
+<div class="voile" id="voileVideos" hidden>
+  <div class="panneau">
+    <div class="tete-panneau">
+      <h2>Vidéos</h2>
+      <div class="tete-actions">
+        <button type="button" class="bouton" id="btnNouvelleDepuisMenu">Nouvelle vidéo</button>
+        <button type="button" class="bouton discret" id="btnFermeVideos">Fermer</button>
+      </div>
+    </div>
+    <div class="liste-videos" id="listeVideos"></div>
+    <details class="repli" id="replCorbeille">
+      <summary>Corbeille <span class="compteur" id="compteCorbeille"></span></summary>
+      <div class="liste-corbeille" id="listeCorbeille"></div>
+      <button type="button" class="bouton minuscule discret" id="btnVideCorbeille" hidden>
+        Vider la corbeille
+      </button>
+    </details>
+    <p class="note" id="noteVideos"></p>
+  </div>
+</div>
+
+<div class="atelier">
+
+  <!-- Le séquencement doit se voir : sept marches, leur état, et ce qui bloque. -->
+  <nav class="rail" id="rail" aria-label="Les sept étapes de la production"></nav>
+
+  <main class="scene" id="scene">
+
+    <!-- ÉTAPE 1 ------------------------------------------------------------ -->
+    <section class="etape" data-cle="destination" hidden>
+      <h2>1. Destination</h2>
+      <div class="blocage" hidden></div>
+
+      <div class="cartes" id="cartesDestination">
+        <button type="button" class="carte" data-destination="youtube">
+          <span class="carte-forme paysage"></span>
+          <span class="carte-titre">Vidéo YouTube</span>
+          <span class="carte-note">1920 × 1080</span>
+        </button>
+        <button type="button" class="carte" data-destination="tiktok-insta">
+          <span class="carte-forme portrait"></span>
+          <span class="carte-titre">TikTok / Instagram</span>
+          <span class="carte-note">1080 × 1920</span>
+        </button>
+      </div>
+
+      <p class="note" id="noteDestination"></p>
+    </section>
+
+    <!-- ÉTAPE 2 ------------------------------------------------------------ -->
+    <section class="etape" data-cle="rush" hidden>
+      <h2>2. Dépôt de la prise</h2>
+      <div class="blocage" hidden></div>
+
+      <div class="depot" id="depot" tabindex="0" role="button"
+           aria-label="Déposer la prise">
+        <input type="file" id="fichierPrise" accept=".mp3,.m4a,.wav,.mp4,.mov" hidden>
+        <p class="depot-titre">Glisse ta prise ici</p>
+        <p class="depot-note">ou <span class="lien">parcours tes fichiers</span></p>
+        <p class="depot-hint">.mp3 · .m4a · .wav · .mp4 · .mov</p>
+      </div>
+
+      <label class="case">
+        <input type="checkbox" id="estCoupe">
+        <span>Plan de coupe, pas la prise principale</span>
+      </label>
+
+      <div class="fiche" id="ficheRush" hidden></div>
+
+      <!-- Remplacer une prise se fait en deux temps : retirer, puis redéposer.
+           Le bouton n'apparaît que s'il y a quelque chose à retirer. -->
+      <button type="button" class="bouton discret" id="btnRetirePrise" hidden>
+        Retirer la prise
+      </button>
+    </section>
+
+    <!-- ÉTAPE 3 ------------------------------------------------------------ -->
+    <section class="etape" data-cle="voixChoisie" hidden>
+      <h2>3. Voix</h2>
+      <div class="blocage" hidden></div>
+
+      <div class="fiche" id="ficheVoix" hidden></div>
+
+      <!-- « Où chercher » VIENT EN PREMIER, ET CE N'EST PAS COSMÉTIQUE.
+           Placé en cinquième position, il se lisait comme un filtre de plus,
+           et on cherchait un timbre dans les vingt-six voix du compte sans
+           soupçonner que les milliers d'autres étaient à un cran de là. -->
+      <div class="filtres">
+        <label>Où chercher
+          <select id="ouChercher" class="large">
+            <option value="bibliotheque">Bibliothèque ElevenLabs — des milliers</option>
+            <option value="compte">Mes voix seulement</option>
+          </select>
+        </label>
+        <label>Genre
+          <select id="filtreGenre">
+            <option value="">tous</option>
+            <option value="female">féminine</option>
+            <option value="male">masculine</option>
+            <option value="neutral">neutre</option>
+          </select>
+        </label>
+        <label>Âge
+          <select id="filtreAge">
+            <option value="">tous</option>
+            <option value="young">jeune</option>
+            <option value="middle_aged">adulte</option>
+            <option value="old">âgée</option>
+          </select>
+        </label>
+        <!-- Le ton est ce qu'ElevenLabs appelle « descriptive ». La liste vient
+             d'un relevé sur les 1 200 voix de la bibliothèque, ordonnée par
+             fréquence : « posée » couvre trois cents voix, « insolente » une. -->
+        <label class="bib-seul">Ton
+          <select id="filtreTon">
+            <option value="">tous</option>
+            <option value="calm">posée</option>
+            <option value="casual">décontractée</option>
+            <option value="confident">assurée</option>
+            <option value="gentle">douce</option>
+            <option value="pleasant">agréable</option>
+            <option value="upbeat">enjouée</option>
+            <option value="excited">enthousiaste</option>
+            <option value="intense">intense</option>
+            <option value="serious">sérieuse</option>
+            <option value="professional">professionnelle</option>
+            <option value="formal">formelle</option>
+            <option value="classy">distinguée</option>
+            <option value="deep">grave</option>
+            <option value="soft">feutrée</option>
+            <option value="whispery">chuchotée</option>
+            <option value="chill">tranquille</option>
+            <option value="relaxed">détendue</option>
+            <option value="meditative">méditative</option>
+            <option value="crisp">nette</option>
+            <option value="modulated">modulée</option>
+            <option value="mature">mûre</option>
+            <option value="wise">sage</option>
+            <option value="neutral">neutre</option>
+            <option value="cute">mignonne</option>
+            <option value="sassy">insolente</option>
+            <option value="raspy">éraillée</option>
+            <option value="rough">rugueuse</option>
+            <option value="grumpy">bougonne</option>
+            <option value="anxious">anxieuse</option>
+            <option value="sad">triste</option>
+            <option value="hyped">survoltée</option>
+          </select>
+        </label>
+        <label class="bib-seul">Pour
+          <select id="filtreUsage">
+            <option value="">tout usage</option>
+            <option value="narrative_story">raconter une histoire</option>
+            <option value="conversational">parler à quelqu'un</option>
+            <option value="social_media">réseaux sociaux</option>
+            <option value="informative_educational">expliquer</option>
+            <option value="advertisement">publicité</option>
+            <option value="entertainment_tv">divertissement</option>
+            <option value="characters_animation">personnage</option>
+          </select>
+        </label>
+        <label>Langue
+          <select id="filtreLangue">
+            <option value="fr">français</option>
+            <option value="">toutes</option>
+            <option value="en">anglais</option>
+            <option value="es">espagnol</option>
+            <option value="de">allemand</option>
+            <option value="it">italien</option>
+            <option value="pt">portugais</option>
+            <option value="nl">néerlandais</option>
+            <option value="pl">polonais</option>
+            <option value="ar">arabe</option>
+            <option value="ja">japonais</option>
+          </select>
+        </label>
+        <label>Nom
+          <input type="text" id="filtreNom" placeholder="chercher…" maxlength="40" spellcheck="false">
+        </label>
+        <label class="bib-seul">Classer par
+          <select id="filtreTri">
+            <option value="trending">les plus reprises en ce moment</option>
+            <option value="cloned_by_count">les plus reprises de tous les temps</option>
+            <option value="usage_character_count_1y">les plus employées cette année</option>
+            <option value="created_date">les plus récentes</option>
+          </select>
+        </label>
+        <button type="button" class="bouton" id="btnCatalogue">Chercher</button>
+      </div>
+
+      <div class="liste-voix" id="listeVoix">
+        <p class="vide">Clique « Chercher ».</p>
+      </div>
+
+      <button type="button" class="bouton discret pleine" id="btnPageSuivante" hidden>
+        Charger 100 voix de plus
+      </button>
+
+      <div class="reglage-essai">
+        <label>Durée
+          <input type="number" id="essaiSecondes" min="2" max="30" step="1" value="10"> s
+        </label>
+        <label>Départ
+          <input type="number" id="essaiDepuis" min="0" step="1" value="0"> s
+        </label>
+        <!-- LA STABILITÉ EST LE SEUL RÉGLAGE QUI TOUCHE À L'INTONATION.
+             Le speech-to-speech transporte TA performance : le débit, les
+             respirations et les montées de voix sont les tiennes. Ce curseur
+             décide seulement de combien la machine s'autorise à en dévier —
+             bas, elle suit et vibre davantage ; haut, elle lisse.
+             Il est gardé avec la voix : le montage emploiera ce que tu écoutes
+             ici, sinon régler à l'oreille ne servirait à rien. -->
+        <label class="curseur-essai">Stabilité <b id="valStabilite">0.50</b>
+          <input type="range" id="essaiStabilite" min="0" max="1" step="0.05" value="0.5">
+          <small>expressive ← → plate</small>
+        </label>
+        <label class="curseur-essai">Similarité <b id="valSimilarite">0.80</b>
+          <input type="range" id="essaiSimilarite" min="0" max="1" step="0.05" value="0.8">
+          <small>libre ← → fidèle au timbre</small>
+        </label>
+        <label class="case">
+          <input type="checkbox" id="voixParDefaut">
+          <span>Voix par défaut de la chaîne</span>
+        </label>
+      </div>
+
+      <!-- L'EXTRAIT S'ÉCOUTE ICI, IL NE SE TÉLÉCHARGE PLUS.
+           Il vit chez ElevenLabs, que la politique de sécurité de la page
+           interdit d'atteindre. Le serveur va le chercher et le renvoie sous sa
+           propre adresse : rien n'est assoupli, et rien ne quitte le poste. -->
+      <div class="ecoute" id="ecouteExtrait" hidden>
+        <p class="note" id="nomExtrait"></p>
+        <audio id="audioExtrait" controls preload="none"></audio>
+      </div>
+
+      <div class="ecoute" id="ecouteEssai" hidden>
+                <audio id="audioEssai" controls preload="metadata"></audio>
+      </div>
+
+      <!-- LES EMPREINTES : UNE VOIX RÉCOLTÉE, PAS UNE VOIX LOUÉE.
+           Tout ce qui précède interroge le catalogue d'ElevenLabs — des voix
+           qui existent parce que quelqu'un les y a déposées, et qui coûtent un
+           crédit à chaque conversion. Ici, on part d'une vidéo : la commande
+           `empreinte` en rapatrie l'audio, sépare la voix du reste, et ne garde
+           que les passages où elle est SEULE. Rien n'est payant et rien ne sort
+           du poste.
+           Ce n'est pas un filtre de plus sur la liste du dessus : c'est une
+           autre provenance, avec ses propres fichiers sur le disque. D'où le
+           bloc à part, et le repli fermé par défaut — on récolte une fois, on
+           s'en sert ensuite. -->
+      <details class="repli repli-large" id="repliEmpreintes">
+        <summary>Empreintes locales — récolter une voix depuis une vidéo</summary>
+
+        <p class="note">
+          Colle des adresses, <b>une par ligne</b>. Les passages où la voix est
+          seule, sans musique, sont découpés dans l'audio d'origine.
+          YouTube, TikTok, Instagram, Facebook, X, Vimeo, Dailymotion, Twitch,
+          SoundCloud. Tout est local : aucun crédit, aucun quota.
+        </p>
+
+        <!-- UN CHAMP À UNE LIGNE DISAIT LE CONTRAIRE DU BON GESTE.
+             Un entraînement demande quinze à trente minutes de voix propre, et
+             une source en rend rarement plus d'une ou deux : c'est trente liens
+             qu'on colle, pas un. Le champ doit avoir la forme du travail réel,
+             sinon il pousse à récolter une source à la fois — et à s'arrêter
+             avant d'avoir de quoi entraîner. -->
+        <label class="etiquette-bloc" for="empreinteUrl">Adresses</label>
+        <textarea id="empreinteUrl" rows="4" spellcheck="false"
+                  placeholder="https://www.youtube.com/watch?v=…&#10;https://www.instagram.com/reel/…&#10;https://soundcloud.com/…"></textarea>
+
+        <div class="filtres">
+          <label>Ranger sous
+            <input type="text" id="empreinteNom" spellcheck="false"
+                   placeholder="le nom du locuteur" maxlength="60">
+          </label>
+          <!-- Le seuil se règle parce qu'il se discute : 20 dB sépare une voix
+               seule d'une voix sur musique de fond sur les deux relevés de
+               calibration, mais une prise en extérieur passe sous la barre
+               sans avoir de musique pour autant. -->
+          <label>Exigence
+            <select id="empreinteMarge">
+              <option value="25">stricte — voix parfaitement seule</option>
+              <option value="20" selected>normale — 20 dB de marge</option>
+              <option value="15">tolérante — un peu de fond accepté</option>
+            </select>
+          </label>
+          <button type="button" class="bouton" id="btnRecolte">Récolter</button>
+        </div>
+
+        <div class="liste-empreintes" id="listeEmpreintes">
+          <p class="vide">Aucune empreinte récoltée.</p>
+        </div>
+
+        <div class="ecoute" id="ecouteEmpreinte" hidden>
+          <p class="note" id="nomEmpreinte"></p>
+          <audio id="audioEmpreinte" controls preload="none"></audio>
+        </div>
+      </details>
+    </section>
+
+    <!-- ÉTAPE 4 ------------------------------------------------------------ -->
+    <section class="etape" data-cle="audio" hidden>
+      <h2>4. Audio complet</h2>
+      <div class="blocage" hidden></div>
+
+      <div class="fiche" id="ficheAudio" hidden></div>
+
+      <!-- LE MOTEUR SE CHOISIT ICI, PARCE QUE C'EST ICI QU'IL S'APPLIQUE.
+           Le choix de voix de l'étape 3 porte sur un TIMBRE ElevenLabs ; celui-ci
+           porte sur QUI convertit. Les deux se ressemblent de loin et n'ont
+           rien à voir : on peut avoir retenu une voix du catalogue et décider,
+           au moment de payer deux minutes de conversion, de passer par un
+           modèle entraîné à la place. Le prix est la vraie différence, donc il
+           est écrit dans les entrées elles-mêmes. -->
+      <div class="filtres">
+        <label>Moteur
+          <select id="moteurVoix" class="large">
+            <option value="sts">ElevenLabs — timbre du catalogue, payant</option>
+            <option value="local">Modèle local entraîné — gratuit, hors ligne</option>
+            <option value="brute">Ma voix telle quelle — aucune conversion</option>
+          </select>
+        </label>
+        <label class="local-seul" hidden>Modèle
+          <select id="modeleVoix"></select>
+        </label>
+        <!-- La transposition est LE réglage qu'on oublie, et son oubli ne
+             ressemble pas à un oubli : la voix sort « robotique » et on accuse
+             le modèle. Elle est donc à l'écran, pas dans un fichier d'aide. -->
+        <label class="local-seul" hidden>Transposition
+          <select id="transposeVoix">
+            <option value="0">aucune — mêmes tessitures</option>
+            <option value="12">+12 — ma voix est plus grave que le modèle</option>
+            <option value="-12">−12 — ma voix est plus aiguë que le modèle</option>
+            <option value="5">+5 — écart léger vers le haut</option>
+            <option value="-5">−5 — écart léger vers le bas</option>
+          </select>
+        </label>
+      </div>
+      <p class="note" id="noteMoteur"></p>
+
+      <button type="button" class="bouton primaire grand" id="btnAudio">
+        Générer la voix sur toute la prise
+      </button>
+    </section>
+
+    <!-- ÉTAPE 5 ------------------------------------------------------------ -->
+    <section class="etape etape-large" data-cle="soustitres" hidden>
+      <h2>5. Sous-titres</h2>
+      <div class="blocage" hidden></div>
+
+      <div class="studio" id="studio" hidden>
+
+        <!-- ------------------------------------------------- les réglages -- -->
+        <div class="controles">
+
+          <!-- LES ONZE MODÈLES SONT DANS UNE LISTE, PAS EN VIGNETTES.
+               Onze pavés occupaient la moitié de la colonne pour un choix qu'on
+               fait une fois et qu'on ajuste ensuite au curseur. Ce que les
+               vignettes apportaient — la description — passe sous la liste. -->
+          <div class="grille2">
+            <div class="groupe">
+              <label class="etiquette" for="stModele">Modèle</label>
+              <select id="stModele"></select>
+            </div>
+            <div class="groupe">
+              <label class="etiquette" for="stStyle">Découpage</label>
+              <select id="stStyle">
+                <option value="mot-a-mot-couleur">Mot à mot — couleur</option>
+                <option value="mot-a-mot-pastille">Mot à mot — pastille</option>
+                <option value="ligne-karaoke">Karaoké — la ligne se colore</option>
+                <option value="bloc-2-lignes">Bloc — sans surlignage</option>
+              </select>
+            </div>
+            <div class="groupe">
+              <label class="etiquette" for="stPolice">Police</label>
+              <select id="stPolice"></select>
+            </div>
+            <div class="groupe">
+              <label class="etiquette" for="stAnimation">Animation</label>
+              <select id="stAnimation">
+                <option value="aucune">Aucune</option>
+                <option value="fondu">Fondu</option>
+                <option value="pop">Pop</option>
+                <option value="rebond">Rebond</option>
+              </select>
+            </div>
+          </div>
+          <p class="note-modele" id="noteModele"></p>
+          <p class="alerte-police" id="alertePolice" hidden></p>
+
+          <div class="grille2 curseurs">
+            <div class="groupe">
+              <label class="etiquette" for="stMotsParPage">Mots par ligne
+                <b id="valMotsParPage">3</b></label>
+              <input type="range" id="stMotsParPage">
+            </div>
+            <div class="groupe">
+              <label class="etiquette" for="stTaille">Taille
+                <b id="valTaille">78</b></label>
+              <input type="range" id="stTaille">
+            </div>
+            <div class="groupe">
+              <label class="etiquette" for="stPositionBas">Hauteur
+                <b id="valPositionBas">30</b></label>
+              <input type="range" id="stPositionBas">
+            </div>
+            <div class="groupe">
+              <label class="etiquette" for="stEpaisseurContour">Épaisseur
+                <b id="valEpaisseurContour">1</b></label>
+              <input type="range" id="stEpaisseurContour">
+            </div>
+          </div>
+
+          <div class="grille3 rang-couleurs">
+            <div class="groupe couleur" data-champ="couleurTexte">
+              <span class="etiquette">Texte</span>
+              <div class="paire">
+                <input type="color" id="stCouleurTexte" aria-label="Couleur du texte">
+                <input type="text" id="stCouleurTexteHex" class="hexa" maxlength="7" spellcheck="false">
+              </div>
+            </div>
+            <div class="groupe couleur" data-champ="couleurSurligne">
+              <span class="etiquette">Mot surligné</span>
+              <div class="paire">
+                <input type="color" id="stCouleurSurligne" aria-label="Couleur du mot surligné">
+                <input type="text" id="stCouleurSurligneHex" class="hexa" maxlength="7" spellcheck="false">
+              </div>
+            </div>
+            <div class="groupe couleur" data-champ="couleurContour">
+              <span class="etiquette">Contour</span>
+              <div class="paire">
+                <input type="color" id="stCouleurContour" aria-label="Couleur du contour">
+                <input type="text" id="stCouleurContourHex" class="hexa" maxlength="7" spellcheck="false">
+              </div>
+            </div>
+          </div>
+
+          <div class="cases">
+            <label class="case"><input type="checkbox" id="stCasse">
+              <span>MAJUSCULES</span></label>
+            <label class="case"><input type="checkbox" id="stPonctuation">
+              <span>Ponctuation</span></label>
+            <label class="case"><input type="checkbox" id="stContour">
+              <span>Contour</span></label>
+          </div>
+
+          <details class="repli">
+            <summary>Couleurs favorites</summary>
+            <div class="tete-favoris">
+              <button type="button" class="bouton minuscule" id="btnFavoriPlus">＋ Garder</button>
+            </div>
+            <div class="favoris" id="favoris"></div>
+          </details>
+        </div>
+
+        <!-- ----------------------------------------------------- l'aperçu -- -->
+        <div class="apercu">
+          <!-- La lecture se commande SUR l'image, comme dans n'importe quel
+               lecteur : le bouton d'à côté demandait de viser ailleurs que là où
+               l'on regarde. -->
+          <button type="button" class="cadre" id="cadre" aria-pressed="true" aria-label="Lire ou mettre en pause">
+            <div class="damier"></div>
+            <div class="plateau" id="plateau">
+              <div class="ligne-st" id="ligneSt"><span class="bloc-st" id="blocSt"></span></div>
+            </div>
+            <span class="fleche" id="fleche" aria-hidden="true"></span>
+          </button>
+
+          <div class="transport">
+            <input type="range" id="curseurTemps" min="0" max="1000" step="1" value="0"
+                   aria-label="Position dans la prise">
+            <span class="chrono" id="chrono">0:00</span>
+          </div>
+
+          <p class="note" id="noteApercu"></p>
+
+          <button type="button" class="bouton primaire grand" id="btnValideStyle">
+            Appliquer au montage
+          </button>
+        </div>
+
+        <!-- --------------------------------- le texte, seconde par seconde -- -->
+        <!--
+          CE QUE CETTE COLONNE RÉPARE.
+
+          Whisper rend un mot qui SONNE juste : « devine quoi » devient « de
+          quoi », l'accord de « attirée » saute. Ça ne s'entend pas — la voix a
+          dit le bon mot — mais ça s'affiche en gros au milieu de l'écran.
+
+          On corrige MOT PAR MOT, jamais la ligne entière : chaque mot porte son
+          propre début et sa propre fin, et ce sont eux qui calent les
+          sous-titres, les punchs et les plans de coupe. Récrire une ligne
+          entière obligerait à réinventer ces instants.
+        -->
+        <div class="textes">
+          <div class="textes-tete">
+            <span class="etiquette">Texte</span>
+            <input type="search" id="chercheTexte" placeholder="chercher un mot…"
+                   spellcheck="false" aria-label="Chercher un mot dans le texte">
+          </div>
+
+          <div class="liste-st" id="listeSt"></div>
+
+          <div class="textes-pied">
+            <p class="note" id="noteCorrections">
+              Clique un mot pour le corriger ; l'aperçu saute à cet instant.
+            </p>
+            <button type="button" class="bouton primaire" id="btnCorrige" disabled>
+              Enregistrer
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ÉTAPE 6 ------------------------------------------------------------ -->
+    <section class="etape" data-cle="plan" hidden>
+      <h2>6. Plans</h2>
+      <div class="blocage" hidden></div>
+
+
+      <div class="fiche" id="fichePlan" hidden></div>
+
+      <!-- ------------------------------------------- tes propres plans -- -->
+      <!--
+        Pexels ne connaîtra jamais ton produit, ton visage, ni la capture
+        d'écran de ton tableau de bord. Ces plans-là t'appartiennent, et ils
+        appartiennent à la CHAÎNE, pas à un montage : déposés une fois avec des
+        mots-clés, ils reviennent tout seuls dans les vidéos qui les appellent.
+      -->
+      <details class="repli bibliotheque" id="replBroll">
+        <summary>Tes propres plans <span class="compteur" id="compteBroll"></span></summary>
+
+
+        <div class="depot-broll" id="depotBroll" tabindex="0" role="button" aria-label="Déposer un plan de coupe">
+          <p><b>Dépose une image ou une vidéo</b></p>
+          <p class="note">jpg · png · webp · avif · mp4 · mov · webm</p>
+          <input type="file" id="fichierBroll" accept=".jpg,.jpeg,.png,.webp,.avif,.mp4,.mov,.webm" hidden>
+        </div>
+
+        <div class="ajout-broll" id="ajoutBroll" hidden>
+          <p class="ajout-nom" id="ajoutNom"></p>
+          <label class="etiquette" for="motsBroll">Mots-clés</label>
+          <input type="text" id="motsBroll" spellcheck="false"
+                 placeholder="victoire, portrait, mon guide">
+          <div class="ajout-actions">
+            <button type="button" class="bouton discret" id="btnAnnuleBroll">Annuler</button>
+            <button type="button" class="bouton primaire" id="btnAjouteBroll">Ajouter</button>
+          </div>
+        </div>
+
+        <div class="liste-broll" id="listeBroll"></div>
+
+        <div class="placement-broll">
+          <button type="button" class="bouton discret" id="btnPlacementBroll">
+            Voir leur placement
+          </button>
+          <div id="placementBroll"></div>
+        </div>
+      </details>
+
+      <button type="button" class="bouton primaire grand" id="btnPlans">
+        Construire le montage
+      </button>
+    </section>
+
+    <!-- ÉTAPE 7 ------------------------------------------------------------ -->
+    <section class="etape" data-cle="rendu" hidden>
+      <h2>7. Téléchargement</h2>
+      <div class="blocage" hidden></div>
+
+      <label class="case">
+        <input type="checkbox" id="estBrouillon">
+        <span>Brouillon <small>définition réduite</small></span>
+      </label>
+
+      <label class="case">
+        <input type="checkbox" id="estExtrait">
+        <span>Extrait de contrôle <small>3 s, pour vérifier avant les huit minutes</small></span>
+      </label>
+
+      <button type="button" class="bouton primaire grand" id="btnRendu">Lancer le rendu</button>
+
+      <div class="fiche" id="ficheRendu" hidden></div>
+      <video class="master" id="lecteurMaster" controls preload="metadata" hidden></video>
+      <a class="bouton telecharge" id="lienMaster" hidden download>Télécharger le master</a>
+
+      <p class="note">Titre, description et miniature : <code>/publie</code> en conversation.</p>
+    </section>
+
+  </main>
+</div>
+
+<!-- L'ESPACE INSPIRATIONS ---------------------------------------------------
+     Coller un lien, revoir la vidéo, relire ce qu'elle dit. Rien d'autre.
+     La vidéo est RAPATRIÉE, pas embarquée : un lecteur TikTok ou YouTube dans
+     la page obligerait à y laisser entrer leurs scripts, et une vidéo que son
+     auteur retire ne serait plus consultable — alors qu'on l'avait gardée
+     précisément pour y revenir. -->
+<div class="inspirations" id="espaceInspirations" hidden>
+
+  <div class="depot-lien">
+    <input type="url" id="lienInspiration" placeholder="Colle un lien TikTok ou YouTube…"
+           spellcheck="false" autocomplete="off" aria-label="Adresse de la vidéo à déposer">
+    <button type="button" class="bouton primaire" id="btnDeposeInspiration">Déposer</button>
+  </div>
+
+  <div class="carnet" id="carnet"></div>
+
+  <div class="loupe" id="loupeInspiration" hidden>
+    <div class="loupe-video">
+      <video id="videoInspiration" controls preload="metadata" playsinline></video>
+      <div class="loupe-fiche">
+        <h3 id="titreInspiration"></h3>
+        <p class="voix-meta" id="metaInspiration"></p>
+        <div class="loupe-actions">
+          <a class="bouton minuscule" id="lienSource" target="_blank" rel="noopener noreferrer">Voir en ligne ↗</a>
+          <button type="button" class="bouton minuscule discret" id="btnRetireInspiration">Retirer</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="loupe-texte">
+      <div class="tete-texte">
+        <h3>Transcript</h3>
+        <button type="button" class="bouton minuscule" id="btnCopieTranscript">Copier</button>
+      </div>
+      <textarea id="transcriptInspiration" readonly spellcheck="false"
+                aria-label="Le transcript, sélectionnable et copiable"></textarea>
+    </div>
+  </div>
+
+</div>
+
+<!-- Le journal de la commande en cours ------------------------------------- -->
+<section class="journal" id="journal" hidden>
+  <header>
+    <span class="pastille-etat" id="journalEtat"></span>
+    <code id="journalCommande"></code>
+    <button type="button" class="bouton minuscule" id="btnJournalFerme">Fermer</button>
+  </header>
+  <pre id="journalLignes"></pre>
+</section>
+
+<!-- Confirmation d'un appel payant ---------------------------------------- -->
+<div class="voile" id="voileCout" hidden>
+  <div class="dialogue" role="dialog" aria-modal="true" aria-labelledby="coutTitre">
+    <h3 id="coutTitre">Cet appel est payant</h3>
+    <p id="coutQuoi"></p>
+    <dl class="cout" id="coutDetail"></dl>
+    <p class="note" id="coutNote"></p>
+    <div class="actions">
+      <button type="button" class="bouton discret" id="coutNon">Annuler</button>
+      <button type="button" class="bouton primaire" id="coutOui">Lancer quand même</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirmation d'un geste irréversible ---------------------------------- -->
+<div class="voile" id="voileConfirme" hidden>
+  <div class="dialogue" role="dialog" aria-modal="true" aria-labelledby="confTitre">
+    <h3 id="confTitre"></h3>
+    <p id="confQuoi"></p>
+    <div class="actions">
+      <button type="button" class="bouton discret" id="confNon">Annuler</button>
+      <button type="button" class="bouton primaire" id="confOui">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Nouvelle chaîne -------------------------------------------------------- -->
+<div class="voile" id="voileNouvChaine" hidden>
+  <div class="dialogue" role="dialog" aria-modal="true" aria-labelledby="nchTitre">
+    <h3 id="nchTitre">Nouvelle chaîne</h3>
+    <p>Un dossier voisin de celui-ci. Le code est copié, le contenu part vierge.</p>
+    <label class="etiquette" for="nchNom">Nom</label>
+    <input type="text" id="nchNom" maxlength="60" spellcheck="false" placeholder="Sommeil Profond">
+    <label class="case">
+      <input type="checkbox" id="nchCles">
+      <span>Copier les clés d'API (mêmes comptes, mêmes quotas)</span>
+    </label>
+    <p class="note erreur" id="nchErreur" hidden></p>
+    <div class="actions">
+      <button type="button" class="bouton discret" id="nchNon">Annuler</button>
+      <button type="button" class="bouton primaire" id="nchOui">Créer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Nouvelle vidéo --------------------------------------------------------- -->
+<div class="voile" id="voileNouvelle" hidden>
+  <div class="dialogue" role="dialog" aria-modal="true" aria-labelledby="nouvTitre">
+    <h3 id="nouvTitre">Nouvelle vidéo</h3>
+    <p>Minuscules, chiffres, traits d'union. Deux mots au plus.</p>
+    <label class="etiquette" for="nouvSlug">Slug</label>
+    <input type="text" id="nouvSlug" maxlength="80" spellcheck="false"
+           placeholder="trois-jours">
+    <p class="note erreur" id="nouvErreur" hidden></p>
+    <div class="actions">
+      <button type="button" class="bouton discret" id="nouvNon">Annuler</button>
+      <button type="button" class="bouton primaire" id="nouvOui">Créer le dossier</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

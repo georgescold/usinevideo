@@ -1,0 +1,163 @@
+# Swipe Right on This: How Dating App Algorithms Shape Who We Meet
+# Vivianne Julia Zhou · 6 vues · 00:05:09
+# https://www.youtube.com/watch?v=ExMOE6GNGiU
+
+concerts and hiking.
+>> Wait, but don't you want
+>> him?
+>> What? No, I'm talking to him.
+>> But users like you are 100% more likely
+to choose users like him. But I'm
+choosing him.
+>> I guess this is him saying that we're
+culturally compatible
+>> based on what?
+Historical data. familiarity,
+other things. That's not compatibility.
+That's just assumptions.
+Yeah. Well,
+>> hi everyone. We're group 28 and today
+we're briefing you on dating apps and
+how their algorithms control who you
+even get to meet. We'll be going over
+what dating apps actually are, how the
+algorithm works, racial bias and sexual
+racism, popularity bias and prof profit
+motive, psychological effects, and our
+policy recommendations. So, dating apps
+are everywhere now, and over 1500 of
+them exist. More than 60% of couples
+today have met online, but dating has
+always had some version of this, whether
+it be matchmakers, compatibility tests,
+or personal ads. Overall wrote in 2020
+that dating has always been about
+efficiency and choice. But what's
+different now is the scale and the fact
+that a private corporation is the one
+deciding who you even get to see in the
+first place. Bandon Elli and Gandini
+call this the marketization of love. And
+once you see it that way, it's kind of
+hard to unsee. Most people think they're
+in control of what they're swiping, but
+you're really not. The app decides whose
+profile shows up in your feed at all.
+Tinder use something called an ELO
+score. Basically, a desiraability
+ranking, a sort of user into tiers. If
+your score was low, higher ranked users
+just never going to saw you. Lobo
+described this as user being poorly
+conditioned to follow the cues of
+technology without even realizing it.
+Chang's research on coffee meets veagel
+in 2025 shows that app use machine
+learning to predict matches based on
+demographics and past behavior. But they
+reduce people to data points that it can
+actually capture how real extraction
+works. Shrabby also points out that even
+early platforms like E-Harmani assumes
+their surveys give the complete
+knowledge of what user wanted. They
+didn't. In fact, none of them do.
+>> This is probably the most uncomfortable
+part of the briefing, but it matters.
+Dating app algorithms don't just reflect
+our preferences, they amplify them.
+NAR's research shows us that image-based
+swiping creates racial feedback loops.
+When people swipe based on looks, the
+algorithm reads as a signal and keeps
+pushing more of the same. But it's not
+just user behavior doing this. Williams
+dug into Mattress Group's actual patent
+fillings and found their algorithms sort
+of signals like ethnicity, hair color,
+and eye color. A journalist named Serena
+Smith actually changed her list of
+ethnicity from mixed race to white on
+Hinge and immediately got way more
+matches. William calls this sexual
+racism, and she's clear that apps didn't
+invent racial preference in dating, but
+they absolutely amplified at a scale.
+Another thing, they're not trying to
+help you find a match. Selder and
+colleagues found in 2024 that dating
+platforms deliberately show the most
+popular and attractive users more often
+because it keeps everyone else swiping
+longer and drives subscription revenue.
+Showing profiles equally actually leads
+to fewer matches and less money for the
+app. Bandanelli and Gandini add that
+this creates a kind of false freedom
+where you feel like you're making
+choices. The whole environment is
+designed to keep you spending. Weighing
+even states that the system treats
+people as products. The algorithm is
+literally working against you. Loel puts
+it really well when she says users are
+being conditioned to want to obey the
+cues of phenology. And that's what makes
+it so hard to notice in real time. You
+open the app, you swipe, it feels like
+you have a choice. But how experience is
+designed to keep you engaged, keep you
+paying, and keep you coming back. That's
+not matchmaking. That's just a product.
+>> So what does all this actually mean?
+Castro did a review in 2020 and saw that
+heavy dating app use could be tied to
+feelings of anxiety and loneliness,
+specifically when it came to rejection
+and being unmatched. Lenton Brin's
+research found that the swiping
+mechanism in these apps really hits hard
+for people with social anxiety and
+lowers their self-esteem as well. Orady
+at the Harvard Gazette wrote that dating
+apps are leading towards casual
+overcommitted relationships. And Toughly
+also raised a concern that AI
+matchmaking is getting much more
+advanced and we're risking social
+isolation and making genuine connections
+much harder than in the past. So, what
+do we actually recommend? Three things.
+First, require algorithmic transparency.
+Users should be able to understand in
+plain terms why they're seeing certain
+profiles and not others. Right now, it's
+a black box and that hides real harm.
+Second, the match group hatton situation
+deserves real regulatory attention.
+Racial sorting built into corporate
+intellectual property is documented and
+it affects millions of people. Third,
+manipulative engagement design needs to
+be addressed. Keeping users swiping
+through manufactured popularity bias
+isn't a neutral business decision. It's
+doing measurable psychological damage.
+To wrap up, dating apps are not neutral
+tools. They reflect racial equality.
+They're built around profit over people.
+They shape who we even consider as
+potential dating partners, and they take
+a real toll on our mental health. These
+platforms are used by hundreds of
+millions of people, and they are the way
+they're designed has serious social
+consequences. That's exactly what the
+ambassador needs to be paying attention
+to.
+So, Ambassador, that's our full
+briefing. Dating apps are shaping modern
+relationships in ways that are worth
+taking seriously at a policy level. We
+hope that this was helpful. We're group
+28. Thank you so much for watching.

@@ -1,0 +1,820 @@
+# Inside the multibillion‑dollar business of dating apps | Econ World
+# Reuters · 870 vues · 00:28:27
+# https://www.youtube.com/watch?v=6KnQOxNfPKc
+
+Hey there. So, this week's show overlaps
+with Valentine's Day, and we thought it
+a good opportunity to take a look at the
+economics of love, or more specifically,
+the economics of dating apps, cuz love
+them or hate them, they've transformed
+how we meet romantic partners. We
+thought you'd want to know more about
+how they work, about the paradox at the
+heart of this multi-billion dollar
+industry, that for every successful
+match, a dating app in theory loses two
+customers. So, how do they navigate
+that? I'm Carmel Crims and this is
+Reuters Econ World. Every week, we go
+deep on the economic principles and
+ideas driving the biggest news around
+the world. On this week's show, the
+dating app paradox and what happens when
+pleasure becomes business.
+[music]
+I think the dating app is a fun to have
+thing, but when you pay for it, it just
+comes across as desperate. I think that
+if you have to pay for it, it becomes
+really unromantic.
+>> I don't think I get more out of a dating
+app than the free features.
+>> I think that most apps these days have a
+subscription element, so it seems much
+the same.
+>> A door hinge. I think it's a great way
+to meet new people. If the love of my
+life is behind a two pound pay wall,
+maybe it's worth it.
+>> They've tricked society into believing
+there's always a better option out
+there. If I knew my friends were paying
+for it, I'd probably be more inclined
+to.
+>> I met my boyfriend with a non-premium
+version, so why would I pay?
+>> I just don't believe in paying for
+[music] love.
+So, full confession, I'm probably the
+worst person to be hosting this show
+because I met my significant other in
+the pre-digital dating era where you
+sort of sided up to someone in the pub
+or the club or if you're feeling really
+delusional on the bus or street and ask
+them out. My producer Eliza tells me
+this kind of organic in-person method is
+making a comeback. It's nice to know I'm
+cool. She met her other half on Hinge,
+by the way. Very Generation Z. So, let's
+get into that app and all the others
+with someone who does know what he's
+talking about, and that's Mark Brooks.
+He's an expert in helping dating
+businesses grow and refine their
+strategy. Mark, thanks so much for
+joining me.
+>> My pleasure. It's great to be here.
+Thank you.
+>> Have you got any plans for Valentine's
+Day?
+>> Uh, well, you know, creature of habit,
+I'm going to take my wife for a
+wonderful curry in Malta, which is where
+we live part.
+>> That sounds lovely. Did you meet her on
+a dating app?
+>> People always ask me that, and we have
+to say nearly. Uh we met as a
+consequence of dating. I was in Europe
+for the European Internet Dating
+Conference many years ago and uh my
+friend held a going away party and I met
+Arena and I didn't go away.
+>> A lovely. So take us back because you're
+obviously the expert on dating apps. Can
+you take us back to when all this
+started back in 1995 with Match.com?
+>> So back in 1995 things were very very
+simple. What we were trying to really do
+is compete with flat, boring personals
+and newspapers.
+>> Mhm. Lonely hearts as they were known.
+>> Back then, you'd have to mail in a note
+and you'd have to wait a while to get a
+response. It was all very antiquated.
+So, it was pretty easy to compete. We
+provided search for the first time. You
+could say, "I'm in San Francisco. I'm in
+London. I want to meet somebody within
+20 miles." And then you'd be able to
+communicate with them. You'd find them
+and you'd be able to communicate very
+quickly. And that was the second thing
+we did really well. We enable people to
+communicate very quickly. The third
+thing which I think is really the holy
+grail for us which I think many apps
+still struggle with is this element of
+compatibility.
+Meeting someone is easy enough but
+meeting the right person is quite a bit
+more difficult.
+>> And Tinder really shook things up,
+didn't it? In 2012, kind of pioneering
+the the swipe right maneuver. Back then
+there was e-harmony, there was match and
+it was quite a bit of work. And what um
+Tinder did most right is they made it
+super simple and they kind
+[clears throat] of gified it. They made
+it kind of fun because you just look at
+a photograph and you say, "Do I fancy
+this person?"
+>> Right. Cut to the chase.
+>> Yes.
+>> Yeah. And tell us about because there's
+a whole universe of apps out there,
+right? There's there's obviously Tinder,
+but we've also got Hinge, Bumble,
+Grinder. Can you talk us through all the
+various apps that are out there? the the
+big ones.
+>> There's a long tale of of niche apps,
+but the majors are number one match
+group. You've got Tinder, which is the
+biggest app. They do about $ three and a
+half billion dollars a year. Then you've
+got Bumble, uh, which kind of, uh, came
+in and disrupted Match for some time.
+They're coming in at about a billion
+dollars a year. Uh, the number three
+player now is Grinder. They've just
+taken over Parip Meat Group. Parip Meat
+Group has Parip, E-Harmony, Meet Me,
+Scout, Tag. They've got a portfolio of
+products, but their main product right
+now is e-harmony. Those are the top
+four.
+>> And Match.com is the big player here,
+right? Like it owns quite a lot of those
+apps.
+>> Match Group. Matchgroup has Tinder.
+They've got uh Match.com, of course,
+which is a hallmark service from years
+ago. They also have a few niche products
+as well, like um uh Black People Meet
+and Hour Time. So they they also have
+delved into niches as well. [snorts]
+>> And how did the dating apps make their
+money originally?
+>> Originally it was a bit of a land grab.
+VCs came in. We tried to get to critical
+mass. Uh it was free for a short while
+and then it became paid and about 10% of
+people converted to paid. 90% would just
+come in look around maybe match with a
+few people maybe respond to a few people
+but they couldn't initiate. Uh then we
+moved to mobile and the dynamic really
+changed again. The VCs came in, they
+funded it, it was free for a while, it
+was premium for the longest time and it
+wasn't until fairly recently that
+metrics popped up to about 10%
+conversion again for the major brands.
+And so you know that we lowered the pay
+bar, we made it very easy. And so we got
+far more people using online dating. It
+became the thing to do to meet someone.
+and explain to me listeners that that
+premium model what exactly did it mean?
+>> Well, we always had to pay to find new
+members. There was a time when people
+talked about online dating uh when it
+was very um efficient in that respect.
+It was the new thing and then people
+kind of got used to it and then we had
+to pay quite a bit to acquire new
+members to find them and entice them
+onto our various apps. And so the thing
+that disrupted that was moving to back
+to premium. So I worked with Plenty of
+Fish for some years and we were 100%
+free
+>> and so that was the attraction. In fact
+the tagline for Plenty of Fish was 100%
+free. Put away your credit card for for
+many years and then they started
+charging and then they sold to Match
+Group. Um so it's the natural
+kind of trajectory of dating apps.
+They'll start free to attract people in.
+Once they've stocked the shelves with
+people then they can start charging.
+Okay, quiz time. Studies show that
+despite what people say they want in
+surveys, their actual swiping behavior
+reveals different preferences. What
+trait gets the biggest boost in right
+swipes, but is rarely mentioned as
+important in surveys? Is it A
+intelligence, B, physical
+attractiveness, or C, sense of humor?
+We'll have the answer for you at the end
+of the show. Up next, we look at how the
+course of true love is not running
+smoothly for the dating app industry.
+Obviously,
+these dating apps have transformed how
+we meet romantic partners, but they have
+been having a rough time of it of late,
+haven't they? And and part of it is,
+isn't it, that kind of switch to to to
+the subscription model.
+>> The way I look at it is we had a rosy
+time during COVID. It was very
+interesting how people gravitated
+towards online dating. felt their
+singleness more than any other time and
+they couldn't really get out. And you
+think because they couldn't get out and
+go on dates, you would think that we
+wouldn't do so well, but the opposite
+was true. Uh the industry boomed. And so
+if you look at the numbers during 2020,
+2021, uh for example, match groups
+numbers, yes, they did dip, but I look
+at that, you could almost argue the case
+that it's regression to the mean. We've
+gone back to COVID like on the cusp of
+COVID numbers or in the case of Bumble
+like 2021 2022 numbers. So, have we gone
+back in time? Yes. Are we up on where we
+were in 29 2020? Yes. So, I don't think
+online dating is going away. I think
+there's a bit of a bit of a um people
+have discovered the real world again as
+they should. They should be out in the
+real world. What we help people do
+better than any other mode is get the
+tough questions right out of the way,
+right up front. Are you single? Are you
+married? Do you want to be married? Do
+you want to have kids? Do you have kids?
+What kind of lifestyle are you? Are what
+kind of religion uh are you?
+>> Yeah. Sif sifting through through all of
+the the kind of the information to kind
+of get to the core of it. There is a
+fundamental paradox though, isn't there
+Mark? like at the heart of this business
+model that if these apps are successful
+and if they do manage to match up two
+people then they've lost two customers.
+>> It's very interesting. Yes, I've long
+thought about that. I remember having a
+chat with Mandy Ginsburg, the former CEO
+of Match about this and she said, "You
+know what we see is when we do a good
+job, people say nice things about us and
+we try and do a good job so that people
+do say nice things about us." And that's
+the missing element. That's tough to
+measure, tough to really see, but that's
+the truth of it. if we do a good job,
+then the industry grows. And I've seen
+the opposite. I've seen some dating apps
+come and go that didn't do a good job.
+They didn't have the integrity. Uh they
+didn't have their users best interests
+at heart and they they they rise and
+then they go away quickly. Um so at the
+end of the day, dating apps live and die
+at the singles dinner tables. The truth
+be told, people will sit down, they'll
+compare notes, and good apps will
+continue to grow, provided they do a
+good job by their single users.
+>> How do they navigate the paradox that,
+you know, if you're successful, you will
+lose customers? Like, how do they
+navigate it?
+>> There's really two schools of thought,
+I've noticed. There's one school of
+thought, which is kind of the e-harmony
+school of thought, which is where they
+ask lots of questions and they try and
+serve up a few people that are highly
+compatible. The other school of thought
+is just here's a world of people, here's
+some search functions, good luck. That's
+the general school of thought. And what
+generally happens when you go that
+approach is people are happy because
+they have lots of choice, but they tend
+to stick around a fair amount of time
+because of paradox of choice. It becomes
+more difficult to choose. Um, so we do
+have a balance point. Ultimately, it's
+very important for us to hit certain
+metrics. So people stick around for like
+I mean ideally for us we want to see
+people sticking around for about 3
+months optimally. Okay that allows us to
+have a decent ROI and the amount of
+money it took uh to obtain that person's
+attention and paying relationship. Um
+and then beyond 3 months I mean the job
+should be done. We know at 3 or 4 months
+they should have been they should be
+bowing out and be into a relationship.
+That's kind of the optimal number. But
+we have seen the number of paid users
+falling on platforms like Tinder. It
+seems like young people in particular
+don't want to pay to date.
+>> I think there's a bit of a backlash. I
+think people are and should be going out
+and and dating I always say is a
+four-letter word for singles and that is
+home. Get out of it. Stay away from it,
+[laughter]
+you know.
+>> But how is the industry grappling with
+that? Because, you know, they've they've
+is it fair to say they've moved from
+relying on, you know, ads to moving to
+the subscription model, which of course
+Wall Street loves because it's recurring
+revenue. Like, how are they getting
+people back on? How are they encouraging
+people to to pay?
+>> We are all about subscriptions. We've
+always been all about subscriptions
+except for Plenty of Fish, which was a
+really odd odd one out in the industry,
+right? and it didn't monetize anywhere
+near as well as the other other dating
+apps just with advertising. Uh
+subscriptions is absolutely what we rely
+on. Um so I don't see that changing
+anytime soon. Um the big change is going
+from premium uh and monetizing a larger
+proportion of our users and we do that
+with um kind of pay as you go type
+options and points and virtual gifts and
+you name it. Uh and then there's also uh
+of course the ongoing subscriptions
+which is an absolute mainstay and those
+prices have gone up. Those prices are
+really you could even on um on Hinge you
+can spend over $100 a month now.
+>> Wow. What what is the average spend on
+something like Hinge?
+>> Typically you're still looking to get
+the job done. I I think you kind of you
+can spend as little as $20 but we're
+really looking at $30 $40 a month.
+>> Mark, how would you describe the state
+of the industry now? because we have
+seen pullback. We have seen people sort
+of more reluctant to pay for these apps.
+>> Yeah. I think I'd describe it in one
+way. I'd say it's just a flesh wound.
+[laughter]
+>> Okay. [gasps]
+>> I think it's here to stay. I think we
+have to adapt to what people really want
+right now, which is a dose of reality, a
+dose of the real world.
+>> I think there's great challenge and
+great opportunity in the rise of
+artificial intelligence.
+um I see great challenge because we
+can't tell the difference a lot of the
+times between a fake profile and a real
+profile
+>> but we have our ways and means there are
+ways to verify people so um but it is
+definitely challenging and then on the
+positive side I think in time we'll be
+able to use artificial intelligence to
+look for uh correlations um that are
+nonobvious
+uh and I think if we open up our data to
+AI, it will spot these non-obvious
+correlations and help us have slightly
+better relationships as a consequence.
+Then the big the absolute um golden
+prize, I think, is not only helping
+people get into a relationship, but
+helping them in the relationship. And I
+think that's where we solve what I call
+the continuity problem, which is that
+problem that you mentioned about our
+users going away if we do a good job. If
+we do a good job, if we've earned the
+right to learn more about that user and
+and match them effectively, we should be
+able to help them in the relationship as
+well.
+>> I mean, you've got a background in in
+behavioral science. What is the
+psychology? Why don't people want to pay
+for dating apps potentially? I mean,
+other than the obvious, it's expensive.
+Like, is there a stigma attached to it?
+What's what's the reason?
+>> There used to be a stigma. Um, I think
+that's largely gone away. But having
+said that, I see uh the the younger gen
+Gen Z also there's some kind of
+resurrection of of that stigma.
+Actually, I think it is a bit of a
+problem. It kind of it's phased out and
+then it's phasing back in,
+>> right? And that that's a big problem,
+isn't it, for the industry like if if if
+younger generations want to go offline
+to date like that that is the biggest
+problem of all, isn't it?
+>> I think it's the way the the brains of
+our brains have adapted. Everything is
+so incredibly public these days and the
+Gen Z is is very much born into video
+online video and so there's near a
+private moment.
+>> Um so when you when you're opening
+yourself up into this context of online
+dating that is incredibly personal and
+so we have to be very careful. I mean
+our defining nature is that we keep
+people's identities private. It's very
+different from social networks. You go
+on a social network and you're
+disclosing who you are, how your day is
+going, etc., etc. With a with a dating
+app, it's it's as Hin says, we are
+designed to be deleted. We want people
+to come on, share enough that they can
+find somebody, then share some more if
+they want to disclose their contact
+information and meet up. Um, but
+ultimately, we safeguard people's
+privacy. That's absolutely our core. And
+and I think I think this newer
+generation are more privacy sensitive
+than ever before, which is in some ways
+uh the opposite of what you see. What
+you see is them being very public, but
+the the truth of it is they're actually
+quite privacy concerned when it comes to
+this context of dating. They don't want
+people making fun of them.
+>> And it's interesting to see the the sort
+of the diversions within uh different
+apps like how they're doing. So Hinge
+appears to be doing better than Tinder.
+Are people looking for more commitment?
+Is that is that what that's telling us?
+Well, Hinge is doing better because I
+think um what MatchGroup is doing is
+driving people a bit more towards Hinge.
+Uh they're kind of rebalancing their
+portfolio based on what they're seeing
+in the human psyche right now. And I
+think the human psyche is that people
+come onto a Tinder and then they will
+want to upgrade. Where do they upgrade
+to? They want something more meaningful.
+I see Tinder as the try before you buy.
+The try before you really get into a
+more I don't I don't don't want to use
+the word serious relationship. You know,
+that's the wrong word. meaningful is the
+right word. Who wants a serious
+relationship? How very dull. But
+meaningful is what they're looking for.
+And
+>> what about the hookup apps? I mean, are
+they from a business perspective, are
+they just great because people will go
+back and back to them or do they also
+have a kind of a shelf life and and and
+need to constantly refresh who's joining
+them.
+>> The metrics around the lifestyle apps
+are stronger. Grinder will retain far
+longer than uh a regular dating app. Uh,
+so there are distinguishing factors in
+the more casual-minded apps. Um, they
+people just stick around because they're
+not less commitment-minded, but I I
+always think, you know, people will
+commit once they find the right one.
+They just are happy to take a longer
+journey and a longer route. So, um, I
+mean, Grinder's the number three. It's
+overtaken partipatr now. So, they're
+they're doing very well. They're the gab
+essentially. So, they have social
+networking. um they're more like a
+social network and they're trying to
+move themselves in that direction. I've
+always been regarded by the rest of the
+industry as as as more social social
+discovery. Um yes, it's about being
+single, but they have very successfully
+extended their model into this kind of
+the social networking area as well.
+>> So kind of going into that like
+identifying groups, is that quite a
+lucrative model to go in like
+identifying various different groups and
+really leaning in there to create that
+community aspect?
+>> It depends. I mean, we they tend to do
+niches tend to do very well around
+lifestyle and religion. I mean, look,
+I've got the likes of J Date that's been
+around for years. Um, millionaire match
+is another interesting one.
+>> Haven't heard of that. What's that?
+What's that?
+>> Uh, so it's for for people who are want
+to meet a millionaire and who are a
+millionaire and they actually do some
+checks.
+>> Right. Okay. Right. Cut to the chase.
+Okay. Right.
+>> Yeah. And that's you know there was an
+interesting study that was done some
+while ago actually. I like what one of
+the problems that we have in the dating
+space is that
+>> if you are in a certain category of
+people, say if you're 5 foot four and
+you're bald as a male, you're going to
+have a hard time because the women will
+tend to search for six foot and they
+kind of want a full head of hair in
+general,
+>> right?
+>> There was a study that was done, I think
+it was by Dan Arieli to see how much
+more you have to earn if you're, I don't
+know, 5'6 and uh overweight. And he
+actually put a number on this. I I I
+remember see like two $300,000 more that
+you do. Wow. So yeah, there are some
+cold stark realities that we observe in
+in the dating space and one of the
+things one of the effects that we've
+exacerbated is that people have their
+lists and they have a sense of what they
+really want. And six foot is is uh we
+see lots of people searching for six
+foot not too many people searching for
+5' 3. So if you're uh not a tall male,
+we have exacerbated the choosiness of
+people.
+>> That's fascinating.
+>> And that's that's not good for them. So
+how can you bubble bubble yourself up?
+Well, if you happen to be a 5'3
+bald male, uh then maybe you'll have
+better luck in a niche. Maybe you'll uh
+have uh stand out a bit more if you're a
+millionaire perhaps. So
+>> or maybe you just wear heels on your
+shoes or or lie about your height,
+right? I mean that's the other the other
+option. cowboy boots.
+>> Exactly. Now, experts predict that
+swiping may disappear within 5 years.
+How how realistic is that? What do what
+do you reckon about that?
+>> I think there will always be a place for
+Tinder. I think that effect is, as I
+say, it's a try before you buy. It's a
+great place to start, but then Tinder
+will often people leave people wanting a
+bit more,
+>> right?
+>> And so that's the brilliance of having
+Hinge in the portfolio with Match Group.
+They've got lots from one to the other.
+>> Exactly. Yeah. You can try uh an hour
+time which is for older singles uh if
+you're 50 plus
+>> right?
+>> Um you could go to black people meet
+perhaps if you really really really just
+want to meet people of your race uh
+profile there religious va b b b b b b b
+b b b b b b b b b b b b b based services
+as well. Um there's geographically based
+services uh not within match group.
+There's London singles for example. Um,
+so if you just really really want to
+meet somebody in a particular city,
+there's there's there's a dating app for
+pretty much everything. What you have to
+be very careful with as a user is is
+there a good population of people on
+this app? And you can get on there
+pretty quickly and assess that. Just
+kind of search for people nearby.
+[music]
+>> Before we get to the final part of the
+show, a quick shout out. If you like
+Econ World, check out Reuters The Big
+View, our sister podcast that breaks
+down the forces driving markets,
+business, and global power. [music] It's
+smart, it's punchy, and it's a great
+companion to this show. We've dropped a
+link in the episode description. Coming
+up, [music] what's next for dating apps
+in the age of AI and the algorithm?
+[music]
+I mean, we talked about a little bit
+before, but let's let's get properly
+into it. How will generative AI change
+the mechanics of online dating, do you
+think?
+>> I think there's lots of people that
+could use a little bit of help.
+>> Mhm. And now they can get a little bit
+of help. It can help them not make the
+obvious mistakes in terms of the way
+they communicate, help them put a little
+bit more effort in. Um, it can certainly
+improve their profiles, but I think
+they've got people got to be very
+careful. Um, I saw one app that would
+take your photograph and then put you
+into a hiking scenario and put a puppy
+in your arms. [laughter]
+>> Okay, that's a there's a lot going on
+there.
+>> Puppies are good. Puppies get attention.
+If you got a puppy in your arms, you're
+going to get more attention.
+>> Not half not halfway up a mountain,
+though, maybe.
+>> But it's not real, is it? I mean, it's
+your It's Is it real or is it not? It's
+you, but it's not really you in the
+photograph. So, I'd say that is we've
+got a there's a fine line between
+fibbing and lying. You shouldn't start a
+relationship lying. We try we prevent
+that. We try and uh encourage people to
+not lie. Um but the natural tendency is
+to fib. For example, if you're 5'11 as a
+male, if you say you're 6 foot, you're
+going to get a lot more attention. So,
+what do you do?
+>> Put the cowboy boots on. Say you're 6
+foot.
+>> What about for women? What's the lie
+that that they'll sometimes deploy?
+>> Um, that will be weight. Weight is the
+big one, of course. Um, for both male
+and female, actually. Um, for example,
+if I was if I was on a if I was on a
+dating app, I'm not going to be on a
+dating app. I'm taken. But, um, if I
+was, I would say I'm athletic. But that
+that's beyond a fib. That is
+aspirational.
+>> Yeah.
+>> Um I would tend to want to say that but
+I probably wouldn't get away with it. So
+that's the big challenge. Weight is the
+thing that people fib about the most.
+>> Okay. And and in terms of the AI as
+well, I suppose there's also when we
+talk about AI in general, we talk about
+ethical concerns. There there would be
+that aspect as well, wouldn't there?
+like AI might sort of reinforce our
+biases as well when it comes to to
+dating, right? Like there is that issue
+too.
+>> It um in some ways it helps people be a
+little bit more competitive in the
+marketplace called online dating. Um but
+they've got to be very careful that when
+they show up on the date, the other
+person should recognize them.
+>> You mean competitive in terms of of how
+they're presented? Yeah. Like if they've
+Yes.
+the puppy. The puppy on the hike. Yeah.
+>> And just the way they communicate, too.
+I mean, it's very easy to get get advice
+on how to could, you know, sweet talk
+somebody into going onto a date, but if
+you can't keep that up on a date, it's
+not going to go very well.
+>> In fact, Bumble CEOs talked about your
+AI concierge perhaps one day going out
+and dating other people's AI
+conciergees. Like, it's that's quite
+fascinating. It sounds like the AI is
+going to have all the fun.
+Um, there is an interesting argument to
+be made rather like when the AIs learned
+how to play chess. How do they learn how
+to play chess? They played millions of
+games of chess against themselves and
+then they came up with winning
+strategies to play chess. So, you could
+there is an argument to be said that you
+could actually have everybody on a
+dating app date everybody else on a
+dating app and then model that.
+>> Uh, in in usability it's called
+synthetic humans. So rather than
+surveying real humans, you can actually
+survey synthetic humans and get a clear
+idea of how they're going to react to an
+app. So there is an argument to be made,
+but I I I reject that argument. I don't
+think that's the way to go. It seems
+like a race to the bottom to me, and I
+don't think we'll have the compute to be
+able to do it very effectively anyway
+for quite a while.
+>> I mean, there have been criticisms,
+haven't there, that the industry has
+sort of gified the whole dating
+industry. You know, they've gified the
+whole process. What do you say to that?
+>> We had to make it fun because it wasn't
+fun. It wasn't fun. There's a wonderful
+survey that was done. Uh I mean if you
+look across all the different segments
+uh digital segments, we have the most
+unhappy users.
+>> And why is that? It's because they come
+with us. It's not just they're not just
+playing a game. Uh they're not just
+doing their accounting. They're laying
+themselves on a line. So I mean it's
+it's we have a lot to very very high
+expectations of from our users. Um so I
+I live in I believe we'll be able to
+deliver on that eventually. I live in
+hope. Um but there is there's a lot more
+for us to do. There's a lot more work to
+be done. I think AI will definitely help
+us with that.
+>> So where does this leave the future of
+relationships, Mark?
+>> Oh my goodness. Wow. Okay. Waxing
+philosophical. I think there's a great
+place for online dating well into the
+future. I think we'll be able to harness
+the great work that many academics have
+done
+>> and fully finally be able to layer that
+into the kinds of questions that we ask
+and the way we do draw people together.
+It's one thing to measure to to assess
+personality but it's very very difficult
+to actually predict compatibility that
+is compoundingly difficult and I think
+that is a great use for AI. I'm very
+excited and I remain committed to this
+industry because that's the future. We
+will get this right at some point and we
+will provide considerably better
+relationships for people if they're, you
+know, if they tell us who they really
+are and if they're honest with us. Um,
+we'll have the technology soon to be
+able to really help them get into better
+relationships and stay in those
+relationships.
+A big thank you to Mark for his time and
+insights. Now for that quiz I asked you,
+what trait gets the biggest boost in
+right swipes but is rarely mentioned as
+important in surveys? Is it A
+intelligence, B, physical [music]
+attractiveness, or C, sense of humor?
+And the answer is B, physical
+attractiveness. Come on guys, was that
+ever in doubt? It's a shallow shallow
+jungle out there.
+This is Reuters Econ World. Every week
+we go deep on the economic principles
+and ideas [music] driving the biggest
+news around the world. If you want to
+tell us what you thought of this week's
+show, drop us a line in the comments
+section of your favorite podcast
+platform or reach out to me on LinkedIn.
+This episode was produced by Eliza Davis
+Beard and Ethan Plotkin. Sound design,
+music composition, and engineering was
+by Josh Summer. Our executive producer
+is Leela Dretzer. Remember, for all your
+daily news, check out Reuters World News
+on the Reuters app or wherever [music]
+you listen to your podcasts.

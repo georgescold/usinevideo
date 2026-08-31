@@ -1,0 +1,2591 @@
+# How Tinder Captures More Value With Tiered Pricing and Consumables — Ravi Mehta
+# Sub Club by RevenueCat · 544 vues · 01:05:12
+# https://www.youtube.com/watch?v=AWI3rofh0BA
+
+The thing that happens is if you
+have one subscription tier at one
+price, there's two buckets of users
+that don't get their needs met.
+There are users who just can't afford
+the price if it's $30 a month, or
+they don't want to pay the price.
+And then the other thing that people don't
+think about enough is that there's a whole
+bunch of people that are willing to pay
+$50 or $60 to, you're leaving money on the
+table on both sides of that subscription.
+Hello, I'm your host, David
+Barnard, and with me today
+RevenueCat, CEO, Jacob Eiting.
+Our guest today is Ravi Mehta.
+Former Chief Product Officer at
+Tinder now working with high growth
+consumer and AI startups as a hands-on
+product advisor on the podcast, we
+talk with Ravi about subscriptions as
+a force multiplier for consumables.
+Why narratives matter more than metrics
+in goal setting, and why you might wanna
+try a longer onboarding or a shorter one.
+Hey Robbie, thanks so much
+for joining us on the podcast.
+Yeah.
+Thanks so much for having me.
+I'm excited to be here.
+And Jacob always nice to have you as well.
+I am back.
+I'm here.
+snowed three inches today
+David on November 8th or day it
+is.
+It's crazy.
+It's
+Nice.
+I'm in Texas and it almost froze
+last night, so you're out in San
+Francisco, Robbie, so you don't have
+I'm actually in LA
+oh, you're in LA
+a few days ago.
+Yeah, sorry.
+What a
+It
+What
+a
+was it was 80
+degrees yesterday and then it got dropped.
+So, anyhow,
+onto
+subscription apps.
+So I wanted to kick things off
+with this chart you created
+from your experience at Tinder.
+And I, I've talked about
+this chart so much.
+I've, I've called it your famous
+chart, because I've just obsessed over
+this chart ever since I first saw it.
+And it's always hard to talk
+about charts on a podcast.
+So for the video podcast, we'll
+we'll see if the production team
+can actually overlay this chart.
+but for those listening along, you
+might wanna just pause and go to the
+show notes and link to this chart.
+because I, I think the, having the
+visual in your head is, is actually
+gonna be super helpful to kind of
+understand what we're talking about here.
+Uh, so in the x axis.
+Number of paying users on the Y axis
+is willingness to pay, and the idea
+is you want to fit this demand curve.
+So what Tinder did so beautifully is
+that with the Tinder Plus product,
+it was a lower price product.
+So you had a lower willingness to
+pay, but you had way more users.
+Uh, who are willing to pay that amount.
+Then for Tinder Gold, you have a
+higher willingness to pay higher
+price product, but then it's fewer
+users who are willing to pay.
+And then Tinder Platinum has the
+highest willingness to pay the
+highest price point, uh, but the
+fewest number of users, but the.
+Beautiful thing is, is creates a nice
+chair step where you meet people where
+they are on the demand curve, you know
+how much they're willing to spend.
+and then the, thing about Tinder
+and what Tinder did so well is
+that you also layer consumables.
+On top of that.
+So the super likes and other consumables
+fit that demand curve even better because
+on top of each of these subscription
+tiers, you can actually spend more money.
+So, I've described the chart, but
+tell me about why you created the
+Chart and how
+you thought about this at Tinder to
+even create the chart and, and the,
+the conversations that led to this
+even becoming Tinder's monetization
+philosophy that then became the chart.
+Yeah, definitely.
+So the idea behind the chart
+is, it's very similar to a lot
+of the charts in like economics
+1 0 1, where you have
+a demand curve and then you're just
+trying to figure out how to price things.
+And as price goes up, demand goes down.
+So that's the theoretical model.
+The
+thing that happens
+very concretely in practice is if you
+have one subscription tier at one price.
+We know there's two buckets of users
+that don't get their needs met.
+There are users who just
+can't afford the price.
+If it's $30 a month or they don't
+want to pay the price, there's a whole
+bunch of users who might have some
+willingness to pay that you're actually
+not going to capture, because they
+are, they're not willing to go to $30.
+You know, maybe they'd be willing
+to spend $10 or $20, but you're just
+not gonna get them as customers.
+And then the other thing that
+people don't think about enough
+is that, yeah, you have a bunch of
+people who are willing to pay $30.
+within those people, there's a whole
+bunch of people that are willing
+to pay $50
+or $60.
+so you're leaving money on the table.
+On both sides of that subscription.
+and so what you can do is you can
+add additional subscription tiers,
+maybe a lower price subscription,
+or a higher
+price subscription, and then you
+can partially address the problem.
+But you still have this open space.
+You still have, you know,
+in between
+the subscriptions, there's
+these cracks of people that
+have a
+higher willingness to pay
+or a lower willingness
+to pay whose needs aren't met.
+And that's where a la
+carte purchases come in.
+And so in addition to having.
+You know, you can have maybe
+two or three subscription tiers.
+Going beyond that is
+gonna be too complicated.
+You can also have micro transactions
+so people, depending on what
+they need, can purchase as
+much or as little as they want.
+And that allows you to get to a much
+more perfect price discrimination.
+And so this combination of a subscription
+set of tiers, as well as Microtransaction
+products turns out to be one of the
+most optimal ways, especially within
+consumer, to price your, your product.
+It works really well in dating.
+Tinder's really proven that it also
+works incredibly well in gaming, and
+we've seen now a lot of game companies
+have moved to this idea of having
+a subscription as well as having all of
+these things,
+that you can purchase within the
+game.
+Do you think the the benefit of having
+the subscription is just like it sort
+of recurringly fills like half of that
+demand curve area Right Because like
+in theory didn't have those sort of
+commitment recurring commitments you
+could fill that all with consumables
+right If the if that's truly where the
+demand curve is do you think it just like
+generally raises you know the the spending
+under the curve or interplay there
+Yeah, I think it's just a good,
+like a single subscription is just
+a really good threshold monetization
+point where there are a whole bunch
+of users who are willing to pay
+that amount.
+and so by setting, you
+know by framing the price
+there, by getting people
+to think about the value.
+in that way you can move a significant
+set of free users over to the paid
+side in a way that is very predictable.
+you know, that's another thing From
+a company standpoint, subscriptions
+are really nice in terms of the
+predictability of the revenue.
+The challenge with having a
+microtransaction only approach, which,
+theoretically should actually be
+perfect price discrimination because
+you know, people buy as much as they
+want.
+Um, but in reality, like the psychology
+of it is, you know, if people have
+a need one month, they'll spend
+more,
+They have less of a need, they spend
+less,
+And then that leads to this kind of
+up and down for you as a business
+that you need to manage through.
+And so subscription is
+a nice way to kind of ratchet that up
+and say, okay, there's this kind of flat
+rate that we want to get people into.
+It's good for them 'cause they're
+getting a ton of value each month.
+It's good for us 'cause it makes
+our business more predictable.
+And then you can use additional tiers or
+additional micro transaction purchases to
+kind of fill in the business model from
+there.
+Does Tinder
+have a free tier?
+I haven't, I haven't used it enough
+personally, as a happily married man.
+Uh, and how do you think about
+the free tier in relation to
+this?
+Yeah, actually that was one
+of Tinder's, innovations.
+So dating in the very early days with
+Match, any eHarmony was paid only
+in order to be a member of the site.
+In order to match with people,
+you had to be a paid member.
+And there were a couple of companies that
+innovated around, free to play dating.
+the first is Okay Cupid and
+the second is Plenty of Fish.
+Both of them
+saw really fast user growth because
+essentially they pull down any friction.
+They get a much larger number of people
+into the product, and that's
+always great
+when you have a product that has network
+effects You want as many people using
+it as possible.
+Tinder came in and said, okay,
+we're gonna do the same thing.
+We're gonna have a free to play
+product about, you know, kind of 85
+to 90% of users are entirely free.
+Um, so there's very little
+friction to get started.
+There's lots of people that are on
+Tinder that are swiping on each other,
+that are messaging with each other.
+So it's a really vibrant
+ecosystem from that standpoint.
+And for a subset of those users,
+kind of 10 to 15%, who want to
+get more out of this experience,
+who want to be able to match with
+more people who want to be able to
+match with less effort,
+they're willing to pay.
+Um, and that's where the
+subscription tiers and the
+microtransactions come into place.
+And that's, I I think one of the most
+interesting questions for,
+consumer app builders right now
+is do you wanna have a free tier?
+do you wanna have a limited pay trial or
+do you wanna not have any trial at all?
+Do you just wanna have people come
+straight in and pay right away?
+And depending on what your
+product is doing for people and
+the psychology associated with
+that and the network effects associated
+with that,
+the right answer for one company
+may be totally different than the
+right answer for another company.
+It doesn't work without a lot
+of people.
+Right.
+A hundred
+percent
+wanna gate.
+actually
+the,
+the and I'm sure there's there's probably
+reasons this works but like so many dating
+apps were fully paid on both sides of the
+network It seems like it would really your
+network effects right Um be able to get
+like know maybe it works in big cities
+but anywhere outside of that would be
+really tough You'd have just like tough
+uh meeting supply and demand I would think
+Totally.
+And there's an interesting thing there
+where Tinder needs as many people as
+possible and then there's, you know,
+broadly there's two categories of people.
+There's people that are getting a lot
+of swipe rights and there's people that
+are not getting a lot of swipe rights.
+That tends to break down on gender lines.
+So women get a lot more people
+swiping on them than men do.
+And because you have these two
+different characteristics of people
+within the system, it's important
+to be free so that the people who
+are, you know, in demand, the people
+that others want to swipe right on,
+are incentivized to
+come into the
+product and don't have to
+have to pay to be there,
+for payers it's predominantly Tinder
+It is
+predominantly men.
+It's a little bit more balanced on
+Hinge and a little balanced on Bumble.
+but the needs
+of someone who's getting
+a lot of
+people swiping right on them
+and the needs of someone who's
+not getting as many people
+swiping right on
+them are very different.
+And the Tinder paid products
+tend to focus on people that are
+not
+getting a lot of swipes, so they're things
+like boosts and super likes,
+which help you get more matches.
+Whereas Bumble, for example, has products
+for people that are getting a lot of
+inbound attention to help them kind of
+filter and
+sort, and
+I was
+sure that they're want
+like bifurcating their products
+to like for the which side of the
+supply demand curve you're on Right
+Yeah, I think there's an interesting and
+really significant opportunity there.
+Tinder hasn't really been able to land
+it yet.
+Bumble I think has landed it much better
+because they've been, um, they've been
+focused on the female user ever since
+inception, and that's part of their brand.
+And I think Hinge has done a really
+nice job of saying, Hey, we're focused
+on people that are here, you know, for
+serious relationships, across genders.
+And they have a more, I
+think, broad set of products.
+It's like hiring market tools right
+There's like all these tools out there
+to help you jobs and then there's
+on the other side there's all these
+SAEs to help you filter out like
+know
+Always.
+money to be at every, on every of the
+market.
+Jacob's point earlier about, um,
+not having the subscription, uh, and
+and I, I should have known Tinder
+had a free tier, but do those free
+users then spend on consumables and,
+and is that a significant part of
+monetization, is having this free
+user spend on consumables, and then do
+you monetize them any other like ads
+don't know if this is on purpose
+or not but interestingly there is
+a there's a little chunk on the
+the value demand curve here where
+Right of the cheapest subscription
+there is Actually no IEP or no no uh
+consumables
+so I didn't do that deliberately,
+but it is the case that very few free
+users actually buy micro
+transactions.
+it tends to be that these subscriptions
+are kind of forced multipliers for
+for
+the micro
+transactions
+cause cause like obviously there's
+probably 10 times as many or nine
+times as many free users as there are
+subscription But it it'd be interesting
+to see if they still don't generate
+a like um meaningful amount of volume
+I think part of it is a
+product value problem.
+So the, the two main micro
+transactions that you
+can buy are super likes and boosts,
+both of which help you get more matches.
+And
+then the main thing you get from Tinder
+Gold is you can see who's swiped right on
+you.
+So the two products work together.
+You can get more people swipe
+right on you and then you can
+see who's swiping right on you.
+And those work together
+to get you more, more
+And
+so if you don't have Tinder
+Gold, the value of those
+Microtransaction products less
+imagine too if
+you're
+like entry level subscription product
+price point is pretty low there's
+probably not a whole lot of
+people to the right of that know what
+I mean That are that are like oh it's
+you know 9 9 a month's too much I gotta
+pay a dollar a month or whatever there's
+probably not a ton of volume there
+A hundred percent.
+And then that, that cheaper
+tier is meant to be an
+on-ramp.
+Like find people that are
+willing to jump the penny gap,
+get them
+into a paid product that shows
+them that they can get a lot
+more from the experience.
+And then from there you can
+upgrade them to Tinder Gold or to
+the micro transaction products.
+And do you show ads to the free users
+or are they
+otherwise monetized?
+They are, there is, um, there are ads.
+Uh, it's a small part of Tinder's revenue.
+it's just the, the numbers
+in terms of like, you know,
+the value of an ad impression versus
+the value of someone subscribing
+to Tinder is such a huge
+difference in terms of order of magnitude.
+It's a nice way to fill in the gap,
+but it's not like I mean, business
+driver
+Everybody I've talked is like less than
+a quarter you know I'm sure there are
+exceptions to that but it's it's not a
+huge part of the revenue mix from talked
+to But it's meaningful I mean 20 15
+I
+mix is you should do it but like
+it's not be the the workhorse
+for your business in most cases
+For sure, and it helps you
+subsidize the free users.
+This happened after your time,
+but what, are your thoughts on the
+super premium tier that Tinder was
+experimenting with and have you heard
+anything about how it's performed?
+so I actually started work on Tinder
+Platinum and this came out of,
+sort of came out of insights from
+this, graphic knowing that there
+were people on Tinder Gold who
+were purchasing a lot of micro
+transactions people
+spending a hundred to
+$250 a month on Tinder.
+And what we wanted to understand
+is why are they spending this
+amount?
+what's
+their motivation?
+What are the things that we could
+do from a product standpoint, to
+create something that better meets.
+Their needs.
+And that was the genesis
+of Tinder Platinum.
+And it really came down to the core value
+of Tinder, which is one of the questions
+was, is this people signaling, like, are
+they trying to signal wealth, or something
+like that by spending a lot on Tinder?
+Or,
+is it more utilitarian?
+Do people just wanna match with more
+folks?
+And it turns
+out it was more utilitarian, like
+people are just looking for more
+Matches.
+And so Tinder
+Platinum, it gives people access to
+additional super likes and additional
+boosts, So it bundles that together.
+you know, one of the interesting
+things about the monetization
+products within Tinder,
+and I think this applies
+elsewhere, is Tinder
+is a game that operates
+by a certain set of rules.
+Like,
+if I swipe right
+on you, you can't necessarily see
+that I did that unless you have
+Tinder Gold and then you can break
+the rule because you've paid.
+And you, you can now, have
+access to that feature.
+The other rule that was sort of,
+golden in Tinder is you can't
+message someone until you've matched
+one of the products that's in
+Tinder Platinum, is the ability
+to message someone before you've,
+before you've matched, which is
+incredibly valuable for folks
+to be able to get more matches
+has that feature too.
+it, it, it's remarkably
+similar in certain ways.
+Yeah
+Uh,
+but no, I was talking about the, the
+$500 a month, uh, one that they had
+been experimenting The the Uber, Uber
+platinum, I don't even
+know what they call it.
+Yeah, I'm not even familiar with that.
+Yeah.
+definitely after my time,
+The uh number of people but
+you still should keep finding
+area under the curve potentially.
+was like what what would be the
+hyper premium version of like,
+it'd be a personal matchmaker,
+or something like this right?
+Like, would you go all the way that far?
+I think like
+at some
+point you go beyond what is the uh
+in the practical scope of like a
+software company right what you do
+But, but it just, this is often the,
+the rails But like Airbnb's
+done this like
+more as a marketing thing
+you know there's like
+crazy
+experiences
+Mm-hmm.
+There's no way that makes money
+for them
+I guess.
+But they have, they have, I,
+I've heard Brian talk about this
+several times which is like the a hundred
+star experience right And they've seen
+em kind of put it into their product
+Um you know but I think like what we're
+talking about here is like how you go
+from like selling something for the
+one star two star three star four star
+right Like that's probably 80 of the
+value you're gonna capture is is within
+you know it's matching to that that
+that, that, sort of spectrum.
+I think so, and then there's like there's
+always the whales who are willing to spend
+more and so it's good to cater to them.
+Games do a really good job with that.
+And I think there's also the brand,
+signaling if you can have really premium
+products within your brand or
+within your product ecosystem that
+suggests that it's,
+you know, it's a premium place
+to
+be
+be.
+we're, we're actually talking about this
+at Appg Growth Annual, and it, and to
+your point Jacob, it is kind of beyond the
+typical playbook of a high gross margin
+software play, but for a lot
+of apps, there are potential to
+do small things that aren't scale that
+don't scale for the people who are
+just willing to spend more or want
+those kind of different experiences.
+So at, at a growth annual, I was talking
+to a guy who has a meditation app and was
+struggling to grow and started offering
+classes and intensives
+and week long things.
+And he, I think he followed up
+recently with me and said he
+is now almost doubled revenue.
+so the, the digital product is providing
+half the revenue now, and these in-person
+experiences Zoom calls and other
+things are providing the other half.
+And so when you have this
+base of users, and again, you
+know, for Tinder at the scale
+of Tinder, maybe it doesn't
+make sense, but, this is one-on-one
+matching for 10 K matchmaker maybe.
+gross margins
+Yeah
+tender scale but
+scale it's it's potentially
+worth considering Right
+Yeah.
+How, how did y'all go
+about, um, staging into this
+three
+tier model and
+layering those on top?
+And was, was there worry about confusion
+and,
+um, you know I know you're, uh,
+the app
+is really
+careful to not show a paywall with like
+all three options at the same time.
+But what what, was the thinking as
+you started to work toward
+fitting this
+demand curve?
+It was pretty organic.
+So like, I wish I could
+say, you know, we had this
+graphic and like, you know, the company,
+sort of laddered into this
+strategy very intentionally.
+I think it was more of an organic
+process of launching one subscription
+Seeing how it does, figuring out
+what are the things that people
+really value in that bundle?
+What are the things
+that are less important?
+What's the next level that
+you can provide someone?
+And so for a very long time it
+was basically just Tinder, PA,
+Tinder Plus plus Tinder Gold.
+and then Tinder Platinum came after
+looking and saying actually there
+there are people that are spending
+a lot, how can we better meet?
+meet their
+needs.
+And
+actually there was
+one of the interesting things behind
+Platinum was people would spend
+more, if they could get more utility.
+we weren't hitting the, the
+limit of what they were.
+they wanted to spend, they
+were hitting the limit of
+what Tinder could do for them.
+Um, and
+so, you know, coming up with a product
+that met their needs was important.
+And then for the micro
+transactions, it was largely about
+like, how
+can
+we create things that enable people
+to match more effectively.
+Um, boost is similar to, you know, the
+boost on LinkedIn where your profile gets
+seen more, by people in the ecosystem.
+Super.
+Like, is the ability to send
+someone alike that's differentiated?
+and so when you send someone's
+super, like, versus a regular, like
+they're three times more likely.
+To match with you.
+and then there were a bunch of
+other Microtransaction products
+that Tinder has tried along the
+way, some of which have stuck,
+some of which, which
+haven't.
+So it's a really organic,
+very experimental process.
+I think one of the
+interesting things about
+Tinder, I don't know if
+this is still the case, but it used
+to be that Tinder had more SKUs in
+the Apple App Store than any other,
+app,
+because Tinder would
+test out 7
+99, 8,
+0.9999 for Tinder, Tinder
+Plus, and then you know other
+price points
+for Tinder, gold, and then
+other price points
+for boosts and then bundles
+of, of boosts and super
+likes.
+And
+so
+there were
+literally hundreds and hundreds of
+different SKUs available, because of all
+the testing.
+And then all that testing will get
+multiplied by, different locations.
+And so if you're in, you know, the
+pricing's gonna be different in the UK
+versus in South America versus in the us.
+so it's all pretty experimental
+and organic.
+I think a really
+key
+thing
+that The company did well though,
+is understanding the underlying
+user behavior of what are people
+looking for from the product,
+and then creating products that,
+really map to that user behavior
+and help people get value, um, get
+more matches for less time spent.
+this being kind of the
+plutonic ideal of monetization.
+I know a lot of people would love
+to get to this, but having
+advised a lot of startups since
+your time there, I'd imagine you've
+started to build some kind of ideas
+around the game theory of like what
+kind of products this works for and
+what kind of products it doesn't.
+Uh any
+thoughts there?
+one of them is like that core
+question of are you free to play?
+do you have a limited,
+free trial or are
+you paid
+only?
+I think that's the first question to ask.
+And, free to play works if you have
+really significant network effects.
+you know, a limited paid trial works.
+If you can get the person into
+a habit loop really fast, you've
+got seven days to get them into
+that loop of using your product.
+And you wanna limit the friction, to
+actually for them to get in and then
+get that habit loop built That works.
+If on the other
+hand, you need someone to
+be financially committed
+in order to really adopt your product.
+I
+think an interesting
+example here are gyms,
+right?
+You would
+never wanna do a seven day free trial
+at a gym.
+Instead
+you wanna charge people up front.
+And now they have both a financial
+commitment and as well as a, a.
+personal commitment to go and to
+use the gym.
+And so I think that's
+the
+first question to answer.
+And then once you've answered
+that, then you could figure out,
+okay, where do we start in terms of a
+subscription What's the
+right price point
+for
+The first tier.
+And then for Microtransaction products,
+I think it's important to understand
+how
+does the value that someone get scale
+with their usage when
+they get a lot of value
+from their product, what are they doing
+more of, in order to get that value.
+And then you can create microtransaction
+products, that really meet that that need.
+And so, you know, the best
+a la carte and market transaction
+products do have that scaling effect of,
+you know, 10 is gonna be 10 times
+better than, you know, one a hundred's
+gonna be 10 times better than 10.
+as long as they're scaling linearly or
+about that, then people will wanna buy
+more of it as they're getting more value.
+but then you also gotta figure
+out like what those users would
+actually be willing to pay those
+10 times or more for, and that
+doesn't kind of break the game.
+You know, if you're a scanner
+app and you limit it to 10 scans
+a month and then you
+pay a dollar per additional scan, I
+mean, that's not gonna probably fly,
+you know, so for certain kind of utility
+apps and other things, there's maybe
+not that kind of similar game theory
+approach where people would be willing
+to pay additional, consumables for
+those kind of products and experiences.
+Right.
+Yeah,
+I.
+think it, it, it depends.
+So one of the things I think people
+undervalue is just the fact that
+someone is using your product.
+The fact that they've
+installed the app or
+they've gone to your website,
+they're using it, they're there.
+Means that, you know, people have a lot of
+stuff to do other than use your product.
+The fact that they're doing it means
+they're pretty highly motivated.
+and so that means that they have an
+interesting level of willingness to pay.
+And so I think it's better to start
+out with something that's a little bit
+higher.
+especially going back to that
+threshold thing that we were talking
+about before, like get people into
+a subscription that's $20 a month
+or $30 a month, whatever the framing
+is for your particular space,
+and then you can kind of optimize
+from there.
+I think
+a lot of companies and founders make the
+mistake of under monetizing their users
+and then they build a system where
+like, okay, you can get your first
+thing for a dollar and then you
+can get five more of them for $3.
+And now you're in a system where
+a user has to be incredibly
+engaged in your app, in order for
+you to be making a reasonable.
+ARPU on a monthly basis.
+So set
+that high water line of 20
+bucks or 30 bucks, you've got a
+really good place to start.
+If nobody's willing to do
+that, then you've got a
+product market fit problem.
+especially if there's already
+framing for that price in the market.
+and then that suggests that you
+should be working on product
+market fit, not monetization.
+And if they are willing to do that,
+then you can optimize from there.
+And you mentioned, you
+know, a lot of, founders are
+under monetized.
+Any, any,
+specific examples come to mind where
+you think if, if you could go in and
+apply this playbook to their business,
+you would, you know, two or three x
+their revenue because they're, they're
+just currently quite under monetized
+Yeah, think granola is a good example.
+So I use whisper flow and
+granola every day incessantly.
+whisper Flow, had a limited paid trial.
+They got me into that habit
+loop I started using it.
+And then once the, you know,
+once it came time to pay,
+it wasn't even a thought.
+I was like I
+have to, I'm using this every day.
+I need to keep using this.
+versus
+granola, they have
+some sort of free tier, which I don't
+fully understand what the limits are,
+but I've never paid for the product,
+even though I use it every day.
+You know, and, and as we were
+talking, it came to mind.
+Riverside is a great example of this.
+I, I think we are only paying
+like a hundred or $200 a
+month for Riverside but it's
+so incredibly valuable to what we
+do with the podcast that it is such a
+drop in the bucket compared to my time.
+The production team, you
+know, we  send mics to guests.
+I mean, that's a hundred bucks a pop.
+We're paying them, you know less than
+we spend in microphones to send a guest
+Um, so they're, you know, that's
+an example of, of probably
+being way under monetized.
+But it's it's hard to differentiate and
+find the, the, those features that I would
+be willing to pay for that the, you know,
+hobbyist
+podcaster, wouldn't pay for.
+And then delineating all the
+different ways to, to charge for that.
+mean that's an interesting thing
+with going back to the Tinder
+examples Just like the um cause
+you know at some point Riverside as
+a counterpoint, if
+somebody's doing like a for fun
+side podcast whatever a hundred
+dollars a month is probably a big ask
+what
+we're doing obviously it's not a
+Not even meaningful.
+Um, but for Tinder, Tinder's
+an app that actually, you
+know, the, the success case of
+Tinder is worth a lot of
+money, right?
+Like, know, not directly necessary,
+but it is, it's like to, to find
+a soulmate or even just like
+companionship or whatever at a good time
+Like
+that's actually quite valuable
+So you can charge quite a bit to
+lever onto that right Uh go back to
+David Scanner app It's like well I
+mean I the scan the document or I
+like this is, there's not a huge, like
+your product market fit problem there.
+It's just that like,
+that's just not a, just
+not a compelling there's not a
+Yeah
+uh
+there But you know I founders think often
+especially early stage like so undervalue
+their products unless maybe they're second
+time founder or they're doing some very
+specific like price arbitrage thing.
+Like maybe what Granola's doing.
+I don't, I don't know anything about
+granola, but maybe they're just like,
+Hey, we've got a bunch of venture money.
+We're just gonna like, dig a hole fine.
+'cause be on every app we'll
+figure it out later but I, I've seen less
+of that and more of
+the like, you
+know oh I don't think it's worth
+that much Oh I don't feel like
+the product is ready, da dah, dah, dah.
+dah but to your point like if you
+don't price it in the market at
+a competitive
+rate you're not gonna know your best way
+to measure product market fit Like you can
+measure it with surveys and all that other
+stuff but there's nothing more revealing
+than if somebody's gonna like open their
+wallet you know and pay you I feel like
+best way to measure product market fit
+A hundred percent.
+And I think that that framing
+thing is really important.
+You know, the fact that you guys
+are sending out microphones that's
+a hundred bucks a guest, right?
+And you're willing to do that.
+The analog in Tinder is we thought,
+you know, a hundred to $200 a
+month, that's a massive amount
+to be spending on Tinder a month.
+Why are people spending that much?
+And we talked to people and
+they said,
+look, if I'm going
+out on a couple of dates a
+month, that's like 400 bucks.
+and so actually, you know, spending
+a hundred dollars
+on Tinder is actually a really
+good investment for me relative to
+the amount
+that I'm spending on this
+need, which is, I want to date
+people, I wanna meet people.
+And so, you know, if you
+have a product that is
+solving
+an important need for someone, there's a
+system around that that kind of fits into
+the problem that you're solving.
+And so you should think about what the
+value is of that system rather than just
+like, you know,
+oh, 20 bucks a month is a
+really good place to start.
+'cause that's what
+everyone else is charging.
+Yeah and I brought up scanner
+apps as this canonical example
+of, it's free You can do it
+in the notes app and this actually
+goes to your point exactly, that the
+scanner, there's scanner apps making
+really great money.
+Why are they making really good money?
+Because they layer on the products
+that are valuable to people.
+If you're scanning on a daily basis,
+and that scan needs to go into a certain
+workflow, like a lot of the scanner apps
+that are succeeding.
+It's because they have inbuilt storage.
+They have OCR,
+when OCR, you know, they added OCR
+when OCR wasn't a thing, and that's
+what people were willing to pay for
+the cloud storage, the easy sharing.
+The workflows, like they, layer onto
+what would otherwise be this commodity
+transaction the things that are actually
+valuable to people.
+And that's how they make their
+money and how they find that
+product market fit to
+Jacob's point is like
+they add the value and people pay for it.
+yeah.
+a hundred percent.
+And you know, if you're getting 200,
+300 pieces of paper a month for your
+business and you need to be able to scan
+it
+real easily.
+Yeah.
+That fits within the broader
+context of your business.
+Adobe Acrobat Reader edit Which
+is like their big scanner app
+on iOS $6.3 million a month
+Congratulations,
+Adobe
+That's amazing
+Yeah.
+almost a hundred
+run rate on a scanner.
+Well, I, I wanted to
+move on and talk about,
+this company you were
+working with this year, uh,
+Sesame Care, who moved from a
+three step checkout to a 25 step
+checkout and boosted conversion, 40%.
+So I, I kind of stole the thunder
+there, why did that happen?
+so
+Sesame's a really interesting
+company.
+It's creating an alternative
+to the typical health,
+healthcare market within the us.
+So the
+healthcare market
+in the US is completely intermediated
+by health insurance.
+You know, in order to go see a doctor,
+you typically will give them your
+health insurance, and then you might
+have a copay or not have a copay.
+it's a system as we can see what's
+happening with the government right
+now that is in many ways broken.
+And the model with Sesame is
+let's actually just create a free
+direct marketplace between doctors
+and patients Doctors can choose
+how much they want to charge.
+Patients can pay that
+in cash, if they need
+to and that makes sense for
+a lot of people who are both uninsured.
+But increasingly there's
+people who are underinsured
+where you can actually see
+a doctor for less than what your copay
+Would be
+One of the really
+key cash pay, kind of areas
+within healthcare over the
+last two or three years has
+been weight loss medication There's
+been, you know, with Ozempic and
+Wegovy and Zeep, there are these
+new medications that people
+want access to that their
+Dr. May or may not wanna prescribe
+that you know, they may or
+may not wanna pay cash for,
+for, the medicines themselves.
+and so a number of companies have
+launched direct to patient services around
+weight
+loss.
+Sesame, we initially launched a program,
+with Costco where you could come in,
+uh, you get low price on having
+access to care and then seeing if
+weight loss medication is right for
+you.
+Um, we had a you know, a
+very typical checkout there.
+It was three screens, you kind of get
+in, you check out, and then we launched
+a much more sophisticated version of
+the program as sort of like a V two,
+um, where we expanded the intake from,
+you know, basically just a little bit
+of information to a checkout screen.
+Instead, we now have, uh,
+20 different questions.
+We estimate the amount of
+weight that you could
+lose on the medication.
+We get
+your medical
+history We ask why you're
+looking to lose weight,
+what are
+the things you've tried?
+and so it's just a really
+comprehensive intake.
+And we saw a higher conversion rate
+because as part of that intake, people
+got increasing confidence that the
+care that they were gonna get is
+really good, really comprehensive.
+We weren't just focusing on just being
+a kind of pill mill sort of approach.
+And so by the time that you got to the
+checkout screen, people were much more
+likely to check out and the step to step
+conversion rate that we were seeing from
+one question to the next is north of 99%.
+and so it was a really good
+example of how sometimes the best
+way to optimize your intake or
+your onboarding
+is not to simplify it, but to
+extend it around the psychology of
+the user
+so that you're giving them the information
+and the motivation that they need
+in order to feel really good
+about completing that process.
+Yeah, but Tinder famously had a super
+fast, less than a minute of onboarding.
+what's the spectrum there How
+do you think
+about
+the uber simple onboarding
+and where that
+actually works and should
+continue to be applied?
+Because I think there's a lot of apps
+where that probably should still be
+the case and you're going to, you know,
+squash your conversion by introducing 25
+steps between getting into the app and
+actually achieving some kind of goal.
+Like how do you think about that spectrum
+from a, you know, super frictionless
+onboarding as quick as possible
+to intentionally adding friction?
+Yeah.
+it's a
+really good
+question.
+I think it comes down to what
+is the.
+Aha moment for your product.
+What's the moment where you're
+delivering a significant amount of value?
+In
+the case of weight loss, the, the value
+moment is when a person.
+Meets face-to-face with
+their doctor
+and it's much better for their doctor to
+come in knowing all of the information
+that you entered about yourself and
+be able to use the time that you have
+with the doctor to talk about the
+questions that you have to see whether
+or not the weight loss
+medication is good for you to get
+you the information that you need
+to make sure you can get it covered
+by insurance or whatever else it is.
+And so moving the information
+gathering out of that visit and into
+the intake phase one gets people
+excited about the fact that this
+is a really comprehensive program
+and then most makes the most use
+out of
+that aha moment
+where it's a patient talking to
+a doctor and that creates value.
+And so the shorter intake actually
+meant that the doctor was having to ask
+a lot of
+those same questions in the visit and
+burn up valuable time where the patient's
+questions weren't getting answered.
+But what's the aha moment for dating?
+The aha moment for dating is getting
+into a conversation with someone and
+if you could shorten the time from when
+they go from, um,
+I'm just trying out this
+app
+to, I'm actually in a conversation with.
+A person that increases the aha
+moment And so sometimes that's a matter of
+increasing friction
+because the friction along the
+way gives you the information
+or the motivation that you need.
+And sometimes it's a matter of decreasing
+friction in case you wanna get a person
+to a particular moment really quickly.
+a framework I really like for this is
+Dery contractor has a framework called
+the Psych Framework, where the idea behind
+it is that you can psych, uh, a user up
+or you can psych a user down as they're
+going through your product.
+And it's important to
+manage that motivation
+in a really intentional
+way and keep the motivation high.
+Gotcha.
+Yeah, there's a, um, I, I pulled
+this up and we'll we will put
+a link to this in the, show notes as well.
+There's a really cool
+chart where it kind of tracks
+the, the psych where you add, add
+five psych points add five psych
+points, and then you hit an email form
+fill and that.
+It Takes away five psych points.
+You have to enter your credit
+card that takes away 10
+psych.
+points and thinking about it in
+this way and kind of managing
+that through the onboarding.
+And you, and you'll probably, you'll
+know, the ones that are, creating this
+negative psych because when you tracking
+your analytics, those, the ones people
+are dropping off on, those are the
+ones that aren't performing as well.
+But you, you need to do some of
+those.
+but I like, you know, you
+build up and then you cash out
+and then you build up and you cash out.
+And I like, I really like the, the,
+even the visual of it in that blog post.
+Yeah,
+for sure.
+And like some people don't think about
+this, but one of the highest negative
+psych moments in a typical onboarding
+flow is having to define your password.
+'cause you want to, you might have,
+you'd be using a password manager.
+You want it to be unique, you want it
+to be secure, All of the stuff that
+goes into that actually decreases
+your motivation.
+and maybe you bounce and go back
+to scrolling on TikTok instead
+of completing that form.
+And so, so many companies I think
+that have really good onboarding flows
+have moved to just give us your phone
+number and we'll send you a one time
+password and then you,
+and then you get in.
+And if we need to set up a password
+later, we can do that.
+Or if you wanna log in with Apple
+or or Google, you can do that.
+And that is like a really good
+example of how taking out a negative
+psych moment can just get
+a lot more people through
+the onboarding process.
+And sometimes those inefficiencies
+lie in places that you think you
+have to do, but you don't necessarily
+have to do it
+you said somewhere that
+by
+creating this really frictionless
+onboarding experience for Tinder that
+actually expanded the TAM for dating.
+What, what do you mean by that?
+How, how did you think
+about expanding TAM through
+more frictionless
+onboarding?
+the problem that dating had at
+the time that Tinder came out, and
+this was I think 2012 timeframe,
+was that
+in order to get into
+match or eHarmony, you had to fill out
+20 or even a hundred
+questions whatever it,
+whatever it was,
+you need to spend 20, 30 minutes, actually
+creating your profile.
+And so only people who are really
+serious about, I think online dating
+can work for me.
+Were actually going to end up
+in an online dating product.
+And so that meant that the total
+addressable market for online
+dating was pretty small.
+Instead, Tinder
+massively decreased the friction
+to get into an online dating app
+through a few different things.
+One, by using Facebook login.
+so you didn't need to create
+account two by having you
+just pick pictures from Facebook that
+you wanted to use for your profile.
+Three by having a short
+kind of Twitter like bio.
+and so you could go from kind of, oh,
+maybe I'm interested in online dating
+to actually swiping on people and maybe
+talking to someone in less
+time that it took to
+create
+your profile on
+eHarmony massively less time
+instead of 20 minutes you could
+be in, and swiping on people in.
+a
+minute and a half, two minutes.
+And
+so that increased the total addressable
+market because all of these people who had
+very limited willingness to pay with their
+time,
+could now actually get into a dating
+app for the first time
+and see that it
+could really work.
+with them, or work for them.
+And so as a result, you had a lot
+of younger people who had never
+considered online dating before,
+come into and use the Tinder
+app, and
+that was a key moment for online
+dating to go from a niche market
+into, you know, a market that nearly
+every single person in America uses.
+I love the dichotomy here where we, we
+and I, I didn't intentionally play
+it this way, but starting with.
+Increasing to 25 step checkout
+boosted conversion,
+40%. Everybody listening was probably
+like, oh yeah, you know, I, I
+really should add more onboarding.
+I really should do more.
+But then Tinder doing
+less is like,
+what
+helped make it happen.
+And I, I, there's probably a,
+a happy middle ground for a
+lot
+of companies where they sh
+ground,
+well unhappy.
+Right,
+right
+should think they're, the is
+the death zone because like,
+I
+mean, also.
+I don't know,
+buying a GLP one like that's a
+complicated very technical very you know
+it's of risk associated and all this
+stuff, I wasn't gonna
+call Tinder a hookup app.
+Some people may have
+called that at some point,
+from time
+looking for hot people
+to go hang out with.
+Maybe date who knows?
+Like that's a very, you know,
+everybody knows how to do that, right?
+you know, there's less less to
+explain there, you know what I mean?
+It's like, meet this person,
+not meet this person, you know,
+attractive, not attractive, right.
+Like, or to you, like whatever.
+like stay away from like
+the messy middle, I mean?
+know who you are.
+Like are you the long onboarding or
+are you the very, very short onboarding
+and like, go hard on either, right.
+I will give another
+really interesting example, and
+I think this all comes down
+to motivation and confidence.
+Like you wanna keep a person highly
+motivated during the onboarding process
+and that you
+want them to be confident that
+what they're getting is what
+they want.
+at TripAdvisor we
+had tested out a
+new algorithm.
+So it used to be that
+you would always see hotels
+sorted by their traveler ranking,
+so by their average review
+score.
+Instead, we personalized that based on
+your past behavior to show you hotels
+that you're more likely to convert on.
+We did some
+testing without doing anything other
+than just changing the algorithm
+and we saw that people were
+actually converting much better, um,
+with the new just for you algorithm.
+And then we rolled it out as
+just for you and said, okay,
+now your default
+is just
+for you.
+We've looked at your past behavior.
+We're showing you
+a set of
+hotels you're likely to convert on,
+and as soon
+as
+we branded as just for you,
+the conversion weight went,
+went,
+down.
+And the reason that
+the conversion rate went down when it
+was branded just for you versus when
+it was sort of a blind algorithm,
+is that travelers don't want
+you making decisions for.
+them.
+They looked at that at and
+said, you know, TripAdvisor
+doesn't know what's just for me.
+They don't know anything And so people
+converted less well, even though when
+we just did it for people and didn't
+tell them they converted better.
+and so there's a combination
+of both actually getting to
+the right answer for the user, but also
+creating confidence
+around that right answer.
+and that might be a longer
+intake That might be
+a shorter intake.
+if you were advising a startup
+and they're like, you know,
+should we do a long onboarding?
+Should we do a short, I mean ideally
+you probably experiment with both,
+but like,
+what would be the, the thinking
+or framework to decide, like, are
+we that short onboarding company
+or are we that long onboarding?
+I would say ask what is the aha moment?
+And then what do you need to do
+to foster the
+confidence and the behavior
+to get a person to that?
+The GLP one case, as Jacob
+was mentioning, you know,
+that's an injectable.
+This is the very first time in
+most people's lives that they're
+actually gonna inject their
+themselves with the medication
+And so it takes
+a lot of information, a lot
+of handholding for a person to
+even consider,
+whether or not
+they want to, talk to a doctor about it
+versus something like dating, you know,
+short
+profile, a couple of
+photos.
+I just want to get, get in there,
+I wanna see who else is here.
+And I wanna swipe on people
+match and have conversations.
+the consequence
+of the decision is very
+different.
+and so as a result, the
+intake should be optimized
+in a different way.
+Gotcha.
+Same with travel, right?
+People travel is a very high
+consequence decision People
+only do it once or twice a year.
+They spend, you know, next to their car
+in their house.
+That's the third most expensive thing
+they do during the course of a year.
+They want to make that decision with
+the confidence that they're making the
+right one, which is not an algorithm
+telling them this is the right thing
+for them, but it's actually them coming
+to the decision of, oh, I looked at
+all of my options and now I feel like
+this is the right thing for me.
+Even if
+those two answers are
+the same,
+they want to go through the process of
+being confident about their decision.
+if you could draw some lines around
+what your monetization is as well.
+And I, I think part of what's working
+for a lot of apps with these long
+onboardings is that there's, you're
+showing the paywall in onboarding
+and so you're not necessarily
+getting them to that aha moment.
+Before they see your paywall.
+And then especially if you're not
+a freemium product and have a hard
+paywall, you gotta manage that psych to
+getting them to the paywall before they
+really get to experience the product.
+So you gotta find a way to like
+manufacture these aha moments,
+this confidence, this excitement
+for the product so that they get
+to that paywall at a state where
+they're willing to start that
+free trial
+to then actually get to
+experience the product.
+And so for a freemium product, maybe
+being able to get to that that aha moment
+quicker, and then have the confidence
+that you're gonna monetize them in the
+long run once they've had that experience,
+uh, is, is one way to think about it
+And then you could create value for
+people before they've monetized.
+I think comm's a really good example.
+As soon as you open that app, you
+start to hear rain sounds right,
+and so their promises were gonna
+make you more calm, and they
+do that before
+you've done anything.
+On intake.
+In fact, even their commercials do
+that, right They have those calm
+commercials where they just did a
+timer of 15 seconds of rain sounds.
+And so
+they're delivering
+that the, the value that the product
+promises from the very first touch
+point with the product.
+And if you're doing that
+during the onboarding, if you're creating
+value for
+people, you're onboarding can be
+as long as you want.
+It can be 90 screens long, as long
+as you are creating the value promise
+for the user that they want to get
+from your app.
+And then, you know, at that point
+they're ready, they're happy to pay.
+'cause they're like, it's
+already creating a lot for me.
+if on the other hand your onboarding
+is, it's like a IRS form, it's
+like name, rank, serial number, and
+you're just asking for information.
+It's not even really clear
+why you need the information.
+at some point a person is gonna
+get bored and, and bounce.
+One of the things you talk a lot about
+are frameworks and mental models.
+Why,
+what, what's
+the value in frameworks and mental
+models and how, how, do you even
+define
+those?
+Yeah
+I think the value is in,
+we are, we're dealing with
+incredibly complicated problems.
+We're trying to build businesses.
+The tech industry is moving really fast.
+Ultimately, products live
+or die by user psychology.
+Whether it's B2C or even B2B, right?
+There's still a psychological element
+to it about whether or not a person
+wants to buy a particular product.
+And so we're making decisions in a really,
+intense and fast moving environment.
+I think frameworks are
+helpful to be able to say,
+let take a step back from this
+decision and start to think about
+it in a simpler way and start to
+pull apart some of the factors that
+might be conflated and
+and come to a better
+understanding of actually maybe if I think
+about it this way versus that way, you
+can start to think about, well, what is
+the root cause that you're solving for?
+Similar to what we've
+been talking about, right?
+This idea of should you have a short,
+onboarding or a long
+onboarding is a really
+key, fundamental question.
+And if you hadn't
+have been thinking
+about in that way,
+you might actually end up
+with a middle-sized onboarding
+and say, okay, you know.
+Balance of all the factors.
+I'm gonna do a little bit
+of this, a little bit of
+that, and, you know, end up with something
+that's less opinionated, and less
+incisive because you didn't pull apart
+the different things that were conflated.
+And so I think the, the magic
+of frameworks is not that they
+do the thinking
+for you, but that they help you ask
+the right questions to pull apart
+the factors that really matter.
+Well
+re request for
+blog posts Um, if you're, uh, have
+some free time, I, I would love to
+see a Ravi meta, onboarding framework
+of like, how, how to really think
+through this, these things that
+we kind of loosely talked about,
+but have a more framework approach
+to how to think about onboarding.
+I think that would be really fascinating.
+it's a really interesting topic.
+I feel like, especially now with ai, you
+know, onboarding is evolving very quickly
+yeah, it's interesting to see what all
+these different companies are doing.
+well you, you
+have a ton of different frameworks and
+mental models that you've published on
+your blog and talked about on podcasts,
+and you, you
+put out prolific in
+your content production.
+So folks, you can, you know,
+you can
+go to robbie meta.com and
+follow 'em on LinkedIn and stuff
+like that to, to hear more.
+Um, so I had like a, a plethora
+of options to draw from,
+but the, the one
+I wanted to talk through,
+was ntts narrative
+commitment and task So why
+did you come up with that
+and, and what is it?
+Yeah,
+so it's an alternative to OKRs.
+and the reason that we developed
+it was we originally developed
+it at TripAdvisor, and we were
+trying to get really good at OKRs.
+We even, um, there was a
+book at the time, about OKRs.
+We did like a mini book club.
+We all read the book.
+We all started to talk about it.
+And what I saw then, as well
+as what I've seen with other
+companies is that many companies
+wanna get better at goal setting.
+They have to get better at goal setting.
+They try to adopt OKRs, and
+then it doesn't, doesn't
+go well as they had wanted.
+And they spend, you know, one quarter, you
+try it out,
+you realize it didn't
+go well, you
+make some changes for the next
+quarter, you make some changes
+for the next quarter, and
+then all
+of a sudden, you know, a year has
+passed and you haven't quite locked
+in your goal setting framework.
+And you've spent a lot of
+time trying to do that.
+And so the question I was trying
+to ask is, why do people have
+such a hard time with OKRs?
+and it comes down to, I think,
+something very simple, which is
+goals are a three legged stool.
+You need the what, you need,
+the why, you need the how.
+and OKRs only have two of the legs.
+And what's interesting is like
+this idea that I got is from
+John Do's Ted Talk on OKRs.
+He talks about goals being a
+three-legged stool, and then he says,
+OKRs solve for two of the legs and.
+The important thing that's missing
+from OKRs is the third leg existed
+in a very clear and direct way at
+companies like Intel and Google,
+because they were designed around OKRs.
+And so OKRs could work in a
+system where you had
+the strategic why, really well defined But
+if you don't have that strategy framework
+to go alongside with OKRs, OKRs tend to
+break down because they're incomplete.
+And so the idea behind narratives,
+commitments and tasks is that they
+are the three legs of the stool
+and that they are, independent.
+And so you can work with just them without
+any other, uh, strategic dependencies.
+Narrative is.
+What is the story strategically that we're
+trying to solve with this set of work?
+Commitments are the things that
+you are committing to do to
+make progress on that story.
+And tasks are the things that
+you'll need to do in order to
+deliver on your commitments.
+And so the narratives are
+the why.
+The commitments are the what and the tasks
+are the how.
+And collectively those three
+pieces work together to provide
+you with a set of goals that can
+stand on its own, that standalone
+that doesn't need to
+exist within any other
+system.
+And so as a result, I found that
+people that have have adopted them
+have found
+a really good,
+alternative to OKRs that, you
+know, in some ways
+it's similar, but
+it works better for
+people 'cause it's got those three parts.
+How do you differentiate between a
+commitment like and a task Uh just it's
+just like accountability on completion or
+Yeah, it's a really good question.
+So one of the things with
+commitments is that because.
+OKRs use the term key results
+most people think about.
+Key results have
+to be a metric that we're moving.
+Commitment is just something that
+we say that we're going to do.
+It could
+be moving a metric, it
+could be completing a task.
+it could be launching a particular
+program, it could be doing some research.
+The commitments are the set of
+things that we as a team believe are
+necessary for us to make progress
+in this area.
+And they could
+be whatever you want.
+If there's something that you need
+to do during a quarter that is not
+critical to making progress, it's
+not something that you wanna commit
+the team to, then it can be a task.
+But if one
+of the tasks is so important that
+you want the team to be a hundred
+percent committed to achieving that
+by the end of
+the quarter, then it should
+be a commitment and it can
+exist in both, both areas.
+Hmm.
+How do you uh I always find my my
+biggest challenge
+with these systems is uh
+people turning
+them into an intellectual busy
+box, right?
+It's Ooh something we
+get word lawyer on, right?
+Uh, because, and here's
+my, here's my thesis.
+So
+I it's
+like the work is hard.
+Arguing about these frameworks is easier.
+the
+For
+so people go people
+go, this is my problem.
+And it's tractable.
+which is why, like David mentioned,
+we tried OKRs and then we kind of
+nuked them And then I've just
+been like coming up with weird
+memorable things every few quarters
+and I've kind of adopted this like
+uh security through obscurity uh
+in in corporate planning which
+is like just things
+periodically to keep people
+from getting too used to any one Right.
+I think it creates, no
+matter what model you use,
+like the the org begins to kind of like
+like a slime
+mold kind of like grow around
+it Right.
+And
+Yeah
+like it.
+is not necessarily good.
+Right.
+So like, um, think this system
+like some ways helps evade that?
+Or is it like an ever present
+problem at frameworks?
+I think there is a problem, right?
+Just around process and exactly what
+you're saying, which is, you know,
+people sort of shape themselves
+around the system they're working in.
+One thing that I have found
+really effective is the word
+commitment is kind of scary.
+And so people don't
+enjoy making
+commitments as much as they
+do making goals or making OKRs it's like,
+oh, I gotta, I'm committing to do this.
+I, I take my
+word
+very seriously.
+And so people tend to come up with
+fewer commitments and then, are
+really focused on them during quarter.
+and actually.
+The fact that people are talking
+about commitments
+is a great forcing function for
+conversation before you actually say,
+we're finalizing our NCTs for this
+So I found that that really helps.
+The narrative helps 'cause it's
+like, okay, let's spend one or a
+couple sentences describing the why.
+The commitments help.
+'cause people only want to commit
+the fewest possible things.
+Um, so it's usually like three to five
+things.
+And then the tasks I think
+about is just a scratch pad.
+Like it gives us a warm
+start on the quarter.
+The goal is not to come up with
+these lofty goals and then all of a
+sudden it's day one of the quarter
+and nobody's talked about how you're
+actually gonna implement any of those.
+Yeah.
+I, I love getting down to this blocking
+and tackling level, which we don't always
+do on the podcast, but I mean, this
+is, this is the messy work of actually
+building great products is that you need
+to think about these kind of things.
+You know, if you just go right to
+tasks and you don't have any kind
+of narrative for why they matter,
+like
+what are you even doing?
+But yeah.
+How do you fit in all the like
+paper cuts and other things?
+Does that
+become a commitment, like we're
+gonna, you know, knock down the
+paper cuts this quarter and, and
+that's a, a specific commitment?
+Or, or do you see those kind of paper
+cut tasks as something that lives
+outside of this framework and work?
+Yeah, I think that this.
+Goals, or NCTs
+or OKRs or whatever you call
+them, operate alongside with just an
+overall culture around product
+and the tenants that you have
+around what you're creating.
+you know if you have a tenant that
+really values design or, or quality,
+that's incredibly important and that
+should be factored into the OKRs, or the
+nc.
+And it should become a commitment if you
+feel like you're moving away from that.
+Right.
+If
+the product
+has
+gotten
+so buggy.
+That actually you have a bunch
+of tasks, on your goals for the
+quarter that need to get done.
+They're not necessarily
+like aligned
+to any strategic narrative, but they just
+need to get done.
+'cause the product
+is getting kind of crappy.
+It's like, guess what?
+That is your strategic narrative.
+Your product quality is, going
+downhill.
+You're gonna start
+losing users.
+Make that the priority for the quarter
+is to get your quality back to the
+bar that you're setting for yourself.
+you know same thing with other
+things that feel like maintenance.
+If it's gotten to the point where
+it's no longer maintenance, it's
+something that really needs to get
+done, make that part of your strategy.
+cause it's the, it's that hygiene
+around product that I think really
+undermines, companies where, you know,
+they're so focused on what's next
+that they don't actually build the
+thing that the customer needs right now.
+I think a
+really good example of this is Spotify.
+I worked Spotify product leader a number
+of years
+ago, and he said, quality is
+our most important feature.
+We ship that
+first and then we get to
+everything else.
+And I think that's
+a really good way to
+think about things.
+And that's really like present in,
+in Spotify.
+I can't
+remember the last time,
+like Spotify
+cut out, or crashed on me.
+Like it never gets in the
+way of listening to music.
+And that's very different
+than some of the other things
+that they compete against.
+and so if quality is absolutely essential
+to you, make that part of your strategic
+narrative.
+how do you advise companies to
+think through the narrative part?
+I mean, it it's actually something
+I've, I've always appreciated
+about revenue Kat, and, um, I
+know Jacob, you probably don't
+wanna take too much credit for it
+a to like, oof.
+Good luck know
+be so clarifying.
+And so at Revenue Cat, our
+mission is to help developers make
+more money.
+And so much of what we do, we
+talk about the culture, is to help
+developers make more money.
+And it,
+it
+just, I as
+an indie
+app developer working on my apps,
+I've just never
+had that kind of
+clarity of vision or narrative
+around the products I'm working on.
+Um, so how how do you think
+about helping folks do that?
+Yeah.
+So I have another framework, um, called
+the product strategy stack, which I
+really like to use, which says that
+product strategy is actually five layers.
+It's company mission is the
+top Everything flows from
+that.
+Then there's the company
+strategy, and then there's
+the product strategy.
+Then there's the roadmap,
+and then there's the goals.
+and so actually the goals are
+the output, not the input.
+and if you are saying Our strategy is
+to increase revenue by 10% next year,
+um, let's look at what
+our roadmap should be.
+I think you're in a world of hurt
+because you actually have nothing that's
+tethering you to what you should be doing.
+Instead of you're saying, you know,
+our mission is to help app developers
+make more money, then everything flows
+from that, and the goals that you get
+out of that process will be really
+aligned to the mission, and that's
+where you're gonna get, a strategic
+advantage and that's where you're
+gonna be able to, create something
+that's really valuable for folks.
+Jacob, how come up with that mission?
+Did you go off on a, on a
+mushroom retreat for days
+I'm
+know I'm straight arrow David Uh no
+it was very
+near the beginning of almost the
+beginning but it not the exact
+beginning but like um it was before
+we hired anybody but you know it
+kind of fell out of, you
+know, I, in that case, the,
+the
+the software a little bit came before.
+at least
+the
+phrasing.
+but we never would've worked on that
+software if that mission wasn't important
+to us to begin with Right Like we would've
+picked a different thing to work on
+but then I was very specific in making
+sure it was pithy and memorable you
+know and you could put it on a t-shirt
+and then uh just repeating it day after
+day after day after day the last uh for
+the last eight years Um but like what I
+feel like software really should
+just be an, or products or companies
+in general should be the, like,
+instantiation of a mission, right?
+who cares if a company exists, right?
+Like that's sort of like a, a legal
+framework and sort of like a lose
+agreement of co of cooperation.
+you know the the narrative that's why I
+was kind of joking is like the narrative
+and the mission you know come first I
+suppose you can rec con A mission and a
+narrative onto a a company and a product
+or a company and a product that's lost its
+mission maybe but often I feel like that
+flows from like founders and founding team
+Right.
+But
+it would be my
+hope that, you know, for
+revenue Cat specifically,
+like we've ingrained the mission
+to So strongly like there's there
+could be no concept of changing
+the mission
+or changing the the narrative because
+like that you wouldn't have a company
+it'd be a different company Right You
+know you'd have to like split the whole
+thing in two.
+everything else though
+is more fluid, right.
+Strategy product roadmap like all of that
+stuff is sort of,
+you know so I think I I Robbie
+I think very much agree with the
+stack Like it makes a lot of sense
+just
+like uh customer of one we like do
+this in so many words You
+don't, necessarily do it in
+a f in a framework sense, but
+like talk a lot about uh everything
+else flowing from from mission but then
+at the bottom is the product goals I
+guess it like flows right into sort
+of tasks
+and commitments right Like what are we
+trying to do on the product Exactly right
+Yeah.
+And that's the MCTs and the strategy stack
+kind of go together to create, you know,
+here's how we're defining our strategy and
+here's how we're gonna execute against it.
+And maybe that's a good expect
+for folks who are working on
+products that aren't working,
+get your mission straight
+is that
+Yeah.
+Or, or move on to a mission that you're
+passionate and excited about and like,
+start over with something that like,
+has a narrative and a mission first.
+Not just a product
+if your
+customer's not mentioned in
+your mission, that's a problem.
+what's really powerful about the revenue.
+Yeah.
+mission.
+Which, you know, a lot of
+companies operate in that way
+and then it filters through the
+entire organization and then all
+of a sudden everyone's just like, how do
+we, how do we just turn the screw on our
+customers to get more money from them?
+And that is like the source of disruption.
+companies get disrupted because,
+you know, they start focusing
+on themselves, not their
+customers
+it goes beyond companies I think if
+you look through like human cooperation
+through history right Like the best and
+greatest and and organizations were built
+not under the guise of like extraction
+It was all under the the guise of like
+know a righteous mission of some kind
+right?
+Of some, some belief system.
+Uh, and then they tend to fall
+when bureaucratic morass where
+everybody's out for themselves, right?
+know anything about
+that
+No, you know, uh, it's not like
+history's
+littered
+with
+examples, but yeah, I
+think it's exactly the same in companies
+right and it's a delicate balance
+It's hard to maintain right it's
+it's very lucky if it survives the
+founders right I mean you could even
+look at Apple now and like you could
+ask the question at least like did
+it survive the founder in that case I
+think there's probably good arguments
+in both directions but it's TBD right
+it could seem like everything's fine.
+'cause the timelines
+are really long, right?
+Like, if you've done well by
+your customer, you might have 10 years,
+or 20 years or 30 years of products
+that you can deliver that are extractive
+before it catches, catches up with you.
+But
+it's important to like catch it
+before it becomes a vicious cycle,
+and then it's impossible to unwind.
+Yeah I should do some I'm trying
+to come up off the top of my
+of of like organizations that
+have lasted like a hundred
+plus years post founder,
+post even founding family and stuff
+like that if you know any I can't name
+it off the top of my head I'm sure they
+exist though right Where they're very
+like still very mission driven still
+very mission oriented even though it's
+been like handed off many multiple times
+Microsoft is how old now.
+It's it's a good example Right Um,
+I think it's 50 years old now, right
+they're on thir, they're on
+iteration three of leadership.
+Yeah, they had to wander the wilderness
+with
+Balmer
+Ballmer founder though, right?
+And like, that even goes show how kind of
+it is Right Um and yeah Now
+with with Satya they might have
+somebody who's like maybe even
+potentially stronger than the founder
+he's he's got
+that founder energy for
+sure
+adapted for the time,
+Yeah
+he's a better founder for the moment
+Steve
+Blank has a
+really
+good article about the visionary
+versus the operator and how visionary
+CEOs surround themselves with
+operators 'cause they need people
+to execute.
+but then they, when they, focus on
+their succession, they typically
+promote an operator into their and
+the reason is because if you had other
+visionaries around the visionary to
+begin with, that would cause conflicts.
+companies need
+that visionary.
+And so a lot times you have
+like Bill Gates was the
+visionary, bomber was the operator,
+and then you had to have Satya
+come in and bring the vision
+back.
+not to Um speculate too much about
+internal Apple politics but like there
+were a bunch of folks that Steve had
+worked with like Scott Forstall um
+and Johnny and Johnny and Scott didn't
+get along I I think this would all
+be considered potentially visionary
+uh replacements right so we ended
+up with Tim obviously one of the
+greatest operators in the history
+Yeah
+uh but very clearly in the operator
+bucket right and so yeah that does
+that's a fascinating observation and
+probably true I'm gonna do some research
+sounds good I'm the question Yeah
+plus years and we think are
+still very mission oriented.
+I I think it's difficult It's
+difficult to find.
+new
+Nintendo might
+be a good example.
+example.
+Um, and, would
+I
+Um the acquired podcast I'm gonna
+offer another podcast but they did
+a really good multi-hour breakdown
+on Nintendo But like Nintendo's also
+kind of a pseudo family company in
+the sense that it's like passed from like
+one generation to the next in in sort
+this like way that only Japanese companies
+kind of can pull off arguably more mission
+focused than they were at the beginning
+Uh, which is good It's a good example Yeah
+So we're starting a new
+thing on the podcast.
+I'm gonna wrap each podcast with three
+questions, and I, I prepped you ahead
+because these are tough questions.
+but what is the biggest fail
+of the year in your mind?
+And, and for operators, this is
+gonna be more directed at the
+biggest fail in their business.
+Uh, but for you as a
+consultant, this could be,
+you know broader industry or you know,
+a, a client
+That you worked with.
+but what's the
+biggest fail of 2025
+for you?
+I think the biggest fail is a GI.
+Like, I think everyone
+thought like this was the
+year
+we're gonna make
+have you blame for
+Yeah, exactly.
+Yeah.
+I took some time off.
+I didn't quite get to a GI fast enough.
+think this goes to a lot of what the tech
+industry does bad is like either over
+hype things or under hype things, and
+either it's like, you know, generative
+AI is you can't do anything and It's
+meaningless It's not that
+useful to, um,
+we're all gonna die.
+And the truth is somewhere in
+between It's been a magical year
+in terms of agents and reasoning
+models and
+the
+have cursor.
+Yeah.
+we didn't
+have cursor, we didn't have Claude
+skills, we didn't have Atlas or Comet.
+we didn't have all the reasoning models.
+Like all of this stuff has
+gone incredibly well this year.
+So it's
+actually been a
+great year for
+Gen
+ai and I think this whole idea that
+we're in a bubble right now is coming
+outta the fact that people thought
+we would be hitting a GI this year.
+and you know, I never
+thought that was the case.
+I think we're still a long way off.
+That doesn't mean that the things
+that are happening right now aren't
+fundamental and transformational.
+And so what's the biggest win of the
+year?
+Yeah.
+I think the biggest win
+of the year is Claude.
+Like I used to use chat GPT
+90% of the time, and now
+between Claude Code and
+the Claude Main app,
+I'm using that.
+almost a hundred percent of the time.
+I think they've done such a
+good job with their models.
+They write well, the reasoning is good.
+Their deep research works well.
+CLO code is pretty exceptional
+in terms of how much it's really
+lived up to in a vision, the
+vision of an agentic, coding tool.
+you know, I think they've
+just done a great job.
+They've focused on their core.
+They haven't gotten distracted
+by other products, um, like SOA
+and, and building a browser.
+And they've just
+gotten, they've
+focused on the essentials, of
+what they can do well, and I've
+become really dependent on it
+And the last question is,
+growth would be easier
+if,
+I
+think growth would be easier
+if, especially right now, people
+focused obsessively on turning
+their earned audience into an owned.
+audience.
+There's all of these distribution
+channels right now that are going through
+massive shifts whether it's SEO or the
+algorithm changes on TikTok or YouTube
+or LinkedIn or other places like it used
+to be that if you got a pretty sizable
+following, you could count on that
+to distribute your products.
+I don't think that's
+the case
+any longer.
+Um, this is especially true
+for YouTubers, for example.
+you know now what gets in front
+of users is really a matter of the
+algorithm, not of your following.
+And so I think it's very important
+for companies to obsess about how do I
+take an audience that I don't own and
+turn it into an audience that I do own.
+I think that's the result of three things.
+One is, you know, create a direct
+channel with your audience, whether
+it's email or something else.
+And then two is create habits around
+your content so people come to you.
+You know, having a podcast that people are
+coming to on a regular basis and listening
+to is an extremely important way to
+have people break through the algorithm.
+And then the third and most
+important thing is create
+habits around your product.
+So if you can create those listening
+habits, if you can create those usage
+habits and you can have a direct
+channel to your audience, you'll be
+in a much better position to weather
+what's happening, which is like a pretty
+significant reshuffling of distribution.
+I
+Yeah.
+Such a great answer.
+well, as we wrap up, anything
+else you wanted to share?
+welcome people to follow me.
+I've got my substack.
+it's just, uh, blog dot ravi meta.com.
+You can also look me up
+at, uh, ravi meta.com.
+I work with companies, so if
+you have, a startup or a company
+where you're looking to figure
+out product strategy or monetization,
+feel free to reach out.
+Would love to chat.
+Awesome.
+Well thank you so much Robbie.
+This was a ton of fun, a really
+Yeah, this was great.
+when went.
+A lot of places I didn't expect.
+Those are always the best.
+bringer of podcast chaos, right?
+I
+Awesome.
+Thank you, Robbie.
+I
+thanks for having me.

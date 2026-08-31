@@ -1,0 +1,265 @@
+# Exposing Dating Apps Algortihms for our University Research
+# Kid Lou · 150 vues · 00:10:06
+# https://www.youtube.com/watch?v=8E4uUisOobI
+
+Designed to be deleted. That's the
+official slogan of Hinge, a dating app
+owned by Match Group, a publicly listed
+corporation that generated $3.4 billion
+in revenues last year. Dating apps have
+become the dominant way that people meet
+nowadays. And to most of us, it's a lot
+of fun and a great way to meet new
+people in this socially distant age. But
+haven't we kind of grown annoyed from
+it? I mean, just look at Tinder, which
+has experienced a fatal crash over the
+past years. Now, the mother company,
+Match Group, has found another cash cow,
+Hinge, which operates on a completely
+different philosophy. And it's working.
+Hinge grew 48% year on year in 2023. So,
+what's the catch? Can a company like
+Match Group, whose survival is
+completely dependent on continuous
+growth and maximizing shareholder value,
+really afford for you to find what
+you're looking for?
+>> Match Group dedicate themselves to
+making online dating easy and fun. And
+at first glance, the numbers agree with
+this. A recent YouGov survey found that
+one in 10 people would meet their
+partners online. Furthermore, the Knot's
+2025 survey showed that Hinge accounts
+for 27% of marriages that began on
+dating apps.
+But Match Group's primary metrics are
+engagement, retention, and revenue per
+payer, not relationship outcomes. There
+is no measure of successful couples in
+their shareholder reports, no metric for
+love.
+The company committed to returning at
+least half of its free cash to
+shareholders in 2024.
+>> This This is the loneliest generation.
+It's the most digital generation. They
+actually need our types of services more
+than anyone, but uh Tinder in particular
+hasn't innovated enough to deliver those
+user outcomes. That's one of
+>> And the relationship data tells a harder
+story. A 2025 University of Stirling
+study, based on over 6,600 people across
+50 different countries, found that
+couples who meet online report lower
+relationship satisfaction and less
+intense love than those who meet in
+person. Relationships from apps are
+increasing, but they seem to be
+systematically less fulfilling. Is this
+coincidence or is it how the apps are
+designed?
+>> Match Group doesn't disclose its
+algorithm, but we do have a clue.
+Tinder's original system used an ELO
+score. It used likes, dislikes, and
+match quality to rate users'
+desirability. Essentially, a swipe from
+a popular user boosts your score.
+Users then were sorted into an invisible
+hierarchy they couldn't see.
+It's a scary to know how much it will
+affect people. I will try to ignore some
+of it while I go on saying. We're
+getting to a point where we have a
+social responsibility to the world. That
+was the co-founder openly scared of its
+own product, not very reassuring. Tinder
+eventually moved away from ELO to a more
+dynamic algorithm, but never disclosed
+that algorithm to the people. Now,
+artificial intelligence is taking over.
+And the data these systems train on
+reflects some of society's prejudices. A
+2023 study found that black women are
+structurally marginalized within dating
+app recommendations, not by accident,
+but as a direct output of how these
+systems learn.
+We can't prove whether these algorithms
+are deliberately limiting matches. We
+have established though that they are
+opaque and potentially biased.
+>> But the deeper question is, even if
+Hinge were to fix it,
+would they have an incentive?
+>> A 2023 study from Caltech, Chao, and
+Huang analyzed behavioral data of over
+240,000 users. They compared a fair
+recommendation system against one that
+prioritized popular, highly engaged
+users. When the algorithm showed the
+best possible matches, the platform
+engagement generated less engagement and
+less revenue.
+An algorithm optimized for your success
+is bad for business.
+Match Group's own financials make the
+logic visible. In Q4 2023, revenue
+paying per user rose 17% year-on-year.
+Not because more people were finding
+love, but because existing users were
+being charged for more features that
+used to be free, visibility and likes.
+Match Group doesn't just own Hinge. It
+owns Tinder, OKCupid, Match.com, Plenty
+of Fish, and more. That creates a trap
+that rarely gets named. When users grow
+frustrated with Tinder, they go to
+Hinge, but they're still inside the same
+company, the same incentive structure,
+and the same shareholder expectation.
+>> So, in system theory, sociologist Niklas
+Luhmann argued that system don't exist
+to solve the problem.
+They exist to sustain themselves.
+They adapt, they evolve, but always in
+the service of their own continuity.
+Match Group is a system. It generate
+over $800 million in free cash flow in
+2023. The moment you find a
+relationship, you cancel your
+subscription, and at that exact moment,
+you became a problem for the business
+model.
+>> We're now entering the phase of AI.
+Match Group has committed to deploying
+AI across all platforms in 2025. Their
+subsidiary Azar has already used to
+drive, and I quote, "improved matching
+and monetization."
+Matching and monetization. We've seen
+the structure before. Tobacco companies
+knew about the harm their product was
+causing, funded research to obscure, and
+kept selling. Well, the parallel isn't
+quite simple. No one is really dying
+from Hinge, but when profit depends
+entirely on
+repeated use, there's no incentive to
+solve the problem. And when one
+corporation controls the infrastructure
+through which millions of people meet
+and experience intimacy and self-worth,
+it is not a question of a bad business
+model, but a question of power.
+It is the system that nowadays connects
+us, but depends on us never leaving.
+And we as humans that strive for genuine
+connection and social interaction must
+understand for ourselves if we want to
+put the fate of our love into the hands
+of AI algorithms.
+>> Ah, should we get this done?
+Match Group doesn't share their
+algorithm.
+Match Group
+Match Group doesn't share their
+algorithm.
+Didn't [ __ ]
+>> New shifts for Match are increasing, but
+they seem to be
+Sorry.
+>> on the sofa
+You're filming me talking like face-on.
+Then you pan to I finish talk As I
+finish talking, Matt comes and sit sits
+down. You pan to
+You pan to him and he like swipes. I
+like swipe him off the screen.
+>> And then he goes
+>> And then when Jack comes talking
+you swipe him off the
+>> [ __ ] up my sleeve. How's your How's
+your flat in the heat?
+>> It's okay, man.
+It's not too hot yet.
+>> My room's boiling up.
+>> It'll be bad.
+>> I'm sorry.
+We got really close.
+That's the process.
+>> Do we look at the camera or not?
+>> No, look at Use your arms a bit more.
+And really like be like really into like
+Like Match Group positions itself as a
+dedicated to making dating easier and
+more and more fun online.
+>> All right.
+>> The Knot's 2025 survey shows Hinge
+accounts for 27% of marriages. So, use
+your arms and like really like emphasize
+these little points.
+>> But Match Group
+nothing to do with how these platforms
+are built.
+I don't know I told that.
+>> Yeah.
+>> dating based on
+Tinder uses an
+>> Oh, [ __ ] hell.
+>> uses desirability.
+>> They can't escape.
+>> Oh, [ __ ]
+>> Users were
+Now, artificial intelligence is taking
+over.
+>> Uh do I have to keep going?
+>> Oh, yeah.
+>> We got Thomas in the back.
+We got Thomas in the back.
+>> We've established that the algorithm is
+opaque, completely biased.
+>> Ah, [ __ ]
+>> It's not completely biased. It's
+completely unaccountable.
+>> I deliver the Well,
+>> Wait, can we do that?
+>> Keep it going. Keep it going.
+We have established, however,
+>> Ah, [ __ ] It's really biased.
+>> But does Match Group really have an
+incentive to fix this?
+>> opaque and potentially biased.
+>> But does Match Group have an incentive
+to fix it?
+Does Match Group have an incentive to
+fix it?
+Push users into subscriptions and making
+cancel I can't say it. Sorry.
+Is it this is if I get this up, it
+should be fine.
+That was really hard.
+>> I'm going to like burn
+with
+power.
+>> This is good for me, I think.
+>> power company
+>> You You want to
+>> So, for Match Group in the system, it
+generate over 800 millions in free cash
+flow.
+>> They have an incentive.
+But does have
+But does hinge have an incentive
+to fix it?
+Back to you, Jack.
+But does have hit
+But does
+So we've established
+So we've established
+that
+Back to you, Jack.
+>> Does Hinge have an incentive to fix it?

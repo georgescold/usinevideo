@@ -1,83 +1,174 @@
 {
   "_lecture": "Carte d'identite de la chaine. VIDE au depart : c'est /init-chaine qui le remplit, en interrogeant l'utilisateur puis la veille. Tout le reste de la stack lit ce fichier. Ne jamais l'editer a la main sans prevenir l'utilisateur.",
-
-  "initialise": false,
-  "date_init": null,
-
+  "initialise": true,
+  "date_init": "2026-08-26",
   "identite": {
-    "id": null,
-    "nom": null,
+    "id": "conseils-relationnels",
+    "nom": "Conseils Relationnels",
     "langue": "fr",
-    "promesse": null,
-    "en_une_phrase": null
+    "promesse": "Tu n'as pas besoin d'espoir. Tu as besoin d'une explication.",
+    "en_une_phrase": "Un media independant qui explique a des adultes de 25 a 40 ans blesses en amour pourquoi leurs relations ne tiennent pas, et ce qui se mesure vraiment. Recommande Compaatible en affiliation quand l'intention le justifie."
   },
-
   "produit": {
-    "nom": null,
-    "type": null,
-    "prix": null,
-    "url": null,
+    "nom": "Compaatible",
+    "type": "Application de rencontre francaise, freemium, recommandee en affiliation",
+    "prix": "19,99 EUR par mois",
+    "url": "https://compaatible.com",
     "fiche": "marque/Fiche-Produit.md"
   },
-
   "avatar": {
     "_lecture": "L'avatar GÉNÉRAL de la chaîne : celui à qui toutes les vidéos parlent. Les autres avatars restent dans marque/Fiche-Avatars.md et servent à varier les angles.",
-    "nom": null,
-    "segment": null,
-    "niveau_de_conscience": null,
+    "nom": "Le Desabuse",
+    "segment": "25 a 40 ans, a toujours eu du mal en amour, a ete blesse, et n y croit plus vraiment. Un segment a la fois, un probleme a la fois.",
+    "niveau_de_conscience": "2 : il connait son probleme par coeur et ne croit plus qu une solution existe. On ne lui revele jamais son probleme, on lui prouve qu on l a compris avant de suggerer qu il existe autre chose. Il passe au 3 au point de bascule de chaque video.",
     "fiche": "marque/Fiche-Avatars.md",
     "hooks": "marque/Hook-Bank.md"
   },
-
   "marketeur": {
-    "nom": null,
-    "posture": null,
+    "nom": "Le Vulgarisateur (nom de code interne, la voix ne se presente jamais a l ecran)",
+    "posture": "Vulgarisateur rigoureux. Il explique un mecanisme au lieu de donner un conseil, il chiffre et il source, il dit a voix haute quand il n a pas de donnee. Il affirme calmement, sans registre coach. Il tape sur les croyances, les mecanismes et les modeles economiques, jamais sur des personnes ni sur une marque nommee. Il n est ni therapeute, ni psychologue, ni coach.",
     "fiche": "marque/Le-Marketeur.md"
   },
-
   "plateformes": {
-    "youtube": { "actif": true, "handle": null, "url": null, "id_chaine": null },
-    "tiktok": { "actif": true, "handle": null, "url": null },
-    "instagram": { "actif": true, "handle": null, "url": null }
+    "youtube": {
+      "actif": true,
+      "handle": null,
+      "url": null,
+      "id_chaine": null
+    },
+    "tiktok": {
+      "actif": true,
+      "handle": null,
+      "url": null
+    },
+    "instagram": {
+      "actif": false,
+      "handle": null,
+      "url": null
+    }
   },
-
   "formats": {
     "_lecture": "Actives par /init-chaine apres la veille : on ne choisit un format qu'une fois qu'on a vu ce qui marche dans la niche.",
-    "long_face_camera": { "actif": false, "duree_cible_s": [480, 900] },
-    "long_faceless": { "actif": false, "duree_cible_s": [420, 720] },
-    "long_screencast": { "actif": false, "duree_cible_s": [360, 900] },
-    "long_avatar": { "actif": false, "duree_cible_s": [300, 600] },
-    "short_face_camera": { "actif": false, "duree_cible_s": [25, 55] },
-    "short_faceless": { "actif": false, "duree_cible_s": [20, 45] },
-    "short_avatar": { "actif": false, "duree_cible_s": [20, 45] }
+    "long_face_camera": {
+      "actif": false,
+      "duree_cible_s": [
+        480,
+        900
+      ]
+    },
+    "long_faceless": {
+      "actif": true,
+      "duree_cible_s": [
+        720,
+        960
+      ]
+    },
+    "long_screencast": {
+      "actif": true,
+      "duree_cible_s": [
+        720,
+        960
+      ],
+      "_lecture_locale": "Active le 26 aout 2026. L auteur peut filmer son ecran, ce qui reste compatible avec le sans-visage : on voit l ecran, pas la personne. Reserve aux RELEVES CHIFFRES, jamais aux modes d emploi : le screencast tutoriel a une mediane de ratio de 0,02 sur 33 videos du corpus. Deux videos sur dix au lot 1, pas davantage."
+    },
+    "long_avatar": {
+      "actif": false,
+      "duree_cible_s": [
+        300,
+        600
+      ]
+    },
+    "short_face_camera": {
+      "actif": false,
+      "duree_cible_s": [
+        25,
+        55
+      ]
+    },
+    "short_faceless": {
+      "actif": true,
+      "duree_cible_s": [
+        45,
+        75
+      ]
+    },
+    "short_avatar": {
+      "actif": false,
+      "duree_cible_s": [
+        20,
+        45
+      ]
+    }
   },
-
   "voix": {
     "mode": "sts",
     "_modes": "sts = tu enregistres, ElevenLabs remplace le timbre | brute = ta voix telle quelle | tts = voix entierement synthetique | avatar = HeyGen genere image + voix",
-    "elevenlabs_voice_id": null,
-    "voix_de_reference": null
+    "elevenlabs_voice_id": "O31r762Gb3WFygrEOGh0",
+    "voix_de_reference": "Victoire (feminine, francaise, professionnelle)"
   },
-
   "identite_visuelle": {
     "fiche": "marque/identite-visuelle.md",
-    "police_titres": null,
-    "police_soustitres": null,
-    "couleur_accent": null,
-    "couleur_fond": null,
+    "police_titres": "Inter",
+    "police_soustitres": "Montserrat",
+    "couleur_accent": "#c9315e",
+    "couleur_fond": "#0e1718",
     "lut": null,
     "logo": null,
-    "style_soustitres": "mot-a-mot-pastille"
+    "style_soustitres": "mot-a-mot-couleur",
+    "couleur_texte": "#f5f3f2",
+    "couleur_accent_secondaire": "#7a5c8c",
+    "police_chiffres": "Montserrat",
+    "derivee_de": "marque/identite/conseils relationnels logo.jpeg",
+    "couleur_pastille": "#a8264c",
+    "ambiance": "douce",
+    "_ambiance": "douce | neutre | dure — regle la vignette, le grain et le contraste d ensemble",
+    "direction_plans": "low key lighting, dark, night, intimate, cinematic, film grain",
+    "_direction_plans": "ajoutee a CHAQUE requete de banque d images : c est elle qui empeche une chaine douce de recevoir des plans durs",
+    "variations_affiche": "\"wght\" 900",
+    "_variations_affiche": "axes d une police VARIABLE. Se limiter a wght : les axes optiques (opsz) interagissent mal avec font-size au rendu et peuvent faire s effondrer le texte.",
+    "soustitres": {
+      "style": "mot-a-mot-couleur",
+      "police": "Montserrat",
+      "motsParPage": 3,
+      "casse": "majuscules",
+      "taille": 86,
+      "positionBas": 22,
+      "contour": true,
+      "epaisseurContour": 1,
+      "couleurTexte": "#f5f3f2",
+      "couleurSurligne": "#a8264c",
+      "couleurContour": "#000000",
+      "animation": "pop",
+      "ponctuation": false
+    },
+    "_soustitres": "Direction artistique validee a l ecran le 28 aout 2026. Ce bloc prime sur les couleurs eparses ci-dessus. Se regle par video avec: npm run soustitres -- <slug>"
   },
-
   "seo": {
-    "mot_cle_pilier": null,
-    "piliers": [],
-    "playlists": []
+    "mot_cle_pilier": "pourquoi mes relations ne durent pas",
+    "piliers": [
+      "Pourquoi ça n'a jamais marché",
+      "Ce qui fait qu'une relation tient",
+      "Ce qui t'a usé pendant ce temps"
+    ],
+    "playlists": [
+      "Pourquoi ça n'a jamais marché",
+      "Ce qui fait qu'une relation tient",
+      "Ce qui t'a usé pendant ce temps"
+    ]
   },
-
   "cadence": {
-    "long_par_semaine": 0,
-    "short_par_semaine": 0
+    "long_par_semaine": 1,
+    "short_par_semaine": 5
+  },
+  "transcription": {
+    "modele": "large-v3-turbo",
+    "_note": "medium perd des mots sur une voix douce ; turbo est plus fidele ET plus rapide"
+  },
+  "audio": {
+    "musique": null,
+    "_musique": "chemin relatif depuis la racine, ex. assets/musique/tension-sourde.mp3",
+    "musique_gain_db": -16,
+    "_musique_gain": "la musique s efface automatiquement sous la voix ; ce gain est son niveau quand la voix se tait",
+    "_aucun_traitement": "Aucun modificateur audio n'est applique : ni debruitage, ni normalisation, ni compression. L'audio depose sort tel quel, seule la coupe des silences et le remplacement de timbre y touchent."
   }
 }

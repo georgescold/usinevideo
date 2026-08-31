@@ -1,0 +1,271 @@
+# The Hidden Economy of Dating Apps: The Platform Manipulation Business Model
+# Open Secret · 111 vues · 00:12:55
+# https://www.youtube.com/watch?v=T8xre1PC0FA
+
+There was a period not long ago when the
+largest dating platform in the world had
+a problem it could not publicly
+acknowledge. The platform had millions
+of male users actively swiping, actively
+messaging, actively paying for premium
+features. But the woman they were
+swiping on, the profiles they were
+paying to message did not exist. They
+wear boots, automated accounts
+programmed to simulate interests, to
+send messages, and to keep men engaged
+long enough to keep paying. The platform
+was not alone. Across the industry,
+dating apps face the same structural
+imbalance.
+men at number women sometimes by ratios
+of 3 to 4:1 and a dating platform with
+too many men and not enough women as a
+fatal flow. The men leave and when the
+men leave the revenue lives with them.
+So the platforms did what any rational
+economic actor would do. They
+manufactured supply. This is not a story
+about bad actors or wrong engineers. It
+is a story about hidden economic logic
+of the dating platforms. A logic that
+does not reward finding your partner. It
+rewards keeping you on the platform. And
+the architecture that emerged from that
+logic is more sophisticated,
+more deliberate, and more quietly
+manipulative that most users will ever
+realize. Dating platforms present
+themselves as a solution to a problem.
+You are single. You want to meet
+someone. The platform will help you find
+them. But this framing obscures
+something essential. A dating platform
+is not a matchmaker. It is a marketplace
+and like any marketplace its fundamental
+challenge is not connecting buyers and
+sellers. It is maintaining enough
+liquidity on both sides to keep the
+market functioning. In the dating
+marketplace, the buyers are
+predominantly men. The sellers, the
+scarce resource, the side that attracts
+the buyers are women. This is symmetry
+is not cultural. It is structural. Men
+are more likely to use dating apps. Men
+are more likely to pay for premium
+features. Men generate the majority of
+the revenue. And the entire economics of
+the industry is built around this fact.
+The problem is that a marketplace with
+too many buyers and not enough sellers
+does not function. Men who swipe on
+hundreds of profiles and never get a
+match do not blame the platforms ranger
+radio. They blame themselves or they
+blame the women. But either way, they
+eventually live and when they leave,
+they stop paying. This is the central
+tension at the heart of every dating
+platform's business model. The platform
+revenue depends on male users staying
+engaged.
+Male users stay engaged when they
+believe they have a chance of success.
+That belief requires a sufficient supply
+of women or failing that a convincing
+simulation of one. The hidden economics
+of dating platforms is the story of how
+distension was managed through
+algorithmic design, through
+gamification,
+through pricing structures, and at
+certain moments through outright
+deception. The numbers tell the story.
+By 2017, Tinder's users base was
+estimated to be roughly 75% male. Other
+platforms reported similar or worse
+ratios. Ashley Medicine, the platform
+for married people seeking affairs, was
+later revealed after a massive data
+breach in 2015
+to have virtually no real female users
+at all. An investigation by Gizmo found
+that 5.5 million female profiles on the
+site fewer than 15,000 were were really
+active and they were really women. The
+rest were books. Tens of thousand of
+automated accounts programmed to send
+messages to express interests to
+simulate the experience of being
+desired. Ashley Medicine was an extreme
+case, an infidelity platform, not a
+mainstream dating app. But the mechanism
+it employed was simply a more aggressive
+version of a widespread practice. The
+boots served a specific economic
+function. A male user who received no
+responses would churn within weeks. A
+male user who received even a few
+automated messages, even if they lead
+nowhere, would stay. He would believe
+the platform was working. He would
+upgrade to premium. He would keep
+swiping. Federal Trade Commission
+eventually find Ashley Madison's parent
+company for deceptive practices. But the
+deeper lesson was not about one
+company's fraud. It was about the
+structural incentive that produced it.
+When your platform's gender ratio makes
+genuine matches impossible for the
+majority of your paying users, you face
+a choice. fix the ratio, which is
+extraordinarily difficult because it
+requires attracting women at scale while
+maintaining an environment they want to
+stay in or simulate the missing supply.
+The economics push towards simulation.
+Genuine supply is expensive to acquire
+and are too retaining. Simulated supply
+costs almost nothing and this is the
+uncomfortable part. It works. The boots
+kept men paying for years. The boot
+economy eventually receded as a
+platforms grew larger enough to reach a
+critical mass of genuine female users
+and as regulatory scrutiny increased.
+But the underlying problem did not
+disappear. It was simply managed through
+more sophisticated means. Modern dating
+platforms do not need boots because they
+have algorithms and the algorithms are
+designed to solve the same problem
+keeping men engaged despite unfavorable
+odds through sub mechanisms. Think about
+our dating app actually makes money. The
+vast majority of users, roughly 90% on
+most platforms, use the free version.
+Revenue comes from the small percentage
+who pay for premium subscriptions.
+Tinder Plus, Tinder Gold, Tinder
+Platinum, Inch Preferred, Bubble B, etc.
+The pricing tires are structured around
+giving payment users advantages and
+limited swipes, the ability to see who
+already like them, the ability to boost
+their profile visibility. Now consider
+the incentive this creates. A platform
+that efficiently matches users and gets
+them into relationships loses two
+customers. The couple deletes that
+revenue declines. The platform's ideal
+outcome is not successful relationship.
+It is an endless series of near misses.
+Enough enough help to keep the user
+swiping. enough frustration to keep them
+paying for advantages. And this is not a
+conspiracy. It is the straightforward
+logic of a business whose revenue
+depends on usage and whose usage depend
+on users remaining single. The platform
+does not need to deliberately sabotage
+relationships. It simply needs to
+optimize for engagement and engagement
+in a dating context is sustained you
+sustain the satisfaction within a thin
+layer of intermittent reward. The
+mechanism are identical to a slot
+machine. You swipe most swipes produce
+nothing. Occasionally there is a match a
+small dopamine it a notification a
+moment of validation. The
+unpredictability of the reward is what
+keeps you swiping. Variable ratio
+reinforcement, the psychological
+mechanism that makes gambling addictive
+is built into the architecture of every
+swipebased dating app. And the premium
+features are designed to exploit the
+frustration this architecture creates.
+You are not getting enough matches. Pay
+to see who already likes you. Still not
+enough? pay for a profile boost. The
+platform does not solve the underlying
+problem because the underlying problem
+is the platform's revenue model. There
+is a deeper layer to the engagement
+architecture and it concerns the
+algorithm itself. Dating platforms do
+not publish their matching algorithms,
+but research and experimentation by
+users have revealed consistent patterns.
+The algorithms do not simple show the
+profiles most likely to be compatible
+with you. They do manage your experience
+showing you highly attractive profiles
+early in your session to your attention
+then throttling exposure as you continue
+swiping then surfacing a match or a
+message just as you are about to close
+the app. The terminology in the industry
+is desiraability scores. Every user is
+assigned a hiding rating based on how
+many right swipes they receive, how many
+matches they convert, how many
+conversations they sustain. The
+algorithm then segments users into
+desiraability tires and primarily shows
+users within their own tire or for
+paying users slightly above it.
+This means the platform is not matching
+you with the people you would be most
+compatible with. It is matching you with
+the people at your desiraability level
+in a way that maximizes the time you
+spend on the app. compatibility, shared
+goals, life goals, communication styles
+is largely invisible to the algorithm
+because what it needs is engagement and
+engagement is what it optimizes. The
+dating platform industry is worth
+roughly 10 billion globally. Match group
+alone which owns Tinder, Incid,
+Match.com and dozen of others generated
+over three billion in revenue in 2023.
+The business is enormously successful by
+any financial measure. But the product
+it sells, it's not relationships. It is
+specifically the kind of hope that can
+be monetized, renewed monthly, upgraded
+annually, refreshed, which with each new
+feature tire. This doesn't mean dating
+platforms are evil or that the engineers
+who build them are cynical or that no
+one ever finds love on them. Millions of
+relationships have started on dating
+apps. The platforms can and do
+facilitate genuine connection. But the
+architecture is not natural. It was not
+designed to maximize human flourishing.
+It was designed to maximize engagement,
+retention, and revenue.
+And those objectives are not the same as
+helping people find partners. They are
+in important ways in tension with it.
+The hidden economics of dating platforms
+reveals a truth that extends beyond
+dating. Platforms that monetize human
+desire face a fundamental conflict.
+Their users want an outcome, a
+relationship, a partner, a resolution to
+their loneliness. The platform business
+model requires that the outcome remains
+perpetually just out of reach. Close
+enough to keep you hoping, far enough to
+keep you paying. The goods are mostly
+gone now. The algorithms have replaced
+them. But the logic that produced them,
+the logic of a marketplace that profits
+from your dissatisfaction has not
+changed at

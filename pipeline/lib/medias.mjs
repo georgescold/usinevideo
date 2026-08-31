@@ -21,6 +21,7 @@ import { journal } from './journal.mjs'
 import { getJson, telecharge } from './http.mjs'
 import { avecCle, pool, clefGrillee } from './trousseau.mjs'
 import { sonde } from './ffmpeg.mjs'
+import { attribue as attribuePerso, DOSSIER as DOSSIER_PERSO } from './broll-perso.mjs'
 
 const CACHE = path.join(CHEMINS.cachePartage, 'medias')
 const CACHE_MS = 24 * 60 * 60 * 1000
@@ -56,7 +57,13 @@ const ecritCache = (cle, resultats) => {
  */
 export async function chercheVideos(requete, { largeur, hauteur, combien = 5 } = {}) {
   const vertical = hauteur > largeur
-  const cle = empreinte('pexels-video', requete, vertical)
+  // LE NOMBRE DEMANDE FAIT PARTIE DE LA CLE.
+  //
+  // Sans lui, une requete servie une premiere fois avec trois candidats restait
+  // figee a trois pendant vingt-quatre heures, meme quand on en redemandait
+  // huit. Combine a la regle « jamais deux fois le meme clip », le vivier
+  // s epuisait des la deuxieme decoupe et les plans etaient abandonnes.
+  const cle = empreinte('pexels-video', requete, vertical, combien)
   const cache = litCache(cle)
   if (cache) return cache
 
@@ -99,7 +106,7 @@ export async function chercheVideos(requete, { largeur, hauteur, combien = 5 } =
 /** Cherche des photos. Le recadrage est demandé au serveur, pas fait ici. */
 export async function cherchePhotos(requete, { largeur, hauteur, combien = 5 } = {}) {
   const vertical = hauteur > largeur
-  const cle = empreinte('pexels-photo', requete, vertical, largeur, hauteur)
+  const cle = empreinte('pexels-photo', requete, vertical, largeur, hauteur, combien)
   const cache = litCache(cle)
   if (cache) return cache
 
@@ -225,9 +232,52 @@ export const brollDisponible = () => {
  * renseigne leur `src`. Les événements non résolus sont retirés plutôt que de
  * laisser un trou noir dans la vidéo.
  */
-export async function resoudBroll(evenements, { largeur, hauteur, dossier }) {
+export async function resoudBroll(evenements, { largeur, hauteur, dossier, direction = null }) {
+  // TES PROPRES PLANS SE POSENT EN INSERT, PAS EN PLEIN ÉCRAN.
+  //
+  // Pexels ne connaîtra jamais ton produit, ton visage, ni la capture d'écran de
+  // ton tableau de bord. Mais un logo ou une photo qui prend tout le cadre
+  // arrête le montage : on passe d'une vidéo à une diapositive, et le plan
+  // suivant repart de zéro.
+  //
+  // L'insert résout les deux : le plan de banque continue derrière, et TON
+  // image se pose dessus, en carte, le temps qu'on la lise. C'est la langue de
+  // l'incrustation — celle des chaînes qui montrent une preuve sans casser leur
+  // rythme.
+  //
+  // Concrètement : on ne pose PAS `src`, on pose `insert`. L'événement reste
+  // donc dans la file de Pexels et recevra son fond comme les autres.
+  assureDossier(dossier)
+  const attributions = []
+  let resolus = 0
+  const perso = attribuePerso(evenements)
+  for (const c of perso) {
+    const e = evenements[c.i]
+    const nom = `perso-${String(c.i + 1).padStart(2, '0')}${path.extname(c.asset.fichier)}`
+    try {
+      fs.copyFileSync(path.join(DOSSIER_PERSO, c.asset.fichier), path.join(dossier, nom))
+    } catch (err) {
+      journal.attention(`Ton plan « ${c.asset.fichier} » n'a pas pu être copié : ${err.message}`)
+      continue
+    }
+    e.insert = {
+      src: `broll/${nom}`,
+      image: c.asset.image,
+      // Le côté vient de l'ordre d'apparition : deux inserts de suite du même
+      // côté se lisent comme une bannière, pas comme deux preuves.
+      cote: perso.indexOf(c) % 2 === 0 ? 'droite' : 'gauche',
+    }
+    e._perso = { fichier: c.asset.fichier, motscles: c.trouves }
+  }
+  if (perso.length) {
+    journal.detail(
+      `${perso.length} insert(s) pris dans ta bibliothèque : ` +
+        perso.map((c) => `${c.asset.fichier} sur « ${evenements[c.i].ancre ?? evenements[c.i].requete} »`).join(', ')
+    )
+  }
+
   const aResoudre = evenements.filter((e) => e.type === 'broll' && !e.src && e.requete)
-  if (aResoudre.length === 0) return { resolus: 0, abandonnes: 0, attributions: [] }
+  if (aResoudre.length === 0) return { resolus, abandonnes: 0, attributions }
 
   if (!brollDisponible()) {
     journal.attention(
@@ -235,21 +285,35 @@ export async function resoudBroll(evenements, { largeur, hauteur, dossier }) {
         `Ils sont ignorés — ajoute une clé dans config/keys.json, ou filme-les toi-même.`
     )
     for (const e of aResoudre) e._aRetirer = true
-    return { resolus: 0, abandonnes: aResoudre.length, attributions: [] }
+    return { resolus, abandonnes: aResoudre.length, attributions }
   }
 
-  assureDossier(dossier)
-  const attributions = []
-  let resolus = 0
   let abandonnes = 0
 
+  // Ce qui a déjà été pris dans cette vidéo. Un même plan qui revient se lit comme
+  // une redite, y compris quand deux recherches différentes tombent dessus.
+  const dejaPris = new Set()
+
   for (const [i, e] of aResoudre.entries()) {
-    const candidats = await chercheVideos(e.requete, { largeur, hauteur, combien: 3 }).catch(() => [])
+    // `variante` vient du découpage sur les fins de phrase : plusieurs morceaux
+    // partagent la même recherche et doivent recevoir des plans DIFFÉRENTS.
+    // Assez de candidats pour que la deduplication ait de la marge. Une meme
+    // requete alimente souvent trois ou quatre plans apres la decoupe sur les
+    // fins de phrase, et chacun doit recevoir un clip DIFFERENT.
+    const combien = 10 + (e.variante ?? 0) * 3
+    // La direction des plans de la chaîne s'ajoute à CHAQUE requête.
+    //
+    // Sans elle, une chaîne douce reçoit des plans durs et une chaîne dure des
+    // plans mièvres — et on corrige alors requête par requête, indéfiniment.
+    // Le réglage vit dans `identite_visuelle.direction_plans` : il traite le
+    // problème à la source, et il change avec la chaîne sans toucher au code.
+    const requete = direction ? `${e.requete} ${direction}` : e.requete
+    const candidats = await chercheVideos(requete, { largeur, hauteur, combien }).catch(() => [])
     const secours =
       candidats.length === 0
-        ? await cherchePhotos(e.requete, { largeur, hauteur, combien: 3 }).catch(() => [])
+        ? await cherchePhotos(requete, { largeur, hauteur, combien }).catch(() => [])
         : []
-    const liste = candidats.length ? candidats : secours
+    const liste = (candidats.length ? candidats : secours).filter((m) => !dejaPris.has(m.id ?? m.url))
 
     let pris = null
     for (const media of liste) {
@@ -262,6 +326,7 @@ export async function resoudBroll(evenements, { largeur, hauteur, dossier }) {
     }
 
     if (pris) {
+      dejaPris.add(pris.media.id ?? pris.media.url)
       e.src = `broll/${pris.nom}`
       // Une photo a besoin d'un mouvement : sans lui, l'image se fige et
       // l'attention part.

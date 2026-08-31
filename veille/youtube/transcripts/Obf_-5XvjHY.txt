@@ -1,0 +1,342 @@
+# How Many Personality Traits Actually Exist? (Massive Study)
+# Spencer Greenberg · 11 k vues · 00:11:22
+# https://www.youtube.com/watch?v=Obf_-5XvjHY&t=116s
+
+A debate has been raging for ages among
+personality researchers about a
+fundamental question related to human
+nature. How many dimensions of
+personality are there? In other words,
+how many different personality traits do
+you need people to be scored on in order
+to have an accurate sense of what
+they're like? Do you need three numbers
+to represent a person's personality? Or
+could it be more like four, five, six,
+10, or even 100? This might even seem to
+you like the sort of question that has
+no answer. But surprisingly, it does.
+And today we're going to explore what
+that answer is. One of the early
+attempts to answer this dates all the
+way back to 1944, and it relates to what
+is today the most famous personality
+test, the Myers-Briggs Type Indicator,
+also known as MBTI. It scores people on
+four traits or spectrums. In particular,
+it evaluates where each person falls
+between being an introvert and an
+extrovert, where they fall between being
+a feeler and a thinker, between being
+intuitive and a sensor, and between
+being a judger and a perceiver. Most
+MBTI-style tests then dichotomize the
+results. If you're above average on
+extraversion, they call you an
+extrovert. Otherwise, they call you an
+introvert. This dichotomization makes
+the test far less accurate because on
+each trait, they put you in just one of
+two buckets. To give an example, most
+people fall near the middle on most of
+these traits. For instance, on sensing
+versus intuition, if you dichotomize the
+data, then you force lots of people who
+are right near the boundary to go on one
+side or the other, which makes it less
+accurate. If we use the same underlying
+framework, but we don't dichotomize
+people, and instead represent them as
+having a score on each of the four
+MBTI-style spectrums, we can see these
+suggest that there are four important
+dimensions of human personality. But is
+it really true that personality has four
+dimensions? And how would we actually
+know? After the MBTI was released, many
+other theories of personality were put
+forward. Cattell developed a test based
+on 16 traits around 1950. Eysenck
+developed a test with just two traits
+around 1960. If we fast forward a bit, a
+major new personality test contender
+came on the scene, known as the Big
+Five. Whereas MBTI-style tests are based
+on the psychological theory about human
+nature, the Big Five started with
+empirical data. Researchers took all of
+the adjectives in the English language
+that could be used to describe a person.
+They duplicated the list and asked
+people, "Which of these adjectives apply
+to you?" They noticed the adjectives
+tended to group together. If someone
+said they were organized, they'd usually
+also say they were perfectionistic. If
+someone said they were social, they'd
+usually also say they were talkative,
+and so on. These groupings were then
+made more rigorous using a method known
+as factor analysis. The idea is that you
+run an algorithm that tries to find
+hidden dimensions in your data. One of
+these dimensions might capture, for
+instance, how conscientious you are,
+which could include both your level of
+organization and perfectionism in one
+factor. When they ran these factor
+analysis algorithms, they found there to
+be five personality dimensions, hence
+the name the Big Five. Other researchers
+replicated the five dimensions on
+different populations using different
+personality questions, getting a similar
+result. There's some debate over whether
+you get these five dimensions in all
+cultures. In small-scale societies, for
+instance, some people argue you get
+fewer factors. But, across most
+countries that were studied, these same
+five dimensions of personality were
+found. So, the Big Five says there are
+five primary dimensions of personality.
+Whereas MBTI-style tests say there are
+four dimensions. How can we tell which
+is right? We ran our own study aiming to
+answer this question. The idea was to
+see whether using five dimensions,
+rather than four, enabled more accurate
+predictions about people. In the study,
+we asked people 37 questions about their
+lives, such as how many close friends
+they have, how satisfied they are with
+their life, and whether they received a
+promotion at work. The goal was to
+predict the answers to these 37
+questions. We also administered each
+person a Big Five test and an MBTI-style
+test based on the same underlying theory
+created by Briggs and Myers. We could
+then compare how accurately we could
+predict the answers to the 37 questions
+using each of the two personality tests.
+The results were quite remarkable. The
+Big Five test had a prediction accuracy
+more than 50% higher on average than the
+MBTI style test. But, how do we know
+that this is because of having five
+factors rather than four? Well, we can
+tell because we can see what happens
+when we drop from the Big Five one of
+its factors. In this case, neuroticism.
+Neuroticism is the tendency towards
+negative emotionality such as
+depression, anxiety, and moodiness. Even
+with that factor gone, the Big Five, or
+maybe we should call it the Big Four in
+this case, still made more accurate
+predictions than the MBTI style test by
+about 20%. If we add that fifth factor
+back to the Big Five, it helps even
+more, boosting the accuracy by another
+27%. In other words, the five dimensions
+of personality win out over the four.
+You get a lot more predictive accuracy
+using five rather than four factors.
+But, is five factors really enough to
+capture the major aspects of
+personality? In the 2000s, another
+contender came on the scene known as
+HEXACO. Its creators, Lee and Ashton,
+argued based on looking at international
+data sets that there was actually a
+sixth factor of personality. This sixth
+factor is known as H, which stands for
+honesty-humility. Low scores in this
+dimension tend to be manipulative,
+arrogant, greedy, and law-breaking. The
+HEXACO model also organizes the other
+dimensions of personality a bit
+differently than the Big Five, as we can
+see in the diagram here. Openness and
+conscientiousness stay intact, but some
+other components get moved around. We
+decided to put the HEXACO framework to
+the test by running another study. To do
+so, we developed a set of questions that
+reflected the scales used in HEXACO. We
+then ran factor analysis to confirm that
+this set of questions grouped the way
+that HEXACO said they should, and indeed
+they did. So, HEXACO passed the very
+first test. We then had people in the US
+take both this test and our 102 question
+Big Five test. That way we could
+directly pit them against each other.
+So, how well did each test fare? Well,
+there are two different ways of looking
+at this. First is to see how well each
+framework did at predicting the answers
+to the personality questions themselves.
+For example, knowing how conscientious
+someone is, you can predict how they
+likely answered questions related to
+being organized and perfectionistic. We
+can capture this idea in terms of the
+percent of variation explained by each
+personality factor. When we do this, we
+get the following result. What we can
+see is that across the full set of
+personality questions from both tests,
+each of the five factors from the Big
+Five captures quite a bit of variance in
+people's responses. The first factor
+captures the most, the second factor
+captures the second most, and so on.
+But, all five of the first factors
+captures quite a lot of variance. But,
+after the first five, something weird
+happens. We get a substantial drop-off.
+The sixth factor, corresponding to H, or
+honesty-humility from HEXACO, captures a
+lot less variation in responses than
+each of the Big Five factors do. To make
+matters worse, the seventh factor is
+only a little bit worse than the sixth
+factor. So, while it seems natural to
+stop after five, before the big
+drop-off, if you are to go further and
+keep six, it seems very hard to explain
+why you aren't also keeping seven and
+eight and so on. This is not looking
+good for HEXACO so far. But, we still
+have another important way to look at
+this question. Ultimately, to be useful,
+personality tests shouldn't just model
+how you answered those exact questions
+in the personality test. They should be
+able to predict other things about your
+life. In this case, we collected 66
+facts about people's lives, a big
+increase from our last study, and we
+attempted to use the five scores from
+the Big Five, as well as the six scores
+from HEXACO, to predict each of these 66
+answers. So, how well did each test do?
+Remember, when we did a similar test
+comparing the MBTI-style test to the Big
+Five, we found that that extra fifth
+factor added a lot of predictive
+accuracy. So, is that what we found in
+this case? Actually, no. The two tests
+did about the same at predictive
+accuracy. HEXACO was only a tiny bit
+more accurate. You might think that
+using six factors, rather than five
+should always improve your prediction
+accuracy because you literally know more
+about a person. You have six numbers
+about them rather than just five. But in
+this case, that six number didn't do
+much for you. It led to a negligible
+increase in prediction accuracy. But
+let's look deeper into this. What
+specific facts about a person were we
+better able to predict using HEXACO than
+using the Big Five? Since HEXACO adds
+the H factor, honesty-humility, we might
+expect that it did especially well at
+predicting factors related to morality.
+And indeed this was the case. It had an
+advantage relative to the Big Five at
+predicting whether a person had used
+physical force against someone else,
+whether they'd been arrested in the last
+10 years, and whether they'd cheated on
+a romantic partner. Interestingly, as
+shown in this diagram, there were
+actually more facts where the Big Five
+did a better job of predicting them than
+HEXACO did than there were the reverse.
+The Big Five did a better job of
+predicting who had donated to charity in
+the past year, who'd been fired from a
+job, and who'd received an award. We
+believe that our study on HEXACO shows
+that for people in the US at least, it
+has little to no value above and beyond
+the Big Five unless your concern is
+specifically on topics related to
+honesty or humility, such as moral
+behavior. This doesn't rule out the
+possibility that HEXACO could be useful
+in other countries, but it does cast
+doubt on its universality. So, how many
+major dimensions of personality are
+there truly? Five appears to be the best
+answer as science understands it today
+in terms of getting the biggest bang for
+your buck. Once you know how open,
+conscientious, extraverted, agreeable,
+and neurotic a person is, you know the
+broad strokes of their personality. But
+there's a very important caveat here.
+This does not mean that there only five
+dimensions of personality that exist.
+What do I mean by that? Well, suppose
+for instance that you're particularly
+interested in risk-taking behavior. It's
+known that this is linked to the
+extraversion dimension of the Big Five.
+But if what you really care about is
+risk-taking, you can improve your
+accuracy at predicting it by adding
+another scale to measure risk-taking in
+particular. This will do a better job at
+predicting risk-taking than if you just
+use the broad big five dimensions. You
+can actually take this logic even
+further. If your goal is simply to make
+the most accurate predictions possible,
+and you don't care about compressing or
+representing that information, then you
+don't even need the big five. You can
+train a model to predict things using
+all the questions in a personality test.
+And in fact, it tends to be more
+accurate than using the big five. The
+big five does not capture everything
+there is to know about personality.
+There are aspects of personality that
+are missing from the big five. And you
+can subdivide each of the big five into
+narrower facets and then measure those
+to get more nuanced results. In fact, we
+have a project to try to find every
+facet of personality that's missing from
+the big five. So, I'll have more to say
+about that soon, hopefully. What's so
+special then about the big five? It's
+that these five factors of personality
+capture a ton of information about
+people in just five numbers. Those five
+scores, in our study for instance,
+captured 40% of the variation in
+people's responses on individual
+questions. So, those first five factors
+seem to be special based on how much
+predictive juice you get from so little
+squeeze. In a sense, there are an
+unlimited number of factors of human
+personality, but five provides a
+surprisingly accurate model that's hard
+to improve on. If you want to know more
+about your personality, take our free
+ultimate personality test. It will give
+you your big five results as well as
+your results from other frameworks. If
+you found this interesting, I'd really
+appreciate it if you subscribe. We do
+regular deep dives in psychological
+topics and have lots of new research
+coming out.

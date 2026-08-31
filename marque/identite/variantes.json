@@ -1,0 +1,50 @@
+[
+  {
+    "nom": "1-montserrat",
+    "_note": "Le standard du sous-titrage social. Géométrique, élégante sans être froide — le choix difficile à prendre en défaut.",
+    "identite_visuelle": {
+      "couleur_accent": "#ce466e",
+      "couleur_pastille": "#c93662",
+      "couleur_texte": "#f5f2f3",
+      "police_soustitres": "Montserrat",
+      "police_chiffres": "Montserrat",
+      "variations_affiche": "\"wght\" 800"
+    }
+  },
+  {
+    "nom": "2-poppins",
+    "_note": "Géométrique et ronde. La plus chaleureuse des standards : cohérente avec un sujet intime.",
+    "identite_visuelle": {
+      "couleur_accent": "#ce466e",
+      "couleur_pastille": "#c93662",
+      "couleur_texte": "#f5f2f3",
+      "police_soustitres": "Poppins",
+      "police_chiffres": "Poppins",
+      "variations_affiche": null
+    }
+  },
+  {
+    "nom": "3-inter",
+    "_note": "Le choix sûr. Neutre, dessinée pour les écrans, se fait oublier — c'est exactement ce qu'on demande à un sous-titre.",
+    "identite_visuelle": {
+      "couleur_accent": "#ce466e",
+      "couleur_pastille": "#c93662",
+      "couleur_texte": "#f5f2f3",
+      "police_soustitres": "Inter",
+      "police_chiffres": "Inter",
+      "variations_affiche": "\"wght\" 800"
+    }
+  },
+  {
+    "nom": "4-nunito",
+    "_note": "Arrondie, tendre. La plus douce du répertoire — à vérifier qu'elle n'adoucit pas un sujet qui doit rester grave.",
+    "identite_visuelle": {
+      "couleur_accent": "#ce466e",
+      "couleur_pastille": "#c93662",
+      "couleur_texte": "#f5f2f3",
+      "police_soustitres": "Nunito",
+      "police_chiffres": "Nunito",
+      "variations_affiche": "\"wght\" 900"
+    }
+  }
+]

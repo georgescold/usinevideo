@@ -20,7 +20,15 @@ export type Format =
   | 'short-faceless'
   | 'short-avatar'
 
-export type StyleSousTitres = 'mot-a-mot-pastille' | 'ligne-karaoke' | 'bloc-2-lignes'
+export type StyleSousTitres = 'mot-a-mot-pastille' | 'mot-a-mot-couleur' | 'ligne-karaoke' | 'bloc-2-lignes'
+
+/**
+ * L'apparition d'une page de sous-titres.
+ *
+ * Les quatre valeurs et leurs chiffres viennent de Scriptshort ; la conversion
+ * en ressort Remotion est documentée dans `components/SousTitres.tsx`.
+ */
+export type AnimationSousTitres = 'aucune' | 'fondu' | 'pop' | 'rebond'
 
 /** Une police embarquée. Le fichier vit dans remotion/public/fonts/. */
 export type Police = {
@@ -36,6 +44,12 @@ export type Theme = {
   texte: string
   accent: string
   accentSecondaire: string
+  /** Fond du mot actif : accent assombri, pour que le texte y reste lisible. */
+  pastille: string
+  /** douce | neutre | dure — règle vignette, grain et contraste. */
+  ambiance: string
+  /** Axes CSS d une police variable, ex. '"wght" 900'. */
+  variationsAffiche?: string | null
   alerte: string
   /**
    * Polices à embarquer. Sans elles, le texte retombe sur une police système
@@ -55,6 +69,28 @@ export type Theme = {
     /** Distance au bas du cadre, en pourcentage de la hauteur. */
     positionBas: number
     contour: boolean
+
+    // LES CHAMPS CI-DESSOUS SONT TOUS OPTIONNELS, ET CE N'EST PAS UNE COMMODITÉ.
+    //
+    // La direction artistique des sous-titres a été validée à l'image avant
+    // qu'ils existent. Un `plan.json` écrit avant eux doit rendre au pixel près
+    // comme il rendait alors : chacun de ces champs, ABSENT, laisse le rendu
+    // exactement où il était. `null` ne fait pas la même chose que `undefined`
+    // ici — n'écrire la clé que lorsqu'on veut vraiment dévier du défaut.
+
+    /** Multiplie l'épaisseur du tracé de contour. 1 = le trait de référence. */
+    epaisseurContour?: number
+    /** Remplace `Theme.texte` pour les mots pas encore dits. #RRGGBB. */
+    couleurTexte?: string
+    /** Couleur du mot en cours de prononciation, quel que soit le style. */
+    couleurSurligne?: string
+    /** Remplace le noir du contour. #RRGGBB. */
+    couleurContour?: string
+    animation?: AnimationSousTitres
+    /** `true` garde la ponctuation finale à l'écran ; par défaut on la retire. */
+    ponctuation?: boolean
+    /** Remplace `Theme.policeSousTitres` pour les seuls sous-titres. */
+    police?: string
   }
 }
 
@@ -97,6 +133,13 @@ export type Infographie =
   | { modele: 'chronologie'; donnees: { etapes: { date: string; texte: string }[] } }
   | { modele: 'barres'; donnees: { series: { libelle: string; valeur: number }[]; unite?: string } }
   | { modele: 'citation'; donnees: { texte: string; source: string } }
+  // Un seul mot, plein écran, qui claque. Pour le pivot émotionnel d'une vidéo,
+  // une fois par tiers au maximum : c'est l'effet le plus fort du catalogue et
+  // il s'use immédiatement si on le répète.
+  | { modele: 'takeover'; donnees: { mot: string; apres?: string; ton?: 'accent' | 'texte' } }
+  // Des pastilles qui poppent en cascade par-dessus l'image. Pour une
+  // énumération rapide qu'on n'a pas le temps de lire ligne à ligne.
+  | { modele: 'pastilles'; donnees: { items: string[] } }
 
 export type BlocComparaison = { titre: string; points: string[] }
 
@@ -110,7 +153,21 @@ export type Evenement =
   | (Base & { type: 'mot-cle'; texte: string })
   | (Base & { type: 'chiffre'; de: number; a: number; prefixe?: string; suffixe?: string })
   | (Base & { type: 'infographie' } & Infographie)
-  | (Base & { type: 'broll'; src: string; ken?: boolean })
+  | (Base & {
+      type: 'broll'
+      src: string
+      ken?: boolean
+      dureeSourceMs?: number
+      entreeSection?: boolean
+      /**
+       * UN PLAN À TOI, POSÉ SUR CELUI-CI — pas à sa place.
+       *
+       * Une image de la bibliothèque personnelle (`assets/broll/`) qui vient se
+       * poser en carte par-dessus le plan de coupe. Le fond continue de vivre
+       * derrière : c'est ce qui distingue une incrustation d'une diapositive.
+       */
+      insert?: { src: string; image?: boolean; cote?: 'gauche' | 'droite' }
+    })
   | (Base & { type: 'capture'; src: string })
   | (Base & { type: 'carton'; texte: string; sousTexte?: string })
   | (Base & { type: 'souligne'; texte: string })
@@ -124,6 +181,8 @@ export type Plan = {
   fps: number
   dureeFrames: number
   theme: Theme
+  /** Zooms d'appui, appliqués à l'étage image entier, au mot exact. */
+  punchs?: { debutMs: number; amplitude: number }[]
   /** Voix off finale, déjà recollée après coupe. Chemin relatif à public/. */
   voix: { src: string; volume?: number }
   musique?: { src: string; volume: number; fondueMs?: number }
@@ -149,6 +208,9 @@ export const THEME_PAR_DEFAUT: Theme = {
   texte: '#FBF9F7',
   accent: '#E8503A',
   accentSecondaire: '#2E9E8F',
+  pastille: '#B03A28',
+  ambiance: 'neutre',
+  variationsAffiche: null,
   alerte: '#D93F3F',
   polices: [],
   policeTitres: 'Inter',

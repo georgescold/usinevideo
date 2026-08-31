@@ -1,0 +1,2978 @@
+# ILS ONT FAIT FORTUNE AVEC DES APPLICATIONS MOBILES TRÈS SIMPLEMENT !
+# LEGEND · 142 k vues · 01:22:40
+# https://www.youtube.com/watch?v=C9tM3hxbfyk
+
+Bonjour tout le monde et bienvenue sur
+Légende. Ils sont devenus
+multimillionnaires en faisant une
+application mobile. On aura plusieurs
+profils d'entrepreneurs qui vont venir
+ici qui ont fait des applications qui
+ont explosé.
+Il y a quelques années, ça coûtait 50000
+€ à développer une [musique] application
+et aujourd'hui grâce à l'IA, pour
+quelques euros, tu vas pouvoir créer une
+application qui va te rapporter de
+l'argent. IB, ce qui une application qui
+était très connue à l'époque qui a une
+application qui te permet de de boire
+une bière virtuelle.
+Ah oui oui, on penche ce téléphone.
+Exactement.
+Voilà. Bon 20000 € par jour, je suis
+bien fait.
+Ah non. Voilà, j'ai proposé une
+application, on l'a faite en y a en
+moins de je dirais en moins de 10
+minutes, l'ordinateur a tourné là, je
+rentre un mot et laappli me dit si c'est
+de gauche ou de droite politiquement. On
+va tester tiens les tatouages. Les
+tatouages c'est plus de gauche. Emmanuel
+Macron, c'est plus de gauche ou est-ce
+que c'est plus de droite ? Ça c'est
+source d'emmerde, je vous le dis ce que
+je suis en train de faire. Je vais
+mettre des emmerdes.
+Bonjour tout le monde et bienvenue sur
+Légende. Ils sont devenus
+multimillionnaires en faisant une
+application mobile. Vous allez voir, on
+aura plusieurs profils d'entrepreneurs
+qui vont venir ici qui ont fait des
+applications qui ont explosé. Et il y
+aura Jean-Baptiste Tironde qui a créé
+MWM aussi qui est une société qui est
+exceptionnelle qui permet de créer une
+application avec de l'IA en 10 15
+minutes maximum. Vous allez voir, c'est
+exceptionnel. On va même tester durant
+l'émission de créer une application avec
+une idée vraiment très simple. On va
+donc faire tout ça en direct. On va
+recevoir tout à l'heure, vous allez
+voir, l'un d'entre vous qui s'appelle
+Hakim qui a créé une application qui
+s'appelle Give. Il y a eu 7 millions de
+Français qui l'ont téléchargé. Ça permet
+de donner des objets et d'en offrir.
+Évidemment sans argent. C'est vraiment
+comme du troc, on peut en offrir et en
+avoir des objets dont on a plus besoin.
+Il y aura Aaron qui est bénévole sur
+l'application Be My Eyes. Ça permet
+d'aider les personnes non voyantes.
+Lorsqu'ils ont besoin, ils appuyent sur
+l'application et c'est vous qui les
+guidez pour faire des tâches où parfois
+on a besoin de voir. Donc on va aborder
+le sujet des applications, des
+applications les plus exceptionnelles
+qui existent aussi avec Lola, notre
+journaliste qui va nous présenter des
+applications. Donc une émission sur les
+app. Merci en tout cas de vous abonner
+juste avant qu'on commence si vous
+voulez bien à notre chaîne YouTube et en
+podcast audio sur Spotify 10 Apple
+Podcast et Amazon Podcast. Vous pouvez
+nous suivre comme ça durant toute
+l'émission sur votre AG. Si vous êtes en
+train de cuisiner ou en train de faire
+autre chose ou dans le lit, vous pouvez
+le mettre en version audio sur les
+plateformes de podcast audio. En tout
+cas, merci d'être là et c'est parti
+maintenant avec Jean-Baptiste Tirond qui
+a la tête de MWM qui est donc une
+société qui permet de créer des
+applications en moins de quelques
+minutes, dizaines de minutes. Vous
+pouvez avoir une application pour
+quelques centaines d'euros aujourd'hui,
+mettre de la pub dessus et gagner de
+l'argent si vous avez une bonne idée.
+C'est parti, on y va sur les gens.
+Bonjour, je m'appelle Jean-Bapthiste
+Tironde. Euh, j'ai créé un catalogue
+d'applications qui ont été téléchargées
+plus de 1 milliard de fois. Et donc
+aujourd'hui, on va parler du business
+des applications mobile.
+Bienvenue Jean-Baptiste, je te reprends
+le clap. Parfait dès le premier coup.
+Euh, bienvenue à toi. Très content de te
+recevoir. Je suis très content de faire
+cette émission. Vous allez voir sur les
+applis mobiles, sur ceux qui ont fait
+fortune avec les applications mobiles,
+on aura plusieurs personnes qui
+viendront tout à l'heure qui ont explosé
+littéralement à partir d'une idée
+d'application mobile. Euh vous allez
+voir, il y aura des applications très
+différentes qui ont été faites il y a
+quelques années pour certaines, d'autres
+qui sont beaucoup plus récentes. À
+l'époque, ça coûtait très cher de faire
+une application, c'était en centaines de
+milliers d'euros. Aujourd'hui, toi, tu
+as MWM, donc vous avez fait 1 milliard
+de téléchargement avec les applications.
+Enfin, c'est monstrueux. Aujourd'hui, on
+peut les faire avec Lia grâce à MWM.
+C'est hyper facile. On va même essayer
+de faire une application. Tout à
+l'heure, j'ai j'ai lancé la requête,
+c'est comme ça qu'on dit. J'ai j'ai
+prompté, en gros, j'ai demandé une
+application, elle est en train de se
+faire. Normalement, dans 10 15 minutes,
+on va reprendre l'ordi, on va le mettre
+sur le téléphone et on aura une
+application qui est partie d'une idée
+d'il y a quelques jours dans une
+émission. Vous allez voir ça. C'est
+vraiment aussi rapide que ça aujourd'hui
+de Farine app.
+Ça prend quelques minutes en fonction de
+la complexité mais globalement un
+premier résultat en moins de 5 minutes
+et après si tu veux vraiment approfondir
+ton application ça peut aller jusqu'à
+une demi-heure 1 heure mais en fait ça
+s'arrête ça s'arrête quand tu décides de
+t'arrêter. Oui. Tu fais après tu tu
+rajoutes des modifs, tu la complexifies
+mais la réalité c'est que ça prenait
+combien de temps avant quand tu as
+commencé ? J'ai j'ai il y a 10 ans 15
+ans. Il fallait combien de temps pour
+faire une app ?
+Alors ma première app qui est iding une
+app de DJ.
+C'est comme ça que tu as fait fortune
+toi ? C'est la première fois que tu as
+explosé ? C'est la c'est la première
+application que j'ai lancé quand j'étais
+donc j'ai eu l'idée quand j'étais
+étudiant.
+Première app mon d'ailleurs.
+C'était la première app de DJ gratuite
+sur iOS et Android. Et euh et
+effectivement bah pour te dire, on a mis
+3 ans à la développer euh pour vraiment
+qu'elle soit finalisée. Donc
+effectivement 3 ans de développement euh
+et des applications. Il y a quelques
+années ça coûtait 50000 € à développer
+une application. Au début, on parlait en
+million. On a certaines appes comme par
+exemple Color Pop qui est une app de
+coloriage qu'on distribue qui est très
+populaire niveau gérer aussi. Ouais.
+Ouais. Euh donc on a un catalogue assez
+large d'application et Colorpop étant
+une des apps qu'on a lancé il y a il y a
+5 6 ans, c'était 1,5 million de frais de
+développement. Donc ça veut dire en gros
+bah tu as quand même des ingénieurs que
+tu payes, des designers, des product
+managers. Donc ça te coûte bah beaucoup
+de temps, beaucoup d'argent.
+Et aujourd'hui, grâce à l'IA, notamment
+WMI, on est capable via
+[raclement de gorge] des agents, donc
+des équipes, une équipe d'agents qui
+vont en fait aller faire le travail pour
+toi de coding, de design, de product
+management et donc du coup pour quelques
+euros, tu vas pouvoir créer une
+application que avant tu mettais des
+dizaines de milliers d'euros à
+[ __ ] c'est fou. Et on peut vraiment
+faire un business aujourd'hui. C'estd
+que je là si demain je voulais lancer un
+business sur une app chez vous avez une
+idée de génie, vous dites mais il manque
+quelque chose, il y a un besoin en ça.
+J'ai l'idée. Est-ce que vraiment si on y
+connaît rien, on peut lancer avec MWM
+vraiment une application rapidement et
+gagner de l'argent avec ? [grognement]
+Alors bah on a fait WMA pour ça en fait.
+Ça veut dire que avant pour te lancer,
+il fallait donc euh lever des fonds euh
+payer des développeurs, embaucher des
+freelances potentiellement dans cette
+boî.
+Voilà, il fallait créer une boîte et il
+fallait lever de l'argent. Donc déjà ça
+quand c'est ce que j'ai fait au tout
+début hein. Et donc on sait que lever de
+l'argent c'est quand même très complexe,
+très difficile. Et donc MWA bah en fait
+tu as pas besoin de lever d'argent
+puisque le ticket d'entrée, on va dire
+est assez faible puisque pour quelques
+euros ou dizaines d'euros, tu vas
+pouvoir avoir une première application.
+Euh donc aujourd'hui
+mais qui est en ligne quand tu dis
+application
+que tu vas pouvoir mettre en ligne
+publié sur l'App Store euh avec ou sans
+monétisation à l'intérieur mais si tu
+mets de la monétisation tu vas pouvoir
+gagner de l'argent. C'estàdire que en
+pour quelques dizaines ou centaines
+d'euros, tu peux avoir un business que
+tu crées dans le domaine des
+applications que tu mets en ligne qui va
+te rapporter de l'argent. Et ça c'est
+nouveau puisqueeffectivement on a lancé
+la plateforme il y a il y a quelques
+mois et ce que je te dis là aujourd'hui
+n'était pas valable il y a 6 mois
+puisque euh les IA n'étaient pas
+capables de faire ça
+parce que vous aviez MWM et là il y a
+MWMAI donc intelligence artificielle
+simplement très simplement MWM euh donc
+nous ça fait 15 ans qu'on développe des
+applications. La première étant une app
+de DJ, c'est comme ça que j'ai commencé
+quand à la suite de mes études. Et
+voilà, après un un long parcours dans
+les App Stores et donc le V des fonds et
+cetera, donc on a appris à faire du
+business sur mobile. Le marché donc a a
+beaucoup évolué et en fait l'IA étant
+arrivé, on s'est dit bon bah là c'est le
+moment de proposer un outil qui va faire
+exactement ce que nous on a mis 15 ans à
+faire. Donc MWM 15 ans pour en arriver
+aujourd'hui on a levé euh à peu près 78
+millions d'euros pour faire marcher une
+boîte qui permet de faire 1 milliards de
+télécharement 78 milli
+78 millions d'euros
+euh parcours du combattant. Donc je la
+première levée de fond c'était 81000 €.
+Euh pour arriver aux 78 millions, il
+s'est passé quelques années et quelques
+difficultés.
+Aujourd'hui vous êtes combien ?
+Euh en 2026 on est 60.
+Félicitations. [ __ ] c'est incroyable.
+Tu as 39 ans [raclement de gorge] toi
+aujourd'hui hein ?
+39 ans. Euh
+c'est très excitant l'émission parce que
+vous allez voir, ça donne vraiment envie
+de se lancer dans les app.
+Excuse-moi, tu disais quoi ? 39 ans et
+bientôt 40 et bientôt 40.
+Ça c'est moins drôle. Maisô
+tu as des enfants, tu es tu es marié ?
+Tu es tu es c'est quoi toi ta situation
+?
+Marié euh trois enfants bientôt quatre.
+Bravo. En cours.
+En cours.
+Félicitations. Euh on va parler de
+différentes applications. Il y a Famo.
+Est-ce que on va avoir tout à le
+créateur de Famile Leo une application
+qui cartonne ? 280000
+familles qui l'utilisent au quotidien.
+Est-ce que tu connais l'application ?
+Alors, je connais très bien Familio
+puisque ma femme l'utilise depuis à peu
+près 5 ans. Euh donc, elle avait le
+besoin pour sa grand-mère,
+elle est cliente depuis 5 ans et donc
+elle paye son abonnement. Et euh le but
+de l'appli, c'est un service qui te
+permet de mettre des photos de famille
+sur l'application qui derrière va aller
+imprimer un magazine que la les
+grands-parents, souvent c'est plutôt les
+grands-parents, vont recevoir chez eux.
+Euh et donc tous les mois, c'est génial.
+Ouais. Elle a son rituel, elle de ses
+photos, toutes les enfants et les
+cousins font ça et tu enfin la la les
+grands-parents reçoivent le mag.
+On peut avoir un livre une fois par an.
+Enfin, c'est vraiment très bien. Vous
+allez voir. Il y aura aussi le patron de
+GI, une société qui qui sert à donner.
+C'estd que c'est un peu comme le Boncoin
+mais là vous allez pas acheter, vous
+allez donner et vous allez pouvoir avoir
+en retour. C'est les systèmes de banane.
+Vous verrez, on gagne des bananes quand
+on donne donc du coup on peut recevoir.
+C'est un énorme carton aussi.
+il y a qui est une application sociale
+pour le coup qui permet d'aider les
+personnes aveugles quand elles ont
+besoin d'aide. Elles sont perdues, elles
+se retrouvent devant quelque chose
+qu'elles doivent voir cette fois. Ilells
+ont besoin de de l'aide de quelqu'un
+sauf qu'elles peuvent pas le faire et du
+coup hop ça sonne sur votre téléphone,
+ça vous propose d'aider une personne non
+voyante n'importe quand et va vous dire
+tiens est-ce que vous pouvez me lire la
+notice ou est-ce que je dois prendre un
+médicament ? Est-ce que peut me dire si
+c'est le bon ? C'est génialissime. Il y
+a 10 millions d'inscrits aussi. Donc on
+aura les créateurs. Euh là aujourd'hui,
+on peut euh créer une appli beaucoup
+plus rapidement. Qu'est-ce que tu
+conseilles à ceux qui ont envie de se
+lancer pour la première fois dans c'est
+un lancement d'application ?
+Alors, je vais pas donner une une app ou
+une catégorie spécifique, hein. La
+problématique, c'est qu'aujourd'hui, on
+peut faire n'importe quoi à un coût très
+faible. Donc, en fait, le danger, c'est
+que quand nous à l'époque on faisait des
+app, on faisait une étude de marché, on
+analysait comment
+du temps quoi.
+Bah, il y avait du temps de de
+marketing, aller comprendre comment ça
+fonctionne ce marché là. Est-ce qu'il y
+a un besoin ? Est-ce qu'il y a un
+business à faire ? Parce que quand tu
+lances une app et que tu mets 200 300
+500000 € de développement de coût de
+développement, tu peux pas y aller au
+hasard. Aujourd'hui, tu vas sur MWMAI,
+tu génères une app, tu as une idée en
+parlant à la machine à café, tu lances
+ton application, euh ça marche pas, tu
+as perdu 50 €. Donc aujourd'hui, la
+problématique c'est qu'on peut tout
+faire pas cher. Euh et donc en fait ce
+que je conseille aux gens, bah c'est
+lancez-vous et faites plein de tests.
+Plus tu vas lancer des app, tu as de
+chance de graines en fait
+tu tu voilà tu comme quand tu vas à la
+pêche. Moi quand j'étais petit, je je
+faisais pas mal
+je faisais pas mal de pêche et je
+faisais fait des concours de pêche étant
+tout petit. Euh et en fait bah ce que je
+faisais c'est que quand tu vas à la
+pêche, tu mets pas une ligne, tu en mets
+quatre cinq pour augmenter tes chances.
+Donc en fait aujourd'hui l'idée c'est le
+point de départ.
+Et derrière [raclement de gorge] euh ce
+qui est important, c'est de répondre à
+une idée qui va avoir un public. Sinon
+ça ne sert entre guillemets à rien.
+C'est pas il y a pas d'idée que personne
+n'y pense et tu l'as tu l'as fait et ça
+y est le c'est le buz tu vois.
+Est-ce qu'on peut encore faire fortune
+avec une application en France ? Est-ce
+qu'il y a encore des applications qui
+vont se créer qui peuvent exploser ? Tu
+penses ?
+ça arrive tous les jours. Ça veut dire
+que aujourd'hui
+une application en fait qui va avoir
+alors ça toi tu as soit les marchés
+émergents, ça veut dire que tu vas avoir
+une nouvelle catégorie qui va se former
+donc avec des gens qui vont en fait
+lancer des app là-dedans. Parce que la
+problématique de l'App Store c'est que
+quand tu lances une application, tu as
+souvent d'autres personnes dans le monde
+qui ont eu soit la même idée, soit qui
+vont te copier. Donc la problématique
+c'est que c'est bien d'avoir une idée
+mais faut aller très vite parce que du
+coup derrière tu vois par exemple nous
+sur Ediging la app de DJ doit y en avoir
+trop 400 sur l'App Store. Bon on est
+numéro 1 mondial le numéro 2 et le
+numéro 3 c'est nos vrais concurrents.
+Mais derrière il y a 400 gars qui
+essayent de venir marcher sur nos
+plandes. Combien de temps il faut là ?
+On va essayer une application pour la
+blague he c'est vraiment un truc pour la
+blague mais on va aller au bout de la
+blague. Ça c'est pas marrant. [soupir]
+On a pitché une idée dans MWM, donc sur
+ordinateur tout simplement, on s'est
+connecté, on a pris un un forfait le
+plus petit juste pour essayer pour voir
+ce que ça donné. C'est en train de
+mouliner. Dans moins de 5 minutes, je
+vais vous montrer l'application, je vais
+vous la présenter. Je garde le le le
+suspense pour l'instant. Combien de
+temps il faut pour qu'elle soit sur
+l'Apple Store, sur l'App Store ou sur
+les autres Stores en général en ligne et
+téléchargeable en version gratuite ?
+Alors euh la développer maintenant, ça
+devient le temps le plus court, c'est
+quelques minutes ou quelques heures. Euh
+la publier, ça devient le temps le plus
+long. Alors quand tu publies une app,
+elle part en ce qu'on appelle en review,
+en revue chez Apple, tu as des humains
+qui vont ouvrir les applications et qui
+vont regarder si ça correspond aux
+guidelines, donc aux règles de la
+plateforme iOS et Android. Euh sur
+Android, donc c'est les deux plateformes
+principales sur Android. Aujourd'hui,
+c'est plutôt des robots qui font ça, qui
+vont ouvrir les app et qui vont regarder
+chez Apple, il y a vraiment des une
+équipe review, donc une équipe de revue,
+qui vont vraiment regarder si l'appin
+pas les règles d'Apple. Voilà, pour
+protéger ses utilisateurs.
+Combien de temps du coup ?
+Et [grognement] ben, ça peut prendre euh
+24 heures au plus rapide.
+C'est quand même pas long.
+Non, c'est pas long. Euh ça peut prendre
+3 mois selon comment tu te positionnes
+par rapport au gin n'importe quoi en
+fait. C'est pas il y a un vrai filtre
+humain qui permet de ne pas lancer
+n'importe quoi pour protéger les
+utilisateurs. Je vais donner les
+chiffres, c'est intéressant de de
+savoir. Il y a 8 millions d'applications
+sur les stores aujourd'hui au moment du
+tournage, grosso modo, il y a 2000
+nouvelles apps, donc 2000 nouvelles
+applications qui sont créées chaque
+jour. Ça c'est quand même
+publié chaque jour,
+énorme. Euh comment on gagne de l'argent
+? Je parlais d'application gratuite.
+Ceux qui veulent se lancer, ils vont
+faire une application gratuite qui va
+exploser. Imaginons, comment est-ce que
+tu gagnes de l'argent ? Alors, ça c'est
+la question qui est la plus technique et
+la plus importante. C'est-à-dire que si
+tu fais une application euh qui n'a pas
+vocation à gagner de l'argent, tu vas
+pas réussir à investir en marketing et
+tu seras pas connu et donc du coup ton
+app ne sera pas utilisée. Donc euh
+aujourd'hui la monétisation c'est
+vraiment le cœur du réacteur. Si tu sais
+pas effectivement tu mets pas en place
+des mécaniques de monétisation dans ton
+app, bah tu globalement comme toute
+entreprise, tu vas pas réussir à à
+perdurer. Donc pour monter, c'est très
+simple. Il y a deux techniques. Soit tu
+mets des publicités dans ton
+application. Donc là, tu vas afficher
+des intersticiels, donc des petites
+vidéos ou des bannières dans ton
+application comme ça.
+Comme dans les jeux mobiles, les jeux
+mobiles, il a des petites pub qui
+popent, tu es obligé d'attendre 10
+secondes avant d'avoir la croix qui
+apparaît.
+Voilà, il y a il y a des des pubs qui
+sont plus ou moins longues et cetera.
+Donc exactement. Ou sinon, tu vas mettre
+ce qu'on ce qu'on appelle des
+abonnements ou des achats intégrés.
+C'est soit tu vas vendre des petits
+objets dans ton application. Donc dans
+les jeux, tu vas acheter des packs de
+diamants ou ce que tu veux. Euh dans les
+app, tu peux acheter euh je sais pas
+moi, tu vas acheter des cartes dans ton
+application de running, tu achètes la
+carte de telle montagne ou autre ou
+sinon tu vas t'abonner au service euh
+pour en fait euh accéder à l'application
+avec toutes les les fonctionnalités
+débloquées. Voilà, donc en gros, c'est
+soit un un système d'abonnement payant
+globalement, soit c'est la publicité.
+Est-ce qu'il y a beaucoup d'applications
+qui sont rentables en France ? Parce que
+tu vois, toi tu le vois avec MWM, il y a
+pas que la France, mais est-ce que tu
+vois beaucoup d'applications qui
+deviennent rentables ? Alors, il y a
+très peu d'applications qui sont
+rentables. Euh bon, 8 millions
+d'applications, euh j'ai pas le chiffre
+exact, hein, mais euh on peut considérer
+que c'est des milliers qui sont
+rentables ou des dizaines de milliers.
+Mais sur les millions, bah comme tu
+disais, il y a beaucoup d'idées. Euh, il
+y a beaucoup d'applications qui sont 100
+% gratuites. Donc là, gag gagnent pas
+d'argent. Euh mais donc globalement euh
+avoir une appli rentable euh c'est on va
+dire ça va dépendre de tes coûts à la
+base. Si tu es solo preneur, tu fais ça
+en parallèle de ton travail, tu mets une
+app qui va te rapporter 1000, 2000, 3000
+€ par mois. euh tu vas être rentable
+puisque tu as tu as pas de coût en fait
+en face. Mais globalement euh oui les
+storcr qui est quand même assez forte
+comme d'ailleurs sur le web euh
+[grognement] et donc du coup il y a la
+majorité des applications euh ne sont
+pas rentables
+mais parce qu'elles sont mortes
+apparemment. Alors ça j'ai découvert on
+des app li mortes.
+Tu as des appes zombies donc une app qui
+sont en ligne mais il y a plus rien qui
+se passe.
+Tu as 8 millions d'applications qui sont
+on va dire en ligne mais ça veut pas
+dire qu'elles ont des téléchargements,
+elles ont pas de trafic. Ça veut dire
+que tu as des applis qui sont là, elles
+ont zéro téléchargement, elles ont
+aucune mise à jour et toi typiquement
+Apple une fois par an ou une fois tous
+les 6 mois, ils vont faire une purge.
+Donc là c'est la purge. Ils vont
+supprimer par paquet de dizaines de
+milliers les applications. Il les
+suppriment. C'est la purge tous les ans.
+Donc tu as 2000 nouvel app par jour.
+Alors ça c'était vrai il y a 6 mois là
+on est plus en plus rapprocher les 10000
+jours à cause de Lia. Lia en fait
+décuple la créativité des gens et donc
+tout le monde maintenant peut peut le
+faire. Et donc là bah la purge va
+s'accélérer puisqueeffectivement bah
+lancer une app maintenant c'est simple
+et après derrière toute la difficulté
+c'est justement d'aller pouvoir la
+monétiser et la mettre bien la
+référencer et puis après ce qu'est le le
+ton application. Euh aujourd'hui sur
+l'App Store, pour parler de ceux qui ont
+des iPhones, mais c'est pour vous donner
+un chiffre intéressant, 2 millions
+d'applications, seulement, donc il y en
+a 8 millions en tout mais 2 millions sur
+App Store. Euh Apple gagne plus de 30
+milliards de dollars par an, juste en
+fait avec les abonnements des
+applications de l'App Store. Euh donc
+c'est euh
+c'est confortable dans dans les 10
+applications les plus téléchargées en en
+2025 en France, la plupart sont faites
+avec de de l'IA et il y a beaucoup
+d'assistants IA aussi. C'est la nouvelle
+tu parlais de nouveaux secteurs qui
+arrivent et qui se crée ça ça existait
+pas il y a 3 4 ans. On l' vu avec
+l'Imova qui marche très fort ici qu'on
+embrasse. C'est ça a explosé dans les
+dernières années. Il y a des secteurs
+qui vont se créer, donc faut toujours
+être à l'affu de tout ce qui arrive pour
+être le premier ou en tout cas
+Alors en fait comme tu disais il y a 6
+mois on pouvait pas faire d'application
+sur iOS et Android en fullia parce que
+le niveau, on va dire de complexité pour
+l'IA pour réussir justement à faire une
+application mobile, c'est pas un site
+web, c'est une application mobile avec
+beaucoup de contraintes, c'était pas
+possible. Euh nous donc on a lancé MWMAI
+il y a 3 4 mois, on était les
+[grognement] premiers à le faire. Euh
+bien évidemment euh quelques mois plus
+tard ou semaine plus tard, il y a déjà
+des concurrents qui sont lancés pour
+justement nous concurrencer sur la
+partie création d'application. Euh et
+donc aujourd'hui sur le business
+[grognement] de l'Appsort en général euh
+Lia n'est permet juste à n'importe qui
+de faire des applications. Ça veut dire
+que aujourd'hui grâce à ça, tout le
+monde peut le faire. Voilà. Et ça veut
+dire que ces personnes-là euh vont créer
+des app qui vont être concurrent à mes
+propres app.
+C'est quoi l'idée la plus originale que
+tu es vu passer toi avec ta ta boîte ?
+Alors juste en terme d'anecdote, hein,
+euh un exemple, IBAR, c'est qu'il y a
+une application qui était très connue à
+l'époque qui a une application qui te
+permet de de boire une bière virtuelle.
+Ah oui oui, on penche ce téléphone.
+Exactement.
+Voilà. Bon 20000 € par jour de chiffre
+d'affaires.
+Ah non.
+Voilà. Donc bah ça ça ça faisait rigoler
+tout le monde. 200 au pic 20000 € par
+jour. Tu as aussi la lampe torche. Tu
+sais à l'époque Apple il y avait pas de
+possibilité de faire la lampe torche. Ça
+c'est des dizaines de milliers d'euros
+par jour avec des dizaines
+d'applications devenit tout blanc en
+fait pour allumer.
+Ouais. tu mettais ça et puis après il y
+a eu le flash que tu pouvais démarrer
+depuis une application que tu pouvais
+pas faire depuis l'iPhone, la fature est
+sortie il y a quelques années. Donc oui,
+il y a eu des opportunités.
+Donc en fait, tu peux vraiment, il y a
+tellement d'utilisateurs sur iOS et
+Android que tu peux vraiment faire des
+business très importants avec des idées
+simples. Toi, tu crées des applications,
+tu en as fait plus d'un milliard de
+téléchargement.
+Maintenant, quand on télécharge une
+application en France, il y a marqué
+"demander à l'app de ne pas me suivre".
+Tout à fait.
+Je pense qu'on s'est tous posé la
+question qu'est-ce que ça veut dire
+concrètement ? Alors, Apple euh a lancé
+en fait euh pour protéger ses users, ses
+utilisateurs en fait une ce qu'on
+appelle une consentin euh une popup.
+Donc en gros, c'est on te demande ton
+consentement pour accepter d'être traqué
+ou pas les annonceurs publicitaires.
+Donc ça quoi ?
+Voilà, ça c'est une réglementation
+européenne pour protéger les
+utilisateurs. On a dit voilà aujourd'hui
+il y a pas de raison que vous traquiez
+les utilisateurs sans l'autorisation de
+l'utilisateur. En Europe, c'est comme
+ça.
+Il faut il faut le faire ou pas
+de mettre la popup.
+Ouais. Sinon, est-ce qu'il faut mettre
+non de demander à de pas me suivre ?
+Alors bah si tu mets oui, globalement,
+il va se passer quoi ? tu vas avoir des
+publicités ciblées sur bah en fait
+Guillaume Play qui aujourd'hui a tel
+comportement numérique, ils vont te
+cibler sur ça,
+ils vont voir j'aime par exemple les
+voitures, j'aur des voitures, ils vont
+dire tiens pub pour les voitures.
+Voilà, exactement. Tu auras peut-être
+pas une pub pour Renault mais tu auras
+une pub pour peut-être d'autres marques
+de voiture. Et en fait l'idée c'est que
+si tu dis non,
+tu vas pas avoir pas de pub, tu vas
+avoir des pubs non ciblées. Donc tu vas
+te retrouver avec des publicités où on
+va te parler de médicaments pour les
+femmes end qu'il traquent tout ce qu'on
+cherche sur internet. Après, ils te
+mettent un un cookie dans le téléphone.
+Alors, alors presque les cookies c'était
+sur le web qu'en fait sur mobile ce qui
+se passe c'est que tu as un identifiant
+unique sur ton téléphone. On appelle ça
+un IDFA pour les termes techniques. Et
+ça permet en fait de tracker le user.
+Donc Guillumeplay aujourd'hui ton
+identic de téléphone et en fait ils vont
+les régenter un profil numérique de toi
+avec toutes les données qui récupèrent
+sur tous les sites du monde et toutes
+les appes du monde. Donc tu vas voir
+même sur Facebook une vidéo, tu as la
+nouvelle Clio.
+Nouvelle voiture qui sort, tu regardes
+une vidéo de minutes parce que tu tu as
+envie de te renseigner pour une nouvelle
+bagnole, il va savoir que tu es
+intéressé par les voitures.
+Tu es tagué, il aime les voitures, il a
+regardé Renault OK, on y va à fond et là
+tous les annonceurs, ils vont aller
+acheter du trafic sur ton identifiant à
+toi. C'est ça sert à ça en fait. On
+appelle ça ATT
+mais ça c'est à vie. Après quand tu mets
+OK, pendant avis, tu auras une espèce de
+de de mouchard qui va regarder.
+En fait, ça veut dire que dans toutes
+les applications que tu ouvres, tu dis
+"Je veux pas me faire traquer" et à vie,
+tu ne feras pas traquer. Euh et si tu
+dis "Oui, alors attention parce que tu
+vas quand même avoir des pubs." Donc la
+question c'est "Est-ce que tu veux avoir
+des publicités qui t'intéressent ou pas
+?" Parce que c'est pas mal de se faire
+traquer, c'est juste qu'on va te pousser
+des produits euh qui t'intéressent vs
+des produits qui t'intéressent pas du
+tout. Donc en fait, c'est un peu tu vois
+sur YouTube, il y a beaucoup de
+publicité. Est-ce que tu préfères parce
+qu'il y a une grosse consommation sur
+YouTube de vidéos ? Est-ce que tu
+préfères toutes les cinq vidéos avoir
+une pub qui correspond vraiment à ton
+usage ? Ah bah tiens, je voulais je sais
+pas moi une pièce pour mon radiateur et
+cetera où tu vas avoir voilà des des
+annonceurs qui vont t'envoyer des
+publicités qui on rien à voir et qui
+vont du coup dégrader enfin dégrader
+l'expérience utilisateur. On va prendre
+l'ordinateur maintenant qui a fini. On a
+fait travailler donc sur MWM. J'ai
+prompté, j'ai demandé un ordre, j'ai
+proposé une application avec l'idée. On
+va voir ce que ça donne et je vous la
+présente maintenant. Ça y est, je viens
+de récupérer l'ordi. Donc on vient de
+faire tourner MWM. Donc le créateur
+d'application avec ta société, on l'a
+testé. J'ai proposé une application,
+c'est vraiment pour la blague mais je
+pense qu'on a créé un monstre. C'est je
+pense que ça peut être assez drôle. On
+va jouer avec. On va voir si ça
+fonctionne. On l'a fait avec Mathieu
+Pigas lorsqu'on l'a reçu l'homme
+d'affaires qui possède plusieurs
+journaux. On s'amusa à faire ici une
+grande fresque de gauche à droite et il
+fallait poser dessus. C'est c'est une
+sorte d'échelle en fait. Pour lui,
+est-ce que c'est plutôt à gauche ou à
+droite ? à son échelle personnelle. On
+lui montrait des objets, des animateurs,
+des comédiens, des chaussures, il y a
+vraiment des choses, des émissions de
+télé, il fallait qu'il les dispose. On
+l'a faite directement en I en moins de
+je dirais en moins de 10 minutes,
+l'ordinateur a tourné là. J'ai fait une
+saisie une un prompt très simple, donc
+une commande. J'ai dit je veux faire une
+application hyper simple où je rentre un
+mot n'importe lequel et l'appli me dit
+si c'est de gauche ou de droite entre
+parenthèses politiquement.
+C'est tout ce que j'ai fait. Ensuite, ça
+m'a proposé euh directement l'icône pour
+l'application et ça m'a proposé
+différents visuels. Est-ce que je
+voulais que ça soit euh rouge à gauche,
+bleu à droite, comment est-ce que je
+voulais que ça soit disposé. J'ai fait
+OK. OK. OK. C'est c'est vraiment c'est
+des réponses très simples. Moi, j'ai
+aucune connaissance là-dedans. Ça a
+mouliné en gros et ça me l'a sorti. Je
+l'ai mis sur le téléphone. On va
+l'appeler comment ? Gauche droite.
+Gauche droite by légende.
+Gauche droite de légende. Gauche droite
+de légende. Donc je vous propose qu'on
+[rires] essaye ça de sens d'emmerde he
+je vous le dis. Euh qu'est-ce qu'on peut
+tester comme mot ? Est-ce qu'on fait un
+truc qui est vraiment évident pour
+commencer ?
+Euh qu'est-ce qu'on peut faire qui est
+évident Jean-Baptiste
+Golf ? Euh, on va prendre un sport, on
+va prendre le golf. Très bien. Golf
+à voter, ça réfléchit et ça va me dire
+que le golf c'est de droite. On va
+prendre un autre sport.
+Est-ce qu'on prend le foot ? Tiens, on
+va prendre le sport le le
+le plus populaire. Le foot, c'est de
+droite aussi.
+C'est une moyenne, ça va prendre dans
+toutes les IA. Et d'après lui, est-ce
+que c'est plus de gauche ou de droite ?
+C'est intéressant hein.
+Tu as plugué une IA dessus, tu lui as
+demandé de le faire.
+J'ai demandé de pluguer une IA. Donc
+c'est Nia qui a codé une application qui
+elle-même est pluguée à NIA. C'est ça
+que tu as fait en quelques pontes.
+En moins de franchement 3 minutes hein.
+Moi moi ça m'a pris 3 minutes vraiment.
+[grognement] Euh on va faire tiens,
+j'avais noté paddle tiens le sport le
+paddle est-ce que c'est plus de gauche
+ou est-ce que c'est plus de droite ? Et
+le paddle ça va nous dire que c'est plus
+de droite. Marron.
+H
+j'entends que ça rigole en régie.
+On va tester, on va tester tiens les
+tatouages pour voir est-ce que c'est
+plus de gauche ou est-ce que c'est plus
+de droite. Les tatouages, c'est plus de
+gauche.
+Est-ce qu'un patron c'est plus de gauche
+ou est-ce que c'est plus de droite ? On
+va voir si ça fonctionne. C'est pour
+vous montrer. Après, on va s'amuser.
+Plus de droite. Est-ce qu'un
+syndicaliste,
+c'est plus de gauche ou est-ce que Non,
+on fait des trucs évidents. D'accord.
+syndicaliste, c'est plus de gauche. Ça
+fonctionne quand même.
+La régie là, ils sont en feu. [rires]
+Est-ce que la Marseillaise Tiens, ça
+c'est un débat
+h on en parlait avec Mathieu Pigas, il
+disait que c'était ni de gauche ni de
+droite. C'est à tous les Français, c'est
+notre hyne national. Mais là, on lui a
+pas laissé le choix d'être au milieu.
+C'est soit de gauche, soit de droite. Il
+va dire que la Marseillaise, c'est quand
+même plutôt de droite. C'est rigolo
+quand même. Est-ce que le drapeau
+français Tiens, on va tester drapeau
+français. Est-ce que c'est plus de
+gauche ou est-ce que c'est plus de
+droite ? C'est plus de droite.
+Par défaut, c'est plus de droite quand à
+mon avis la réponse est peut-être neutre
+quoi.
+Est-ce que Emmanuel Macron
+Ah
+c'est plus de gauche ou est-ce que c'est
+plus de droite ? Je ne triche pas. Et
+c'est plus de droite. Marrant he de voir
+la vie. Tiens, on pourrait tester
+l'émission de télé quotidien qu'on
+embrasse qui est super. Est-ce que sont
+plus de gauche ou est-ce qu'ils sont
+plus de droite ? Ils sont plus de
+gauche.
+Ça c'est source d'emmerde, je vous le
+dis ce que je suis en train de faire. Je
+vais mettre des emmerdes.
+Sachant que c'est Nia qui a répondu.
+Donc c'est pas
+c'est pas moi. Bien sûr. Non non mais
+c'est rigolo parce que en vrai c'est un
+peu au milieu mais du coup ça permet
+d'avoir Est-ce que Tibo Inshape qu'on
+embrasse
+est-ce que c'est plus de gauche ou
+est-ce que c'est plus de droite ? On l'a
+fait avec Mathieu Pigas et un peu plus
+de droite d'après l'application. On lui
+demandera
+euh [raclement de gorge]
+on le on l'embrasse très fort. C'est
+intéressant quand même hein. C'est
+vachement bien. En 2 secondes, on a fait
+une appli hyper fun avec tu vois. On a
+envie de jouer avec les amis, on a envie
+de passer du temps, on a envie d'aller
+voir un match et de taper des mots et de
+rigoler quoi. C'est que ça nous a pris
+moins de 3 minutes à créer et moins de
+10 minutes à se coder.
+Ouais, tout à fait.
+Tu es habitué à ça mais tu vois, je sais
+pas si tout le monde sait que on peut le
+faire. Donc avec MWM, vous pouvez le
+faire vraiment rapidement. Je vous mets
+le lien directement dans la description.
+Si vous voulez essayer de faire vous
+aussi une application, vous pouvez aller
+vous inscrire avec le code légende. Vous
+aurez 50 % de réduction sur le premier
+mois d'abonnement. C'est les systèmes
+d'abonnement. Il y a différentes
+manières de le faire. Vous pourrez voir
+directement sur le site. C'est vraiment
+très simple. C'estd que même si vous y
+connaissez rien comme moi, vous pouvez
+faire une appli. Vraiment, ça m'a pris
+littéralement 3 minutes. On va faire
+rentrer maintenant trois personnes qui
+ont fait soit fortune, soit fait des
+applications qui ont eu beaucoup de
+succès en France. Soit parce qu'ils ont
+répondu à un besoin, soit parce que
+c'est socialement important. C'est que
+ça aide par exemple à sauver des vies.
+Vous allez voir différentes
+applications. On aura ensuite Him qui a
+créé une application qui s'appelle Give,
+une application qui permet de donner et
+de recevoir des objets gratuitement. Et
+ensuite, on aura Aaron qui est bénévole
+pour BY. C'est une application qui
+permet d'aider les gens qui sont
+malvoyants dans leur quotidien. Il vous
+appelle parfois l'application Son et
+d'ailleurs il est bénévole sur une autre
+application où il permet de faire des
+massages cardiaques à une personne pas
+loin de lui. Et c'est le SAMU qui
+déclenche cet appli. C'est exceptionnel.
+Ça y est, Hakim vient d'arriver.
+Bienvenue Hakim.
+Merci.
+42 ans.
+Exactement.
+Tu as créé l'application qui s'appelle
+Give G E V. Tu l'as créé en quelle année
+? On l'a lancé en 2017. Alors, et me
+paraît très connue cette application. Je
+ne sais pas le nombre de
+téléchargements. On sait pas trop
+combien de personnes, il y a pas comme
+sur YouTube par exemple, le nombre de
+vues, il y a pas marqué le nombre de
+téléchargements. Combien de personnes
+ont give aujourd'hui ?
+Aujourd'hui, c'est 7 millions d'inscrits
+en France.
+Mais non, c'est exceptionnel.
+Félicitation.
+Sans publicité en fait. Nous, c'est
+peut-être pour ça que tu vois, tu nous
+vois, tu nous connais un petit peu mais
+tu sais pas vraiment où on est parce
+qu'on fait pas de pub. C'est 7 millions
+mais quasiment qu'avec du bouche à
+oreill
+7 millions de gens donc qui donnent. Et
+donc il y a un système de banane. On va
+vous expliquer si vous l'avez jamais vu.
+On va essayer d'être le plus clair
+possible. On imagine que chez vous
+l'avez jamais vu. Comment est-ce que tu
+as l'idée d'une application de don ?
+Écoute, non, l'idée elle est très
+simple. En fait, c'est un constat
+citoyen, c'est de se dire [grognement]
+"Tu vois, moi je suis parisien, j'ai
+vécu très longtemps à Paris et voilà, je
+marchais dans la rue, j'ai vu plein
+d'objets qui traînaient dans la rue et
+quand tu vois des objets en bon état
+posés sur le trottoir, tu te dis il y a
+un souci, il y a il y a un problème dans
+le système, il y a un souci." Ils ont
+comb les déchets qu'on
+Ouais, c'est ça. Tu vois, tu as des
+meubles, des fois des fringues, tu as
+plein de choses qui traînent et cetera.
+Et du coup, moi qui ai toujours été, tu
+vois, pas mal dans la récupe, les
+vgreniers, tout ça, c'est un truc qui
+m'intéressait. Je me suisintéressé à ce
+truc là parce que je peux pas tout
+récupérer. Donc, on s'est dit, on va
+s'intéresser, voilà, à la vie de l'objet
+chez les gens. Et on s'est rendu compte
+de deux trucs en fait que déjà tu
+essayes de vendre mais très
+majoritairement ça part pas. Voilà, les
+plateformes de vente fonctionnent mais
+je crois que c'est à peu près tu vois,
+tu as trois chances sur 5, quatre
+chances sur C que ça parte pas. sur le
+Bon Coin tout ça. Ouais,
+sur le Boncoin sur Ved sur toutes pl
+c'est dur de vendre.
+C'est dur de vendre. Tu as toujours en
+fait tu as toujours plus d'offres que de
+demande. Voilà, tu vois, tu as tu as
+toujours le canap qui part pas, le frigo
+qui part, tes fringues, tu en as plein,
+tu sais pas quoi en faire.
+D'ailleurs, je il y en a plein qui
+mettent des annonces, des potes ou quoi
+même la famille qui tu mets plein
+d'objets puis de temps en temps, 2 mois
+plus tard, 4 mois plus tard, tu as une
+réponse sur un vieux truc, une relance,
+tu vends pas tout tout de suite quoi.
+Ouais. Puis des fois voilà, tu es à la
+veille de ton déménagement et tu dis
+"Mais qu'est-ce que je fais de tout ça
+quoi Ou alors pire, tu déménages et sur
+un double déménagement, tu as des
+cartons que tu as toujours pas ouvert,
+tu vois. Non mais tu as plein
+d'incohérence comme ça.
+Donc tu te dis il y a un truc à faire,
+il y a un truc à faire. La vente c'est
+déjà bien établi. Tu as déjà des
+plateformes énormes, tu vois avec des
+millions d'utilisateurs. Tu faisais quoi
+dans la vie en 2016 17 à l'époque ?
+Moi je travaillais dans la pub.
+OK. Rien à voir. Tu avais pas
+d'application, tu étais pas codeur. Pas
+du tout. Par contre, j'étais bricoleur.
+C'est-à-dire que GIF, c'est pas mon
+premier essai, tu vois. Mais comme
+sûrement beaucoup d'entrepreneurs en
+fait, tu sais. C'est voilà on là on se
+parle parce que tu viens de me parler de
+cette boîte qui finalement a décollé. Tu
+me parles pas de toute celle que j'ai
+raté quoi.
+Tu savais même pas que tu sais fait.
+On a j'ai testé plein de trucs et give
+oui c'est la première qui décolle mais
+j'ai toujours bricolé tu vois depuis mes
+études. Essayé de lancer des produits,
+des services et cetera. J'ai
+on on va parler des objets les plus
+exceptionnels que tu es eu dessus et
+cetera. Juste je parlais des bananes. Je
+sais que c'est un système sur give qui
+permet d'équilibrer un peu l'offre et la
+demande et pour pas qu'il y ait que des
+gens qui profitent, qui prennent plein
+d'objets qui les revendent. ça soit
+vraiment un échange de bon procédé quoi.
+C'est exactement ça. En fait, l'objectif
+de la plateforme c'est de créer la
+circularité et de la réciprocité. Donc
+l'idée c'est de dire je contribue à un
+système qui est vertueux, donc je vais
+donner des objets, tu vois, je les
+poste, les gens vont vont vont me
+contacter, mais on veut équilibrer ce
+système là. Et du coup, on a créé une
+mécanique de crédit. Donc tu vas donner
+un objet. Cet objet te permet de
+récupérer des crédits. Donc c'est des
+petites bananes parce qu'on veut, tu
+vois, être amusant, ludique et tout,
+c'est cool. Et en fait, ces bananes te
+permettent de contacter d'autres objets.
+Donc finalement, c'est comme ça que tu
+crées,
+tu donnes, tu reçois.
+Exactement. Tu donnes, tu reçois. C'est
+vertueux. C'est
+mais si c'est si c'est un étudiant par
+exemple, j'imagine vous êtes étudiant
+chez vous, vous allez déménager, vous
+allez prendre votre premier appart dans
+une grande ville parce que vous allez
+faire vos études et vous avez pas du
+tout d'argent, vous avez pas d'objets à
+donner ou alors il faut obligatoirement
+trouver des objets à donner chez ses
+parents par exemple ou tu peux quand
+même avoir un si tu vois une table basse
+et que tu as besoin d'une petite table,
+tu vois, comment est-ce que tu fais ?
+Ouais. Non mais là, tu me fais une bonne
+transition pour le modèle économique
+parce que ça c'est une question qu'on me
+pose souvent. Comment vous gagnez de
+l'argent ? En fait, sur GIF, tu as une
+version gratuite de l'appli avec ce
+cette mécanique de banane, je donne, je
+reçois et cetera. Et après, on a un
+abonnement euh qui s'appelle GIF Plus
+qui coûte quelques dizaines d'euros par
+an, tu vois, qui est le surbon plan pour
+les étudiants. On a beaucoup d'étudiants
+qui le prennent et là on te donne des
+bananes. Donc en fait là, là, on te
+donne un petit pack de crédit qui est
+pas illimité parce queil faut quand même
+que toi-même à un moment donné, tu
+contribues au système mais voilà, tu as
+une petite trentaine de bananes, donc tu
+peux, tu vois, on a plein de plein de
+remontées, plein de plein d'histoires,
+plein d'anecdotes où les gens nous
+disent "Mais oui, moi j'ai meublé mon
+appart avec Give en 3 4 semaines de
+mois."
+Il y a combien d'objets surve en en
+moyenne en temps réel ?
+Tu en as euh un instant Té, tu dois en
+avoir 200 300000 et par mois c'est les
+parents, c'est 8 millions.
+Incroyable. Et vous arrivez à faire un
+chiffre d'affair à être parce que c'est
+très social. C'est une super idée pour
+plein de gens. Est-ce que c'est très
+rentable aussi ?
+Alors c'est pas très rentable, c'est
+rentable. On est sur le fil, tu vois.
+Ouais, on est vraiment sur le fil et
+depuis pas longtemps. La boîte à 10 ans,
+ça fait 3 mois, tu vois. Donc c'est tout
+frais. Donc on a mis 10 ans arrivé à la
+rentabilité. Donc on a levé de l'argent,
+on a on a eu beaucoup de soutien
+financiers, voilà, d'investurs,
+d'investisseurs privés, un peu de public
+aussi pour arriver à voilà trouver le
+bon modèle économique. Mais c'était long
+hein, tu sais, le modèle qu'on a créé,
+il existe nulle part. Créer un modèle
+d'abonnement sur du don et cetera. Donc
+la mission était louable, le l'équilibre
+économique était compliqué. Mais ça y
+est, on y est.
+Pour que vous sachiez un peu, vous êtes
+combien aujourd'hui à bosser là-bas ?
+Une quinzaine.
+Quinzaine ?
+Ouais. Il y a des objets qui sont
+interdits par que quand je pense à ça,
+je pense à est-ce qu' il y a des
+vraiment je vais être dans les extrêmes,
+mais c'est pour qu'on s'amuse un peu
+dans la question. Est-ce que il y a déjà
+des gens qui ont donné de la drogue qui
+sont dit tiens je je prenais du LSD, il
+m'en reste 5, j'en prends plus. Est-ce
+que quelqu'un est-ce que tu as déjà eu
+des trucs comme ça que vous avez bloqué
+? Je suis sûr que c'est déjà arrivé dans
+t
+alors il y a pas mal de trucs qu'on
+bloque. Ouais, il y a pas mal de trucs
+qu'on bloque mais drogue pas ma
+connaissance. Pas ma connaissance, tu
+vois sur les dizaines de millions ou
+alors je suis pas au courant mais je
+pense pas. Qu'est-ce qui est interdit ?
+Alors,
+qu'est-ce qui est interdit ? Alors, en
+fait, c'est c'est pas mal du bon sens,
+hein. Euh c'est euh alors déjà, c'est
+tout bête, les objets en mauvais état.
+Nous, on est une plateforme de réemploi.
+Donc, si l'objet peut pas être
+réutilisé, il a rien à faire sur une
+table où il manque un pied, quoi.
+Si ta table, elle est éclatée, si le
+canapé il est ventré, ça passe pas. Là,
+c'est du recyclage, c'est pas notre
+métier. Tu as les médicaments, c'est
+interdit. Alors, on a plein de
+médicaments pas périmés dans nos euh
+dans nos pharmacies, mais c'est interdit
+de donner des médicaments. Après, les
+gens, des fois,
+il y a un truc à inventer sur ça aussi
+peut-être, mais enfin de recyclage,
+hein, je parle pour des pays ou des
+trucs, tu vois, euh
+c'est complexe, c'est des industries
+très complexes. Même nous, ça nous
+arrive de temps en temps d'avoir une
+petite boîte de lipr qui passe, tu vois,
+entre les ma filet, on rien que sur une
+boîte depr, on peut se prendre une
+petite mise en demeure, tu vois.
+Ouais, c'est très carré. Euh tu as euh
+comment dire ? Tu as de temps en temps,
+par exemple, on a eu il y a il y a une
+semaine je crois euh quelqu'un qui
+donnait un clap à lapin. OK. Tu dis OK
+mais il y avait encore les lapins
+dedans. Donc donc l'objet oui.
+C'est quoi ce genre ?
+L'objet oui. Donc le cap le clapier oui.
+Mais les lapins non. Il y en a qui
+donnent des animaux gen
+il y en a qui essayent de donner des
+animaux. Les animaux c'est interdit. Tu
+as pas le droit de donner des animaux.
+Un poisson rouge par exemple pour une
+même poisson rouge.
+Mais parfois ça peut ça peut se
+comprendre. C'est que on en a parlé avec
+un un un spécialiste canin il y a
+quelques temps et qui est Spri Dog qui
+qui est génial. On a fait une super
+émission avec lui et on parlait dans
+certains cas, par exemple une dame qui
+part en maison de retraite parce qu'elle
+a un souci et qui qui est veuve et qui a
+un problème physique et qui a pas de
+famille, bah il faut bien c'est c'est
+pas forcément où donner son chien et
+parfois il y a plein de chiens qui sont
+abandonnés comme ça de gens qui savent
+même plus comment faire quoi.
+Non non c'est vrai mais c'est là où tu
+vois enfin c'est c'est un c'est comment
+dire c'est il faut une technicité c'est
+très spécialisé il y a des font très
+très bien. Nous, on est juste une
+plateforme de mise en relation. On peut
+pas s'assurer que la personne en face va
+bien s'en occuper de c. On qualifie pas,
+tu vois, les compétences de la personne
+en face qui récupère. Donc non. Donc
+est-ce que des couteau, des armes, il y
+a des trucs ? Vous avez dû bloquer ? Le
+fusil de papi.
+Alors, le fusil de papi, c'est régulé,
+ça passera pas. Le couteau de cuisine,
+il passe.
+Vous avez de l'IA qui regarde si c'est
+un fusil par exemple. Vous avez Non,
+c'est dans les mots peut-être les mots
+clés.
+Ouais, c'est plus Alors, on a des
+humains déjà qui on a des modérateurs
+comme beaucoup de plateformes qui
+regardent à la mano, annonce par annonce
+qui se passe et cetera. Ouais, c'est
+beaucoup de temps
+contrôlé.
+C'est très contrôlé. Tu as des outils
+d'automatisation mais c'est pas
+forcément de li des fois c'est juste des
+on va dire des éléments d'un profil qui
+vont nous alerter tu vois. Un profil
+très récent qui va mettre un très beau
+don. Là on va dire c'est bizarre tu vois
+tu enfin voilà il y a des éléments comme
+ça. Puis après, oui, dans dans dans les
+mots, dans la sémantique, on garde pas
+mal de choses.
+Est-ce que tu as eu des voitures ?
+Est-ce qu'il y a des gens qui donnent
+des caisses ? Tu vois, tu te dis s'il y
+a des expats, il doivent repartir en 2
+jours à New York, j'en sais rien, ben
+ils disent "Bah tiens, j'ai une voiture,
+une 208, je sais pas quoi, j'aurais pas
+le temps de la vendre, je la donne."
+Est-ce que tu as déjà eu des des vraies
+jolies voitures, des trucs comme ça ?
+Alors, des vrais jolies, pas dingue mais
+des voitures qui roulent. Oui. Ouais.
+Ouais, on en a eu mais en fait si tu si
+tu te poses la question de "J'ai un
+objet, je sais pas quoi en faire mais il
+faut qu'il parte et il est encore
+fonctionnel". En fait, il peut se
+retrouver sur la plateforme. Voiture,
+bateau, mobo, des
+bateau Ouais. Des On a souvent les
+bateaux. Ouais mais je te jure
+des bateaux gratuits.
+Des bateaux gratuits mais en même temps
+tu as tu as un petit voilier au fond de
+ton au fond de ton jardin. Tu vois tu as
+besoin je sais pas de tu vends ta
+maison. Bah qu'est-ce que tu en fait du
+bateau ? Bah tu donnes ton bateau.
+On parlait avec MWM. On peut développer
+une appli en I en en 10 15 minutes
+aujourd'hui. C'est ce qui était pas
+possible il y a 10 15 ans en 2017. Toi
+combien ça t'a coûté de lancer l'appli
+au départ ? Combien de temps ça t'a pris
+?
+Alors en fait au lancement c'était
+c'était toutes mes économies. Donc
+c'était quand même quelques dizaines de
+milliers d'euros, tu vois. J'avais déjà
+la trentaine passée donc c'était un peu
+d'argent. En cumulé depuis le lancement,
+c'est des millions d'euros parce que on
+a levé des sous plusieurs fois. C'est on
+a levé de l'argent, on a fait du fil
+d'affaires depuis donc tu réinvestis ça
+aussi dans le développement. Donc c'est
+on parle de millions d'euros et
+effectivement aujourd'hui tu on va plus
+vite. Enfin le en fait les ressources tu
+les utilises [musique] autrement c'estàd
+que nous on a toujours une équipe de
+développement. Aujourd'hui, ils codent
+moins, tu vois, ils sont plus à gérer
+des IA, des outils et cetera. Mais donc,
+on a pas moins de gens, c'est juste
+qu'ils changent de métier, quoi.
+C'est c'est quoi tes prochaines étapes
+pour terminer ? Tu tu veux aller où avec
+Give ?
+C'est euh alors écoute, on a on a on a
+on a plusieurs plusieurs projets sympas.
+Le Graal honnêtement, ce serait
+l'international parce qu'aujourd'hui, on
+a un peu une exception française, tu
+vois. Il y a des communautés de don qui
+existent partout dans le monde sur les
+réseaux et cetera. Nous, on en connaît
+beaucoup et cetera. On est les seuls
+aujourd'hui en France à avoir réussi à à
+en faire un produit dédié et avoir un
+modèle qui fonctionne, tu vois. Donc
+l'idée c'est de se dire bon bah voilà,
+on a mis 10 ans à le faire en France,
+est-ce qu'on réussirait pas le voilà le
+lancer en Europe, peut-être en Amérique
+du Nord et cetera ?
+Ça serait ça tes prochaines étapes ?
+C'est ça ?
+Bah ce serait ce serait incroyable et
+très vertueux, tu vois le don, tu vois,
+c'est un usage qui est très universel
+aussi. Tu vends pas pareil partout, mais
+tu donnes.
+Il y a des sociétés qui donnent ou pas ?
+Alors nous, on n pas on n'est pas trop
+trop connecté au pro. on l'a fait un
+petit peu. C'est un peu compliqué euh
+parce que côté boîte, côté société, tu
+as tu es plus sur comment dire
+l'intention est bonne mais des fois elle
+est couplé aussi à des volontés de
+défiscaliser, tu vois. Et nous on n'est
+pas une assaut donc on peut pas proposer
+de la défiscalisation sur le don. En
+général quand une boîte donne c'est
+qu'il y a
+Non, c'est plus quand il y a un
+changement de locaux, il y a des
+chaises, il y a des trucs, tu vois, tu
+sais pas. Ça on le fait un petit peu.
+Ouais, ça on le fait un petit peu mais
+toujours ça vient toujours de bah voilà
+de d'un de nos utilisateurs qui
+travaille dans cette boîte et qui dit
+ben les gars on va pas acheter ses
+bureaux, on va les mettre sur GIF quoi.
+Ça vient toujours d'une initiative
+interne, tu vois, de quelqu'un qui
+connait l'appli.
+Merci Hakim, merci d'être venu.
+Franchement, c'était c'était super
+intéressant. Je s la main de loin. On va
+faire rentrer Aaron qui a qui est
+bénévole pour Be My Ice. Est-ce que vous
+connaissez ? Est-ce que tu connais ?
+Ben non, je connaissais pas. J'ai
+découvert aujourd'hui. Tu vois
+appli pour pour aider les personnes non
+voyantes. Il est bénévole. Il va
+raconter aussi comment l'explosion et et
+les bénévoles lui depuis quelques temps
+va nous raconter comment ça se passe.
+Aaron vient d'arriver pour terminer.
+Dernière application. Euh alors toi tu
+es bénévole pour l'application, c'est ça
+?
+C'est ça. Pour l'application qui
+s'appelle B My Eyes.
+B My Eyes. Donc qui qui aide en fait les
+personnes non voyantes.
+Est-ce que tu peux expliquer depuis
+combien de temps est-ce que c'est c'est
+intéressant ? On présente des
+applications très différentes et juste
+après LOL, notre journaliste va venir
+nous présenter des des vous allez voir
+des juste très rapidement trois
+application improbable qui existent un
+peu drôle un peu un peu surprenante pour
+pour changer. Et qu'est-ce que c'est que
+BI ? Parce que c'est vachement bien.
+Ouais, BMI c'est une application qui
+s'adresse aux personnes en situation de
+handicap notamment avec des problèmes
+visuels.
+Et le but c'est quoi ? C'est de dire bah
+au quotidien il y a des choses toutes
+bêtes mais que tu ne peux pas faire
+quand tu es aveugle. par exemple,
+choisir tes vêtements correctement euh
+parce que tu voudrais quand même
+accorder les couleurs, euh différencier
+euh bah des choses enfin c'est des
+choses qui nous paraissent tout bête
+mais qu'on a pas du tout au quotidien
+quand on aug.
+Et donc le but de l'application c'est
+simplement de venir dire euh je
+m'inscris en tant que personne assoation
+de handicap, je lance un appel, donc tu
+as vraiment un gros bouton lancer un
+appel et ça appelle n'importe quel
+bénévole
+au hasard.
+C'est une sorte d'algorithme qui envoie
+sur quelqu'un qui est connecté qui a les
+notifications quoi. Exactement. Et donc
+ça te fait un appel comme un appel
+WhatsApp. Voilà. Et derrière
+toi tu sais c'est be my c'est marqué
+quoi.
+Tu as juste marqué be my eyes et tu as
+un bouton personne voyante qui va tout
+de suite quoi. OK
+exactement et donc tu décroche. Alors si
+tu es un peu trop lent déjà pris il y a
+je crois un facteur x 10 hein.
+C'est-à-dire que tu as 1 million de
+personnes de handicap inscrites et 100
+millions de bénévoles disponibles.
+Il y a 10 fois moins de Ah d'accord.
+Donc en fait du coup il trouvent tout de
+suite quelqu'un trou quelqu'un ce qui
+est top pour eux du coup et après
+derrière ils te demandent "Bonjour hop
+est-ce que vous pouvez me dire ? Donc
+j'ai eu peut-être une dizaine d'Apple.
+Je suis inscrit depuis mai 2024 quelque
+chose comme ça.
+Donc c'est pas non plus ça sonne pas
+tous les jours.
+Ça sonne pas tous les jours.
+Voilà. C'est vraiment ils essayent de
+passer partout même j'imagine pour
+aider. Comment ça se passe ? Est-ce que
+les gens qui te demandent de l'aide déjà
+c'est pourquoi tu as eu quoi toi ?
+Alors moi j'ai eu vraiment comme je te
+disais bah trouver quelle robe quelle
+couleur est ma robe par exemple le truc
+de base. Ou bien d'ailleurs c'est
+marrant j'ai réalisé que les gens
+vivaient dans le noir parce que un jour
+il m'appelle il me dit c'est quelle
+poubelle ? parce qu'il peut pas voir ses
+poubelles vertes, poubelles jaunes. Et
+donc je lui dis bah je sais pas, je vois
+pas non plus en fait c'est dans le noir.
+Mais du coup ils ont vachement bien
+pensé le truc parce que quand tu
+décroches la pelle, tu as la possibilité
+de venir activer la lampe torche de ton
+intervenant.
+[ __ ] fort
+et oui
+c'estd que toi tu allumes sur le
+téléphone du monsieur dame le le flash
+exement. Exactement. Et du coup après
+bah tu vois la poubelle et tu dis voilà
+c'est telle ou telle poubelle. Ça c'est
+vraiment les trucs du quotidien, un truc
+un peu plus touchy sur des médicaments.
+Elle m'a appelé parce que tu sais les
+boîtes de médicaments sont équipées donc
+tu as du braille dessus donc c'est pas
+le problème. Par contre, elle me dit
+"C'est bizarre la forme du médicament,
+elle me paraît pas être la bonne." Et en
+effet, tu sais, tu retournes le
+médicament et tu as le nom du médicament
+et c'était pas le bon.
+Oh [ __ ] !
+Ouais. Voilà. Donc ça peut quand même
+mener à des situations.
+Tu tu peux peut-être sauver quelqu'un
+avec ce truc.
+Oui. Euh et un truc un peu improbable
+qui m'est arrivé euh c'était un appel.
+1h30 je pense ou une bonne heure, on m'a
+demandé de lui raconter un livre.
+Mais non.
+Ouais. En plus un livre un peu compliqué
+sur la Seconde Guerre mondiale, c'était
+le le comment tu pouvais lui raconter un
+tu l'avais physiquement aussi ?
+Non non, elle me le filmait et à
+l'époque, il y avait une fonctionnalité
+qui n'existait pas, qui permettait de
+figer, de prendre une photo en fait de
+la caméra mais du coup ça n'existait pas
+encore. Donc elle était là et je dis un
+peu plus à gauche, descends un peu,
+monte un peu.
+Et tu lui lisais le livre ?
+Ouais, exactement. et je lui disais le
+livre page par page et ça a duré un peu
+plus d'une heure et je crois qu'à la fin
+a coupé parce que tu as une limite du
+temps d'appel sinon ça serait
+Et après tu peux plus rappeler la
+personne. Tu as pas
+non tuas tu as aucun lien. Tu as aucun
+lien.
+[ __ ] c'est génial. Ça te plaît de
+faire ça ?
+Bah c'est sympa. Moi j'ai toujours eu ce
+sensl. Je suis aussi sur d'autres
+applications pour aider.
+Ouais pour aider.
+Peut-être que tu as vu ça s'appelle Sove
+Life.
+Qu'est-ce que c'est
+Sve life ? vraiment sur un autre
+registre sur les arrêts
+cardiorrespiratoires, donc les crises
+cardiaques, on va dire. Et en fait, le
+Samu te localise en temps réel et il
+peut t'envoyer
+faire un massage cardiaque.
+Faire un massage cardiaque.
+Mais ça ça arrive vraiment.
+Ah ben moi j'ai été déclenché c'est pas
+massage cardiaque ça. Ça arrive vraiment
+qu'en France on utilise l'appli pour
+sauver des gens.
+Ah ben j'ai été déclenché quatre fois.
+Alors toujours dans les situations les
+plus improbables tu sais.
+[ __ ] incroyable. Tu connaissais tu
+connaissais [raclement de gorge] ça ?
+Non
+je non je je connaissais pas. Je
+connaissais pas. Quand tu apprends une
+application à un gars qui en a fait un
+milliard de télécharge, c'est que tu es
+sur une application même catégorie. Mais
+[rires]
+ouais.
+[ __ ] c'est vachement bien. Bravo.
+Attends, mais donc toi tu es tu es tu es
+au SAMU ? Enfin, tu connais les gestes ?
+Je connais les gestes parce qu'à côté,
+je suis équipier secouriste, j'ai fait
+pas mal d'expérimentation donc je fait
+aussi des gardes Samu où je suis envoyé.
+Mais techniquement, l'application, elle
+est ouverte à tous. Il y a pas vraiment
+de limite en fait. Tout le monde peut
+venir même sans formation ou juste avoir
+fait la mairie du coin qui a organisé
+une sensibilisation peut peut faire le
+peut faire un masse. Tu peux nous
+raconter une fois où tu étais déclenché
+comment ça se passe sur cet appli ?
+Comment s'appelle ? Save. Save
+life. SAUV.
+Save life Save Life.
+Euh bah c'est très simple, tu as un
+petit écran et maintenant il parle dans
+les dernières mise à jour. Donc l'autre
+jour j'étais rue Saint-Charles à Paris
+avec des copines et puis d'un coup
+j'entends attention alerte. Bon tu
+reçois un SMS aussi en parallèle
+comme un pompier quoi. Tu as un bip.
+Comme un pompier. Ouais ouais
+exactement. Tu as un bip sur ton
+téléphone, je qu'est-ce qui se passe ?
+Tu regardes et là, il te dit euh
+voulez-vous intervenir ? Tu vois à peu
+près l'adresse, tu as pas tous les
+détails. Ensuite, tu acceptes et là le
+Samu peut te joindre en visio si c'est
+nécessaire. Moi, ça m'est jamais arrivé
+mais du coup ensuite bah j'ai pris mes
+potes et on est allé sur place parce que
+du coup, on était vraiment à 100 m. Donc
+on descend, il y en a une, je lui dis
+"OK, tu restes là, tu gardes la porte
+pour que quand le Samu arrive, il te
+voit bien et tu sais souvent à Paris
+c'est compliqué, faut rentrer. Première
+porte, digod, la deuxième porte, la cour
+le truc
+donc une qui reste là et une autre qui
+vient avec moi parce que mine de rien
+quand tu as pas d'aide déjà faut gérer
+la famille. Alors il te le demande pas
+évidemment, j'avais la chance d'être
+avec d'autres personnes mais tu sais
+quand tu as la famille qui pleure le
+truc, te faire de l'espace, te donner
+les ciseaux pour pouvoir couper le
+t-shirt et cetera.
+C'est le Samu qui déclenche cette
+application.
+C'est Samu qui déclenche cette
+application. Ouais, exactement.
+Incroyable. Et donc là, tu es arrivé.
+Et donc là, je suis arrivé. Et donc tu
+donc moi, j'ai j'ai ma première pote en
+bas qui reste à la porte, la deuxième
+qui vient avec moi pour m'aider, chope
+des ciseaux. Euh et en attendant, je
+commence la réanimation. Donc je prends
+la relève sur la famille et tu attends
+que les secours arrivent. Euh
+il te rela
+et après tu sais pas ce qui se passe
+quand tu t'en vas. Alors moi, j'ai la
+chance d'avoir eu du coup les
+informations. Malheureusement, la
+personne est décédée mais c'est l'idée
+de dire on va on peut sauver beaucoup de
+vie et tu vois une stat qui je sais plus
+si est toujours d'actualité mais il y a
+3 % de chance en France de survivre à un
+arrêt cardiaque parce qu'on est très mal
+formé.
+Comment ça se fait pour terminer ?
+Pourquoi tu fais autant tu passes autant
+de temps à aider les autres ?
+Euh je pense que c'est quelque chose que
+j'ai toujours eu un peu naturellement.
+Ça vient d'une curiosité. J'ai toujours
+été curieux et puis derrière je me dis
+que bon bah faut quand même un peu
+redonner dans ce que tu fais. C'est
+important de d'élever les gens je pense
+avec nous et c'est peut-être ma manière
+à moi de contribuer un peu à à élever
+bah les personnes et aider autour de
+moi.
+C'est super. Merci beaucoup Aaron.
+Franchement c'était bien. On a vu trois
+applications très différentes. On a
+compris à quel point ça pouvait impacter
+la vie de de plein de gens en bien et ça
+peut être aussi certaines des business.
+Là c'était une application qui aide
+aussi. On voulait montrer différentes
+applications parce que vous pouvez aussi
+avoir envie de créer une application
+avec Lia aujourd'hui rapidement en moins
+de 15 minutes. Euh je vous mettrai
+d'ailleurs le lien de MWM si vous voulez
+dans la description. Vous avez plus qu'à
+cliquer dessus pour faire une
+application et si vous avez une idée
+même pour raider les autres à Ron lui
+être en tant que bénévole. Mais si vous
+avez une idée d'application vous pouvez
+la faire en moins de 10 minutes, 15
+minutes. Et et tu tu avais pas un code
+ou tu voulais pas faire un code promo ?
+On pourrait pas faire un truc
+avec grand plaisir, on peut faire un
+code légende. Je pense qu' permettra
+d'obtenir une réduction
+de - 50 % par exemple.
+Ça c'est une vraie réduction pour le
+voilà sur voilà sur le sur le premier la
+première mensualité de l'abonnement. Euh
+voilà, on peut faire ça sans problème.
+Euh bah pour rendre le on va dire le
+service accessible au plus au plus grand
+nombre, au moins pour tester et puis euh
+donc ça coûte encore moins cher. Euh une
+appli une une appli simple euh alors
+comme l'application que tu as fait tout
+à l'heure, euh globalement ça a dû te
+coûter euh quelques euros. Euh une
+application plus complexe, je dirais
+quelques dizaines d'euros, une très
+complexe quelques centaines d'euros qui
+ira jamais au-dessus de 1000 €. Euh
+voilà donc par rapport à certaines
+applications où çaù on parlait de
+millions d'euros, voilà
+euh le prix on va dire c'est c'est pas
+c'est pas rien 100 € mais c'est
+négligeable par rapport à la technologie
+que tu vas réussir à mettre euh
+l'ingénering qui a là-dedans maintenant
+c'est c'est c'est tu imagines je vois
+combien ça nous a coûté c'est c'est une
+révolution. On va vous montrer trois
+applications maintenant euh très
+rapidement avec Lola, notre journaliste,
+qui a trouvé trois applications un peu
+marrantes. C'est un peu le sujet
+aujourd'hui. C'est les succès qu'on peut
+avoir, l'aide et puis les trucs un peu
+un peu fun aussi. Regardez, ça y est,
+Lola est venue. Lola qui est journaliste
+et nous, vous voyez, tous les mardis
+dans les gens de story.
+Merci pour la pub.
+Et ben, attends, on est dans la même
+dans la même dans le même même bateau.
+Tu es allé chercher des applications
+pour montrer autre chose. Aujourd'hui,
+on a montré des applications qui
+rapportent de l'argent. C'était pour
+montrer tout un panel différent. C'est
+un vrai business ces applications, mais
+c'est aussi il y a des applications qui
+aident les gens, des applic gratuites ou
+des applications vraiment social, on l'a
+vu aujourd'hui. Euh et là c'est plus des
+trucs fun, je sais pas ce que tu vas
+montrer là.
+Improbable, insolite, des trucs que vous
+n'avez jamais entendu.
+On découvre.
+Alors la première c'est di me. Alors en
+fait cette application elle sert quand
+vous avez moins de 5 % de batterie et
+l'idée c'est d'aller sur cette
+application du coup et de discuter avec
+des personnes qui elles aussi ont moins
+de 5 % de batterie pour mourir tous
+ensemble. pour que le téléphone [rires]
+que le téléphone s'arrête ensemble et ça
+ça ne marche que quand tu as vraiment 5
+% de batterie.
+Exactement. Et l'idée c'est de discuter
+du coup tu perds encore plus de batterie
+mais voilà tu partages ça
+mar ça c'est des trucs un peu [rires] f
+je connaissais pas non plus c est-ce que
+tuen vois passer des trucs parfois tu
+dis mais c'est quoi ce truc ?
+Bah non mais c'est c'est c'est des
+délires enf déjà tu peux pas regarder
+tellement il y a de volume. C'est on
+disait donc 2000 par jour il y a 6 mois
+10000 par jour maintenant donc en fait
+des idées un peu farfelu il y en a
+plein. Mais ça ve pas dire ça marche pas
+ça ça plaît beaucoup.
+Oui parfois il y a des trucs comme ça
+qui peuvent exploser non.
+Ouais,
+il y en a qui gagnent de l'argent avec
+des appis qui n'ont bah tu disais la
+bière tout à l'heure, la fausse bière
+qu'on boit là.
+Ouais. Bah au pic qui faisait 20000 €
+par jour, une app comme ça, ça va créer
+de l'audience. Tu vas pas tu vas pas
+t'engager à payer quelque chose pour
+parler à des gens alors que tu as 5 % de
+batterie. Donc en fait, il va falloir
+que tu trouves une modèle différent.
+Donc là, c'est la pub. Tu crées de
+l'audience, tu mets de la pub et là, tu
+peux commencer à gagner de l'argent.
+Mais euh mais c'est pas forcément une
+for en soi pour les utilisateurs. Tu
+peux créer une app drôle, utile. Les
+jeux d'alcool, c'est
+Ah bah bah oui, ça les jeux d'alcool
+entre amis, les les les Tu peux même
+faire des jeux de société. Tu peux faire
+un jeu avec des objets cachés, des
+énigmes. En fait, tu peux inventer tout
+ce que tu veux maintenant. Et
+l'avantage, c'est comme tu as pas
+quasiment de coup de développement,
+[grognement] tu as pas de limite en
+fait.
+Qu'est-ce que tu as d'autre ? Alors la
+deuxième appli, je l'ai téléchargé, je
+l'adore. Waky. Et alors celle-ci, je
+sais pas si vous la connaissez.
+Vous pouvez réveiller n'importe quel
+inconnu [grognement]
+dans quel enfin dans n'importe quel pays
+du monde que tu souhaites. Donc là, si
+vous voulez, je peux aller réveiller
+quelqu'un en Inde au Pakistan.
+Mais ça, tu le vois en vidéo ?
+Non, tu l'as tu l'appelles, mais on
+Ah, vas-y, vas-y, vas-y, vas-y. Mais
+attends, mais c'est des gens qui ont
+l'application qui sont d'accord.
+Oui, exactement.
+Moi, je paye pour ça. Pour réveiller
+quelqu'un, je paye.
+Mais est-ce que tu payes pour être
+réveillé par je ne sais [rires]
+Attends, donc tu sais pas dans quel pays
+ça part par contre. Alors si on va
+pouvoir choisir ensemble. Alors attends,
+j'ai lancé l'enregistrement.
+C'est marrant on connaît pas mais on est
+gêné déjà de l'avance.
+Ouais. Faut c'estd qu'il faut pas mettre
+son portable en mode avion donc faut le
+laisser. Faut être d'accord de se faire
+réveiller.
+Ouais j'aiou qui est en Inde.
+Tout de suite chaud.
+Vas-y vas-y.
+Vous voulez lui parler ? Je lui parle.
+Non parlei parlui juste second parler en
+anglais du coup.
+Metsle par
+Ouais on va on va faire du franglis.
+Hi wakey waky. [rires]
+It's time to wake up from Paris.
+Voilà.
+Fit dans la vie. Où il habit
+tu habites où ?
+Dubaï. OK. Qu'est-ce qu'il fait dans la
+vie à Dubaï ? What do
+?
+Oh, what ? [grognement][rires]
+Ça peut durer longtemps. Teacher of
+what? Professoration.
+Oh waouh !
+OK, ben merci beaucoup.
+Merci beaucoup. Thank you. See you soon
+legend. [rires]
+C'est génial.
+C'est marrant, il y a des applis comme
+ça assez drôle.
+Oui. Alors, à la base, en fait, c'était
+vraiment pour réveiller les personnes
+mais là, ils ont un peu changé le
+concept. En fait, l'idée c'est juste de
+faire des rencontres à l'autre bout de
+la planète. C'est là, je pense qu'on l'a
+pas réveillé à Dubaï.
+Ouais, bien sûr. Est-ce que tu en as
+Vas-y trè éta ?
+Alors, j'ai une troisième application.
+Alors, celle-ci c'est la plus débile.
+Elle s'appelle Send Me to Heaven. Et le
+but, c'est de lancer son téléphone le
+plus haut possible et de le rattraper.
+Attends, c'est mais du coup, tu vois la
+hauteur du téléphone ? Non.
+Oui, [raclement de gorge] le record
+c'est 40 m. [rires]
+C'est pas possible.
+Ils prennent des lier en fait. Ils
+prennent des lancepies. Ouais,
+faut le rattraper là après.
+Oui, si tu le rattrapes pas, c'est
+Ouais, tu perds. C'est pas comptabilisé.
+Incroyable. C'est quand même
+tu l'as essayé ou pas ?
+Non.
+Mais est-ce que si tu fais ça par
+exemple, tu vas voir 2,20 ou exactement
+faut être Ouais, oui, c'est ça.
+Attends, c'est comment il s'appelle CL ?
+Send me to Heaven.
+Send me to Heaven, ça veut dire quoi ?
+Envoie-moi au paradis.
+Envoie-moi au paradis. Je vous mets le
+le liens parce que de tout ce dont on
+parle comme ça si ça vous amuse ou s'il
+y a des trucs entre potes.
+Et donc, tu l'as pas essayé celui-là ?
+Je l'ai pas essayé. J'ai pas envie très
+je vais l'essayer en sortant du bureau.
+Je vais dans la rue, je vais jeter mon
+téléphone. Qu'est-ce que Alors celle-ci
+marrante aussi, elle s'appelle Weock et
+l'idée c'est que cette application vous
+envoie cinq notifications par jour où
+elle vous dit "N'oublie pas que tu vas
+mourir." Donc en fait l'idée c'est de
+vous rappeler cin fois par jour que vous
+allez mourir. Alors c'est pas très fun.
+Si ça permet de se dire profite de la
+vie en fait.
+Exactement. Carpédiem l'instant présent
+parce qu'en fait [rires] dans l'idée
+c'est ça
+parce qu'il y a un proverbe qui dit
+on est en 2003 là.
+Il y a un proverbe qui dit que si tu se
+si tu te rappelles cinq fois par jour
+que tu vas mourir, tu vas être plus
+heureux.
+Ah génial.
+Ça part d'un vrai truc quand même.
+Comment elle s'appelle ?
+Euh rock.
+Wick rock.
+Wick rock.
+Et une dernière.
+Et alors une dernière. Alors celle-ci
+elle est très marrante aussi. Je l'ai
+téléchargé. Elle Je sais pas si vous
+avez des animaux de compagnie. Un chien.
+Yes chat.
+Ah chat. Ça marche pas. Ça marche
+qu'avec les chiens. Elle
+c'est bien ciblé en tout cas.
+Elle s'appelle Dog Translator
+et en fait l'idée c'est de comprendre
+les aboiements de votre chien et idem si
+vous voulez parler à votre chien
+communiquer avec votre animal
+c'est censé traduire avec Lia.
+Exactement. Donc là si tu veux
+tu peux parler
+et on va avoir ce que ce que tu dis en
+chien. Traduis en aboiement.
+Vas-y. Vas-y montren-nous comment tu
+abois. Attends [rires]
+attends je commence. J'ai pas compris.
+Tu parles en en normal, en humain et ça
+te fait un aboiement parler à chien
+et idem si ton chien te c comprendre ce
+qu'il te dit.
+Bon, ça c'est du bullshit. Vas-y.
+Bah, c'est pas prouvé scientifiquement
+mais il y en a beaucoup qui l'utilisent.
+Alors attends,
+tu as tu as Mew talk aussi. Mew talk
+c'est pour les chats. Miaou talk.
+Et en fait bah tu parles en français, en
+anglais. Ouais. Ça traduit en chat et
+c'est la même chose. Mais ça existe.
+Mais donc ça c'est du
+je l'ai pas essayé parce que mon chat
+déjà même en chat il parle pas. Donc je
+l'ai pas essayé. Mais ça ouais, ça
+existe
+donc c'est des c'est full bullshit.
+C'estàd que c'est totalement faux.
+Tu pourrais demander à chat GPT s'il
+sait parler en chat, il va te répondre
+que oui. Euh après il va il va vraiment
+te parler en chat mais personne ne sait
+si ça marche vraiment en fait. Mais
+peut-être que Lia elle pense que c'est
+possible et peut-être qu'elle a raison
+mais on peut pas vraiment savoir. Tu
+vois on n'est pas dans la peau d'un chat
+quoi. Chen
+c'est pas prouvé quoi.
+Alors vas-y. Vous voulez qu'on dise
+quelque chose ?
+Si on savait parler aux animaux ça
+serait normalement. Voilà. Mais donc on
+peut faire une application un peu
+charlotte charl de charlatanisme. C'est
+là où faut faire attention pour les App
+Store et tout ça.
+C'est c'est assez réguler l'Apsort donc
+tu peux pas faire n'importe quoi. Je
+pense que globalement si c'est une app
+qui est plutôt dans divertissement
+gratuit, bon voilà, c'est pour rigoler.
+Mais si tu commences effectivement à
+charger les abonnements hyper cher, bah
+ça va passer.
+Oui, là c'est payant. J'ai pris un essai
+gratuit 3 jours, mais sinon c'est 8 €
+semaine. Voà. Wouh
+! Est-ce qu'il y a des applications pour
+parler au défunt ou tu vois des trucs un
+peu qui utilisent ?
+Il y a tout. Il y a tout. Tu peux faire
+des cimetières d'animaux virtuels.
+Donc là, tu enteres ton chien, tu viens
+le voir sur ton application, tu peux lui
+mettre des messages et cetera. Donc oui,
+tu peux et ça il y en a tu peux tout
+faire.
+Alors vas-y, on t'écoute aboyer.
+Ouais. Non, je vais pas boyer. Ce que je
+vous propose c'est qu'on traduise ou ça
+va traduit en aboiement.
+Exactement.
+D'accord.
+Voilà. Et ben écoute, on est sur
+légendes et bientôt il y a une tournée.
+On est en plein légendus.
+[raclement de gorge] Fait une petite
+promo. Voilà, on va voir ce que ça donne
+en aboiement.
+Voilà, on est sur les gens à la tournée
+prochainement. Voilà. Et tu peux choisir
+l'humeur du chien.
+Ah bon ? Joy énervé joyeux, énervé
+effrayé, heureux total.
+D'accord. Toutes les styles de Merci
+beaucoup. Voilà, ça nous a permis de
+voir d'autres styles d'application. On a
+vu du très très haut, on voulait voir
+vraiment tout ce qui se faisait. Ça
+permet d'avoir un panel. Merci beaucoup
+Lola. Avec
+plaisir.
+On va continuer l'émission maintenant.
+Allez, pour terminer l'émission, euh
+c'était super en tout cas de pouvoir
+voir plein de d'applications comme ça
+très différentes avec Lola, avec ceux
+qui en ont créé avec les bénévoles. On a
+je pense je sais pas pour vous chez
+vous, j'espère que on a réussi à cette
+mission là vraiment de découvrir
+vraiment un monde euh tu vois avec MWM,
+mais je connaissais pas, je savais pas
+qu'on pouvait faire des applications.
+Euh est-ce qu'on peut parler de ton
+parcours si tu veux bien euh pour
+comprendre comment est-ce que tu as fait
+avant parce que toi tu as fait une
+application qui a explosé.
+Euh maintenant qu'on a compris un peu ce
+que tu fais aujourd'hui, c'est bien de
+comprendre le parcours et comment tu en
+as arrivé là. Euh je vous rappelle que
+si vous voulez essayer de fabriquer, de
+faire une application avec
+l'intelligence artificielle, avec MWM,
+je vous mets le lien dans la description
+du podcast audio. Si vous nous suivez
+sur Spotify, 10er, Apple Podcast, Amazon
+Podcast, vous cliquez sur description,
+vous aurez le lien directement pour vous
+inscrire. Oubliez pas le code les gens
+en plus pour avoir 50 % de réduction le
+premier mois. Et sur YouTube, dans la
+description de de l'épisode, vous aurez
+directement aussi le lien pour faire ça.
+Toi, tu étais tuas tu as fait des études
+d'ingénieur.
+Tout à fait.
+Ingénieur aéronautiqué espace.
+Donc c'est-à-dire que tu étais dans pour
+pour l'aviation quoi. Pour l'aviation,
+industrie lourde. Euh donc rien à voir
+avec que ce que j'ai fait par la suite.
+Et pourquoi tu bascules sur sur les app
+? Quel est le rapport ? En fait, j'étais
+euh passionné de de musique électro à
+l'époque, donc j'étais DJ. Et en soir
+étudiant forcément bah tu as un peu plus
+de temps. Après tu sais MATP où tu fais
+beaucoup de tu bouffes des mats et de la
+physique pendant 2 ans. Bah après
+derrière quand tu rentres à l'école, tu
+es plus là pour tu as travaillé en fait
+ta mémoire et tes capacités
+intellectuelles. Tu es là juste pour
+apprendre ton métier mais tu es plus
+dans la compétition. Tu es vraiment
+juste tu as passé le concours, tu
+rentres dans l'école d'ingénieur, on va
+t'apprendre à on va dire les contours
+d'un métier. Donc moi je suis rentré
+dans l'école. Donc forcément la charge
+de travail baisse quand même de manière
+assez significative. Euh et donc moi
+effectivement ben j'étais euh euh
+toujours à fond dans tout ce qui était
+dijing. Et euh pendant l'école en
+parallèle de mes études d'aéronautique,
+je me suis dit euh bah tiens, il y a un
+besoin. Mais c'est quelque chose qui est
+très commun dans tout ce qu'on tout ce
+qu'on s'est dit et tout ce qu'on a
+entendu aujourd'hui c'est euh il faut
+identifier un besoin. Moi j'avais
+identifié un besoin que euh les
+applications enfin les logiciels de DJ
+ça répondait à un besoin donc des gens
+qui avaient besoin d'aller mixer pour
+animer une soirée. Et sauf qu'à mon
+époque, donc en en 2010, quand j'ai fais
+mon école, il y avait des logiciels
+professionnels et je me suis dit "Ouais,
+mais comment il fait euh le le oui
+comment il fait Guillaume Play
+pouranimer son anniversaire ou son
+mariage ? Il a pas envie de lâcher 2 3
+4000 € pour un DJ." Euh et ben j'ai créé
+du coup l'application qui permettait à
+n'importe qui d'avoir un logiciel de DJ
+accessible pour animer une soirée. En
+fait, c'est comme ça que l'idée est
+venue. J'avais fait un petit business
+plan, j'avais fait une étude marketing
+et pendant mon école euh
+Tu te prends en stage dans ta propre
+motou
+en fait je lance
+tu fais un stage dans ta propre société.
+C'est
+voilà je je lance le projet dans
+l'école. Ça commence à à avoir de
+l'engouement au niveau des professeurs à
+qui j'en parle et cetera. Et euh et du
+coup bah moi en dernière année d'école
+d'AG, j'avais le choix entre aller chez
+Talès, chez Airbus, chez Safran pour
+aller d'être dans des bureaux d'études
+hein, pour faire du dimensionnement de
+de rivet euh tu vois pour aller euh bah
+à fixer des pièces pour des avions ou
+faire de la résistance des matériaux
+pour voir si le petit bout d'aluminium
+il est pas cassé. Euh et donc je me suis
+dit bon bah j'ai le choix de soit faire
+ça pour valider mon diplôme, soit bah ma
+boîte elle commence à marcher. Bah je
+pourrais peut-être J'avais déjà créé la
+boîte, j'avais déjà levé de l'argent
+avant de finir. Alors tu étais en cours
+encore.
+Ouais, j'avais levé 80000 €. Donc
+j'avais fait ma première levée de fond
+en étant à l'école, dernière année
+d'école lingée. J'avais déjà des
+stagiaires qui étaient qui bossaient au
+bureau quand j'étais en cours euh que je
+gérais du coup avec on avait quand même
+une personne sur place qui qui était on
+va dire le on va dire un salarié. Euh et
+donc bah du coup je lance ça et donc je
+me dis bah en fait soit euh je me mets à
+fond dans ma boîte, soit bah je je
+l'arrête et puis je vais faire mon
+stage. Et donc en fait ce qui s'est
+passé c'est que j'ai négocié avec le
+directeur de l'école en lu disant voilà
+je vais faire un stage dans ma boîte.
+Euh ce qui du coup à l'époque était
+quand même très compliqué parce que j'ai
+signé des deux côtés sur la convention
+en tant que entreprise et en tant que
+étudiant. Et donc le directeur de
+l'école euh je passe le bonjour
+Jean-Michel Nicole à l'époque l'esprit
+très ouvert a dit "OK, ça s'est jamais
+vu, l'école elle a 75 ans ou 80 ans, ça
+s'est jamais vu, ça s'est jamais fait,
+on va le faire." Et donc il m'a autorisé
+à le faire. Euh bien évidemment, je me
+suis pas noté à la fin. Euh mais donc
+j'ai eu un jury convoqué par l'école de
+professionnels qui ont jugé ma
+performance en tant qu'entrepreneur
+débutant. Euh et j'ai alors ce qui est
+très drôle et je viens d'y repenser mais
+euh euh j'ai été noté 19,5/ 20 euh sur
+ce stage qui était la meilleure note de
+l'école et donc j'ai fini euh premier de
+l'école au classement sur le dernier tri
+dernier semestre qui était le stage
+alors qu'avant euh j'étais plutôt proche
+de la fin du duo tu vois. Donc ça bon ça
+après ça reste une note. Il y a rien de
+il y a rien d'extraordinaire. Et donc
+j'ai fait ce stage dans l'école ce qui
+m'a permis en fait de me lancer et puis
+en fait bah du coup j'ai ça a commencé
+un peu à prendre. J'avais fait ma
+première levée de fond euh et du coup
+bah j'ai commencé comme ça et donc je
+n'ai jamais travaillé dans une
+entreprise de ma vie à parten
+Ouais jamais. Je sais pas ce que c'est
+que de travailler dans une entreprise.
+[ __ ] et tu vas tu vas le faire en ça
+c'est en 2012 quand tu vas lancer euh
+ton application DJ. Première
+application.
+La première application c'était sur
+iPhone 3 donc ça fait longtemps
+et en même temps c'est c'est il y a pas
+si longtemps que ça. 2012.
+14 ans quand même hein.
+Ouais. J'ai l'impression ça fait 3 ans
+mais ça fait 14 ans.
+C'est vrai. 14 ans et ça va marcher tout
+de suite ou c'est euh
+Alors bah globalement au début juste
+avant la la phase iPhone, on s'était
+lancé sur le web parce que bon l'iPhone
+globalement 2010 ça venait à peine de
+sortir, il y avait pas de marché euh
+mais bon bah on galérait sur le web et
+là on s'est dit "OK euh là faut qu'on
+trouve un truc, l'iPhone sort
+entre guillemets, l'iPhone 1 ça explose,
+l'iPhone 3G euh encore les ventes
+augmentent. l'iPhone 3GS, c'est là où on
+est arrivé, ça s'accélère, après il sort
+l'iPad et nous on se dit "OK, on va
+faire un logiciel de DJ sur
+l'application mobile en en format
+application mobile." Faut voir qu'à
+l'époque les écrans d'iPhone, c'était
+tout
+beaucoup plus petit.
+Donc en fait, quand je te dis ça
+aujourd'hui, tu dis "OK, Eddie Jing
+c'est 150 millions de téléchargement,
+c'est évident.
+150 millions ?
+Juste Ediging, ouais 150 millions. Euh
+à l'époque c'était idiot, il y avait pas
+de marché et l'écran était tout petit.
+Donc en fait, tu imagines un DJ qui est
+comme ça avec ses doigts sur l'écran.
+Mais il s'avère que on voulait faire une
+app grand public. Donc où était le grand
+public ? Où était en train le grand
+public d'arriver massivement ? C'était
+sur ce nouveau support qui était le
+smartphone iOS ou Android. Et donc en
+fait, on s'est retrouvé parmi les
+premières apps euh françaises sur l'
+store d'Apple. Euh et c'est ça en fait
+qui euh qui nous a permis d'être repéré
+par Apple. Ils nous ont mis en avanting
+à partir du 3è mois après le lancement.
+Donc on met l'app en ligne. Premer mois,
+on fait 100 téléchargements. 2è mois on
+fait 150 téléchargement au niveau
+mondial. Donc en gros, c'est mort. 3è
+mois, Apple nous met en avant, on fait
+500000 dans le mois.
+Oh la vache ! C'est vraiment un choix de
+C'était à l'époque. Aujourd'hui, c'est
+c'est encore c'est des chiffres beaucoup
+plus gros.
+C'est c'est vraiment si Apple décide de
+te mettre ou pas ?
+Ah bah ils te mettent en avance de
+États-Unis, tu peux faire 500000 dans la
+dans dans la semaine ou dans la journée.
+Euh c'est c'est voilà c'est il y a
+aujourd'hui Apple c'est 1,4 milliards de
+de personnes qui ont des téléphones
+actifs. Donc c'est quand même un très
+très gros business.
+Tu habitais à l'époque dans un un petit
+appartement avec ta copine, tu vivais
+d'APL et tu te retrouves à vendre. Enfin
+non, c'était gratuit. Donc 500000
+téléchargements, vous allez en avoir 1
+million tout de suite la première année.
+Est-ce que vous gagnez de l'argent tout
+de suite ?
+Alors, pas du tout. Donc, en fait, je
+lance l'application, je finis mes études
+et donc j'étais encore en appartement
+étudiant. Donc effectivement, je vivais
+avec ma copine de l'époque qui est
+devenue ma femme euh et qui m'a supporté
+pendant toutes ces années sur du coup
+mes idées farfelues qui n'étaient pas
+rentables. Euh alors, c'est pas ce
+qu'elle disait, mais c'est ce que
+certaines personnes de l'entourage
+pensaient. pas de marché, pas de pas de
+monétisation potentielle, enfin voilà.
+Et puis sur un device qui était tout
+nouveau, personne n'y croyait encore au
+début. Et donc en fait euh je me lance
+comme ça et donc je reste dans cet
+appartement pendant plusieurs années euh
+comme si j'étais étudiant. En fait, je
+vivais comme un étudiant pendant les
+trois premières années, j'ai v comme un
+étudiant euh comme avant. Donc en gros,
+c'est comme si j'avais fait, tu vois, 9
+années d'étude. Donc en fait, on gagnait
+pas d'argent, mais notre côté, j'avais
+pas beaucoup de besoins. Et
+effectivement, les APL et l'argent que
+[grognement] mes parents me donnaient
+pour pour m'aider me permettait
+largement de bah continuer à faire ma
+petite vie d'étudiant tranquille. Et
+donc, j'étais chef d'entreprise avec une
+boîte qui gagne zéro mais qui a
+l'ambition de créer, on va dire, une
+super grosse application et un jour de
+monétiser. Donc au début zéro.
+Combien de temps après tu vas monétiser
+?
+Donc on lance en 2012. euh la boîte de
+rentame en 2018. Donc 6 ans
+6 ans de galère. Forcément, on a dû
+faire des levé de fond pour en fait
+pouvoir survivre. À l'époque, c'était
+très compliqué d'expliquer à des
+investisseurs que les applications, ça
+va gagner de l'argent. C'est
+aujourd'hui, bah en fait,
+c'est évident.
+C'est évident. Nous, on l'a fait et puis
+là, on est en train de lire avec MWMI,
+tout le monde peut le faire. Sauf que
+imagine euh il y a il y a 10 ans en donc
+il y a 14 ans en 2012 personne n'y
+croyait. Donc quand tu vas voir un
+investir, tu dis voilà je vais lancer un
+produit qui a pas de business model sur
+une plateforme qui est nouvelle. Voilà à
+l'époque Facebook Facebook c'est 2009
+hein. Donc Facebook en 2012 il vendent
+pas de publicité facilement. YouTube
+pareil 2009 ou 2008 c'està dire que il y
+avait pas le trafic qui a aujourd'hui
+pour générer pour aller faire de la
+publicité. Donc en fait, tu as tu as pas
+de moyen d'aller te faire connaître et
+tu as pas de moyen de monétiser puisqueà
+l'époque, il y avait pas de solution
+monétisation. Par exemple, l'abonnement
+[grognement] euh dans les App Store est
+sorti en 2018. Ça veut dire que avant
+2018, tu pouvais monétiser avec des
+publicités, mais le marché de la pub
+mobile, les les on va dire les revenus
+potentiels que tu pouvais générer
+étaient très faibles. Euh bah Facebook
+n'était pas aujourd'hui Facebook. Pareil
+pour toutes les autres régies
+publicitaires. Donc c'està dire qu'il y
+avait pas de business model potentiel.
+Et donc forcément quand on parlait aux
+investisseurs bah ils y croyaient pas.
+Et donc comment on a fait pour survivre
+jusqu'en 2018 ? C'est qu'en fait on a
+fait appel à des Business Angels où
+c'est là où on a on a j'ai parcouru un
+peu avec mon bâton de pélerin la France
+et même l'Europe jusqu'à me retrouver
+Ibiza pour essayer de lever de l'argent
+auprès de toute personne qui avait qui
+était business angels. On va dire
+qu'est-ce que c'est qu'un business angel
+?
+Un business angel c'est un quelqu'un qui
+a bien réussi sa vie qui est soit
+entrepreneur soit quelqu'un qui a très
+bien réussi dans un domaine donné donc a
+de l'argent [grognement] et qui va
+investir dans ta boîte. Voilà, c'est un
+investisseur mais privé, c'est
+tu donnes un peu de part de ta boîte,
+il achète des parts de ta boîte, il
+investit dans
+du coup tu dilu c'estàd que tu perds un
+peu de pouvoir,
+tu vend du capital de ta société. Donc
+toi
+tu en restes quand même en 2018 quand tu
+as fait 6 ans de
+euh après 6 ans de lever de fond, oui,
+on s'est quand même fait bien diluer. Et
+donc en fait c'est un peu le jeu he
+parce que c'est ça qui fait survivre ta
+boîte. Moi à l'époque, j'avais une
+vingtaine de salariés. Donc 20 salariés,
+ça te coûte facilement 2 million d'euros
+par an. Donc faut le financer puis dans
+la durée hein, tu vois. Alors après, on
+a embauché au fur et à mesure mais au
+donc le le venture capitalisme donc les
+les investisseurs professionnels, donc
+les gros fonds d'investissement ne
+croyaient pas au marché du mobile. Ils
+sont réveillés à partir de 2020 tous ces
+tous ces investisseurs là. Avant c'était
+du coup des business angels et des
+familles. Ce qu'on appelle des famili en
+fait des
+fond d'investissement
+fond d'investissement mais qui sont des
+familles,
+tu vois, ça va être la famille d'assaut,
+la famille Arnaud euh qui vont en fait
+se structurer pour en fait investir dans
+des start-ups dans lesquels tous les
+autres professionnels de la place non ne
+ne enfin ne vont pas parce que
+globalement quand ils y vont, c'est
+qu'effectivement le marché il est assez
+dérisqué pour eux pour pouvoir aller
+investir dedans. Et [grognement] alors
+et pour terminer pour comprendre le
+parcours, la boîte elle est elle a
+failli s'effondrer. C'est là où avant
+d'exploser, elle a failli s'effondrer en
+2000
+17, vous devenez MWM, donc c'est Musique
+World Media.
+À l'époque.
+À l'époque.
+Ouais.
+Vous allez vous appeler MWM tout court.
+C'est plus la même chose maintenant.
+C'est plus le même nom.
+Non, euh maintenant c'est WM tout court
+et ça veut dire plus le
+ça veut dire Mad with Manness. Mais en
+gros maintenant c'est un double même
+pour en fait tu vois faire quelque chose
+de
+Mad Wness. Ça veut dire quoi ?
+Mad Wiz Manness ? Là, c'est c'est un peu
+en fait notre façon de travailler, tu
+vois. On a on a une façon de travailler.
+Qu'est-ce que ça veut dire en français ?
+Ça veut dire fait que un grain de folie,
+la créativité, un grain de folie et MWM
+si tu inverses le le
+voilà, ça fait WW,
+c'est internet MWM M comme mobile. Donc
+en fait, on est un peu l'internet du
+mobile. Vous avez failli euh fermer
+boutique au dernier moment, vous allez
+vous relever pour exploser à ce
+moment-là. Qu'est-ce qui s'est passé à
+ce moment en 2018 ?
+2018 euh très simplement euh on devait
+euh lever de l'argent euh 1,5 million
+d'eux en janvier. Euh l'investissement
+s'est pas fait puisque l'investisseur en
+fait a nous a nous a lâché à la dernière
+minute. Donc on s'est retrouvé euh bah
+sans ce financement qui devait arriver
+et il nous restait 30 jours de
+trésorerie. Donc c'estàdire 30 jours
+d'argent pour payer les salaires et tous
+les salarist.
+C'està dire rien quoi en boîte. Quand tu
+as une boîte, c'est rien du tout hein.
+Ah bah oui bah un mois voilà, tu as 30
+jours et tu dois trouver une solution.
+Donc ce que j'ai fait c'est que j'ai
+envoyé un mail à mes investisseurs qui
+étaient actuellement là en leur disant
+"Bon, bonjour à tous, il nous reste 30
+jours, dans 30 jours, on peut plus payer
+les salaires et après ce qui se passe,
+bah tu vas au tribunal, dépôt de bilan,
+tout ça." J'ai un de mes investisseurs,
+Martin Solveg, le le DJ produceur qui a
+dit "Bah tiens, je connais un copain
+d'enfance, écoute, tu vu que tu as pas
+de solution et ça va aller, ça doit
+aller très vite, je lui envoie un mail
+et puis on verra si ça marche quoi." il
+s'avère que c'est cet ami d'enfance une
+semaine après, il est au bureau. Euh, il
+vient, on lui explique ce qu'on fait euh
+tout no parcours, à la fin du meeting,
+il met 500000 € et ce qui nous a permis
+après bah de refaire la levée d' 1,5
+million et euh et la boîte est sauvée.
+Ça s'est joué à un mail, envoyé à tous
+les investisseurs et une réunion, une
+personne et tout a été débloqué. Grâce à
+Martin Solveille,
+grâce à Martin qui a contacté son ami
+d'enfance
+qui est en fait un entrepreneur français
+très connu qui s'appelle Rodolp Carl qui
+a monté tu sais le le réseau de crèche
+Babylou numéro 1 d'Europe très
+successful et donc il est investi dans
+les start-ups comme ça pour aller
+justement bah aider l'écosystème.
+Et Martin Sveg a créé une application
+chez toi
+non
+parce qu'il a créé une application qui
+est très connue.
+Il a créé une application
+qui est très utilisée par les parents
+pour être très précis mais qui n'est pas
+forcément connu que c'est lui qui est
+derrière. Personne ne sait que c'est
+Martin Sevc derrière. Je crois
+c'est pas dans dans l'a marketé comme
+ça, mais
+c'est Alma Studio.
+Alma Studio, effectivement,
+c'est des histoires pour les enfants,
+gros.
+Exactement. Donc tu sais que le temps
+d'écran, c'est quelque chose de très
+important notamment chez les enfants.
+Donc en fait le business du mobile c'est
+un business qui est extraordinaire pour
+aller développer du business, des
+applications et cetera. Sauf que
+l'audience que tu que tu vas viser,
+c'est très important de savoir à qui tu
+t'adresses. Les enfants. Pour le coup,
+les applications sont pas forcément
+bonnes pour les enfants. Donc Alma,
+c'est une application qui va répondre
+euh à un besoin simple, c'est de dire il
+faut réduire le temps d'écran des
+enfants. Parce que quand tu es un
+enfant, tu peux pas assumer ce qu'un
+adulte assume en terme de temps d'écran.
+Et donc, il a créé une application
+d'histoire pour enfants audio où il y a
+pas de pas d'image, c'est de de l'audio.
+Et tu vas apprendre donc développer ton
+langage, tu vas apprendre des histoires
+sur comment marche le corps et cetera.
+Donc plein plein plein de séries audio.
+Il a créé ça et nous on l'a fait en
+partenariat parce que bah globalement en
+tant en tant que éditeur mais de
+distributeur d'application, on bosse
+avec Martinard sur cette application là
+pour le le distrib.
+Il y a combien de gens qui l'ont
+téléchargé ? Alma studio
+Alma euh
+au niveau nombre de familles qui l'ont,
+on est sur plusieurs centaines de
+milliers de familles en France euh
+France Benilux. Euh donc on doit on est
+à entre 1 et 2 million de
+téléchargement.
+Vous allez passer d'un million d'euros
+de chiffre d'affaires par an à 1 million
+en 3 mois grâce aux abonnements. Vous
+allez lancer un système d'abonnement
+2018, vous devenir rentable et vous
+allez lever en 2020. Donc ça va vous
+permettre de lever 50 millions d'euros
+en 3 semaines.
+Donc là c'est vraiment l'accélération.
+C'est là où ça se passe.
+Bah c'est là où ça se passe. Ça veut
+dire qu' en janvier et 2018 je suis à 30
+jours de de poser le bilan. mi 2018,
+après l'investissement de d'un
+investisseur, on devient rentable et au
+lieu de faire 1 million de chiffres
+d'affaires annuels, on le fait par mois,
+en quelques mois, euh tout s'enchaîne.
+Euh fin 2010, enfin début 2000 début
+2019, fin 2019, on fait la grosse de
+fond de 50 millions parce queen fait la
+boîte, elle a décollé donc en quelques
+semaines et ça s'est pas arrêté. Donc 1
+million par mois, puis après on a
+continué comme ça. Et forcément quand
+euh tu arrives voir les fameux marchés
+des VC, tu dis "Bonjour, je m'appelle
+MWM, euh je faisais euh zéro en janvier,
+maintenant je fais 2 millions d'euros
+par mois, j'ai 30 salariés, la courbe
+elle est comme ça. Bah en fait, j'avais
+juste fait un deck, donc un deck, ce
+qu'on appelle, c'est un petit une
+présentation avec 11 pages où je suis
+arrivé et j'ai dit bah voilà ce que je
+fais." Et en 11 pages, j'ai levé 50
+millions d'euros avec euh des fonds
+d'investissement. Là où avant j'avais
+parlé à des dizaines et des dizaines de
+fonds pendant des heures et
+effectivement bah on avait levé zéro.
+Donc là tout s'accélère parce qu'avec
+cet argent donc 50 millions d'euros qui
+était en 2020 la dans le top 10 des plus
+grosses levées de fond de l'année.
+[grognement] Donc sur un business en
+plus que le mobile qui est naissant
+enfin que les gens connaissaient pas
+vraiment c'était pas c'était pas c'était
+pas les investires professionnels n'y
+allaient pas. Euh et donc là
+effectivement après 2020, ça a été un
+peu l'euphorie sur le marché des
+applications mobiles où tout le monde
+s'est mis à investir dans des comme par
+exemple Dualingo, tu sais, une grosse
+application d'apprentissage de l'angle
+de l'anglais, ils ont levé des centaines
+de millions et puis tout le monde s'est
+mis, les viis se sont mis, donc les
+investisseurs professionnels se sont mis
+à investir des milliards dans dans ce
+business-là euh et donc le marché a
+continué d'accélérer euh et de grossir.
+Le
+le coût d'une application, d'en parler
+tout à l'heure avec qui a créé GIV,
+l'application pour données qui disait
+qu'il avait mis plus d'un million
+d'euros après petit à petit, ça lui a
+vraiment coûté cher. Aujourd'hui, on en
+parlait, ça coûte, on peut faire une
+belle application pour une centaine
+d'euros avec MWM. Donc c'est vraiment ça
+a complètement changé. Il y a des
+systèmes d'abonnement. Est-ce que tu
+peux expliquer si vous y connaissez rien
+comme moi pour bien comprendre quand on
+arrive, si on crée une application,
+combien est l'abonnement, si on veut
+mettre de la pub, est-ce que c'est
+automatique ? Est-ce que tu peux
+expliquer tout ça ?
+Euh ouais. Alors, en fait, SWMAI, quand
+tu vas venir, tu vas te créer un compte
+en un clic avec ton ton mode de
+connexion préféré et tu vas venir aller
+sélectionner un abonnement. Donc nous,
+on a un le premier abonnement, il est à
+40 € 49 € par mois et tu as un autre
+abonnement qui est à 149 € par mois. Et
+de toute manière, tu vas être facturé à
+l'usage. Ça veut dire que tu vas
+commencer à créer des apps et en
+fonction de ton usage, bah tu vas
+pouvoir développer plus ou moins d'App.
+Euh ça peut paraître cher de se dire "Je
+vais 149 € par mois pour faire une
+application." Euh mais sauf que une
+application globalement aujourd'hui pour
+une centaine d'euros, vous avez une app
+vraiment finie. Euh quand moi j'ai fait
+mes premières applications, ça se compte
+en millions d'euros euh comme
+effectivement les les les entrepreneurs
+qu'on a vu tout à l'heure. Euh par
+exemple Color Pop, notre app de
+coloriage euh qui est aujourd'hui très
+très populaire, c'est 1,5 million de
+coût de développement. Iding
+[grognement] plus de 5 millions d'euros.
+Euh et en fait euh
+aujourd'hui on peut faire la même chose
+pour 100 € vraiment.
+Alors tu peux pas faire exactement la
+même chose pour refaire un ça va te
+coûter plusieurs milliers d'euros mais
+ça veut dire que tu perds per de million
+ouais tu vis par 1000. Donc ça c'est
+vraiment une Oubène assez incroyable et
+c'est ce que permet aujourd'h euh et
+c'est pour ça que l'abonnement en gros
+c'est un plutôt un prix d'entrée. Tu vas
+payer, tu vas acheter en fait euh un
+pack qui va te permettre de créer x
+application, enfin un nombre
+d'applications. Euh mais en fait en
+fonction de ton usage et ben tu vas
+pouvoir euh aller beaucoup plus loin.
+Mais euh faut imaginer que oui, on a une
+réduction par 1000 du coût de
+développement et c'est très récent. Ça
+fait que quelques mois qu'on peut faire
+ça.
+Si on veut mettre de la pub
+s'il y en a qui a envie de mettre de la
+pub, de même de faire payer les
+applications ? Est-ce que vous avez des
+systèmes de régie directement qui
+mettent la pub ?
+Ouais, alors sur la partie euh
+publicitaire euh là justement on est en
+train de d'intégrer donc les régies avec
+qui on travaille sur nos appanou pour
+justement monétiser via la publicité. Et
+sinon très simplement, tu peux juste
+demander MWMAI euh d'intégrer, on va
+dire, un abonnement pour aller vendre
+ton service ou ton application. Et Lia,
+elle va créer en fait, vous savez, ce
+qu'on appelle un payall. Donc c'est la
+petite shop euh qui te permet, on va
+t'expliquer ce que tu vas acheter,
+qu'est-ce que tu débloques par rapport à
+ce à ce à quoi tu vas t'abonner dans
+l'application du client. Euh et donc
+quand tu vas la mettre en ligne, bah les
+utilisateurs vont pouvoir
+tout ça c'est très simple, c'est très
+facile ou pas ?
+Euh quand tu utilises MWMAI, euh tu lui
+parles comme si tu parlais à chat GPT et
+tu lui parles comme si tu parlais à un
+enfant. Donc tu lui parles, je veux
+monétiser mon mon app, comment je fais ?
+Elle va t'expliquer, voilà comment tu
+peux gagner de l'argent, qu'est-ce que
+je fais ? Tu dis bah tu fais ça et ainsi
+de suite. Et en fait, elle va t'aider,
+elle va te proposer des solutions.
+Un agent I quoi OK ?
+C'est en fait une suite d'agent IA où tu
+vas avoir accès à un designer qui va
+faire les designs, un product manager
+qui est quelqu'un qui va organiser le
+projet, c'est un chef de projet, tu vas
+avoir un développeur qui va faire le
+code et toi en fait tu parles à ton chef
+de projet et lui il se débrouille.
+Voilà, il se débrouille. Toi, tu es en
+fait, tu deviens CEO de ta société. Il
+va en fait parler à tous les autres
+agents qui sont dans MWMAI et tu vas lui
+donner des instructions, il va le faire,
+il va te il va orchestrer tout ça pour
+toi.
+Il y a combien d'applications qui ont
+été faites par vous depuis le début là
+euh sur MWMI ? Euh donc ça fait 4 mois
+qu'on a lancé la plateforme.
+Aujourd'hui, on a à peu près 300000
+applications qui ont été créées. Ce qui
+est énorme, c'est que moi, depuis que
+j'ai créé la boîte, on a dû en lancer
+150 200 en 15 ans. Euh là, les
+ça accélère quoi. Là, c'est
+les utilisateurs, on créé 300000. Alors
+après, ils sont plus nombreux que nous
+hein. Mais euh mais le premier mois, on
+a fait plus de 100000 inscrits sur la
+plateforme
+et vous avez créé MMWM Publishing. En
+fait, ça améliore les applications qui
+existent déjà. Donc c'est par exemple
+des créateurs d'appli qui veulent venir
+la faire évoluer. Ils peuvent revenir
+chez vous avec Lia.
+Exactement. En fait ce qui se passe
+c'est que nous on se positionne vraiment
+comme une plateforme pour faire du
+business sur mobile. C'était ça un peu
+le la thèse. Ça veut dire que pour faire
+du business sur mobile, tu as besoin d'
+d'avoir une app. Donc on a fait un outil
+MWMAI qui permet de créer des app. Sauf
+que si tu l'as déjà et tu veux accélérer
+ton business et ben nous on a créé le
+publishing. Donc le publishing ça veut
+dire de la distribution. Et donc à ce
+moment-là, tu prends ton application, tu
+on va dire la la connectes à notre
+plateforme comme tu pourrais faire avec
+ton site web et Google Analytics par
+exemple. Euh et en fait à ce moment-là
+euh on va venir t'aider avec des agents
+IA pour aller, on va dire
+commercialiser, distribuer ton
+application. Et on a une dernière off
+euh qui va en fait être une sorte de
+booster, tu sais, où en gros les
+applications qui ont vraiment des très
+bonnes données, donc qui en fait qui ont
+des des bons euh on appelle ça des KPI,
+mais c'est en fait c'est des indicateurs
+qui permettent de savoir que cette app
+est très populaire. Donc si par exemple
+ton application est très populaire, on
+va le voir dans les données qu'on va en
+fait mesurer. Et là, on va être capable
+d'investir nous de l'argent et on va
+investir en marketing pour aller que ton
+app soit connue. Et donc là sur certains
+clients, notamment on l'a fait pour une
+app qui s'appelle Swipe Wipe qui est un
+utilitaire photo où tu vas pouvoir aller
+gérer ta galerie photo, créer des
+miniils un peu comme Familia mais en
+version vraiment full full digital. Euh
+c'est une application qui avait des très
+bons des très un des un très bon usage
+d'utilisateur. Euh bon, un exemple hein,
+on l'a boosté donc on a on a investi de
+l'argent sur cette application-là avec
+un notre offre de distribution. Il
+faisait 3000 € de chiffre d'affair
+annuel. Donc il avait déjà une
+application euh et la première et au
+bout de 18 mois, il faisait 4 millions.
+3000 dollars 4 millions. L'année
+d'après, il faisait 20 millions. Voilà.
+Et donc nous on est distributeur. Donc
+MM accélérateur de particules.
+Voilà, tu peux dire ça mais tu vois MWM
+tu tu imagines le le marché de la grande
+distribution. Tu prends euh Carrefour,
+ils sont distributeurs et producteurs.
+Ils ont ils produisent des des aliments,
+ils produisent euh des des des
+produits qui vendent avec sous la marque
+Carrefour. Et à côté de ça, ils ont bah
+ils distribuent les autres. Bah MWM, on
+est une plateforme technique qui permet
+à la fois de permettre aux gens de
+créer, permettre aux gens de produire et
+d'accélérer. Et en fait, c'est c'est
+tout simplement ce que ce que ferait le
+Carrefour, mais nous on le fait dans le
+domaine des applications.
+C'est quoi le futur pour vous pour
+terminer là ? Vous allez où ? Ça va
+tellement vite. Tu dis avec Lia, ça a
+complètement bouleversé la création.
+C'est quoi la prochaine étape ?
+Alors, la prochaine étape, c'est un peu
+MWM. C'est-à-dire que, tu vois, ça fait
+15 ans que moi je développe des
+applications avec euh des techniques
+traditionnelles artisanales, euh
+beaucoup de technologie euh et
+d'ingénierie. Euh ça m'a coûté des
+dizaines de millions de frais de
+développement et de frais de RED. Euh
+MWMI euh c'est une plateforme qui va
+remplacer euh tout le savoir-faire que
+j'ai créé et toute mon expérience euh
+sur cette plateforme. Donc en gros euh
+j'ai créé la plateforme qui va remplacer
+MWM. Euh donc là tu te dis bon bah OK
+les gars vous êtes un peu mao parce que
+vous vendez bah vous envoyez vous vendez
+149 € par mois euh juste tout votre
+savoir-faire euh que vous avez acquis
+après 15 ans de travail et plus de 80
+millions de dépenses. Et en fait on
+s'est juste dit la chose très simple
+globalement ce qu'on fait d'autres vont
+le faire notamment les Chinois et les
+Américains. C'est eux qui aujourd'hui
+développent les meilleurs IA du monde.
+Donc on s'est dit on est un des leaders
+mondiales dans notre domaine, on
+développe l'IA qui permet de développer
+des applications pour tous et si on le
+fait pas nous, quelqu'un d'autre le
+fera. Donc en fait on on devance un peu
+le marché. On a été les premiers mondees
+à à lancer une un builder, donc un une
+plateforme pour créer des applications
+iOS et Android. Et donc le futur, c'est
+vraiment de permettre d'être la
+plateforme de référence pour quelqu'un
+qui a une idée qui veut la transformer
+en business rentable sur mobile. Et
+comme on disait 8 millions
+d'applications, 10000 nouvelles par
+jour. En fait,
+on peut faire son trou quoi.
+Il faut faire son trou. Et nous, on est
+là pour accompagner de la création à on
+va dire aux opérations, donc la
+distribution en ligne et puis
+jusqu'après au booster où nous on va
+repérer les gars et on va être capable
+de les monter très haut.
+Sur sur votre site, on peut il y a il y
+a un numéro de téléphone, on peut avoir
+quelqu'un en ligne si on a besoin de
+conseils, si on s'y connaît pas bien.
+Alors, numéro de téléphone, non, parce
+qu'on est 60 donc globalement ça va pas
+être possible. Maintenant, on a un
+support et euh et en fait aujourd'hui
+euh la l'interface est très est assez
+simple à utiliser mais on a un support
+client. Alors comment tu as des IA qui
+vont répondre puisque elles connaissent
+globalement comment ça fonctionne mais
+euh au bout d'un moment effectivement
+bah tu as tu contactes le support par
+mail et généralement tu as une réponse
+assez rapide. Mais voilà, nous on est
+plutôt à la recherche de feedback. S'il
+y a des choses effectivement qui sont un
+peu douloureuses ou un peu compliqué.
+L'idée c'est qu'on essaie d'améliorer le
+plateforme en permanence. Merci beaucoup
+Jean-Baptiste d'être venu.
+Merci Guillaume.
+C'est un plaisir de t'avoir.
+Avec plaisir.
+C'était une super émission. On a appris
+plein de trucs sur les applis. On s'est
+bien marré. On a appris des vraiment
+beaucoup de choses. On a découvert un
+paradigme complet quoi. Merci d'être là.
+Merci à toute l'équipe d'avoir préparé
+l'émission avec moi. Les amis. On se
+retrouve de plus en plus nombreux chaque
+semaine, tous les mercredis, tous les
+vendredis et tous les dimanches sur les
+gens. Vous pouvez trouver pour des
+interviews ou des documentaires. Ça soit
+sur YouTube, vous pouvez vous abonner en
+2 secondes avant de nous quitter. Ça
+nous aide beaucoup. Vous êtes environ
+150000 200000 à nous rejoindre chaque
+mois et un podcast audio sur Spotify, 10
+Apple podcast, Amazon Podcast, vous
+faites de légendes, le premier podcast
+de France. Merci 1000 fois et on se
+retrouve très vite sur les jambes. Ciao
+tout le monde. [musique]
+[musique]
+[musique]
+[musique]

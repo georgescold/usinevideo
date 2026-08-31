@@ -1,0 +1,288 @@
+# Bumble’s reset: AI, dating fatigue and the end of swiping
+# Axios · 1,9 k vues · 00:09:22
+# https://www.youtube.com/watch?v=-tMXK0XBhuM
+
+The fatigue is really real. Women said
+they felt like the people they were
+seeing were not who they actually were.
+These are two massive changes.
+>> We've gone so deep with what people
+want.
+Whitney Wolfe Herd is basically saying
+we need to shrink in order to grow.
+Hi, I'm Nicholas Johnston. I'm the
+publisher of Axios. I'm here with one of
+my favorite people at Axios, our chief
+media correspondent Sara Fischer. Sara,
+how are you?
+>> Hi, I'm doing well. You just had a great
+interview with the CEO and founder of
+Bumble made some big news. The swipe is
+going away.
+>> In select markets in Q4
+the swipe will be gone. Tell me why that
+matters. So, that's been the primary
+functionality for dating online for
+years. You swipe right if you like
+someone, you swipe left if you don't.
+But the problem with the swipe is
+there's not a lot of friction. And
+because of that, it's causing people not
+to pause and take consideration.
+>> It's too easy. You're just like back and
+forth with your thumb.
+>> And that actually might be causing
+people to be getting dating fatigue. So,
+she didn't say what she would be
+replacing the swipe with.
+>> We are going to be saying goodbye to the
+swipe and hello to something
+that I believe is revolutionary for the
+category and I'm very excited about it.
+>> But the fact that she's taking this
+stand and saying we need to radically
+change the way that people are using
+Bumble is a big deal. I mean, what she
+clearly recognizes that dating apps are
+shrinking in popularity. 78% of people
+who use dating apps say they're either
+mentally, physically, or emotionally
+exhausted by them.
+>> Bumble stock
+>> price is probably reflective of that.
+>> Bumble, a once popular app, has lost 90%
+of its value since going public 4 years
+ago. Maybe take a step back and give us
+the full picture of this is like a
+business. So, I think dating online has
+become very spamy. A lot of people are
+creating profiles and they're doing it
+to bait people. They're not necessarily
+trying to go on actual dates and develop
+relationships. And that's become a
+problem for the people who do want to
+use dating apps to find their person.
+And so, in order to get to a place where
+the entire ecosystem is healthier,
+Whitney Wolfe Herd is basically saying,
+we need to shrink in order to grow.
+Women said they felt like the people
+they were seeing were not who they
+actually were. They felt like the
+quality of behavior was low. They were
+experiencing low quality. So, we said,
+okay, let's over set let's let's let's
+reset and overhaul the supply. Weed out
+the spammy accounts, people who aren't
+invested in actually going on dates in
+order to make the entire experience
+better for everybody. So, for Wall
+Street, this sounds theoretically like
+it could be a good thing, but in the
+short term, when someone says, our user
+base is going to shrink, that's a
+problem.
+>> to go down before it goes up. She's on
+the other side.
+>> That's her argument.
+>> to spend some time talking about AI in
+two ways on this. First, there's I think
+maybe the way people use AI, is that an
+issue where you're cleaning up your
+pictures or something and that's the
+spammy element of it. Was that something
+that came up a lot in that conversation?
+>> So, they're going to be introducing a
+new AI assistant called B, you know,
+Bumble. It makes sense.
+>> it, yeah. And what B is supposed to do
+is help you optimize your profile. So,
+for example, let's say one of your
+photos was really grainy, Yeah.
+>> B might come in and say, hey, we suggest
+you use a different photo that has a
+higher resolution, for example. I asked
+her though, are you going to be
+encouraging people to use like AI
+generated photos? She said, absolutely
+not. Everything is about authenticity.
+So, things we will not do, which I think
+is important for people to hear in the
+era of AI. We will not let you falsify
+who you are with AI. You cannot have
+falsified photos with AI. You cannot use
+AI to, you know, message people that we
+we will not be leaning into AI
+as a replacement to human connection.
+It's more about, to my understanding,
+encouraging people to make optimization
+choices that are going to behoove them
+in dating.
+>> it to be a little better, but not give
+yourself like a fake image or something
+polished.
+>> Correct. Now, there was some skepticism
+when she first announced this. At the
+beginning it was more like, "Oh, is my
+AI agent going to talk to your AI agent
+and set up dates for us?" I don't think
+that she They've kind of since walked
+back from that. I don't think that we're
+going to that world quite yet. I think
+for now it's how do we use AI to make
+users better at using our app?
+>> Yeah. And that's what we should expect.
+>> how does AI, this is the flip side of
+that, how does AI fit into the
+algorithm? The magic of Bumble is the
+swiping and how it picks people and goes
+it together. Is that getting smarter? Is
+that getting more clever? Are they
+figuring out ways to bring AI into that?
+>> They are. And what's so fascinating,
+Nick, is I asked her, "You're competing
+against all these niche apps, right?
+Like Farmers Only or, you know, an app
+for a certain religion, Christian
+Mingle, whatever it is. So, how do you
+compete as a broad app with some of
+these more niche players? How do you
+think about competing against the niche?
+Do the niche have an opportunity to
+survive against the new Bumble?"
+Probably not. I don't think that these
+these apps that are just for vegans or
+just for a certain religion really have
+longevity, frankly. I mean, I I hope
+they do well. I I don't wish anyone to
+fail.
+But you you know, why do you need to go
+to a grocery store for just oranges when
+we can give you oranges?
+Right? You don't need to do that. You
+can have a lot of things in the market
+and you can just choose to go there for
+that. I think that's where AI comes in
+because on Bumble, you can filter for
+preferences around things like
+demographics or religion or geography.
+But can the app actually algorithmically
+match you really well with those people
+so there's enough scale, like enough
+choice? I think that's where they're
+going to use a lot of AI is helping to
+do the match system amongst niche
+preferences. She actually went as far as
+to say that she doesn't think those
+competitors will even survive. Uh let's
+take a step back, a big step back here,
+and talk about like just the general
+tiredness of everything on the internet.
+It's like enough with all of this. That
+fits into that. Give me your take on it
+from this interview. The internet got so
+spammy, Nick, and so scammy that a lot
+of apps, not just Bumble, are trying to
+figure out how can I weed out bots, how
+can I weed out inauthentic behavior so
+that the actual experience on those
+platforms are better. Gen Z hates dating
+apps. They keep saying there's dating
+fatigue on these apps. So, how do you
+plan to build the business when the, you
+know, biggest demographic coming into
+this dating game doesn't want to be
+dating online.
+We showed our new product to a group of
+what I would consider
+the target demo, young Gen Z women.
+Unanimously, every single woman said,
+"This is it. I will use this."
+And so, we have been in the trenches
+with Gen Z, talking to them, hearing
+them, understanding what they don't like
+about Bumble, what they don't like about
+our competitors, what they don't like
+about dating in general. And we have put
+ourselves through this, you know, hybrid
+of a psychology and sociology
+experiment. We've gone so deep with what
+people want. One thing I thought was so
+interesting is that when she created
+Bumble in 2014, Whitney Wolfe heard was
+adamant and groundbreaking about women
+being empowered through this app. That's
+why in the beginning women always had to
+make the first move and then had 24
+hours to respond. She seemed to have
+suggested that that's going to change a
+little bit in this new version. The
+emphasis on women making the first move,
+is that going to go away and remain? You
+know, I it's so hard to
+to give you the answer without kind of
+giving you the answer and we want to be
+delicate with how we roll this out um
+towards the end of the year. We will not
+force one gender over another to do
+something first, but we will be
+basically bottling the essence of what
+it what was always meant to be women
+making the first move. A confident
+experience, a safe experience, a dynamic
+experience
+to get you offline, in person,
+on great dates and meetups. The essence
+of that has been redesigned, but very
+much intact and now this is the next
+move, and that will be the core of how
+this new interaction model works. I
+don't know necessarily that in order to
+unlock a chat, women are going to be the
+ones that have to chat first. She didn't
+reveal much, but I'm guessing that
+that's going to change.
+>> These are two massive changes. They're
+eliminating the swipe, they're
+eliminating the women coming the at
+having the first action of that. Is she
+being coy, or they really not know what
+they're going to do next?
+>> funny because originally this entire
+reset was supposed to roll out in Q2.
+And now they're saying it's coming in
+Q4. So, I do think that there are
+elements of this that are still a work
+in progress. I think she's just not
+trying to reveal too much. Think about
+it, her biggest competitor, which is a
+publicly traded giant, Match.com. That's
+the parent company to companies like
+Match, like Tinder. They're watching
+what Whitney Wolfe Herd and Bumble are
+doing very closely and vice versa. So,
+she probably is not trying to give
+herself away too much. But, I do think
+that there are going to be some
+fundamental changes because the fatigue
+is really real.
+>> has Bumble been around? Over a decade,
+which is wild.
+>> time for a refresh. 10 years ago, the
+swiping, this was like a new interesting
+thing. Now, it's commonplace, it's a
+meme, practically. So, like, what's
+next? Totally. And also, the interface
+on the mobile apps and phones has
+totally changed. People are into
+vertical video. People swipe vertically
+now, much more than they swipe left and
+right. So, I think part of reimagining
+the app is thinking about how do I make
+it suitable for the modern mobile
+experience, not just the modern dating
+experience.
+>> Right. Uh Sarah, so great to see you.
+Thanks so much for being here, and you
+can catch all of Sarah's interview uh on
+the Axios YouTube channel.

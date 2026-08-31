@@ -1,0 +1,451 @@
+# Le Tinder de l’Intelligence Artificielle | Morningbull : le réveil marchés
+# Swissquote (en français) · 9,5 k vues · 00:13:35
+# https://www.youtube.com/watch?v=loJXkRafoas
+
+Bon, si aujourd'hui euh vous voulez
+faire plaisir euh à vos investisseurs,
+vous avez plus besoin de présenter un
+bon produit, ni même une stratégie
+cohérente. Non, le secret c'est assez
+simple. Vous signez un deal avec Open
+c'est la nouvelle religion de Wall
+Street. Vous voulez que votre titre
+d'école, vous voulez que votre CEO passe
+pour un génie, vous voulez que votre
+boîte même déficitaire double de valeur,
+c'est pas grave, vous balancez les mots
+magiques. Intelligence artificielle,
+partenariat stratégique, plusieurs
+milliards et là c'est fini. Les
+investisseurs vont s'évanouir de bonne
+heure et le contenu du deal, c'est pas
+forcément super important. Globalement,
+on va dire qu'on s'en fout et l'objectif
+c'est pas super important non plus. On
+s'en fout un tout petit peu aussi. Mais
+tant qu'il y a un chiffre à 90 et le
+logo de Ponai à l'intérieur ou de Nvidia
+quelque part sur la présentation
+PowerPoint, et bien vous avez tout
+gagner. À partir de là, vous pouvez
+faire grosso modo n'importe quoi,
+licencier la moitié de vos employés,
+dire que vous êtes en phase de
+transformation stratégique, brûler du
+cash à coup de GPU et affirmer que c'est
+pour accélérer le développement de
+l'intelligence artificielle et paf,
+l'action, elle s'envolera. Bienvenue en
+2025, le monde où la croissance ne se
+mesure plus en point de PIB mais en
+Terraflops. Bienvenue dans ce Morning
+Bull Live. Je suis Thomas Veillet et
+nous sommes le 4 novembre 2025 et Open a
+encore signé un deal. Bah comme toutes
+les semaines.
+[musique]
+Alors avant toute chose, ce que vous
+allez entendre et voir dans cette vidéo
+n'est pas un conseil financier. C'est
+mon avis, mon analyse et parfois mon
+humeur du jour. Par contre, si vous
+voulez comprendre la bourse, là vous
+êtes au bon endroit.
+Lundi, les marchés américains ont
+démarré la semaine en mode bipolaire se
+fait. Le S&P 500 + 0,2 %, le Nasdaq +
+0,5, le Dow Jones on baisse de 0,5 %
+parce qu'il y a pas assez d'intelligence
+artificielle dedans. Quand même le DAO,
+c'est un peu le boomer du marché, il
+comprend plus rien à ce qui se passe
+pendant que les autres parlent de cloud,
+de GPU et de GPT6, lui se demande encore
+ce que c'est un même. Mais derrière ces
+variations minuscules et bien il y a une
+excitation monumentale parce qu'en
+coulisse, c'était Disneyland pour les
+traders. Si vous étiez pas full exposé à
+la tech et à l'IA hier, et bien votre
+journée a dû ressembler à une réunion de
+copropriété longue, molle et inutile.
+Sur les 500 valeurs du S&P 500, à peine
+180 ont terminé dans le verre. Autrement
+dit, la hausse repose sur les épaules de
+trois acteurs Amazon, Nvidia et Palanti.
+Les autres, ils faisaient tapisserie.
+Heureusement qu'op est pas côté parce
+que sinon c'est eux qui auraient tiré le
+marché. Et le grand moteur du jour
+c'était bien évidemment Amazon parce
+qu'Amazon vient de signer un accord
+complètement colossal avec Open High. Un
+pack de 38 milliards de dollars sur 7
+ans. Oui 38 milliards. Et tout ça
+pourquoi ? Et ben pour héberger les
+cerveaux de chat GPT sur ces serveurs
+AWS. Résultat où Wall Street a perdu la
+tête. Amazon + 4 %, Nvidia + 2,2 %,
+Palantir + 3,3. Pourquoi ? parce que les
+investisseurs ont vu les deux mots
+magiques et a et 38 milliards dans la
+même phrase et donc là ils ont acheté
+tout ce qui avait une puce, un
+processeur, une ligne de code ou un lien
+quelconque avec l'intelligence
+artificielle. Ce qui est génial c'est
+que peu importe le deal qu'open signe,
+Nvidia monte quand même. C'est devenu
+une loi de la nature. La hausse de
+pasir, c'est parce qu'on entendait les
+résultats, ça n'a rien à voir mais quand
+même ça tira un peu le secteur de
+l'intelligence artificielle.
+Aujourd'hui, chaque contrat signé est
+égale une cargaison de GPU
+supplémentaire et open AI, de son côté,
+c'est devenu la boîte la plus polie
+amoureuse de la planète et il signe avec
+tout le monde. Microsoft, Oracle,
+Nvidia, AMD, Intel, Amazon, Broadcom,
+ils sont partout, partout à la fois,
+tout le temps. Et le plus fou, c'est
+qu'on ne sait même pas quand c'est que
+ça se traduira en vrai revenu, mais
+visiblement tout le monde s'en fout.
+C'est pas la préoccupation principale.
+Tant que ça fait tourner les serveurs,
+construire des data center, vider des
+lacs entiers pour refroidir tout ça et
+bien on appelle ça de l'innovation. À
+côté le reste du marché c'était la
+misère totale. Les matériaux, la conso
+de base, l'immobilier, la finance, tout
+le monde s'est pris des claques sans
+intérêt. Les défensifs sont fait
+massacrer, les small cap aussi.
+Aujourd'hui, faire du défensif, c'est
+comme acheter un fax, c'est totalement
+ringar. Moi bien sûr, je plaisante mais
+en ce moment, c'est pas tellement
+populaire. À la fin de la journée, il
+restait trois survivants, la conso
+discrétionnaire parce qu'il faut bien
+fêter quelque chose, la techque
+évidemment et les utilities parce que
+quelqu'un doit bien alimenter les
+serveurs de pon en électricité et en
+flotte. Autrement, les États-Unis sont
+en shutdown depuis 34 jours. Oui, 34
+jours. Les statistiques économiques,
+plus rien. Les traders naviguent à vue,
+guidé par leurs algos, leur instinct et
+les rares humeurs de Jérôme Powell. La
+semaine dernière, la Fed a baissé les
+taux, tout le monde s'est emballé. C'est
+reparti pour les baisses à gogo. Sauf
+que Powel, vous vous en souvenez, a
+calmé tout le monde. Non, la prochaine
+baisse n'est pas garantie. Résultat, les
+marchés qui y croyait à 94 % encore la
+semaine dernière, bah aujourd'hui, ils y
+croyaient plus qu'à 67 %. Et donc ce
+soir, on bat un record historique, le
+shutdown le plus long de l'histoire
+américaine. Et pendant ce temps, des
+millions d'Américains vont voir leurs
+aides alimentaires couper de moitié sans
+compter que plus un seul avion n'arrive
+à l'heure. Trump promet de régler ça
+mais bon, on connaît la chanson. Les
+politiques à Washington n'arrivent
+toujours pas à se mettre d'accord sur un
+budget et pendant ce temps, l'économie
+tourne en rond comme un hamster sous
+anxiolitique. Et quand le pays rouvrira,
+quand le shutdown se terminera, les
+chiffres de l'emploi vont être calculés
+à la louche. On aura donc droit à des
+statistiques qui ne voudront plus rien
+dire et qui seront encore plus complexes
+que d'habitude à interpréter. Et quand
+on connaît le niveau du BLS, on peut
+s'attendre à tout et n'importe quoi.
+Dans le reste des histoires, Hidex
+Laboratory s'est envolé de 15 % après
+ses résultats. Kenvu a pris 12 % après
+son rachat par Kimberly Clark qui eux
+sont pris 15 % dans les dents.
+Aujourd'hui, les regards sont tournés
+vers Uber, Shopify, Spotify, Ferrari et
+Pfizer avant l'ouverture. Et ce soir, on
+aura AMD et Super Mcro qui vont passer à
+la moulinette. Les deux derniers
+devraient cartonner parce que aux
+surprises, ils ont mis IA dans leur
+pitch. Ferrari, ce sera un peu
+l'exception du jour. Parce qu'on parlera
+pas d'intelligence artificielle, mais on
+parlera du fait que personne n'a envie
+d'une Ferrari électrique qui fait un
+faux bruit de V12 et qui a 200 km
+d'autonomie en descente avec le vent
+dans le dos. C'est le sujet du moment
+chez Ferrari. On verra ce que ça donne
+en terme de résultat, mais
+rassurez-vous, ils doivent quand même en
+vendre deux trois autres de voitures qui
+n'ont pas des moteurs électriques
+dedans. Et côté indicateur, c'est le
+grand écart. Alors ça c'était mythique
+hier. L'ISM manufacturier nous a dit que
+l'économie américaine ralenti, était en
+contraction. Par contre, le PMA de
+l'autre côté nous dit qu'elle repart.
+Bref, on sait plus rien mais tout le
+monde s'en fout pour l'instant. Lia,
+c'est la seule boussole. Autrement, en
+Europe, le stock fait du sur place. Le
+CAC perdait 0,1 %, le DAX montait de
+0,7, les PMA européens étaient à 50,
+c'est-à-dire ni plus ni moins, bien au
+contraire. Et la Suisse terminait en
+hausse de 0,01
+%. Ça sent l'omallement carrément. En
+même temps, on notera qu'en Suisse,
+l'inflation est sortie à + 01 %. Tout
+est sous contrôle. Et en clair, l'Europe
+regarde Wall Street et ne fait rien
+comme si on était euh plus du même monde
+du tout. Ce matin en Asie, les marchés
+digère la trêve commerciale entre
+Washington et Pékin, mais c'est une
+trêve façon pause café. C'est en tout
+cas le sentiment que ça donne pas
+vraiment une réconciliation globale.
+Trump vient d'annoncer que les puces
+Blackwell de Nvidia resteraient aux
+États-Unis, pas une seule pour la Chine.
+Et Pékin, par la voix de son ambassadeur
+a répondu gentiment "Oui, mais tu
+touches pas à Taïwan." Bref, saison 8 de
+la guerre commerciale est en
+préparation. À séou, on prend les
+bénéfices après les records historiques
+et à Sydney, la banque centrale a laissé
+ses taux changer à 3,6 %. Tout le monde
+s'en doutait, personne n'a branché. Les
+futurs américains sont en baisse ce
+matin, c'est assez rare pour être
+signalé. Ambiance assez molle où tout le
+monde attend le prochain épisode du SAOP
+opera entre Trump et Ex ou alors une
+annonce sur Amazon et Open AI ou sur
+Open AI avec quelqu'un d'autre.
+D'ailleurs, revenons à ce deal parce que
+c'est pas juste un partenariat, c'est un
+acte de guerre. Open AI distribue
+désormais ses cerveaux sur trois géants
+du cloud, Microsoft, Oracle et Amazon.
+C'est complètement stratégique. Ça
+empêche qu'un seul acteur Microsoft par
+exemple ait le contrôle total de son
+infrastructure et ça garantit une
+redondance massive pour ses futurs
+modèles GPT6 et GPT7. Pour Amazon, c'est
+un coup de génie parce que AWS revient
+au centre du jeu alors qu'il y a encore
+une semaine, on critiquait le fait qu'il
+perdait du terrain sur Microsoft et
+Microsoft, eux qui commencent à
+grignoter départ de marché sérieusement
+vont devoir redoubler d'énergie. Et puis
+alors Nvidia derrière eux à chaque fois
+toute façon ils encaissent les commandes
+de GPU comme c'était Noël tous les
+jours. Et puis on notera que depuis le
+début de l'année Open c'est 500
+milliards de deal avec Stargate, c'est
+100 milliards de deal avec Nvidia, c'est
+100 milliards de deal avec AMD, c'est 38
+milliards avec Amazon, 25 milliards avec
+Intel, 20 milliards avec TSMC, 13
+milliards avec Microsoft, 10 milliards
+avec Oracle et un deal où on sait pas
+vraiment combien avec Broadcom. En plus,
+ils ont lancé un navigateur pour essayer
+de concurrencer Chrome et ils sont
+devenus la boîte privée la plus
+valorisée du monde. Et ils visent une
+IPO à plus de 1000 milliards de dollars
+en 2026-2027. C'est plus une entreprise,
+c'est le centre du monde. Samtman est
+devenu le matchmaker et le spécialiste
+Tinder de l'intelligence artificielle.
+Et puis aussi, puisqu'on parle toujours
+d'intelligence artificielle, parlons de
+Palantir. Palantir et ses résultats
+trimestriels. Palantir et sa
+valorisation de débile mental. Avant ses
+résultats, pasir c'était la Rockstar du
+Nasdaq + 3,3 % hier soir sur la séance.
+Le marché était surexcité. Tout le monde
+voulait y croire. La boîte qui
+réinventait la défense, la data Elia. Et
+sur le papier, elle a délivré. 1,18
+milliards de chiffres d'affaires, 21
+cents de bénéfices par action, plus 63 %
+de croissance sur une année, un contrat
+géant avec l'armée américaine, des très
+bons contrats avec ce qui n'est pas armé
+et globalement tout était meilleur que
+les attentes. Bref, le feu d'artifice
+parfait. Résultat, le titre s'envole de
+7 % en after hours, puis tout d'un coup
+- 5 %. En quelques minutes, vous pouvez
+voir sur le chart et bien pas en tir est
+passé de + 7 % à - 5 %. Et pourquoi ?
+Bien parce que même les miracles ont un
+prix à près de 500 milliards de
+capitalisation boursière et un P à 700,
+le marché s'est quand même posé de trois
+questions. Alex Carp lui est hyper
+serein. En parlant des résultats, il a
+déclaré que c'était les meilleurs
+résultats jamais réalisés par une boîte
+de software. Mais Wall Street, eux, ils
+ont surtout entendu beaucoup de hype et
+pas beaucoup de guidance sur l'avenir.
+En résumé, en résumé, l'économie réelle
+ne semble pas être dans la forme de sa
+vie, mais on n pas sûr parce qu'on a pas
+les chiffres. Ces abrutis de politiciens
+ne servent à rien et bloquent le
+système. Les traders s'ennuient et open
+et sign des deal comme d'autres
+collectionnent des timbres. Amazon
+imprime des milliards de capitalisations
+boursières depuis 3 jours. Palonir
+découvre que la gravité existe encore
+même pour eux. Et Powell essaie toujours
+de comprendre comment calmer un marché
+sous amphétamine. On vit une époque
+absolument fascinante. Tout le monde
+parle d'intelligence artificielle. Tout
+le monde a une idée sur l'intelligence
+artificielle. Plus personne ne parle
+d'économie. Et si 2025 devait avoir un
+slogan, définitivement ça serait in AI
+we trust. N'oubliez pas de vous abonner
+à la chaîne Suisse coton français, de
+liker, partager et commenter cette
+vidéo. Et nous on se revoit bien sûr
+demain matin comme d'habitude pour un
+nouveau Morning Bull Live. Très bonne
+journée à tous. Bye bye.
+Ce contenu s'adresse aux personnes
+familières avec les marchés financiers,
+les instruments financiers et est fourni
+à titre informatif uniquement. L'idée
+présentée, y compris les commentaires de
+marché, données de marché et
+observation, ne constitue pas un produit
+de recherche de la part d'un département
+de recherche de Swiss Code ou de ses
+affiliers. Ce matériel vise à mettre en
+lumière les mouvements du marché, ne
+constitue en aucun cas un conseil en
+investissement juridique ou fiscal. Si
+vous êtes un investisseur particulier ou
+si vous manquez d'expérience dans le
+trading de produits financiers
+complexes, il est recommandé de
+consulter un conseiller agréé avant
+toute décision financière. Ce contenu
+n'a pas pour objectif de manipuler le
+marché ni d'encourager un comportement
+financier spécifique. Suscô ne garantit
+en aucun cas la qualité, [musique]
+l'exactitude, l'exhaustivité ou
+l'absence de violation de ce contenu.
+Les opinions exprimées sont celles du
+consultant et sont fournis à des fins
+éducatives uniquement. Toute information
+liée à un produit ou à un marché ne doit
+être interprétée comme une
+recommandation d'une stratégie
+d'investissement ou d'une transaction.
+Les performances passées ne garantissent
+pas les résultats futurs. Suisse quat
+ses employés et représentants ne
+sauraient en aucun cas être tenus
+responsable de tout dommage ou perte
+directe ou indirecte résultant des
+décisions prises sur la base de ce
+contenu. L'utilisation de marques ou de
+noms commerciaux de tiers est uniquement
+à titre informatif et n'implique aucune
+approbation de la part de Swiss Quat ni
+que le propriétaire de la marque a
+autorisé Swiss Quat à promouvoir ses
+produits ou services. Swiss Quat est la
+marque commerciale regroupant les
+activités de Swiss Code Ban SA régulé
+par la FINMA. Swiss Code Capital Markets
+LTD régulé par la SCIS Code Ban Europe
+SA régulé par la CSSF. Suiscode LTD
+régulé par la FCA, Suisse Code Financial
+Services LTD régulé par la MFSA, Suisse
+Code MEA régulé par la DFSA, Swiss Code
+PTE LTD régulé par la MAS, Swiss Code
+Asia Limited licencié par la SFC et Suis
+Code South Africa LTD supervisé par la
+FSCR. Les produits et services de Suiss
+code sont destinés uniquement aux
+personnes autorisées à les recevoir
+conformément au droits local. Tout
+investissement comporte un risque. Le
+risque de perte en tradant ou en
+détenant des instruments financiers peut
+être important. La valeur des
+instruments financiers, y compris mais
+sans sillimiter actions, obligations,
+cryptomonnaes et autres actifs, peut
+fluctuer à la hausse comme à la baisse.
+Il existe un risque important de perte
+financière lors de l'achat, de la vente,
+du staking ou de l'investissement dans
+ces instruments. Swiss Quat ne
+recommande aucun investissement,
+transaction ou stratégie en particulier.
+Les CFD sont des instruments complexes
+comportant un risque élevé de perte
+rapide en raison de l'effet de levier.
+La grande majorité des comptes de
+clients de détail subissent [musique]
+des pertes en capital lors du trading
+des CFD. Vous devez vous assurer que
+vous comprenez le fonctionnement des CFD
+et que vous pouvez vous permettre de
+prendre un risque élevé de perte. Les
+actifs numériques ne sont pas régulés
+dans la plupart des pays et les règles
+de protection des consommateurs peuvent
+ne pas s'appliquer. En tant
+qu'investissement hautement volatile et
+spéculatif, ils ne conviennent pas aux
+investisseurs ayant une faible tolérance
+au risque. Assurez-vous de bien
+comprendre chaque actif numérique avant
+de trader. Les cryptomonnaaies ne sont
+pas considérées comme une monnaie légale
+dans certaines juridictions et sont
+soumises à des incertitudes
+réglementaires. L'utilisation de
+systèmes basés sur internet peut
+entraîner des risques importants,
+notamment mais sans yimiter la fraude,
+les cyberattaques, les pannes de réseau
+et de communication, ainsi que le vol
+d'identité et les attaques de fishing
+lié au cryptoactif. M.

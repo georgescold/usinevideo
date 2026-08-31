@@ -1,0 +1,335 @@
+# Why Dating Apps Are Engineered to Keep You Single
+# Engineered to Hook · 0 vues · 00:10:51
+# https://www.youtube.com/watch?v=RXbeL1H2GOA
+
+Swipe equals slot machine. Your thumb
+already knows the move. Before you
+decided [music] anything, swipe right,
+swipe left, swipe right. Love is what
+you think you're searching for. [music]
+The app has a different goal entirely.
+Tinder pulled in $1.79 billion in
+[music] 2022. That money did not come
+from people finding partners and
+leaving. [music] It came from people
+staying. Matchmaking is not the business
+model.
+>> [music]
+>> Prolonged searching is, and the swipe
+gesture was engineered deliberately to
+keep you in that loop. Here is the
+mechanism, one mechanism,
+>> [music]
+>> and once you see it, you cannot unsee
+it. Variable ratio reinforcement drives
+[music] this. B. F. Skinner mapped it in
+the 1940s.
+Skinner put rats in a box. When a rat
+pressed a lever, sometimes [music] it
+got a food pellet, sometimes nothing,
+completely unpredictable. Rats [music]
+with unpredictable rewards pressed the
+lever far more compulsively than rats
+who got one every time.
+>> [music]
+>> Certainty kills the drive. Uncertainty
+fuels it. That is the same schedule your
+brain is on right now when [music] you
+swipe. Each swipe is a lever pull. The
+match, when it comes, is the pellet.
+[music] Your brain releases dopamine,
+the motivation chemical, not when you
+get the reward, but in anticipation of a
+possible reward. Neuroscientist Wolfram
+Schultz's research on dopamine neurons
+showed that the brain's reward signal
+fires most powerfully when an outcome is
+uncertain,
+not guaranteed. [music]
+The maybe is the drug. The swipe gesture
+was a choice. Designers could have used
+[music] tapping or scrolling. What they
+landed on mimics pulling a slot machine
+lever. The swipe gesture did not have to
+be a swipe. Designers could have chosen
+tapping or scrolling. What they landed
+on, a flick of [music] the wrist,
+closely mimics pulling a slot machine
+lever, whether by design or by
+consequence. One motion, instant result,
+or not. That connection between the
+swipe and the slot machine lever
+>> [music]
+>> is not a coincidence most people notice.
+But researchers studying swipe [music]
+app design, including relationships
+scientist Eli Finkel, have drawn
+parallels between the card stack
+interface and the rapid-fire uncertainty
+[music] loops used in gambling design.
+The architecture rhymes too closely to
+dismiss. Another card always sits
+beneath the last [music] one. That
+endless stack removes the natural
+stopping point your brain needs to
+disengage. Books end. [music] Albums
+end. A swipe stack does not. That is a
+deliberate UX pattern called infinite
+[music] scroll, first named and
+criticized by its own inventor, Aza
+Raskin. Raskin later said he regretted
+inventing it. He estimated, [music] in
+his own words, that infinite scroll
+wastes hundreds of thousands of hours of
+human attention [music] every day across
+platforms. He built the trap, then he
+saw what it did. Here is what the app
+does not advertise.
+>> [music]
+>> Researchers estimate that only 10 to 20%
+of matches on major swipe apps [music]
+ever become a real-world meeting. The
+apps do not publish that figure. They do
+not publish it because a high conversion
+rate would be catastrophic [music] for
+the business. If you found your partner
+quickly, you would delete the app. That
+is the last thing the revenue model
+wants. That is where the app profits
+most,
+>> [music]
+>> the gap between almost and enough. The
+UX is calibrated to keep you in it.
+>> [music]
+>> New profiles load the moment you run
+low. The queue never fully empties. The
+reward never fully arrives. Proof is
+visible in the product itself. Watch
+what happens the moment you get a match.
+[music]
+Confetti, animation, a celebration
+screen. That is a dopamine reward
+delivery system dressed as [music] a
+congratulations.
+It is designed to feel like a win so
+that you immediately want another one.
+Matching is not the goal.
+>> [music]
+>> Matching is the reload. Your brain has
+just been primed to swipe again.
+Notifications sharpen this further. That
+small red badge on the app icon is a
+deliberate [music]
+psychological trigger. It signals
+unresolved status. Your brain is wired
+to close [music] open loops.
+Psychologists call it the Zeigarnik
+effect. The brain fixates on unfinished
+tasks more than completed ones. That red
+dot is an unfinished [music] task. It
+nags. You open the app to close the
+loop. The loop does not close. Picture
+11:00 [music] at night. You told
+yourself you were just going to check
+quickly. That was 40 minutes ago. A few
+matches. None led anywhere. Still, you
+keep going because the next one might be
+different. That feeling that might is
+the variable ratio doing exactly [music]
+what it was designed to do. Nothing is
+broken in you. Your brain is working
+exactly as it evolved to work.
+>> [music]
+>> Chasing uncertain rewards. The app was
+built to exploit that.
+>> [music]
+>> The design is just very, very good. Here
+is the counterintuitive part. Apps are
+not exploiting a flaw. They are
+exploiting a strength.
+>> [music]
+>> Your brain's extraordinary sensitivity
+to reward signals. The same wiring that
+made your ancestors excellent [music]
+hunters makes you an excellent swiper.
+Richard Thaler won the Nobel Prize in
+economics in [music] 2017 for his work
+on how humans actually make decisions.
+Showing [music] that people consistently
+act against their own stated intentions
+when the environment works against them.
+Behavioral scientists call this the
+intention-action gap.
+>> [music]
+>> You plan one thing. You do another. It
+happens when the environment is
+engineered against you. That environment
+is the app. Teams of engineers and
+behavioral scientists built it around
+one metric.
+>> [music]
+>> Time in app. Not matches. Not dates. Not
+relationships. [music]
+Time in app. That single design
+priority, maximize session length,
+>> [music]
+>> explains every feature you see, the
+infinite card stack, the confetti match
+screen, the red notification badge, the
+daily limit on free swipes that resets
+at midnight, nudging you to come back
+tomorrow. Midnight resets are
+particularly elegant. Free swipes run
+out,
+>> [music]
+>> pay to unlock more, or come back
+tomorrow. Either way, the app wins.
+Artificial scarcity is the name [music]
+for this pattern. It runs across
+subscription apps and games, not just
+dating platforms. Create a limit, make
+it feel natural, then sell its removal.
+Quick pause. [music]
+Every video on this channel takes one
+system like this, one mechanism, full
+depth,
+>> [music]
+>> and shows you exactly how it works. If
+that is useful to you, subscribe. 2
+seconds. Back to the mechanism. [music]
+There is one more layer most people
+miss. It is not just about keeping you
+swiping. [music]
+It is about keeping you feeling like you
+are almost there. Academic studies of
+algorithmic dating design have found
+evidence that matching algorithms may be
+tuned to deliver just enough positive
+signal to maintain engagement, but never
+enough to satisfy [music] it.
+Researchers studying algorithmic
+recommendation systems, including work
+presented at ACM CHI, the leading
+conference on human-computer
+interaction,
+>> [music]
+>> have noted that engagement-optimized
+algorithms tend to prioritize content
+that produces emotional arousal over
+content [music] that produces
+satisfaction. The same logic applies to
+match delivery.
+>> [music]
+>> Arousal keeps you in the app.
+Satisfaction sends you out of it. The
+algorithm is not optimizing for your
+outcome.
+>> [music]
+>> It is optimizing for its own. There is
+also the premium tier structure.
+>> [music]
+>> In most major swipe apps operating in
+Western markets, free users are shown a
+deliberately limited and sometimes
+[music] algorithmically deprioritized
+pool of profiles. This is sometimes
+called a freemium friction design.
+[music]
+Make the free experience frustrating
+enough that paying feels like relief.
+Paying does not buy more love. It buys
+less friction. [music] Then the variable
+ratio starts again with a slightly wider
+pool. The mechanism does not change. You
+just paid for a bigger slot machine. So,
+what does this look like from the inside
+of a product team?
+>> [music]
+>> Former Google design ethicist Tristan
+Harris described the general practice
+across attention-based platforms,
+including dating apps,
+>> [music]
+>> as a race to the bottom of the brain
+stem. The goal is to reach the most
+primitive, reactive part of your
+decision making.
+>> [music]
+>> The part that does not plan, the part
+that just responds. A flick of the
+wrist,
+>> [music]
+>> no reading, no deliberation, no judgment
+required. The swipe reaches that part of
+the brain perfectly, faster than
+thought. Speed matters here. The faster
+the gesture, the less the prefrontal
+[music] cortex gets involved. Slow the
+swipe down and people become more
+selective, more intentional, and they
+swipe less. That is bad for the business
+model. [music]
+Best judgment is not what the app is
+designed for. Bypassing [music] it is.
+Think back to the last time you used a
+swipe app. How many profiles did you
+actually evaluate? How many did you
+swipe in under a second? That habit was
+trained into you, not through coercion,
+through design. A gesture that feels
+natural, a reward schedule that feels
+exciting, [music]
+an interface that strips away every
+stopping signal your brain would
+otherwise use. Knowing this does not
+make you immune. The mechanism still
+works even when you [music] understand
+it, because it runs below conscious
+decision making. But knowing it changes
+your relationship to the urge. You can
+see the lever. You can choose whether to
+pull it. Several platforms have added
+features that look like well-being
+tools. Daily swipe summaries, prompts
+[music] to message existing matches,
+nudges to take a break. The industry
+knows users are catching on.
+>> [music]
+>> These features are real. Whether they
+meaningfully reduce compulsive use or
+simply reduce criticism while leaving
+the core of variable ratio loop intact,
+that is a question worth asking.
+>> [music]
+>> The slot machine did not stop being a
+slot machine because it added a
+responsible gambling disclaimer. So, the
+next time your thumb finds the app
+before you have decided to open it,
+[music]
+you will know what that is. That is not
+you. That is the lever.
+>> [music]
+>> $1.79 billion
+built on a gesture that mimics a lever
+pull, running on a reward schedule older
+than the app, older than the phone,
+older than the company that owns it.
+>> [music]
+>> The question worth sitting with is not
+whether the design is clever. It is what
+it is costing you in time, [music] in
+attention, in the relationships you did
+not build because the loop kept you
+searching. None of this was invented by
+an app. Dating has always carried
+uncertainty [music]
+and longing. The app just found the most
+efficient way to plug into both. Now,
+you can see exactly how the plug works.
+Subscribe. One system. One mechanism.
+[music]
+Every video. Next, how slot machines
+were reverse engineered into your phone.
+And why the sound design alone is worth
+a full [music] breakdown.

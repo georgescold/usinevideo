@@ -1,0 +1,159 @@
+# What Is Stable Matching? (The Algorithm Behind Med School & Dating Apps)
+# SysSketch · 17 vues · 00:04:42
+# https://www.youtube.com/watch?v=DEFtJ7zHTHI
+
+Every doctor gets a hospital, every
+hospital fills its slots, and nobody on
+either side wants to swap. Is that even
+possible?
+Dating apps, job markets, medical
+residency, they all share one shape. Two
+groups, and every member of each group
+ranks every member of the other best to
+worst. A matching pairs each person on
+one side with exactly one person on the
+other. The real question isn't whether
+you can pair everyone up, that's
+trivial. It's whether the pairing holds
+once people can see who else is out
+there. Will anyone want to break their
+match and pair up with someone else
+instead?
+That's the problem stable matching
+solves, and it shows up in more places
+than you'd expect. Hiring pipelines,
+school assignment systems, even national
+kidney donation registries, all running
+some version of the same underlying
+idea.
+Formally, side A and side B each write
+out a full preference list ranking every
+member of the other side from favorite
+to least favorite. A matching assigns
+each person on side A to exactly one
+person on side B, using up every slot on
+both sides. That's the easy part, any
+random pairing satisfies it. The hard
+part is what happens after the pairing
+is announced. Once everyone can compare
+their partner against every other option
+they could theoretically have got.
+If two people who aren't matched to each
+other would both rather switch to each
+other than stay put, the whole
+arrangement is in trouble, no matter how
+neatly it filled every slot on paper.
+Here's why this is harder than it looks.
+Say Alice is matched with Y and Bob is
+matched with X looks fine on paper, but
+Alice actually prefers X over Y and X
+actually prefers Alice over Bob. Both of
+them would rather ditch their current
+partner and pair up with each other.
+That's called a blocking pair, and it's
+the technical definition of failure
+here.
+A matching is unstable if any such pair
+exists anywhere in it. A matching is
+stable only when there are zero blocking
+pairs, meaning nobody anywhere has both
+the desire and the opportunity to
+defect.
+Randomly pairing people almost always
+leaves at least one blocking pair
+sitting there, quietly waiting to fall
+apart the moment anyone compares notes.
+1962, David Gale and Lloyd Shapley
+proved a stable matching always exists
+no matter what the preferences look like
+and gave an algorithm that finds one.
+Every unmatched person on side A
+proposes to their favorite remaining
+option on side B, each B compares the
+new offer against whoever it's currently
+holding and keeps whichever proposer it
+prefers, rejecting the other. A rejected
+proposer crosses that name off their
+list and proposes to their next choice
+instead.
+This repeats, propose, compare, reject,
+repeat until every single person is
+matched.
+No coordinator, no central planner, just
+one simple local rule applied over and
+over until it can't be applied anymore.
+Let's trace three rounds with three
+people on each side. Round one, Alice
+proposes to X, Bob proposes to Y, both
+get held. Cara also proposes to X, X
+compares Cara against Alice, prefers
+Alice and rejects Cara. Round two, Cara
+now free proposes to her second choice Z
+and Z holds her. Round three, every
+single person is matched. Nobody was
+rejected this round, so the algorithm
+halts right there.
+The final result, Alice with X, Bob with
+Y, Cara with Z. Three proposals were
+rejected along the way and not one
+lingering complaint survives anywhere in
+the final outcome.
+Two things need proving and both fall
+out of the same mechanism.
+First, termination. Every proposal
+permanently crosses one name off
+somebody's list and there's only a fixed
+number of possible pairs total, so the
+algorithm can't loop forever. It runs
+out of moves. Second, stability. Suppose
+someone ends up wishing they got a
+different partner. They must have
+proposed to that person earlier and been
+rejected, which means that person was
+already holding someone they liked more
+and from that point on they only ever
+trade up.
+So that preferred partner never wants
+them back either. No blocking pair can
+survive the process, which is exactly
+why the algorithm always lands on
+something stable.
+But stable doesn't mean fair to both
+sides equally.
+Whichever side does the proposing ends
+up with the best partner it could
+possibly get across every stable
+matching that exists for that set of
+preferences. That's called being
+proposer optimal. The side receiving
+proposals gets the opposite deal. The
+worst partner it could get across every
+stable matching, still stable, just the
+least favorable stable outcome available
+to it. Flip who proposes and you flip
+who benefits, the algorithm itself is
+neutral, but the setup you choose isn't.
+This is exactly why real-world matching
+systems fight hard over who gets to be
+the proposing side before the algorithm
+ever runs.
+This algorithm is already running parts
+of your life.
+National Resident Matching Program uses
+a stable matching process to place
+roughly 40,000 doctors in a hospital
+residencies across the United States
+every single year. New York City and
+Boston assign students to public schools
+with variants of the same idea. Kidney
+exchange programs use related stable
+matching logic to chain together
+incompatible donor-recipient pairs into
+working swaps. Some labor markets and
+academic hiring clearinghouses lean on
+it, too.
+One deceptively simple
+propose-and-reject loop published over
+60 years ago still quietly clearing real
+high-stakes markets today. Thanks for
+watching.

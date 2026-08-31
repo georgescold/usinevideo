@@ -13,18 +13,14 @@
 
 import fs from 'node:fs'
 import path from 'node:path'
-import {
-  CHEMINS,
-  dossierVideo,
-  assureDossier,
-  litChaine,
-  env,
-} from './lib/chemins.mjs'
+import { CHEMINS, dossierVideo, assureDossier } from './lib/chemins.mjs'
 import { journal, duree } from './lib/journal.mjs'
 import { litArgs, aide, drapeau, nombre, principal } from './lib/args.mjs'
 import { changeDeVoix, etatPool, voix as listeVoix } from './lib/elevenlabs.mjs'
-import { sonde, ffmpeg, normalise } from './lib/ffmpeg.mjs'
+import { voixPour } from './lib/choix-voix.mjs'
+import { sonde, ffmpeg } from './lib/ffmpeg.mjs'
 import { avecCle } from './lib/trousseau.mjs'
+import { modelePour, convertitAvecModele } from './lib/voix-locale.mjs'
 
 const { options, positionnels } = litArgs()
 
@@ -33,16 +29,29 @@ aide(
   `
 npm run voix -- <slug | fichier> [options]
 
-  --voix=<id>        identifiant de voix ElevenLabs (défaut : celui de .env)
+  --voix=<id>        identifiant de voix ElevenLabs
+                     (défaut : le choix de la vidéo, sinon celui de la chaîne)
   --stabilite=0.5    0 = très expressif, 1 = très plat
   --similarite=0.8   fidélité à la voix cible
   --essai            ne convertit que les 30 premières secondes
   --catalogue        liste les voix disponibles et s'arrête
   --quota            affiche le quota du pool et s'arrête
   --sortie=nom.wav   nom du fichier produit
-  --brute            saute ElevenLabs : normalise seulement l'enregistrement
+  --brute            saute la conversion : garde l'enregistrement tel quel
 
-Le seuil sans confirmation est de 5 minutes d'audio. Au-delà, ajoute --oui.
+Convertir en local, avec un modèle entraîné
+
+  --local            emploie un modèle de marque/voix/ au lieu d'ElevenLabs
+  --modele=<id>      lequel (défaut : le choix de la vidéo, sinon le seul)
+  --transpose=0      demi-tons, de -24 à 24 — indispensable si les tessitures
+                     diffèrent (homme vers femme : +12, l'inverse : -12)
+  --index=0.3        influence de l'index : plus haut colle au timbre appris,
+                     plus bas garde ta prononciation
+  --protege=0.33     protège consonnes et respirations (0 à 0.5)
+  --enveloppe=1      1 garde la dynamique du modèle, 0 suit celle de TA prise
+
+Le local est gratuit et hors ligne : ni quota, ni seuil, ni confirmation.
+Pour ElevenLabs, le seuil sans confirmation est de 5 min. Au-delà, ajoute --oui.
 `
 )
 
@@ -140,10 +149,91 @@ await principal(async () => {
 
   const { dureeS } = await sonde(entree)
 
+  // Le slug n'existe que si on a visé un dossier de vidéo : sur un fichier
+  // isolé, il n'y a pas de choix par vidéo à consulter, seulement le défaut de
+  // la chaîne. Il est résolu ICI parce que les deux moteurs en ont besoin.
+  const slugVise = fs.existsSync(dossierPossible) ? path.basename(dossierPossible) : null
+
   // ------------------------------------------------------- voix brute seule --
   if (drapeau(options, 'brute')) {
-    await normalise(entree, destination, { lufs: -14 })
-    journal.ok(`Voix conservée telle quelle, normalisée : ${path.basename(destination)}`)
+    // Aucun traitement : l'audio fourni est recopie tel quel.
+    fs.copyFileSync(entree, destination)
+    journal.ok(`Voix conservée telle quelle, sans traitement : ${path.basename(destination)}`)
+    return
+  }
+
+  // ---------------------------------------------------- le moteur local ----
+  //
+  // GRATUIT ET HORS LIGNE : NI QUOTA, NI SEUIL, NI CONFIRMATION.
+  //
+  // Tout ce qui suit — la limite des cinq minutes, le calcul en crédits, le
+  // trousseau — n'a de sens que pour un appel payant. Une conversion locale ne
+  // coûte que du temps de carte graphique, et le §7 ne demande d'annoncer que
+  // ce qui se paie. La branche sort donc AVANT le seuil, pas après.
+  if (drapeau(options, 'local') || options.modele) {
+    const modele = modelePour(slugVise, options.modele)
+
+    journal.titre('Remplacement du timbre — modèle local')
+    journal.detail(
+      `Modèle : « ${modele.id} » (${modele.origine}) · ` +
+        `${modele.epoques} époques sur ${duree(modele.corpusS ?? 0)} de voix`
+    )
+    if (!modele.index) {
+      journal.attention(
+        `Ce modèle n'a pas d'index : la prononciation sera moins fidèle. ` +
+          `Un réentraînement en produit un.`
+      )
+    }
+
+    const transpose = nombre(options, 'transpose', 0)
+    if (transpose === 0) {
+      // LE PIÈGE LE PLUS COURANT DE RVC, ET IL EST SILENCIEUX.
+      //
+      // Le modèle ne transpose pas de lui-même : il plaque un timbre sur TA
+      // hauteur. Convertir une voix d'homme vers un modèle de femme sans
+      // transposer donne une voix de femme qui parle une octave trop bas —
+      // le résultat sonne « robotique » et on accuse le modèle, alors qu'il
+      // manque un réglage. On le dit ici plutôt que dans un fichier d'aide.
+      journal.detail(
+        `Sans transposition. Si les tessitures diffèrent, essaie --transpose=12 ou -12.`
+      )
+    }
+
+    await convertitAvecModele(entree, destination, modele, {
+      transpose,
+      index: nombre(options, 'index', 0.3),
+      protege: nombre(options, 'protege', 0.33),
+      enveloppe: nombre(options, 'enveloppe', 1),
+    })
+
+    for (const temporaire of ['.prise.wav', '.essai.wav']) {
+      fs.rmSync(path.join(path.dirname(destination), temporaire), { force: true })
+    }
+
+    // LA DURÉE EST LE SEUL CONTRÔLE QUI COMPTE VRAIMENT ICI.
+    //
+    // Les sous-titres sont calés MOT À MOT sur ce fichier. La conversion est
+    // censée être synchrone à la trame — même longueur, échantillon pour
+    // échantillon — mais si elle dérivait, rien d'autre ne le signalerait : on
+    // le découvrirait au rendu, sur des sous-titres qui glissent, et on
+    // chercherait ailleurs. On mesure, et on le dit.
+    const fin = await sonde(destination)
+    const derive = Math.abs(fin.dureeS - dureeS)
+    journal.ok(`${path.basename(destination)} · ${duree(fin.dureeS)}`)
+    if (derive > 0.05) {
+      journal.attention(
+        `La durée a bougé de ${derive.toFixed(2)} s (${duree(dureeS)} → ${duree(fin.dureeS)}). ` +
+          `Les sous-titres se caleront sur le fichier converti, pas sur ta prise : ` +
+          `retranscris avant de monter.`
+      )
+    } else {
+      journal.detail(`Durée conservée à ${derive.toFixed(3)} s près — le calage tient.`)
+    }
+    console.log('')
+    journal.detail(
+      `Les sous-titres se calent sur CE fichier : ` +
+        `lance « npm run transcris -- ${slugVise ?? path.basename(path.dirname(path.dirname(destination)))} ».`
+    )
     return
   }
 
@@ -156,22 +246,22 @@ await principal(async () => {
     )
   }
 
-  const chaine = litChaine()
-  const voixId = options.voix || chaine?.voix?.elevenlabs_voice_id || env('ELEVENLABS_VOICE_ID', null)
+  const choisie = voixPour(slugVise, options.voix)
+  const voixId = choisie.voice_id
 
   journal.titre('Remplacement du timbre')
-  const brut = path.join(path.dirname(destination), '.converti.wav')
-
-  await changeDeVoix(entree, brut, {
+  if (voixId) {
+    journal.detail(
+      `Voix : ${choisie.nom ? `« ${choisie.nom} » · ` : ''}${voixId} (${choisie.origine})`
+    )
+  }
+  // La conversion ecrit directement le livrable : plus de normalisation entre
+  // les deux. Le niveau qui sort d'ElevenLabs est celui qu'on garde.
+  await changeDeVoix(entree, destination, {
     voiceId: voixId,
     stabilite: nombre(options, 'stabilite', 0.5),
     similarite: nombre(options, 'similarite', 0.8),
   })
-
-  // Normalisation en dernier : les plateformes ramènent tout à −14 LUFS, autant
-  // livrer à la bonne cible plutôt que de les laisser écraser la dynamique.
-  await normalise(brut, destination, { lufs: -14 })
-  fs.rmSync(brut, { force: true })
   for (const temporaire of ['.prise.wav', '.essai.wav']) {
     fs.rmSync(path.join(path.dirname(destination), temporaire), { force: true })
   }
