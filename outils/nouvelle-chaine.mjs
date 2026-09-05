@@ -161,6 +161,20 @@ await principal(async () => {
     for (const f of Object.keys(vierge.formats ?? {})) {
       if (!f.startsWith('_')) vierge.formats[f].actif = false
     }
+    // LA VOIX NE SE COPIE PAS NON PLUS, ET L'OUBLI SE VOYAIT MAL.
+    //
+    // Le bloc restait entier : la nouvelle chaine heritait de l'identifiant
+    // d'une voix ElevenLabs, de celui d'une voix Fish qui vit sur le COMPTE de
+    // quelqu'un d'autre, d'un `modele_local` qui n'existe pas chez elle, et
+    // d'un `transpose` calibre pour une paire de voix precise (+12 entre une
+    // prise a 125 Hz et un modele a 216). Rien de tout ca n'a de sens ailleurs,
+    // et le premier montage sonnait faux sans qu'on sache pourquoi.
+    //
+    // `mode` survit : c'est un defaut de fabrication, pas une identite.
+    for (const cle of Object.keys(vierge.voix ?? {})) {
+      if (cle.startsWith('_') || cle === 'mode') continue
+      vierge.voix[cle] = cle === 'transpose' ? 0 : null
+    }
     vierge.seo = { mot_cle_pilier: null, piliers: [], playlists: [] }
     vierge.cadence = { long_par_semaine: 0, short_par_semaine: 0 }
     // LE DOSSIER DRIVE NE SE COPIE PAS, ET C'EST LA MEME REGLE QUE LE RESTE.
