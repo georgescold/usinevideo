@@ -26,10 +26,19 @@ import { CHEMINS, assureDossier } from '../pipeline/lib/chemins.mjs'
 import { journal, duree as formateDuree } from '../pipeline/lib/journal.mjs'
 import { litArgs, aide, drapeau, nombre, principal } from '../pipeline/lib/args.mjs'
 import { pool } from '../pipeline/lib/trousseau.mjs'
+import { pathToFileURL } from 'node:url'
 
 const { options, positionnels } = litArgs()
 
-aide(
+// IMPORTER UNE COMMANDE NE DOIT RIEN EXÉCUTER.
+//
+// `principal()` était gardé, `aide()` ne l'était pas : `npm run copie -- --aide`
+// affichait l'aide de ce fichier-ci, parce que la copie l'importe. Le garde vaut
+// pour tout ce qui parle ou sort, pas seulement pour le point d'entrée.
+const EST_LA_COMMANDE =
+  Boolean(process.argv[1]) && pathToFileURL(process.argv[1]).href === import.meta.url
+
+if (EST_LA_COMMANDE) aide(
   options,
   `
 node outils/fal-video.mjs "<prompt>" [options]
@@ -57,8 +66,14 @@ const cle = () => {
 
 const AUTH = () => ({ Authorization: `Key ${cle()}`, 'content-type': 'application/json' })
 
-/** Le solde, pour ne pas lancer une génération qui échouera au milieu. */
-async function solde() {
+/**
+ * Le solde, pour ne pas lancer une génération qui échouera au milieu.
+ *
+ * Exporté : l'atelier l'affiche en permanence dans son en-tête. Un budget qu'on
+ * ne voit qu'en le demandant ne se regarde jamais — on le découvre quand une
+ * génération s'arrête au milieu.
+ */
+export async function soldeFal() {
   for (const url of [
     'https://rest.alpha.fal.ai/billing/user_balance',
     'https://api.fal.ai/billing/user_balance',
@@ -79,7 +94,14 @@ async function solde() {
  * Exportée : le montage pourra l'appeler le jour où `medias.mjs` saura demander
  * un plan généré au lieu de le chercher en banque.
  */
-export async function genereVideo(prompt, { modele, dureeS, format, sortie, surEtape }) {
+// Les trois formulations de la règle « aucun texte » vivent dans `lib/fal.mjs` :
+// elles servent aussi à la copie, et un fichier de commande ne s'importe pas.
+export { SANS_TEXTE, AUCUN_TEXTE_A_L_ECRAN, IGNORE_LE_TEXTE_INCRUSTE } from '../pipeline/lib/fal.mjs'
+import { SANS_TEXTE } from '../pipeline/lib/fal.mjs'
+export async function genereVideo(
+  prompt,
+  { modele, dureeS, format, sortie, surEtape, sansTexte = SANS_TEXTE }
+) {
   const dire = surEtape ?? (() => {})
 
   const r = await fetch(`https://queue.fal.run/${modele}`, {
@@ -87,6 +109,7 @@ export async function genereVideo(prompt, { modele, dureeS, format, sortie, surE
     headers: AUTH(),
     body: JSON.stringify({
       prompt,
+      negative_prompt: sansTexte,
       num_frames: Math.round(dureeS * 24),
       aspect_ratio: format,
       resolution: '720p',
@@ -101,7 +124,24 @@ export async function genereVideo(prompt, { modele, dureeS, format, sortie, surE
 
   // On interroge sans se presser : une génération prend une à trois minutes, et
   // marteler l'API ne la fait pas aller plus vite.
+  //
+  // MAIS ON EN REND COMPTE SOUVENT, ET C'EST DIFFÉRENT.
+  //
+  // Le compte rendu ne coûte rien — c'est une ligne écrite en local, pas un
+  // appel de plus. Il ne parlait qu'une fois toutes les quinze secondes : sur
+  // un écran qui attend, quinze secondes de silence passent pour un blocage, et
+  // on ferme la fenêtre. On dit donc tout de suite chaque CHANGEMENT d'état, et
+  // sinon on bat la mesure toutes les six secondes.
   const debut = Date.now()
+  const ETATS = {
+    IN_QUEUE: 'en file d’attente chez fal',
+    IN_PROGRESS: 'génération en cours',
+    COMPLETED: 'terminé',
+  }
+  dire(`demande envoyée — une génération prend 1 à 3 min`)
+  let dernierEtat = null
+  let derniereLigne = Date.now()
+
   for (let essai = 0; essai < 120; essai++) {
     await new Promise((r) => setTimeout(r, 3000))
     const s = await fetch(statut, { headers: AUTH() })
@@ -109,8 +149,18 @@ export async function genereVideo(prompt, { modele, dureeS, format, sortie, surE
     const e = await s.json()
     if (e.status === 'COMPLETED') break
     if (e.status === 'FAILED') throw new Error(`génération échouée : ${JSON.stringify(e).slice(0, 200)}`)
-    if (essai % 5 === 0) dire(`${e.status ?? '…'} · ${formateDuree((Date.now() - debut) / 1000)}`)
+
+    const change = e.status !== dernierEtat
+    const assezAttendu = Date.now() - derniereLigne >= 6000
+    if (change || assezAttendu) {
+      dernierEtat = e.status
+      derniereLigne = Date.now()
+      const ecoule = formateDuree((Date.now() - debut) / 1000)
+      const place = Number.isFinite(e.queue_position) ? ` · ${e.queue_position} devant` : ''
+      dire(`${ETATS[e.status] ?? e.status ?? '…'}${place} · ${ecoule}`)
+    }
   }
+  dire(`téléchargement du plan…`)
 
   const f = await fetch(resultat, { headers: AUTH() })
   if (!f.ok) throw new Error(`résultat illisible (HTTP ${f.status})`)
@@ -125,6 +175,14 @@ export async function genereVideo(prompt, { modele, dureeS, format, sortie, surE
   return sortie
 }
 
+// CE FICHIER EST AUSSI UNE BIBLIOTHÈQUE, DEPUIS QU'ON Y LIT LE SOLDE.
+//
+// `cles.mjs` importe `soldeFal` pour l'afficher dans l'atelier. Sans ce garde,
+// l'import exécutait le programme entier et sortait sur « Donne le prompt » —
+// une erreur qui ne parle pas du tout de ce qu'on faisait.
+// `process.argv[1]` est absent sous `node -e` et au REPL : sans ce garde,
+// importer ce module depuis là plantait avant d'avoir rien exécuté.
+if (EST_LA_COMMANDE) {
 await principal(async () => {
   const prompt = positionnels.join(' ').trim()
   if (!prompt) throw new Error(`Donne le prompt, en anglais, entre guillemets.`)
@@ -144,7 +202,7 @@ await principal(async () => {
   journal.info(`${modele} · ${dureeS} s · ${format}`)
   journal.detail(prompt)
 
-  const reste = await solde()
+  const reste = await soldeFal()
   if (reste !== null) journal.info(`Solde fal : ${reste.toFixed(2)} $ · ce plan ≈ ${COUT_ESTIME_USD} $`)
   if (reste !== null && reste < COUT_ESTIME_USD * 2) {
     throw new Error(`Solde trop bas (${reste.toFixed(2)} $). Recharge avant de générer.`)
@@ -168,3 +226,4 @@ await principal(async () => {
       `${formateDuree((Date.now() - debut) / 1000)}`
   )
 })
+}

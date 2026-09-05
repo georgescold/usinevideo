@@ -69,6 +69,10 @@ node outils/choix-voix.mjs [slug] [options]
     --proprietaire=<id>   pour une voix de la bibliothèque : elle est d'abord
                           ajoutée au compte, sans quoi la conversion la refuse
   --defaut              enregistre --voix comme défaut de la CHAÎNE
+  --defaut --local --modele=<id> --transpose=12
+                        enregistre le MODÈLE LOCAL et sa transposition comme
+                        défaut de la chaîne. Gratuit, hors ligne, sans quota :
+                        c'est le bon défaut dès qu'un timbre est entraîné.
   --essai               convertit 5 s de la prise avec --voix, pour écouter
     --secondes=5          longueur de l'essai
     --depuis=0            où le prendre dans la prise, en secondes
@@ -224,6 +228,51 @@ await principal(async () => {
   // ------------------------------------------------ défaut de la chaîne ----
   // Fixer un défaut n'annule pas le choix par vidéo : il le précède. Les quatre
   // niveaux de §8 restent dans leur ordre, ceci ne touche que le troisième.
+  if (drapeau(options, 'defaut') && drapeau(options, 'local')) {
+    // LE DÉFAUT D'UNE CHAÎNE, C'EST UN MOTEUR ET SON RÉGLAGE, PAS UNE VOIX.
+    //
+    // Retenir le modèle sans la transposition ne servirait à rien : le timbre
+    // se plaquerait sur la hauteur de la prise, une octave trop bas entre un
+    // homme et une femme. La voix sort alors « robotique » et on accuse le
+    // modèle — c'est le réglage dont l'oubli ne ressemble pas à un oubli.
+    // Les deux se retiennent donc ensemble, ou pas du tout.
+    const { modelesEntraines } = await import('../pipeline/lib/voix-locale.mjs')
+    const entraines = modelesEntraines()
+    const id = options.modele && options.modele !== true ? String(options.modele) : null
+    if (!id) {
+      throw new Error(
+        `Donne le modèle : --defaut --local --modele=<id>\n` +
+          `  Entraînés : ${entraines.map((m) => m.id).join(', ') || '(aucun)'}`
+      )
+    }
+    if (!entraines.some((m) => m.id === id)) {
+      throw new Error(
+        `Aucun modèle entraîné « ${id} ».\n` +
+          `  Entraînés : ${entraines.map((m) => m.id).join(', ') || '(aucun)'}\n` +
+          `  npm run entraine -- --liste`
+      )
+    }
+    const demiTons = Math.max(-24, Math.min(24, Math.round(Number(options.transpose) || 0)))
+
+    const cheminChaine = path.join(CHEMINS.config, 'chaine.json')
+    const chaine = litJson(cheminChaine, {})
+    chaine.voix = {
+      ...(chaine.voix ?? {}),
+      mode: 'local',
+      modele_local: id,
+      transpose: demiTons,
+    }
+    ecritJson(cheminChaine, chaine)
+
+    if (enJson) { console.log(JSON.stringify({ ok: true, defaut: chaine.voix }, null, 2)); return }
+    journal.ok(
+      `Défaut de la chaîne : modèle « ${id} », transposition ` +
+        `${demiTons > 0 ? '+' : ''}${demiTons} demi-tons.`
+    )
+    journal.detail(`Gratuit et hors ligne. Les prochaines vidéos partiront dessus.`)
+    return
+  }
+
   if (drapeau(options, 'defaut')) {
     if (!options.voix || options.voix === true) {
       throw new Error(`Donne la voix à retenir : --defaut --voix=<identifiant>`)

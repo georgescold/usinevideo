@@ -484,6 +484,16 @@ export function etatDe(slug) {
       verdict: vAudio,
       chemin: dateDe(audioFinal) === null ? null : relatif(audioFinal),
       dureeS: dureeMediaS(audioFinal),
+      // LA DATE DU FICHIER, PARCE QUE SON ADRESSE NE CHANGE JAMAIS.
+      //
+      // `voix-finale.wav` garde le même nom d'une conversion à l'autre. Pour un
+      // navigateur, c'est donc la même ressource : il rejoue ce qu'il a en
+      // cache, et sur une lecture partielle il peut recoller le début qu'il
+      // avait gardé avec la suite du NOUVEAU fichier. On entend alors les
+      // premières secondes dans l'ancienne voix et le reste dans la nouvelle —
+      // ce qui ressemble à un montage raté alors que le fichier sur le disque
+      // est parfaitement homogène. La date rend chaque version distincte.
+      modifie_le: dateDe(audioFinal),
     },
     transcript: {
       verdict: vTranscript,
@@ -505,6 +515,13 @@ export function etatDe(slug) {
       chemin: poidsMaster === null ? null : relatif(master),
       poidsMo: poidsMaster === null ? null : Number((poidsMaster / 1e6).toFixed(1)),
       dureeS: dureeMediaS(master),
+      // LA DATE SERT À CASSER LE CACHE DU NAVIGATEUR, ET C'EST TOUT SON EMPLOI.
+      //
+      // Un master refait garde son chemin : `06-rendu/master.mp4`. Le lecteur
+      // rejoue donc l'ancien fichier, tiré de son cache, et on croit que le
+      // rendu n'a rien changé. C'est le même piège que sur la voix, où il avait
+      // coûté une demi-heure à comprendre.
+      modifie_le: dateDe(master),
     },
   }
 

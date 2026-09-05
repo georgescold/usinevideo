@@ -46,6 +46,7 @@ import { pathToFileURL } from 'node:url'
 import { CHEMINS, dossierVideo, litJson, ecritJson } from './lib/chemins.mjs'
 import { journal } from './lib/journal.mjs'
 import { litArgs, aide, drapeau, principal } from './lib/args.mjs'
+import { reperesDesNombres } from './lib/nombres.mjs'
 
 /** `1 min 04,3 s` → lisible dans une liste de deux cents lignes. */
 const horodate = (ms) => {
@@ -258,6 +259,9 @@ npm run texte -- <slug> [options]
                         [{ "de": 40, "a": 42, "texte": "et devine quoi" }]
                                                                  toute une ligne
                       un texte vide retire les mots visés
+  --chiffres          réécrit en chiffres les nombres dits en lettres :
+                      « voici trois signes » devient « voici 3 signes ».
+                      --chiffres=voir montre ce qui changerait, sans rien écrire
   --json              sortie machine, pour l'atelier
 
 À nombre de mots constant, aucun instant ne bouge. Quand il change, les instants
@@ -272,6 +276,58 @@ Le plan de montage est corrigé en même temps : pas besoin de remonter.
     const slug = positionnels[0]
     if (!slug) throw new Error(`Donne le slug de la vidéo.`)
     const enJson = drapeau(options, 'json')
+
+    // ------------------------------------------------- nombres en chiffres --
+    //
+    // UN CHIFFRE SE SAISIT D'UN COUP D'ŒIL, UN NOMBRE ÉCRIT SE LIT.
+    //
+    // Sur un sous-titre qui tient trois mots et passe en huit dixièmes de
+    // seconde, la différence n'est pas cosmétique : « 3 » est perçu, « trois »
+    // est lu. Whisper, lui, transcrit ce qui est PRONONCÉ — il ne peut pas
+    // faire autrement, et c'est très bien ainsi : le transcript dit ce qui a
+    // été dit. La mise en chiffres est une décision d'affichage, elle vient
+    // après, et elle se voit avant de s'appliquer.
+    //
+    // On passe par le même patch que `--corrige` : c'est lui qui sait répartir
+    // les instants quand deux mots deviennent un, et qui corrige le plan dans
+    // la foulée. Réécrire le transcript ici aurait dupliqué cette mécanique —
+    // celle, précisément, dont dépend le calage des sous-titres.
+    if (options.chiffres !== undefined) {
+      const mots = motsDe(slug)
+      const trouves = reperesDesNombres(mots)
+      const seulementVoir = String(options.chiffres) === 'voir'
+
+      if (enJson && seulementVoir) {
+        console.log(JSON.stringify({ ok: true, slug, trouves }, null, 2))
+        return
+      }
+      if (!trouves.length) {
+        if (enJson) { console.log(JSON.stringify({ ok: true, slug, changements: [] }, null, 2)); return }
+        journal.titre(`Texte · ${slug}`)
+        journal.info(`Aucun nombre écrit en lettres.`)
+        return
+      }
+      if (seulementVoir) {
+        journal.titre(`Nombres à mettre en chiffres · ${slug}`)
+        for (const t of trouves) journal.detail(`${t.avant.padEnd(28)} → ${t.texte}`)
+        console.log()
+        journal.info(`${trouves.length} à convertir. Relance sans « =voir » pour les écrire.`)
+        return
+      }
+
+      const patch = trouves.map((t) => ({ de: t.de, a: t.a, texte: t.texte }))
+      const { changements, planPatche } = corrige(slug, patch)
+      if (enJson) {
+        console.log(JSON.stringify({ ok: true, slug, changements, plan_patche: planPatche }, null, 2))
+        return
+      }
+      journal.titre(`Texte · ${slug}`)
+      for (const t of trouves) journal.ok(`${t.avant} → ${t.texte}`)
+      console.log()
+      journal.info(`${changements.length} mot(s) réécrit(s).`)
+      journal.detail(planPatche ? `Plan de montage corrigé.` : `Pas de plan à corriger.`)
+      return
+    }
 
     // ------------------------------------------------------------ correction --
     if (options.corrige !== undefined) {

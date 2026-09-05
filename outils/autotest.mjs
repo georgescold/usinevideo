@@ -67,12 +67,8 @@ const BLOCS = [
     intention: 'posé',
     prise: 1,
     visuel: [
-      {
-        type: 'infographie',
-        modele: 'liste',
-        donnees: { items: ['Le devis', 'La maintenance', 'Les corrections'] },
-        ancre: 'maintenance',
-      },
+      { type: 'mot-cle', texte: 'la maintenance', ancre: 'maintenance' },
+      { type: 'souligne', texte: 'annuelle', ancre: 'annuelle' },
     ],
   },
   {
@@ -81,7 +77,10 @@ const BLOCS = [
     texte: 'Demande le cout total avant de signer quoi que ce soit.',
     intention: 'grave',
     prise: 1,
-    visuel: [{ type: 'carton', texte: 'Le cout total', sous_texte: 'pas le devis', ancre: 'signer' }],
+    visuel: [
+      { type: 'mot-cle', texte: 'le cout total', ancre: 'signer' },
+      { type: 'punch-in', amplitude: 0.05, ancre: 'total' },
+    ],
   },
 ]
 
@@ -159,7 +158,15 @@ await principal(async () => {
   verifie(Boolean(plan), 'Plan de montage écrit')
 
   if (plan) {
-    verifie(plan.coupes.length > 1, 'Silences détectés', `${plan.coupes.length} plans`)
+    // LE SON DÉPOSÉ SORT TEL QUEL — §9, DEPUIS LE 28 AOÛT 2026.
+    //
+    // Ce contrôle attendait l'inverse : il exigeait que le montage ait découpé
+    // la piste. Il échouait donc à CHAQUE passage depuis ce jour-là, et un
+    // autotest qui échoue toujours n'est plus lu par personne — les trois
+    // autres échecs de la même série sont passés inaperçus quatre jours.
+    //
+    // Il vérifie maintenant la règle en vigueur : par défaut, on ne coupe pas.
+    verifie(plan.coupes.length === 1, 'Piste audio non découpée (§9)', `${plan.coupes.length} segment`)
     verifie(
       plan.mots.length === mots.length,
       'Mots conservés',
@@ -178,10 +185,20 @@ await principal(async () => {
     verifie(Boolean(plan.piste), 'Piste image montée')
   }
 
+  // LA PISTE IMAGE DOIT COUVRIR TOUTE LA VOIX, PAS ÊTRE PLUS COURTE.
+  //
+  // Le contrôle exigeait `< DUREE_S` — c'est-à-dire une piste RACCOURCIE par la
+  // coupe des silences, qui n'a plus lieu. Pire : il validait précisément ce
+  // qu'il faut éviter. Une piste image plus courte que l'audio, c'est un écran
+  // noir ou une image gelée à la fin de la vidéo.
   const image = path.join(v.montage, 'public', 'image.mp4')
   if (fs.existsSync(image)) {
     const info = await sonde(image)
-    verifie(info.dureeS > 1 && info.dureeS < DUREE_S, 'Piste image raccourcie', duree(info.dureeS))
+    verifie(
+      info.dureeS >= DUREE_S - 0.5,
+      'Piste image couvrant toute la voix',
+      `${duree(info.dureeS)} pour ${duree(DUREE_S)}`
+    )
   }
 
   // -- rendu ----------------------------------------------------------------

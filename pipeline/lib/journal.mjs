@@ -116,13 +116,75 @@ export function compact(n) {
   return `${(n / 1e6).toFixed(1).replace('.', ',')} M`
 }
 
-/** Barre de progression sur une seule ligne, réécrite en place. */
+/**
+ * L'avancement d'un travail long, et le temps qu'il reste.
+ *
+ * DEUX SORTIES, PARCE QU'IL Y A DEUX LECTEURS.
+ *
+ * Au terminal, une barre réécrite en place : elle occupe une ligne quoi qu'il
+ * arrive et se lit d'un coup d'œil. Dans l'atelier, c'est impossible — le
+ * journal y défile ligne à ligne, et le retour chariot n'y efface rien.
+ *
+ * Le code sortait alors immédiatement dès que la couleur était coupée, ce qui
+ * est le cas dans l'atelier (`NO_COLOR`). Résultat : un rendu de huit minutes,
+ * un entraînement de trois heures et une séparation de dix minutes n'affichaient
+ * RIEN entre leur première et leur dernière ligne. Un travail sans horizon est
+ * indiscernable d'un travail bloqué, et on le tue au bout de deux minutes.
+ *
+ * On écrit donc des lignes, mais rarement : au plus une par tranche de cinq
+ * pour cent ou par trois secondes. Assez pour voir que ça avance, assez peu
+ * pour que le journal reste lisible.
+ *
+ * LE TEMPS RESTANT EST MESURÉ, PAS ESTIMÉ D'AVANCE. On chronomètre ce qui a
+ * déjà été fait et on l'extrapole : une machine chargée, un GPU qui throttle ou
+ * un plan plus lourd que les autres se voient tout de suite, là où une durée
+ * annoncée au départ resterait fausse jusqu'à la fin.
+ */
+const suivis = new Map()
+
 export function progression(fait, total, etiquette = '') {
-  if (sansCouleur) return
-  const largeur = 24
-  const part = total ? fait / total : 0
-  const plein = Math.round(part * largeur)
-  const barre = '█'.repeat(plein) + '░'.repeat(largeur - plein)
-  process.stdout.write(`\r  ${barre} ${Math.round(part * 100)}%  ${etiquette}   `)
-  if (fait >= total) process.stdout.write('\n')
+  const part = total ? Math.min(1, fait / total) : 0
+  const pc = Math.round(part * 100)
+
+  if (!sansCouleur) {
+    const largeur = 24
+    const plein = Math.round(part * largeur)
+    const barre = '█'.repeat(plein) + '░'.repeat(largeur - plein)
+    process.stdout.write(`\r  ${barre} ${pc}%  ${etiquette}   `)
+    if (fait >= total) process.stdout.write('\n')
+    return
+  }
+
+  // L'ÉTIQUETTE EST LA CLÉ DE SUIVI, ET C'EST UN PIÈGE SI ON L'IGNORE.
+  //
+  // C'est elle qui relie deux appels au même travail : le début, le dernier
+  // pourcentage, la dernière ligne écrite. Une étiquette qui CHANGE à chaque
+  // appel — parce qu'on y a mis le pourcentage ou le temps restant — fait
+  // croire à un travail neuf à chaque fois : le temps écoulé repart de zéro, la
+  // prévision annonce « reste 0 s », et la limitation de débit ne freine plus
+  // rien. Passe un libellé fixe ; les chiffres, c'est le travail d'ici.
+  const cle = etiquette || '—'
+  const maintenant = Date.now()
+  let suivi = suivis.get(cle)
+  // Un nouveau travail, ou le même qui repart de zéro après avoir fini.
+  if (!suivi || pc < suivi.pc) {
+    suivi = { debut: maintenant, dernierPc: -1, derniereLigne: 0 }
+    suivis.set(cle, suivi)
+  }
+
+  const fini = fait >= total
+  const assezAvance = pc - suivi.dernierPc >= 5
+  const assezAttendu = maintenant - suivi.derniereLigne >= 3000
+  if (!fini && !(assezAvance && assezAttendu)) return
+
+  suivi.dernierPc = pc
+  suivi.derniereLigne = maintenant
+
+  const ecoule = (maintenant - suivi.debut) / 1000
+  // Sous cinq pour cent, l'extrapolation dit n'importe quoi : on se tait plutôt
+  // que d'annoncer deux heures pour un rendu de huit minutes.
+  const reste = part > 0.05 && !fini ? (ecoule / part) * (1 - part) : null
+  const bout = reste !== null ? ` · reste ${duree(Math.round(reste))}` : ''
+  console.log(`  ${etiquette || 'avancement'} ${pc} %${bout}`)
+  if (fini) suivis.delete(cle)
 }

@@ -440,6 +440,8 @@ export function plagesDeBlocs(script, mots) {
  */
 export function caleEvenements(script, mots, { sansCamera = null } = {}) {
   const evenements = []
+  /** Les visuels que le montage a refusés, par type. Voir plus bas. */
+  const bannis = new Map()
   const nonCalees = []
   const plages = plagesDeBlocs(script, mots)
 
@@ -467,9 +469,10 @@ export function caleEvenements(script, mots, { sansCamera = null } = {}) {
         (v.duree_s ? v.duree_s * 1000 : null) ??
         tempsDeLecture(v.texte ?? v.sousTexte ?? JSON.stringify(v.donnees ?? ''))
 
-      // `convertis` rend `null` pour un type banni : on ne le pose pas.
+      // `convertis` rend `null` pour un type banni : on ne le pose pas, et on
+      // le COMPTE — un visuel retiré en silence est un visuel qu'on réécrira.
       const converti = convertis(v)
-      if (!converti) continue
+      if (!converti) { bannis.set(v.type, (bannis.get(v.type) ?? 0) + 1); continue }
 
       evenements.push({
         ...converti,
@@ -703,6 +706,20 @@ export function caleEvenements(script, mots, { sansCamera = null } = {}) {
     )
   }
 
+  // LE SCRIPT DOIT APPRENDRE CE QUE LE MONTAGE A REFUSÉ.
+  //
+  // Cartons et infographies sont bannis depuis le 28 août 2026 (§10) et
+  // tombaient sans un mot. Le script en déclarait cinq, le plan en gardait
+  // deux, et rien ne l'annonçait : on croyait à un défaut de calage, et on
+  // réécrivait le même type à la vidéo suivante.
+  if (bannis.size) {
+    journal.attention(
+      `Visuel(s) retiré(s) — ce type n'existe plus (§10) : ` +
+        [...bannis].map(([t, n]) => `${n} × ${t}`).join(', ') +
+        `. Un mot-clé ou un punch-in fait le même travail sans arrêter le montage.`
+    )
+  }
+
   return evenements.sort((a, b) => a.debutMs - b.debutMs)
 }
 
@@ -732,8 +749,13 @@ function convertis(v) {
     // qu on cherche. Un chiffre ou une liste se disent tres bien a la voix, et
     // le sous-titre mot a mot les porte deja a l ecran.
     //
-    // On les retire silencieusement plutot que d echouer : un vieux script qui
-    // en contient doit continuer a se monter.
+    // On les retire plutot que d echouer : un vieux script qui en contient doit
+    // continuer a se monter.
+    //
+    // MAIS PLUS EN SILENCE. Le script en declarait deux, le montage en gardait
+    // zero, et rien ne le disait : l autotest a mis quatre jours a reveler que
+    // ses cinq visuels tombaient a deux. Qui ecrit un script doit apprendre que
+    // ce type n existe plus, sinon il le reecrira a la video suivante.
     case 'infographie':
       return null
     case 'broll': {

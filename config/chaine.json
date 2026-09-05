@@ -29,6 +29,10 @@
     "posture": "Vulgarisateur rigoureux. Il explique un mecanisme au lieu de donner un conseil, il chiffre et il source, il dit a voix haute quand il n a pas de donnee. Il affirme calmement, sans registre coach. Il tape sur les croyances, les mecanismes et les modeles economiques, jamais sur des personnes ni sur une marque nommee. Il n est ni therapeute, ni psychologue, ni coach.",
     "fiche": "marque/Le-Marketeur.md"
   },
+  "avatars": {
+    "_lecture": "Le registre de jeu commun a TOUS les avatars de cette chaine. Il ne fige pas une expression : il donne le temperament dont chaque avatar decline ses reactions. Vide = aucun registre impose, l'identite se deduit des seules photos et de la marque.",
+    "registre": "ultra dynamique, excentrique et solaire"
+  },
   "plateformes": {
     "youtube": {
       "actif": true,
@@ -101,10 +105,16 @@
     }
   },
   "voix": {
-    "mode": "sts",
+    "mode": "local",
     "_modes": "sts = tu enregistres, ElevenLabs remplace le timbre | brute = ta voix telle quelle | tts = voix entierement synthetique | avatar = HeyGen genere image + voix",
     "elevenlabs_voice_id": "O31r762Gb3WFygrEOGh0",
-    "voix_de_reference": "Victoire (feminine, francaise, professionnelle)"
+    "fish_voice_id": "22d34bc01e0a4bdaa2b9eec3a2d15691",
+    "_fish_voice_id": "La voix Fish employee quand la video n en choisit pas. npm run parle -- --voix=? pour la liste du compte.",
+    "voix_de_reference": "Victoire (feminine, francaise, professionnelle)",
+    "modele_local": "myriam",
+    "transpose": 12,
+    "_modele_local": "Le modele entraine employe quand la video n en choisit pas. npm run entraine -- --liste",
+    "_transpose": "Demi-tons ajoutes a TA hauteur avant la conversion. Mesure : ta prise 125 Hz, myriam 216 Hz, soit +9,5 au calcul et +12 a l oreille. Sans lui, le timbre feminin se plaque une octave trop bas et sonne robotique."
   },
   "identite_visuelle": {
     "fiche": "marque/identite-visuelle.md",
@@ -170,5 +180,10 @@
     "musique_gain_db": -16,
     "_musique_gain": "la musique s efface automatiquement sous la voix ; ce gain est son niveau quand la voix se tait",
     "_aucun_traitement": "Aucun modificateur audio n'est applique : ni debruitage, ni normalisation, ni compression. L'audio depose sort tel quel, seule la coupe des silences et le remplacement de timbre y touchent."
+  },
+  "drive": {
+    "dossier_id": "1XzED3CYV2s5FvlaakKOH3XRVvdXPn5Gx",
+    "dossier_nom": "Conseils Relationnels",
+    "lien": "https://drive.google.com/drive/folders/1XzED3CYV2s5FvlaakKOH3XRVvdXPn5Gx"
   }
 }

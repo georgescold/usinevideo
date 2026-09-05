@@ -27,6 +27,11 @@ import { CHEMINS, dossierVideo, litJson, assureDossier } from './lib/chemins.mjs
 import { journal } from './lib/journal.mjs'
 import { litArgs, aide, drapeau, principal } from './lib/args.mjs'
 import { DOSSIER, EXTENSIONS, bibliotheque, enregistre, attribue } from './lib/broll-perso.mjs'
+import {
+  plansDe, remplaceUnPlan, styleDesSousTitres, assureLaMesureDOuverture,
+} from './lib/plan-broll.mjs'
+import { accrocheFaible } from './lib/ffmpeg.mjs'
+import { litChaine } from './lib/chemins.mjs'
 
 const listeDeMots = (v) =>
   String(v ?? '')
@@ -69,6 +74,14 @@ npm run broll -- [<slug>] [options]
   --mots-de=<fichier>   change les mots-clés d'un plan déjà déposé
     --mots="a,b,c"
   --retire=<fichier>    le sort de la bibliothèque (le fichier est supprimé)
+  --plans               les plans de coupe du montage, un par un (avec un slug)
+  --remplace=<n>        échange le plan n° n contre un autre candidat de la
+                        banque. Refuser un plan doit en appeler un autre :
+                        le retirer laisserait le précédent s'étirer, et c'est
+                        le temps mort que la doctrine interdit.
+  --source=ia           le fait GÉNÉRER au lieu de le chercher en banque.
+                        ~0,18 $ le plan, sur ton solde fal. Pour les scènes
+                        qu aucune banque ne tient.
   --json                sortie machine, pour l'atelier
 
 Avec un slug : montre où ces plans tomberaient dans CETTE vidéo, et sur quel
@@ -82,6 +95,70 @@ Pexels ; il n'est jamais posé au hasard.
   )
 
   await principal(async () => {
+    // ------------------------------------------- les plans d'UN montage -----
+    const slugVise = positionnels[0] ?? null
+
+    if (slugVise && (drapeau(options, 'plans') || options.remplace !== undefined)) {
+      const enJson = drapeau(options, 'json')
+
+      if (options.remplace !== undefined) {
+        const numero = Number(options.remplace)
+        if (!Number.isInteger(numero) || numero < 1) {
+          throw new Error(`Donne le numéro du plan : --remplace=3 (voir --plans).`)
+        }
+        const chaine = litChaine({ exigeInitialisee: false })
+        const r = await remplaceUnPlan(slugVise, numero, {
+          direction: chaine?.identite_visuelle?.direction_plans ?? null,
+          source: options.source === 'ia' ? 'ia' : 'pexels',
+        })
+        if (enJson) { console.log(JSON.stringify({ ok: true, ...r, plans: plansDe(slugVise) }, null, 2)); return }
+        journal.titre(`Plan de coupe n° ${r.numero} · ${slugVise}`)
+        journal.ok(`${r.avant ?? '(rien)'} → ${r.apres}`)
+        journal.detail(
+          `${r.essais}e proposition · ${r.restants} candidat(s) pour cette requête` +
+            (r.media.auteur ? ` · ${r.media.auteur}` : '')
+        )
+        journal.info(`Le plan est réécrit. Relance le rendu pour le voir.`)
+        return
+      }
+
+      const liste = plansDe(slugVise)
+      if (!liste) throw new Error(`Aucun plan de montage pour « ${slugVise} ». Monte-la d'abord.`)
+      await assureLaMesureDOuverture(slugVise, liste)
+      if (enJson) {
+        // Le style part avec les plans : l'écran de revue s'en sert pour
+        // dessiner les sous-titres du rendu par-dessus l'image.
+        const paquet = { ok: true, slug: slugVise, soustitres: styleDesSousTitres(slugVise), plans: liste }
+        console.log(JSON.stringify(paquet, null, 2)); return
+      }
+
+      const t = (ms) => `${String(Math.floor(ms / 60000)).padStart(2, '0')}:${String(Math.floor((ms % 60000) / 1000)).padStart(2, '0')}`
+      journal.titre(`Plans de coupe · ${slugVise}`)
+      for (const p of liste) {
+        journal.detail(
+          `${String(p.numero).padStart(3)}. ${t(p.debutMs)}→${p.finMs != null ? t(p.finMs) : '  ?  '} ` +
+            `${String(p.source).padEnd(7)} ${String(p.src ?? '—').padEnd(26)}` +
+            (p.insert ? ` +insert` : '') +
+            (p.essais ? ` (${p.essais} refus)` : '')
+        )
+        if (p.ouverture) {
+          // Le plan d'ouverture porte ses trois relevés. Pas une note : trois
+          // nombres qu'on lit, parce que ce qui arrête l'œil ne se résume pas.
+          const a = p.accroche
+          journal.detail(
+            `      ouverture` +
+              (a?.visage?.present ? ` · VISAGE sur ${a.visage.taille} % du cadre` : '') +
+              (a ? ` · mouvement ${a.mouvement} · contraste ${a.contraste} · couleur ${a.couleur}` : '') +
+              (a && accrocheFaible(a) ? ` — terne, et c'est LE plan qui décide` : '')
+          )
+        }
+        if (p.ancre || p.requete) journal.detail(`      « ${String(p.ancre ?? p.requete).slice(0, 68)} »`)
+      }
+      console.log()
+      journal.info(`${liste.length} plans. En changer un : npm run broll -- ${slugVise} --remplace=<n>`)
+      return
+    }
+
     const enJson = drapeau(options, 'json')
 
     // ------------------------------------------------------------- ajouter --

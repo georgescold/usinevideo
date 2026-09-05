@@ -41,6 +41,7 @@ import {
   reglagesPour,
   enregistreReglages,
   oublieReglages,
+  enregistreDefautDeChaine,
   versTheme,
   verifie,
 } from './lib/soustitres.mjs'
@@ -77,7 +78,7 @@ const BOOLEENS = new Set(['contour', 'ponctuation'])
 const COULEURS = new Set(['couleurTexte', 'couleurSurligne', 'couleurContour'])
 
 /** Les drapeaux qui ne sont pas des champs de réglage. */
-const DRAPEAUX = ['aide', 'help', 'json', 'valide', 'oublie', 'applique', 'modele', 'modeles']
+const DRAPEAUX = ['aide', 'help', 'json', 'valide', 'oublie', 'applique', 'modele', 'modeles', 'defaut']
 
 aide(
   options,
@@ -103,6 +104,9 @@ Sans option : affiche les réglages effectifs et l'origine de chaque champ.
 
   --valide                marque les réglages comme validés à l'image
   --oublie                efface les réglages de CETTE vidéo : retour aux défauts
+  --oublie=taille,hauteur rend CES champs-là à la cascade, et eux seuls
+  --defaut                écrit les réglages courants comme défaut de la
+                          CHAÎNE : toutes les vidéos sans réglage propre suivent
   --applique              réécrit le plan avec les réglages effectifs, sans rien changer d'autre
   --modeles               liste les onze modèles et s'arrête
   --json                  sortie machine, pour l'atelier
@@ -295,11 +299,25 @@ await principal(async () => {
   if (surcharge.animation && ANIMATIONS_TRADUITES[surcharge.animation]) {
     surcharge.animation = ANIMATIONS_TRADUITES[surcharge.animation]
   }
-  const ecrit = drapeau(options, 'valide') || drapeau(options, 'oublie') || Object.keys(surcharge).length > 0
+  const ecrit = drapeau(options, 'valide') || options.oublie !== undefined || Object.keys(surcharge).length > 0
 
   // -------------------------------------------------------------- oublie ----
-  if (drapeau(options, 'oublie')) {
-    oublieReglages(slug)
+  if (options.oublie !== undefined) {
+    // `--oublie` seul efface tout ; `--oublie=taille,hauteur` ne rend que
+    // ces champs-là à la cascade. C'est ce que fait la flèche de l'atelier,
+    // à côté de chaque réglage.
+    const nommes =
+      typeof options.oublie === 'string'
+        ? options.oublie.split(',').map((c) => sansTirets(c.trim())).filter(Boolean)
+        : []
+    const inconnus = nommes.filter((c) => !PAR_NOM.has(c))
+    if (inconnus.length) {
+      throw new Error(
+        `Champ inconnu : ${inconnus.join(', ')}\n` +
+          `  Champs réglables : ${CHAMPS.join(', ')}`
+      )
+    }
+    oublieReglages(slug, nommes.map((c) => PAR_NOM.get(c)))
   }
 
   // ------------------------------------------------------------- écriture ----
@@ -324,6 +342,28 @@ await principal(async () => {
   const reproches = verifie(reglages)
   const bloc = blocPourLePlan(reglages)
 
+  // ------------------------------------------------- défaut de la chaîne ----
+  //
+  // ON FIGE CE QU'ON VOIT, PAS CE QU'ON VIENT DE TAPER.
+  //
+  // Les réglages effectifs sont le résultat de la cascade entière — un champ
+  // qu'on n'a jamais touché sur cette vidéo y figure avec la valeur qui la sert
+  // réellement. C'est bien celle-là qu'on veut promouvoir en défaut : promouvoir
+  // la seule surcharge de la ligne de commande donnerait un défaut de chaîne
+  // partiel, et le reste continuerait de se reconstruire depuis les couleurs
+  // éparses.
+  let defautEcrit = null
+  if (drapeau(options, 'defaut')) {
+    const reprochesDefaut = verifie(reglages)
+    if (reprochesDefaut.length) {
+      throw new Error(
+        `Ces réglages ne sont pas rendables, le défaut de la chaîne n'a pas bougé :\n` +
+          reprochesDefaut.map((r) => `  · ${r}`).join('\n')
+      )
+    }
+    defautEcrit = enregistreDefautDeChaine(reglages)
+  }
+
   const patch = ecrit || drapeau(options, 'applique')
     ? patcheLePlan(v.plan, bloc)
     : { patche: false, raison: plan && !memeBloc(plan.theme?.sousTitres, bloc) ? 'plan désynchronisé' : null }
@@ -341,6 +381,7 @@ await principal(async () => {
       origine,
       valide_le,
       modele: modeleRetenu,
+      defaut_de_chaine: defautEcrit,
       reproches,
       plan: { existe: Boolean(plan), patche: patch.patche, raison: patch.raison },
       modeles: MODELES,
@@ -353,6 +394,10 @@ await principal(async () => {
   }
 
   journal.titre(`Sous-titres · ${slug}`)
+  if (defautEcrit) {
+    journal.ok(`Défaut de la chaîne mis à jour — config/chaine.json`)
+    journal.detail(`Toutes les vidéos sans réglage propre suivront ces valeurs.`)
+  }
   journal.info(`${format} · ${vertical ? '1080×1920' : '1920×1080'}${modeleRetenu ? ` · modèle ${modeleRetenu}` : ''}`)
   console.log('')
   for (const champ of CHAMPS) {

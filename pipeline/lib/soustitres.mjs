@@ -260,9 +260,59 @@ export function enregistreReglages(slug, reglages, { valide = false } = {}) {
   return apres
 }
 
-export function oublieReglages(slug) {
+/**
+ * Oublie les réglages de cette vidéo — tous, ou seulement ceux qu'on nomme.
+ *
+ * OUBLIER UN CHAMP N'EST PAS LUI DONNER UNE VALEUR.
+ *
+ * On pourrait croire qu'annuler une modification revient à réécrire la valeur
+ * d'origine. C'est faux, et la différence se voit plus tard : une valeur
+ * réécrite est FIGÉE sur cette vidéo. Le jour où la chaîne change sa taille de
+ * sous-titres, cette vidéo-là garde l'ancienne, et plus personne ne comprend
+ * pourquoi. Retirer le champ le rend à la cascade — il suivra le format, puis
+ * l'identité de la chaîne, comme s'il n'avait jamais été touché.
+ */
+export function oublieReglages(slug, champs = null) {
   const chemin = path.join(dossierVideo(slug).montage, 'soustitres.json')
-  if (fs.existsSync(chemin)) fs.rmSync(chemin)
+  if (!fs.existsSync(chemin)) return
+  if (!champs || !champs.length) {
+    fs.rmSync(chemin)
+    return
+  }
+  const avant = litJson(chemin, null)
+  if (!avant) return
+  for (const champ of champs) delete avant[champ]
+  // Il ne reste que la trace de validation : le fichier ne décrit plus rien.
+  const utiles = Object.keys(avant).filter((c) => c !== 'valide_le' && c !== 'modele')
+  if (!utiles.length) fs.rmSync(chemin)
+  else ecritJson(chemin, avant)
+}
+
+/**
+ * Écrit les réglages courants comme DÉFAUT DE LA CHAÎNE.
+ *
+ * Ils vont dans `identite_visuelle.soustitres`, le bloc explicite : ce qu'on y
+ * met est ce qu'on verra, sans reconstruction à partir des couleurs éparses.
+ * Toutes les vidéos qui n'ont pas de réglage à elles suivront.
+ *
+ * On ne touche à rien d'autre du fichier d'identité : il est écrit à la main,
+ * il porte des commentaires en `_clé`, et une réécriture complète les perdrait.
+ */
+export function enregistreDefautDeChaine(reglages) {
+  const chemin = CHEMINS.chaine
+  const chaine = litJson(chemin, null)
+  if (!chaine) throw new Error(`config/chaine.json est illisible : on n'y écrit rien.`)
+
+  chaine.identite_visuelle = chaine.identite_visuelle ?? {}
+  const bloc = {}
+  for (const champ of CHAMPS) if (reglages[champ] !== undefined) bloc[champ] = reglages[champ]
+  chaine.identite_visuelle.soustitres = bloc
+  chaine.identite_visuelle._soustitres =
+    `Direction artistique validée à l'écran le ` +
+    `${new Date().toLocaleDateString('fr-FR')}. Ce bloc prime sur les couleurs ` +
+    `éparses ci-dessus. Se règle par vidéo avec : npm run soustitres -- <slug>`
+  ecritJson(chemin, chaine)
+  return bloc
 }
 
 /**
@@ -296,6 +346,18 @@ export function reglagesPour(slug, { chaine, format, vertical, surcharge = {} } 
  */
 export function versTheme(reglages) {
   return {
+    // LA POLICE FAISAIT EXCEPTION, ET C'EST TOUT LE DÉFAUT.
+    //
+    // Elle vivait dans `theme.policeSousTitres`, à côté du bloc, et `patcheLePlan`
+    // ne réécrit QUE le bloc. On changeait donc la police dans le studio, on la
+    // voyait dans l'aperçu — qui lit les réglages, pas le plan — et le rendu
+    // sortait avec l'ancienne. Relevé sur une vidéo réelle : réglages « Roboto »,
+    // plan « Montserrat », douze minutes de rendu pour s'en apercevoir.
+    //
+    // Remotion lit déjà `st.police ?? theme.policeSousTitres` : en la mettant
+    // dans le bloc, elle emprunte le même chemin que les onze autres réglages,
+    // et il n'y a plus d'exception à retenir.
+    police: reglages.police,
     style: reglages.style,
     motsParPage: reglages.motsParPage,
     casse: reglages.casse,

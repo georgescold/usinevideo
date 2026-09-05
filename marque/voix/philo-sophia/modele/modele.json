@@ -1,0 +1,16 @@
+{
+  "id": "philo-sophia",
+  "entraineLe": "2026-09-01T14:32:19.851Z",
+  "epoques": 300,
+  "lot": 8,
+  "frequence": 48000,
+  "f0": "rmvpe",
+  "embedder": "contentvec",
+  "vocoder": "HiFi-GAN",
+  "corpusS": 1280,
+  "extraits": 79,
+  "sources": 9,
+  "moteur": "applio",
+  "pth": "modele/philo-sophia.pth",
+  "index": "modele/philo-sophia.index"
+}

@@ -49,6 +49,10 @@
   --doux: #9daabd;
   --accent: #5b8cff;
   --accent-clair: #86a9ff;
+  /* L accent, assez sourd pour cerner une ligne sans la faire crier. Une
+     bordure a la pleine saturation attire autant qu un bouton, et la ligne ou
+     l on se trouve entrait alors en concurrence avec l action qu on y propose. */
+  --accent-sourd: #3a5591;
   --ok: #35c07a;
   --attention: #e5a13c;
   --erreur: #ff6b7a;
@@ -253,7 +257,10 @@ select { cursor: pointer; }
 select:focus-visible, input:focus-visible, button:focus-visible {
   outline: 2px solid var(--accent); outline-offset: 2px; border-color: var(--accent);
 }
-input[type="range"] { padding: 10px 0; accent-color: var(--accent-clair); cursor: pointer; border: none; background: none; }
+/* La marge de 2 px que le navigateur pose de lui-meme sur un curseur le faisait
+   depasser sa colonne de quatre pixels — invisible a l oeil, mais c est ce qui
+   fait qu une grille « ne tombe pas juste » sans qu on sache pourquoi. */
+input[type="range"] { padding: 10px 0; margin-inline: 0; accent-color: var(--accent-clair); cursor: pointer; border: none; background: none; }
 input[type="number"] { width: 6.5em; }
 
 .bouton {
@@ -357,18 +364,36 @@ input[type="number"] { width: 6.5em; }
 /* L'adresse d'une vidéo ne tient pas en douze cadratins : on la voit en entier
    pendant qu'on la colle, sinon on ne peut pas vérifier qu'on a le bon lien. */
 .filtres input[type="url"].large { width: 28em; max-width: 100%; }
-.filtres select { width: 12em; }
-/* Le fonds interrogé et le tri portent des libellés entiers, pas des mots :
-   « Bibliothèque ElevenLabs — des milliers » tronqué à douze cadratins ne dit
-   plus rien de ce qu'on choisit. */
-.filtres select.large { width: 21em; }
-.filtres #filtreTri { width: 19em; }
+
+/* UN MENU DÉROULANT SE MESURE À SON LIBELLÉ LE PLUS LONG.
+
+   Il avait une largeur fixe de douze cadratins, et six menus de l'atelier la
+   dépassaient : « +12 — ma voix est plus grave que le modèle » s'affichait
+   « +12 — ma voix est plu⌄ ». La transposition est justement LE réglage qu'on
+   oublie (§8) — le tronquer au milieu du mot qui l'explique est le pire endroit
+   possible.
+
+   Deux rustines existaient déjà (`.large`, `#filtreTri`), posées au cas par cas
+   quand la gêne devenait criante. On traite la cause : le menu prend la largeur
+   de son contenu, sans descendre sous douze cadratins ni dépasser la ligne. Ils
+   se replient — `.filtres` est en `flex-wrap` — au lieu de se tronquer. */
+.filtres select {
+  width: auto;
+  min-width: 12em;
+  max-width: min(100%, 34em);
+}
 .filtres #filtreAge, .filtres #filtreGenre { width: 9em; }
 .filtres label[hidden] { display: none; }
 
 /* « Charger 100 de plus » suit la liste qu'il complète, sur toute sa largeur :
    le geste est « continuer vers le bas », pas « viser un bouton ». */
 .bouton.pleine { width: 100%; margin-top: 12px; }
+
+/* Les deux facons de recuperer le master, cote a cote : telecharger sur ce
+   poste, ou deposer dans le Drive de la chaine. La note dit ou ca va, ou ce
+   qui manque pour que ca aille quelque part. */
+.sorties { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+.sorties .note { margin: 0; }
 
 .reglage-essai { display: flex; gap: 22px; flex-wrap: wrap; align-items: center;
                  border-top: 1px solid var(--bord); padding-top: 18px; font-size: 16px; }
@@ -451,14 +476,26 @@ input[type="number"] { width: 6.5em; }
  */
 .studio {
   display: grid;
-  grid-template-columns: minmax(280px, 330px) minmax(0, 1fr) minmax(260px, 340px);
+  /* LA COLONNE DE REGLAGES ETAIT LA PLUS ETROITE DES TROIS, ET C EST ELLE QUI
+     PORTE LE PLUS DE TEXTE. A 330 px, ses deux colonnes internes tombaient a
+     163 px et tronquaient leurs libelles ; l apercu, lui, gardait 455 px pour
+     dessiner un telephone de 200. On rend la place a celui qui en a besoin. */
+  grid-template-columns: minmax(300px, 430px) minmax(0, 1fr) minmax(260px, 340px);
   gap: 20px;
   align-items: start;
 }
 .controles { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 .groupe { min-width: 0; }
 
-.grille2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 14px; }
+/* DEUX COLONNES TANT QU'ELLES TIENNENT, UNE SEULE ENSUITE.
+
+   Le studio des sous-titres mesure 340 px de large : deux colonnes y font
+   163 px, et « Réglages personnalisés » comme « Mot à mot — couleur » y
+   arrivaient tronqués. Le repli automatique rend la ligne entière au champ
+   plutôt que de couper son libellé, et redonne deux colonnes dès que la place
+   revient. Il règle du même coup la flèche de remise à zéro de « MOTS PAR
+   LIGNE », qui passait à la ligne toute seule et décalait la rangée. */
+.grille2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px 14px; }
 .grille3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 /* Les trois couleurs se replient plutôt que de se serrer sous la largeur utile. */
 .grille3.rang-couleurs { grid-template-columns: repeat(auto-fit, minmax(148px, 1fr)); }
@@ -723,7 +760,9 @@ dl.cout dd { margin: 0; font-size: 17px; font-weight: 700; font-variant-numeric:
    de correction sous un aperçu de huit cents pixels de haut la rendait
    invisible. Les 992 px utiles suffisent aux trois pistes. */
 @media (max-width: 1360px) {
-  .studio { grid-template-columns: minmax(280px, 340px) minmax(0, 1fr); }
+  /* Meme raison qu au-dessus : la colonne de reglages porte le texte, l apercu
+     porte une image qui se contente de la place qui reste. */
+  .studio { grid-template-columns: minmax(300px, 430px) minmax(0, 1fr); }
   .textes { grid-column: 1 / -1; position: static; max-height: 46vh; }
 }
 @media (max-width: 1100px) {
@@ -823,6 +862,21 @@ dl.cout dd { margin: 0; font-size: 17px; font-weight: 700; font-variant-numeric:
 }
 .tete-panneau { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .tete-panneau h2 { margin: 0; }
+/* Fermer n est pas une action du panneau, c est sa sortie. Sans bordure, il
+   cesse de disputer le titre. */
+.tete-panneau > .bouton.discret { border-color: transparent; color: var(--doux); }
+.tete-panneau > .bouton.discret:hover:not(:disabled) {
+  border-color: var(--bord-vif); color: var(--texte); background: none;
+}
+
+/* LES DEUX MENUS D ENTREE SONT PLUS ETROITS QUE LES PANNEAUX DE TRAVAIL.
+
+   Une liste de noms tenait dans 680 px comme une phrase tient dans une page :
+   l action se retrouvait a trois cents pixels du nom qu elle concerne, et il
+   fallait traverser le vide pour l atteindre. */
+.panneau-menu { width: min(560px, 100%); }
+.panneau-menu .liste-chaines,
+.panneau-menu .liste-videos { margin-bottom: 12px; }
 
 .liste-chaines { display: flex; flex-direction: column; gap: 10px; margin: 18px 0 14px; }
 .chaine {
@@ -846,12 +900,154 @@ dl.cout dd { margin: 0; font-size: 17px; font-weight: 700; font-variant-numeric:
   display: grid; grid-template-columns: minmax(0, 1fr) auto;
   gap: 14px; align-items: center;
 }
-.chaine.courante { border-color: var(--accent); background: var(--panneau-3); }
+/* LA LIGNE OUVERTE NE SE CERNE PLUS D UN TRAIT BLEU.
+   La pastille et le bouton portent deja l accent ; une bordure de la meme
+   famille en faisait trois, et le bleu cessait alors de vouloir dire quelque
+   chose. Le fond plus clair suffit a detacher la ligne. */
+.chaine.courante { border-color: var(--bord-vif); background: var(--panneau-3); }
 .chaine.bloquee { opacity: .72; }
 .chaine-texte { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
 .chaine-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
-.chaine-ici { font-size: 14px; color: var(--accent-clair); font-weight: 700; }
 .chaine-manque { font-size: 14px; color: var(--attention); }
+
+/* TU ES ICI SE MONTRE, IL NE S ECRIT PAS TROIS FOIS.
+
+   La ligne ouverte le disait par sa bordure, par « ouverte » dans sa deuxieme
+   ligne, ET par une mention collee au bouton. Une pastille devant le nom suffit
+   a le montrer ; le mot de la deuxieme ligne le dit. */
+.chaine.courante .chaine-nom::before,
+.video-ligne.courante .video-nom::before {
+  content: ''; display: inline-block;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent);
+  margin-right: 10px; vertical-align: 0.1em;
+}
+
+/* Supprimer reste atteignable et cesse d etre une dalle : sans bordure, en
+   gris, et rouge seulement quand la souris s y pose. Une action destructrice ne
+   se cache pas — elle ne se propose pas non plus au meme volume que celle qu on
+   est venu faire. */
+.chaine-actions .bouton.discret,
+.video-actions .bouton.discret {
+  border-color: transparent; color: var(--doux); padding-inline: 9px;
+  font-weight: 600;
+}
+.chaine-actions .bouton.discret:hover:not(:disabled),
+.video-actions .bouton.discret:hover:not(:disabled) {
+  color: var(--erreur); background: none; border-color: transparent;
+}
+
+/* AJOUTER UNE LIGNE A UNE LISTE EST UNE LIGNE DE LA LISTE.
+
+   Le bouton vivait dans l en-tete, a egalite avec « Fermer » : deux dalles
+   grises de meme poids pour deux actes qui n ont rien de commun. En pointilles
+   au bas de la liste, il se lit pour ce qu il est — une entree de plus. */
+.ajoute {
+  display: flex; align-items: center; justify-content: center; gap: 9px;
+  width: 100%; padding: 12px 16px;
+  font: inherit; font-size: 15px; font-weight: 700; color: var(--doux);
+  background: none; border: 1.5px dashed var(--bord); border-radius: var(--r);
+  cursor: pointer;
+}
+.ajoute::before { content: '+'; font-size: 19px; line-height: 0.8; }
+.ajoute:hover { border-color: var(--accent-sourd); color: var(--texte); }
+.ajoute:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ------------------------------------------------- fabriquer la voix ------- */
+
+#cartesPrise { margin-bottom: 20px; }
+#cartesPrise .carte { align-items: flex-start; text-align: left; min-height: 0; padding: 16px 18px; }
+#cartesPrise .carte-note { white-space: normal; line-height: 1.45; }
+
+.parle { display: flex; flex-direction: column; gap: 14px; }
+.parle textarea {
+  width: 100%; resize: vertical; line-height: 1.6;
+  font-family: inherit; font-size: 15px;
+}
+.parle .note { margin: 0; }
+.parle-actions { display: flex; gap: 10px; }
+.parle .lecteur { width: 100%; margin-top: 4px; }
+
+/* Les marqueurs se cliquent : les laisser à taper de mémoire, c'est s'assurer
+   qu'ils ne serviront pas — et c'est le premier levier d'intonation. */
+.marqueurs { display: flex; flex-wrap: wrap; gap: 6px; }
+.marqueur {
+  padding: 5px 10px; border: 1px solid var(--bord); border-radius: 999px;
+  background: var(--panneau-2); color: var(--doux);
+  font-size: 13px; font-family: inherit; cursor: pointer;
+}
+.marqueur:hover { color: var(--texte); border-color: var(--accent); }
+/* Les sons se voient : ils ne teintent pas la lecture, ils s'entendent. */
+.marqueur.sonore { border-style: dashed; color: var(--attention); }
+.marqueur-titre {
+  align-self: center; margin-left: 8px;
+  font-size: 12px; color: var(--doux); text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+/* « Diriger » n'est pas un marqueur de plus : c'est ce qui les pose tous. */
+.marqueur.diriger {
+  color: var(--accent-clair); border-color: var(--accent);
+  font-weight: 700; margin-right: 4px;
+}
+
+/* ------------------------------------------------------------- les modes --- */
+
+.modes { margin-top: 26px; border-top: 1px solid var(--bord); padding-top: 22px; }
+.modes h3 { margin: 0 0 14px; font-size: 17px; }
+/* Les cartes de mode portent une phrase, pas une dimension : elles respirent
+   plus que celles du format. */
+#cartesMode .carte { align-items: flex-start; text-align: left; min-height: 0; padding: 16px 18px; }
+#cartesMode .carte-note { white-space: normal; line-height: 1.45; }
+
+.copie { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
+.copie .note { margin: 0; max-width: 68ch; }
+.copie .master { margin-top: 6px; }
+
+/* ---------------------------------------------------------- les avatars --- */
+
+.avatars { padding: 28px 32px 80px; max-width: 1000px; }
+.entete-espace { margin-bottom: 22px; }
+.entete-espace h2 { margin: 0 0 6px; font-size: 22px; }
+.entete-espace .note { margin: 0; max-width: 62ch; }
+
+.liste-avatars { display: flex; flex-direction: column; gap: 12px; margin-bottom: 26px; }
+.liste-avatars .vide { color: var(--doux); margin: 0; }
+
+/* Les photos EN PREMIER : c est ce qu on vient verifier. Un avatar se juge sur
+   la variete de ses angles, pas sur son nom. */
+.avatar {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 16px; align-items: center;
+  padding: 14px 16px; border: 1px solid var(--bord); border-radius: var(--r);
+  background: var(--panneau-2);
+}
+.avatar-photos { display: flex; gap: 6px; }
+.avatar-photos img {
+  width: 54px; height: 72px; object-fit: cover;
+  border-radius: 6px; background: var(--panneau-3);
+}
+.avatar-texte { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.avatar-nom { font-size: 17px; font-weight: 800; }
+.avatar-meta { font-size: 14px; color: var(--doux); font-variant-numeric: tabular-nums; }
+.avatar-signe { font-size: 14px; color: var(--accent-clair); overflow-wrap: anywhere; }
+.avatar-manque { font-size: 13px; color: var(--attention); }
+.avatar-actions { display: flex; align-items: center; gap: 8px; }
+.avatar-actions .bouton.discret { border-color: transparent; color: var(--doux); font-weight: 600; }
+.avatar-actions .bouton.discret:hover:not(:disabled) { color: var(--erreur); background: none; }
+
+/* L'identité de jeu est repliée par défaut : on la lit quand on la corrige,
+   pas à chaque coup d'œil sur la liste. */
+.avatar-jeu { grid-column: 1 / -1; margin-top: 4px; border-top: 1px solid var(--bord); padding-top: 12px; }
+.avatar-jeu > summary { font-size: 14px; color: var(--doux); cursor: pointer; }
+.avatar-jeu > summary.manquante { color: var(--attention); }
+.avatar-jeu textarea {
+  width: 100%; margin-top: 10px; resize: vertical; line-height: 1.5;
+  font-family: inherit; font-size: 14px;
+}
+.avatar-jeu-actions { display: flex; gap: 8px; margin-top: 8px; }
+
+.ajout-avatar { display: flex; flex-direction: column; gap: 12px; padding-top: 4px; }
+.ajout-avatar .depot { margin-top: 4px; }
 
 /* ------------------------------------------------------ le menu des vidéos -- */
 
@@ -865,7 +1061,7 @@ dl.cout dd { margin: 0; font-size: 17px; font-weight: 700; font-variant-numeric:
   padding: 11px 14px; border-radius: var(--r);
   border: 1.5px solid var(--bord); background: var(--panneau-2);
 }
-.video-ligne.courante { border-color: var(--accent); background: var(--panneau-3); }
+.video-ligne.courante { border-color: var(--bord-vif); background: var(--panneau-3); }
 .video-texte { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .video-nom { font-size: 16px; font-weight: 700; overflow-wrap: anywhere; }
 .video-meta { font-size: 14px; color: var(--doux); }
@@ -1268,16 +1464,72 @@ dl.cout dd { margin: 0; font-size: 17px; font-weight: 700; font-variant-numeric:
 .liste-empreintes { display: grid; gap: 10px; margin-bottom: 14px; }
 .liste-empreintes .vide { color: var(--doux); font-size: 16px; padding: 14px 0; }
 
+/* UNE VOIX EST UNE FICHE, PLUS UNE LIGNE.
+ *
+ * La carte tenait sur un rang : nom, une phrase, trois boutons. Elle répondait
+ * donc à « qu'ai-je récolté ? » et à rien d'autre — ni combien il manque, ni
+ * d'où ça vient, ni où c'est rangé. Les trois questions qu'on se pose vraiment
+ * quand on récolte une voix. Le rang devient une colonne, et chaque bande y
+ * répond dans l'ordre où on se les pose. */
 .empreinte {
-  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  display: grid; gap: 9px;
   border: 1px solid var(--bord); border-radius: var(--r);
-  background: var(--panneau-3); padding: 12px 14px;
+  background: var(--panneau-3); padding: 13px 15px;
 }
-.empreinte-nom { font-size: 16px; font-weight: 700; overflow-wrap: anywhere; }
-/* La durée pousse les boutons à droite et absorbe seule le rétrécissement :
-   c'est la seule ligne qu'on peut tronquer sans perdre un geste. */
-.empreinte-note { flex: 1 1 220px; min-width: 0; font-size: 14px; color: var(--doux); }
+.empreinte-tete { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.empreinte-nom { font-size: 16px; font-weight: 700; overflow-wrap: anywhere; flex: 1 1 auto; }
+.empreinte-note { min-width: 0; font-size: 14px; color: var(--doux); }
 .empreinte-actions { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+
+/* Le chemin est en chasse fixe : c'est un chemin, on le retape au terminal. */
+.empreinte-chemin {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: 13px; color: var(--doux); overflow-wrap: anywhere;
+}
+
+/* LA JAUGE MESURE LA DISTANCE AU SEUIL D'ENTRAÎNEMENT, PAS UN POURCENTAGE.
+   Quinze minutes est le plancher du §8 : en dessous, le timbre bave sur les
+   phonèmes que le modèle n'a jamais entendus. Une barre pleine ne veut donc pas
+   dire « terminé », elle veut dire « on peut entraîner ». */
+.jauge {
+  height: 8px; border-radius: 999px; overflow: hidden;
+  background: var(--panneau-2); border: 1px solid var(--bord);
+}
+.jauge > span { display: block; height: 100%; background: var(--accent); border-radius: 999px; }
+.jauge.pleine > span { background: var(--ok); }
+.empreinte-chiffres { font-size: 14px; color: var(--texte); }
+.empreinte-chiffres b { font-size: 16px; }
+
+/* Les sources, repliées : on les ouvre quand on se demande quoi récolter
+   ensuite, pas à chaque coup d'œil sur la liste. */
+.empreinte-sources > summary {
+  cursor: pointer; font-size: 14px; color: var(--doux); padding: 2px 0;
+}
+.empreinte-sources > summary:hover { color: var(--texte); }
+.source-ligne {
+  display: flex; align-items: baseline; gap: 12px;
+  padding: 6px 0; border-top: 1px solid var(--bord); font-size: 13px;
+}
+.source-titre { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
+.source-chiffres { flex: 0 0 auto; color: var(--doux); white-space: nowrap; }
+/* L'écart médian est la mesure qui EXPLIQUE le rendement : une source qui rend
+   9 % de sa durée a presque toujours un écart sous le seuil, c'est-à-dire un
+   fond sonore. Les deux chiffres côte à côte se lisent comme une cause et son
+   effet. */
+.source-ecart {
+  flex: 0 0 4.5em; text-align: right; color: var(--doux); white-space: nowrap;
+}
+/* Une source qui rend moins d'un quart de sa durée : de la musique, ou une
+   prise dans une pièce sonore. On la teinte au lieu de l'écrire, pour que la
+   ligne reste lisible d'un balayage. */
+.source-ligne.faible .source-chiffres,
+.source-ligne.faible .source-ecart { color: var(--attention); }
+
+/* Le badge « défaut de la chaîne » ne concurrence pas celui du modèle : il dit
+   un réglage, pas une capacité. */
+.empreinte-badge.doux {
+  color: var(--doux); background: transparent; border-color: var(--bord-vif);
+}
 
 /* Le repli des empreintes porte une zone de texte multi-lignes : les adresses
    se collent par paquets, pas une par une. */
@@ -1303,4 +1555,153 @@ dl.cout dd { margin: 0; font-size: 17px; font-weight: 700; font-variant-numeric:
   font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
   color: var(--accent-clair); background: #5b8cff22;
   border: 1px solid #5b8cff55; border-radius: 999px; padding: 2px 9px;
+}
+
+/* Le sifflement d'une source : c'est le seul défaut du corpus qui survive à
+   l'entraînement, il se lit donc en même temps que le rendement. */
+.source-raie {
+  flex: 0 0 auto; white-space: nowrap; color: var(--attention); font-weight: 600;
+}
+
+/* Écouter et retirer une source, sur sa propre ligne : ce sont les deux gestes
+   qui décident si elle entre dans un timbre. Discrets, parce qu'on lit la liste
+   bien plus souvent qu'on n'agit dessus. */
+.source-jouer, .source-oter {
+  flex: 0 0 auto; padding: 1px 7px; line-height: 1.4; font-size: 12px;
+}
+.source-oter:hover { color: var(--erreur); border-color: var(--erreur); }
+
+/* La flèche de retour d'un réglage : discrète, à côté de la valeur, et absente
+   tant qu'il n'y a rien à annuler. Un bouton qui ne ferait rien serait cliqué
+   une fois par curiosité, puis ignoré — y compris quand il servirait. */
+.retour {
+  margin-left: 8px; padding: 0 5px; line-height: 1.2;
+  font-size: 13px; color: var(--doux); cursor: pointer;
+  background: none; border: 1px solid var(--bord); border-radius: 6px;
+}
+.retour:hover { color: var(--texte); border-color: var(--bord-vif); }
+
+/* La revue des plans de coupe : une bande de vignettes qu'on parcourt à l'œil.
+   Trois compteurs ne disent pas si un montage est bon ; trente images, si. */
+.revue-plans {
+  display: grid; gap: 10px; margin-top: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+}
+.plan-vignette {
+  display: flex; flex-direction: column; gap: 7px;
+  border: 1px solid var(--bord); border-radius: var(--r);
+  background: var(--panneau-3); padding: 9px;
+}
+.plan-vignette video, .plan-vignette img {
+  width: 100%; height: 100%; object-fit: cover;
+  border-radius: 8px; background: var(--panneau-2);
+}
+.plan-vignette .plan-cadre { width: 100%; }
+.plan-texte { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.plan-quand { font-size: 13px; color: var(--doux); font-variant-numeric: tabular-nums; }
+.plan-sur { font-size: 13px; overflow-wrap: anywhere; }
+.plan-refus { font-size: 12px; color: var(--attention); }
+
+/* LE PREMIER PLAN SE VOIT DANS LA GRILLE.
+
+   C est le seul dont la valeur se lit a un chiffre — combien il bouge — et le
+   seul qui decide si les trente autres seront vus. Une vignette identique aux
+   autres le laissait passer inapercu a la relecture. */
+.plan-vignette.ouverture { border-color: var(--bord-vif); background: var(--panneau-2); }
+/* Ni vert ni rouge tant que rien ne cloche : le vert se lirait comme
+   « valide par la machine », et c est exactement l impression a ne pas donner —
+   ce plan se juge a l oeil. */
+.plan-ouverture {
+  font-size: 12px; font-weight: 700; color: var(--accent-clair);
+  letter-spacing: .01em; cursor: help;
+}
+.plan-ouverture.faible { color: var(--attention); }
+.note.alerte-ouverture { color: var(--attention); }
+/* La phrase d'introduction n'est pas une vignette : elle prend toute la ligne
+   au lieu de se serrer dans la première colonne. */
+.revue-plans > .note { grid-column: 1 / -1; margin: 0; }
+
+/* Le budget des services payants, dans l'en-tête. Discret tant qu'il est
+   confortable, visible quand il ne l'est plus : c'est le seul moment où il
+   doit interrompre la lecture. */
+.budget { display: flex; align-items: center; gap: 14px; margin-left: auto; margin-right: 4px; }
+.budget-poste { display: flex; align-items: baseline; gap: 5px; font-size: 13px; white-space: nowrap; }
+.budget-nom { color: var(--doux); }
+.budget-poste b { color: var(--texte); font-variant-numeric: tabular-nums; }
+.budget-poste.bas b { color: var(--attention); }
+
+/* Un plan en grand : l'image, sa voix et son texte dans le même champ de
+   vision. C'est la seule disposition qui permette de répondre à la question
+   qu'on se pose vraiment — est-ce que ça va avec ce qui est dit ? */
+.panneau-plan { width: min(560px, 100%); }
+.plan-grand { display: flex; flex-direction: column; gap: 10px; margin: 16px 0 12px; }
+.plan-grand video, .plan-grand img {
+  width: 100%; max-height: 52vh; object-fit: contain;
+  border-radius: var(--r); background: #000;
+}
+.plan-grand audio { width: 100%; }
+/* Le cadre porte le format du rendu (pose en JS) : sa hauteur est bornee, sa
+   largeur en decoule, et l image le remplit exactement. C est ce qui fait que
+   38 % du bas sont les memes 38 % que dans le MP4. */
+.plan-grand .plan-cadre {
+  align-self: center;
+  width: min(100%, calc(52vh * var(--cadre-ratio, 0.5625)));
+}
+.plan-grand .plan-cadre video, .plan-grand .plan-cadre img {
+  width: 100%; height: 100%; max-height: none; object-fit: cover;
+}
+
+/* LES SOUS-TITRES DU RENDU, PAR-DESSUS L IMAGE.
+
+   Ce n est pas une decoration : c est la seule facon de repondre a la question
+   qu on se pose devant un plan de coupe — est-ce que cette image va avec ce qui
+   est dit A CET INSTANT. Les valeurs viennent du plan, donc du rendu ; la
+   taille est exprimee en pourcentage de la largeur du cadre, exactement comme
+   86 px le sont sur une image de 1080. */
+.plan-cadre {
+  position: relative; container-type: inline-size;
+  border-radius: var(--r); overflow: hidden; background: #000;
+}
+.plan-cadre video, .plan-cadre img { display: block; width: 100%; }
+
+.st-couche {
+  position: absolute; left: 0; right: 0;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 0 0.28em;
+  padding: 0 6%; pointer-events: none; text-align: center;
+  font-family: var(--police-st, var(--police, sans-serif));
+  font-weight: 900; line-height: 1.12;
+  font-size: calc(var(--st-taille, 8) * 1cqw);
+  color: var(--st-texte, #f5f3f2);
+  -webkit-text-stroke: calc(var(--st-epaisseur, 0.056) * 1em) var(--st-contour, #000);
+  paint-order: stroke fill;
+}
+.st-couche.sans-contour { -webkit-text-stroke: 0; }
+.st-couche span.actif { color: var(--st-surligne, #CA5377); }
+
+/* La fleche de lecture. Elle s efface quand ca joue : on veut voir l image, pas
+   le bouton qui l a lancee. */
+.plan-jouer {
+  position: absolute; inset: 0; margin: 0; padding: 0;
+  border: 0; background: transparent; cursor: pointer;
+  display: grid; place-items: center;
+  transition: opacity var(--t-moyen, .2s) ease;
+}
+.plan-jouer::before {
+  content: ''; width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(0, 0, 0, .55) center / 40% no-repeat
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E");
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .45);
+  transition: transform var(--t-court, .12s) ease, background-color var(--t-court, .12s) ease;
+}
+.plan-jouer.grand::before { width: 62px; height: 62px; }
+.plan-jouer:hover::before { transform: scale(1.08); background-color: rgba(0, 0, 0, .72); }
+.plan-jouer:focus-visible { outline: 2px solid var(--accent, #c9315e); outline-offset: -2px; }
+.plan-cadre.joue .plan-jouer { opacity: 0; }
+.plan-cadre.joue:hover .plan-jouer { opacity: 1; }
+.plan-cadre.joue .plan-jouer::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'%3E%3Cpath d='M6 5h4v14H6zm8 0h4v14h-4z'/%3E%3C/svg%3E");
+}
+.plan-dit {
+  margin: 0 0 6px; font-size: 16px; line-height: 1.5;
+  color: var(--texte); overflow-wrap: anywhere;
 }

@@ -152,7 +152,7 @@ await principal(async () => {
     const vierge = JSON.parse(JSON.stringify(chaine))
     vierge.initialise = false
     vierge.date_init = null
-    for (const bloc of ['identite', 'produit', 'avatar', 'marketeur']) {
+    for (const bloc of ['identite', 'produit', 'avatar', 'avatars', 'marketeur']) {
       for (const cle of Object.keys(vierge[bloc] ?? {})) {
         if (cle.startsWith('_') || cle === 'fiche' || cle === 'hooks') continue
         vierge[bloc][cle] = cle === 'langue' ? 'fr' : null
@@ -163,6 +163,14 @@ await principal(async () => {
     }
     vierge.seo = { mot_cle_pilier: null, piliers: [], playlists: [] }
     vierge.cadence = { long_par_semaine: 0, short_par_semaine: 0 }
+    // LE DOSSIER DRIVE NE SE COPIE PAS, ET C'EST LA MEME REGLE QUE LE RESTE.
+    //
+    // Un dossier = une chaine = un produit. Herite, l'identifiant ferait
+    // deverser deux marques dans le meme dossier Drive — un melange qu'on ne
+    // remarque qu'au bout d'un mois, quand on cherche un master parmi ceux
+    // d'une autre chaine. La nouvelle chaine pose le sien :
+    //   npm run drive -- --dossier
+    delete vierge.drive
     ecritJson(path.join(destination, 'config', 'chaine.json'), vierge)
   }
 

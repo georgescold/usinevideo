@@ -33,6 +33,7 @@ import { journal, duree, compact } from './lib/journal.mjs'
 import { litArgs, aide, drapeau, nombre, principal } from './lib/args.mjs'
 import * as M from './lib/montage.mjs'
 import { resoudBroll } from './lib/medias.mjs'
+import { remplaceUnPlan } from './lib/plan-broll.mjs'
 import { sonde } from './lib/ffmpeg.mjs'
 import { transcris, corrigeParLeScript } from './lib/whisper.mjs'
 import { voixPour, reglagesDeVoix } from './lib/choix-voix.mjs'
@@ -46,7 +47,7 @@ npm run monte -- <slug> [options]
 
   --voix=sts|local|brute  remplacer le timbre chez ElevenLabs, avec un modèle
                           entraîné en local, ou garder ta voix (défaut : config)
-  --modele=<id>           quel modèle local (défaut : le seul, ou celui de la vidéo)
+  --modele-voix=<id>      quel modèle local (défaut : le seul, ou celui de la vidéo)
   --transpose=0           demi-tons, si les tessitures diffèrent (local seulement)
   --voix-id=<identifiant> forcer une voix ElevenLabs pour ce montage
                           (défaut : le choix de la vidéo, sinon celui de la chaîne)
@@ -58,7 +59,10 @@ npm run monte -- <slug> [options]
                           depose n'est pas modifie)
   --coupe-hesitations     retire aussi « euh », bafouillages et faux départs
                           (découpe dans la voix : à écouter après)
-  --modele=large-v3-turbo modèle de transcription (défaut : config de la chaîne)
+  --modele-transcription=large-v3-turbo   modèle de transcription
+                          (défaut : config de la chaîne)
+  --modele=<id>           raccourci : on reconnaît si c'est un modèle de
+                          voix entraîné ou un modèle whisper, et on le dit
   --oui                   passe les seuils de confirmation
 
 Sortie : videos/<slug>/05-montage/plan.json
@@ -81,7 +85,62 @@ await principal(async () => {
         `Lance /script ${slug} d'abord.`
     )
   }
-  verifieScript(script, slug)
+  // ON VA AUSSI LOIN QU'ON PEUT, ET ON S'ARRÊTE OÙ IL FAUT VRAIMENT S'ARRÊTER.
+  //
+  // Cette ligne était `verifieScript(script, slug)` sans condition, et elle
+  // refusait la commande entière sur une vidéo sans script. C'était trop
+  // large : sur les six étapes, seules les deux dernières — le calage des
+  // événements et le plan — ont besoin des blocs. Convertir la voix et
+  // transcrire n'en demandent aucun, et ce sont précisément les deux choses
+  // qu'on veut obtenir dès qu'un audio est déposé.
+  //
+  // Le résultat était une impasse : on déposait une prise, la voix était
+  // convertible à la main (`npm run voix`) mais pas ici, et l'atelier affichait
+  // « le script n'est pas écrit » au-dessus d'un audio déjà converti.
+  //
+  // Un script PRÉSENT MAIS INVALIDE reste refusé tout de suite : là, il y a une
+  // faute à corriger, et la découvrir après deux minutes de conversion ne rend
+  // service à personne. Un script ABSENT n'est pas une faute, c'est un moment de
+  // la production — on fait ce qui se fait, et on dit où l'on s'arrête.
+  const scriptEcrit = Array.isArray(script.blocs) && script.blocs.length > 0
+  if (scriptEcrit) verifieScript(script, slug)
+
+  // DEUX RÉGLAGES PORTAIENT LE MÊME NOM, ET ILS N'ONT RIEN À VOIR.
+  //
+  // `--modele=` désignait le modèle de TRANSCRIPTION (whisper) à un endroit et
+  // le modèle de VOIX (le timbre entraîné) à un autre — les deux étaient même
+  // documentés dans l'aide, six lignes l'un sous l'autre. Résultat :
+  //
+  //     npm run monte -- video-2 --voix=local --modele=myriam
+  //     ✗ Invalid whisper model myriam. Available: tiny, base, small…
+  //
+  // La voix se convertissait correctement, puis la transcription allait
+  // télécharger un modèle whisper appelé « myriam ». Douze minutes de travail
+  // pour une erreur en fin de course, sur un mot qu'on avait bien écrit.
+  //
+  // Chaque réglage a désormais son nom. `--modele=` reste accepté parce que
+  // c'est ce qu'on tape naturellement, et parce qu'il n'y a aucune ambiguïté à
+  // lever : les deux familles de noms sont connues et disjointes. On tranche, et
+  // surtout ON LE DIT — deviner en silence serait le défaut suivant.
+  const MODELES_WHISPER = new Set([
+    'tiny', 'tiny.en', 'base', 'base.en', 'small', 'small.en',
+    'medium', 'medium.en', 'large-v1', 'large-v2', 'large-v3', 'large-v3-turbo',
+  ])
+
+  let modeleVoix = options['modele-voix'] ?? null
+  let modeleTranscription = options['modele-transcription'] ?? null
+
+  if (typeof options.modele === 'string') {
+    const brut = options.modele
+    if (MODELES_WHISPER.has(brut)) {
+      if (!modeleTranscription) modeleTranscription = brut
+    } else {
+      // Pas un nom whisper : c'est donc un modèle de voix. `modelePour` dira
+      // lui-même s'il n'existe pas, avec la liste des modèles entraînés.
+      if (!modeleVoix) modeleVoix = brut
+      journal.detail(`--modele=${brut} : compris comme un modèle de VOIX.`)
+    }
+  }
 
   const chaine = litChaine()
 
@@ -164,7 +223,7 @@ await principal(async () => {
       await M.fabriqueAudioCoupe(coupe.aGarder, brouillon)
       const t = await transcris(brouillon, {
         langue: chaine?.langue ?? 'fr',
-        modele: options.modele || chaine?.transcription?.modele || 'large-v3-turbo',
+        modele: modeleTranscription || chaine?.transcription?.modele || 'large-v3-turbo',
         silencieux: true,
       })
       const affine = M.retireLesHesitations(coupe.aGarder, t.mots)
@@ -294,7 +353,7 @@ await principal(async () => {
       // propriété qui rendait le speech-to-speech compatible avec ce pipeline,
       // et le modèle local la tient aussi.
       const { modelePour, convertitAvecModele } = await import('./lib/voix-locale.mjs')
-      const modele = modelePour(slug, options['modele'])
+      const modele = modelePour(slug, modeleVoix)
       journal.detail(
         `Modèle local : « ${modele.id} » (${modele.origine}) · ` +
           `${modele.epoques} époques sur ${duree(modele.corpusS ?? 0)}`
@@ -382,7 +441,7 @@ await principal(async () => {
     // a donc aucun arbitrage à faire entre qualité et temps.
     const r = await transcris(audioFinal, {
       langue: chaine?.langue ?? 'fr',
-      modele: options.modele || chaine?.transcription?.modele || 'large-v3-turbo',
+      modele: modeleTranscription || chaine?.transcription?.modele || 'large-v3-turbo',
     })
 
 
@@ -445,6 +504,24 @@ await principal(async () => {
     journal.ok(`${transcript.mots.length} mots calés`)
   } else {
     journal.etape(4, 6, `transcription déjà là : ${transcript.mots.length} mots (--depuis=transcris pour la refaire)`)
+  }
+
+  // SANS SCRIPT, LA CHAÎNE S'ARRÊTE ICI — ET ELLE LE DIT.
+  //
+  // Les deux étapes qui suivent lisent les blocs : le calage place les
+  // événements visuels sur les mots du script, le plan les assemble. Il n'y a
+  // rien à en tirer sans texte écrit, et rien d'utile à inventer.
+  //
+  // Ce qui précède, en revanche, est fait et gardé : la voix est convertie, le
+  // transcript est écrit. On sort en succès parce que le travail possible a été
+  // fait ; `npm run etat` reste l'arbitre et montrera le plan manquant.
+  if (!scriptEcrit) {
+    journal.titre(`Voix et transcript · ${slug}`)
+    journal.ok(`${transcript.mots.length} mots transcrits, calés sur l'audio final.`)
+    journal.info(`Le montage attend le script — c'est la seule chose qui manque.`)
+    journal.detail(`Il s'écrit en conversation : /script ${slug}`)
+    console.log()
+    return
   }
 
   // -- 5. calage des événements --------------------------------------------
@@ -571,6 +648,24 @@ await principal(async () => {
     dossierPublic: pub,
   })
   ecritJson(v.plan, plan)
+
+  // L'OUVERTURE GÉNÉRÉE, QUAND ON LE DEMANDE — ET SEULEMENT ELLE.
+  //
+  // La banque rate souvent l'émotion précise qu'un premier plan réclame (§10) :
+  // le détecteur trouve un visage, pas ce qu'il porte. La génération, elle,
+  // reçoit l'intention du bloc et demande un gros plan de visage avec l'émotion
+  // lisible. Ça se paie — dix-huit centimes — donc ça se demande : `--ouverture=ia`
+  // au terminal, une case dans l'atelier, et le devis avant de partir. Les
+  // trente plans suivants restent en banque : trente portraits générés
+  // d'affilée sont un diaporama, et trente fois dix-huit centimes une facture.
+  if (options.ouverture === 'ia') {
+    journal.info(`Ouverture générée par IA…`)
+    const r = await remplaceUnPlan(slug, 1, {
+      source: 'ia',
+      direction: chaine?.identite_visuelle?.direction_plans ?? null,
+    })
+    journal.ok(`Plan d'ouverture : ${r.apres}`)
+  }
 
   if (broll.attributions.length) {
     // Les licences CC-BY exigent l'attribution : elle doit se retrouver dans la

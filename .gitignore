@@ -7,6 +7,12 @@ config/*.precedent
 config/.trousseau-etat.json
 config/.voix-catalogue.json
 **/*.key
+# Un export de cookies porte une SESSION OUVERTE : quiconque l'a est connecté au
+# compte. C'est un secret au même titre qu'une clé d'API, et il arrive ici sous
+# un nom banal — d'ou le filet large.
+cookies.txt
+*.cookies.txt
+**/cookies*.txt
 
 # --- Dependances ------------------------------------------------------------
 node_modules/
@@ -23,6 +29,12 @@ videos/*/06-rendu/
 # trois cents megaoctets que `npm run monte` reconstruit a partir du plan. Le
 # plan, lui, pese quatre-vingts kilooctets et reste versionne.
 videos/*/05-montage/public/
+# `copie/` non plus : c'est le plan de travail de la copie IA — la video de
+# reference RAPATRIEE (celle de quelqu'un d'autre), les troncons decoupes, les
+# plans generes et une liste de chemins ABSOLUS propres a ce poste. Tout se
+# refait d'une commande, et rien la-dedans n'a de raison de voyager.
+videos/*/05-montage/copie/
+videos/*/05-montage/copie.mp4
 veille/youtube/miniatures/
 veille/youtube/raw/
 veille/tiktok/media/
@@ -43,6 +55,8 @@ marque/voix/*/reference.wav
 # extraits. `modele.json` reste versionne — il dit sur quoi et comment.
 marque/voix/*/modele/*.pth
 marque/voix/*/modele/*.index
+# Les vignettes des avatars : un cache de 180 px que le serveur refabrique.
+marque/avatars/**/.vignettes/
 assets/broll/
 assets/musique/
 assets/sfx/
@@ -68,3 +82,7 @@ desktop.ini
 
 # Les vidéos mises de côté : elles attendent une décision, pas un versionnement.
 videos/.corbeille/
+
+# yt-dlp posé dans le dossier de la chaîne, quand le cache partagé est
+# inaccessible (AppData virtualisé). Voir pipeline/lib/tiktok.mjs.
+.outils-ytdlp/

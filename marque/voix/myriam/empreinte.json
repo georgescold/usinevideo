@@ -1,0 +1,1112 @@
+{
+  "id": "myriam",
+  "cree": "2026-09-01T19:11:40.758Z",
+  "sources": [
+    {
+      "url": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis",
+      "plateforme": "youtube",
+      "titre": "Pour être mentoré par moi et avoir les informations sur l'Expérience Expansion, clique ici : https://app.iclosed.io/e/maryamgadery/rdv-d-couverte-expansion-yt",
+      "secondes": 1981.590938,
+      "recolteLe": "2026-09-01T19:32:49.020Z",
+      "raie": {
+        "hz": 16436,
+        "ecartDb": 4.3,
+        "extraits": 120
+      },
+      "reperes": {
+        "voixHaute": -24.3,
+        "voixMediane": -29.9,
+        "accompMedian": -64.7,
+        "ecartMedian": 32.7
+      },
+      "retenus": 120,
+      "retenuS": 1835
+    }
+  ],
+  "extraits": [
+    {
+      "debutS": 0,
+      "finS": 23,
+      "secondes": 23,
+      "note": 26.2,
+      "ecartMoyen": 37.4,
+      "fichier": "extraits/001.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 23,
+      "finS": 48.5,
+      "secondes": 25.5,
+      "note": 28.7,
+      "ecartMoyen": 42,
+      "fichier": "extraits/002.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 48.5,
+      "finS": 71.5,
+      "secondes": 23,
+      "note": 21,
+      "ecartMoyen": 39.3,
+      "fichier": "extraits/003.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 71.5,
+      "finS": 95,
+      "secondes": 23.5,
+      "note": 21.8,
+      "ecartMoyen": 35.7,
+      "fichier": "extraits/004.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 95,
+      "finS": 109,
+      "secondes": 14,
+      "note": 21.5,
+      "ecartMoyen": 35.8,
+      "fichier": "extraits/005.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 109.5,
+      "finS": 127,
+      "secondes": 17.5,
+      "note": 20.4,
+      "ecartMoyen": 27.9,
+      "fichier": "extraits/006.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 127.5,
+      "finS": 137.5,
+      "secondes": 10,
+      "note": 22.6,
+      "ecartMoyen": 30.3,
+      "fichier": "extraits/007.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 138,
+      "finS": 166.5,
+      "secondes": 28.5,
+      "note": 23.5,
+      "ecartMoyen": 36.6,
+      "fichier": "extraits/008.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 166.5,
+      "finS": 194,
+      "secondes": 27.5,
+      "note": 23.6,
+      "ecartMoyen": 40.3,
+      "fichier": "extraits/009.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 194,
+      "finS": 210,
+      "secondes": 16,
+      "note": -4.5,
+      "ecartMoyen": 37.6,
+      "fichier": "extraits/010.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 210.5,
+      "finS": 218.5,
+      "secondes": 8,
+      "note": -5.3,
+      "ecartMoyen": 30,
+      "fichier": "extraits/011.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 219,
+      "finS": 237.5,
+      "secondes": 18.5,
+      "note": 0.8,
+      "ecartMoyen": 34.2,
+      "fichier": "extraits/012.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 239,
+      "finS": 263,
+      "secondes": 24,
+      "note": -10.7,
+      "ecartMoyen": 33.9,
+      "fichier": "extraits/013.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 263,
+      "finS": 292.5,
+      "secondes": 29.5,
+      "note": 20.7,
+      "ecartMoyen": 37.4,
+      "fichier": "extraits/014.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 292.5,
+      "finS": 319,
+      "secondes": 26.5,
+      "note": -10.2,
+      "ecartMoyen": 30.1,
+      "fichier": "extraits/015.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 319.5,
+      "finS": 344,
+      "secondes": 24.5,
+      "note": -7.9,
+      "ecartMoyen": 32,
+      "fichier": "extraits/016.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 344,
+      "finS": 365,
+      "secondes": 21,
+      "note": -5.5,
+      "ecartMoyen": 32,
+      "fichier": "extraits/017.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 365.5,
+      "finS": 369,
+      "secondes": 3.5,
+      "note": 25,
+      "ecartMoyen": 34.7,
+      "fichier": "extraits/018.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 373,
+      "finS": 391,
+      "secondes": 18,
+      "note": 21.2,
+      "ecartMoyen": 34.8,
+      "fichier": "extraits/019.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 391.5,
+      "finS": 406.5,
+      "secondes": 15,
+      "note": -10.8,
+      "ecartMoyen": 27.3,
+      "fichier": "extraits/020.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 407.5,
+      "finS": 413.5,
+      "secondes": 6,
+      "note": -10.8,
+      "ecartMoyen": 23.9,
+      "fichier": "extraits/021.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 414,
+      "finS": 422.5,
+      "secondes": 8.5,
+      "note": 23.4,
+      "ecartMoyen": 33.5,
+      "fichier": "extraits/022.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 423,
+      "finS": 438,
+      "secondes": 15,
+      "note": -10.9,
+      "ecartMoyen": 31.5,
+      "fichier": "extraits/023.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 438.5,
+      "finS": 458,
+      "secondes": 19.5,
+      "note": -0.6,
+      "ecartMoyen": 32.8,
+      "fichier": "extraits/024.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 459.5,
+      "finS": 486.5,
+      "secondes": 27,
+      "note": 21.4,
+      "ecartMoyen": 35.8,
+      "fichier": "extraits/025.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 486.5,
+      "finS": 515.5,
+      "secondes": 29,
+      "note": 26.6,
+      "ecartMoyen": 35.7,
+      "fichier": "extraits/026.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 515.5,
+      "finS": 544,
+      "secondes": 28.5,
+      "note": 0.6,
+      "ecartMoyen": 36.7,
+      "fichier": "extraits/027.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 544.5,
+      "finS": 570,
+      "secondes": 25.5,
+      "note": -9.3,
+      "ecartMoyen": 30.9,
+      "fichier": "extraits/028.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 570,
+      "finS": 594.5,
+      "secondes": 24.5,
+      "note": 19.8,
+      "ecartMoyen": 37.6,
+      "fichier": "extraits/029.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 594.5,
+      "finS": 617,
+      "secondes": 22.5,
+      "note": -2.2,
+      "ecartMoyen": 37.2,
+      "fichier": "extraits/030.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 617,
+      "finS": 634.5,
+      "secondes": 17.5,
+      "note": 22.4,
+      "ecartMoyen": 32.7,
+      "fichier": "extraits/031.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 635,
+      "finS": 646.5,
+      "secondes": 11.5,
+      "note": -7.7,
+      "ecartMoyen": 28.3,
+      "fichier": "extraits/032.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 650.5,
+      "finS": 674,
+      "secondes": 23.5,
+      "note": -11.2,
+      "ecartMoyen": 32.2,
+      "fichier": "extraits/033.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 674.5,
+      "finS": 680.5,
+      "secondes": 6,
+      "note": -6.5,
+      "ecartMoyen": 23.5,
+      "fichier": "extraits/034.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 686,
+      "finS": 695,
+      "secondes": 9,
+      "note": -3.8,
+      "ecartMoyen": 33.9,
+      "fichier": "extraits/035.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 696.5,
+      "finS": 716,
+      "secondes": 19.5,
+      "note": -8.7,
+      "ecartMoyen": 31.4,
+      "fichier": "extraits/036.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 717.5,
+      "finS": 730.5,
+      "secondes": 13,
+      "note": -8.2,
+      "ecartMoyen": 26.3,
+      "fichier": "extraits/037.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 733.5,
+      "finS": 751,
+      "secondes": 17.5,
+      "note": 9.6,
+      "ecartMoyen": 28.5,
+      "fichier": "extraits/038.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 752,
+      "finS": 759,
+      "secondes": 7,
+      "note": 20.9,
+      "ecartMoyen": 29.9,
+      "fichier": "extraits/039.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 759.5,
+      "finS": 765.5,
+      "secondes": 6,
+      "note": 23.2,
+      "ecartMoyen": 32.6,
+      "fichier": "extraits/040.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 772.5,
+      "finS": 780,
+      "secondes": 7.5,
+      "note": 22.3,
+      "ecartMoyen": 28.9,
+      "fichier": "extraits/041.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 782,
+      "finS": 793,
+      "secondes": 11,
+      "note": 20.3,
+      "ecartMoyen": 34.6,
+      "fichier": "extraits/042.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 793.5,
+      "finS": 797,
+      "secondes": 3.5,
+      "note": 29.4,
+      "ecartMoyen": 35.8,
+      "fichier": "extraits/043.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 798,
+      "finS": 810,
+      "secondes": 12,
+      "note": 25.9,
+      "ecartMoyen": 43.4,
+      "fichier": "extraits/044.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 811.5,
+      "finS": 835,
+      "secondes": 23.5,
+      "note": -9.4,
+      "ecartMoyen": 35.5,
+      "fichier": "extraits/045.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 835,
+      "finS": 852,
+      "secondes": 17,
+      "note": 3.5,
+      "ecartMoyen": 35.4,
+      "fichier": "extraits/046.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 852.5,
+      "finS": 880.5,
+      "secondes": 28,
+      "note": -8.8,
+      "ecartMoyen": 29.2,
+      "fichier": "extraits/047.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 882.5,
+      "finS": 898.5,
+      "secondes": 16,
+      "note": -8.5,
+      "ecartMoyen": 29.4,
+      "fichier": "extraits/048.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 899,
+      "finS": 922.5,
+      "secondes": 23.5,
+      "note": -9.1,
+      "ecartMoyen": 30.6,
+      "fichier": "extraits/049.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 922.5,
+      "finS": 933,
+      "secondes": 10.5,
+      "note": -7.5,
+      "ecartMoyen": 32.9,
+      "fichier": "extraits/050.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 934,
+      "finS": 960.5,
+      "secondes": 26.5,
+      "note": 17.9,
+      "ecartMoyen": 36.6,
+      "fichier": "extraits/051.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 961,
+      "finS": 965.5,
+      "secondes": 4.5,
+      "note": 27.1,
+      "ecartMoyen": 31.6,
+      "fichier": "extraits/052.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 966,
+      "finS": 971,
+      "secondes": 5,
+      "note": 24.5,
+      "ecartMoyen": 29.3,
+      "fichier": "extraits/053.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 971.5,
+      "finS": 985.5,
+      "secondes": 14,
+      "note": 6.1,
+      "ecartMoyen": 34.5,
+      "fichier": "extraits/054.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 986.5,
+      "finS": 998.5,
+      "secondes": 12,
+      "note": 24.9,
+      "ecartMoyen": 37.8,
+      "fichier": "extraits/055.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 999,
+      "finS": 1005.5,
+      "secondes": 6.5,
+      "note": 23.1,
+      "ecartMoyen": 32.8,
+      "fichier": "extraits/056.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1006.5,
+      "finS": 1013.5,
+      "secondes": 7,
+      "note": 29.3,
+      "ecartMoyen": 35.7,
+      "fichier": "extraits/057.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1014,
+      "finS": 1019.5,
+      "secondes": 5.5,
+      "note": 21.9,
+      "ecartMoyen": 33.1,
+      "fichier": "extraits/058.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1020,
+      "finS": 1033.5,
+      "secondes": 13.5,
+      "note": 12.6,
+      "ecartMoyen": 31.8,
+      "fichier": "extraits/059.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1035,
+      "finS": 1043.5,
+      "secondes": 8.5,
+      "note": -0.5,
+      "ecartMoyen": 28.9,
+      "fichier": "extraits/060.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1044.5,
+      "finS": 1053,
+      "secondes": 8.5,
+      "note": -7.7,
+      "ecartMoyen": 24.9,
+      "fichier": "extraits/061.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1054.5,
+      "finS": 1062.5,
+      "secondes": 8,
+      "note": -3.2,
+      "ecartMoyen": 33.1,
+      "fichier": "extraits/062.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1063.5,
+      "finS": 1066.5,
+      "secondes": 3,
+      "note": 23.2,
+      "ecartMoyen": 27.7,
+      "fichier": "extraits/063.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1074,
+      "finS": 1080.5,
+      "secondes": 6.5,
+      "note": 26.3,
+      "ecartMoyen": 31.3,
+      "fichier": "extraits/064.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1081.5,
+      "finS": 1090,
+      "secondes": 8.5,
+      "note": 23.8,
+      "ecartMoyen": 29.9,
+      "fichier": "extraits/065.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1094.5,
+      "finS": 1100.5,
+      "secondes": 6,
+      "note": 22.4,
+      "ecartMoyen": 29.4,
+      "fichier": "extraits/066.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1103.5,
+      "finS": 1111.5,
+      "secondes": 8,
+      "note": 24.5,
+      "ecartMoyen": 32.6,
+      "fichier": "extraits/067.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1115,
+      "finS": 1142,
+      "secondes": 27,
+      "note": 21.9,
+      "ecartMoyen": 36.5,
+      "fichier": "extraits/068.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1142,
+      "finS": 1147.5,
+      "secondes": 5.5,
+      "note": 9.2,
+      "ecartMoyen": 34.6,
+      "fichier": "extraits/069.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1148,
+      "finS": 1157,
+      "secondes": 9,
+      "note": -5.8,
+      "ecartMoyen": 32.7,
+      "fichier": "extraits/070.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1158.5,
+      "finS": 1164.5,
+      "secondes": 6,
+      "note": 25.4,
+      "ecartMoyen": 33.9,
+      "fichier": "extraits/071.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1166,
+      "finS": 1190,
+      "secondes": 24,
+      "note": 11.6,
+      "ecartMoyen": 32.8,
+      "fichier": "extraits/072.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1190,
+      "finS": 1196.5,
+      "secondes": 6.5,
+      "note": 35.7,
+      "ecartMoyen": 42.2,
+      "fichier": "extraits/073.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1197,
+      "finS": 1219.5,
+      "secondes": 22.5,
+      "note": -7.3,
+      "ecartMoyen": 32.6,
+      "fichier": "extraits/074.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1220,
+      "finS": 1242.5,
+      "secondes": 22.5,
+      "note": -5,
+      "ecartMoyen": 33.9,
+      "fichier": "extraits/075.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1242.5,
+      "finS": 1259.5,
+      "secondes": 17,
+      "note": -9.5,
+      "ecartMoyen": 25.9,
+      "fichier": "extraits/076.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1265,
+      "finS": 1293,
+      "secondes": 28,
+      "note": -10.2,
+      "ecartMoyen": 32.5,
+      "fichier": "extraits/077.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1294.5,
+      "finS": 1304.5,
+      "secondes": 10,
+      "note": 26.9,
+      "ecartMoyen": 34.4,
+      "fichier": "extraits/078.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1305,
+      "finS": 1308.5,
+      "secondes": 3.5,
+      "note": 25.7,
+      "ecartMoyen": 31.4,
+      "fichier": "extraits/079.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1309,
+      "finS": 1314.5,
+      "secondes": 5.5,
+      "note": 28.5,
+      "ecartMoyen": 34.7,
+      "fichier": "extraits/080.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1315,
+      "finS": 1319.5,
+      "secondes": 4.5,
+      "note": 23.2,
+      "ecartMoyen": 26.4,
+      "fichier": "extraits/081.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1321,
+      "finS": 1343.5,
+      "secondes": 22.5,
+      "note": 8.8,
+      "ecartMoyen": 34,
+      "fichier": "extraits/082.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1343.5,
+      "finS": 1355.5,
+      "secondes": 12,
+      "note": 17.9,
+      "ecartMoyen": 38.4,
+      "fichier": "extraits/083.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1356,
+      "finS": 1378.5,
+      "secondes": 22.5,
+      "note": 21.4,
+      "ecartMoyen": 31.1,
+      "fichier": "extraits/084.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1379,
+      "finS": 1385,
+      "secondes": 6,
+      "note": -8.4,
+      "ecartMoyen": 29.4,
+      "fichier": "extraits/085.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1387,
+      "finS": 1410,
+      "secondes": 23,
+      "note": -10.7,
+      "ecartMoyen": 30.9,
+      "fichier": "extraits/086.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1410,
+      "finS": 1437,
+      "secondes": 27,
+      "note": -4.9,
+      "ecartMoyen": 33,
+      "fichier": "extraits/087.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1444.5,
+      "finS": 1450,
+      "secondes": 5.5,
+      "note": 20.8,
+      "ecartMoyen": 34.1,
+      "fichier": "extraits/088.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1451.5,
+      "finS": 1456,
+      "secondes": 4.5,
+      "note": 27.2,
+      "ecartMoyen": 33.5,
+      "fichier": "extraits/089.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1459,
+      "finS": 1476,
+      "secondes": 17,
+      "note": 22.7,
+      "ecartMoyen": 37,
+      "fichier": "extraits/090.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1476.5,
+      "finS": 1499,
+      "secondes": 22.5,
+      "note": -8.6,
+      "ecartMoyen": 33.6,
+      "fichier": "extraits/091.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1499,
+      "finS": 1528.5,
+      "secondes": 29.5,
+      "note": -7.9,
+      "ecartMoyen": 33.8,
+      "fichier": "extraits/092.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1528.5,
+      "finS": 1556,
+      "secondes": 27.5,
+      "note": -9.9,
+      "ecartMoyen": 33,
+      "fichier": "extraits/093.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1556,
+      "finS": 1583.5,
+      "secondes": 27.5,
+      "note": -10.3,
+      "ecartMoyen": 34,
+      "fichier": "extraits/094.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1585.5,
+      "finS": 1614.5,
+      "secondes": 29,
+      "note": -7.8,
+      "ecartMoyen": 30.8,
+      "fichier": "extraits/095.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1615,
+      "finS": 1636.5,
+      "secondes": 21.5,
+      "note": 9.5,
+      "ecartMoyen": 32.2,
+      "fichier": "extraits/096.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1636.5,
+      "finS": 1656.5,
+      "secondes": 20,
+      "note": 23,
+      "ecartMoyen": 28.6,
+      "fichier": "extraits/097.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1657,
+      "finS": 1673.5,
+      "secondes": 16.5,
+      "note": 22.5,
+      "ecartMoyen": 31.3,
+      "fichier": "extraits/098.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1674,
+      "finS": 1681,
+      "secondes": 7,
+      "note": 23,
+      "ecartMoyen": 30.6,
+      "fichier": "extraits/099.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1681.5,
+      "finS": 1693.5,
+      "secondes": 12,
+      "note": 20.7,
+      "ecartMoyen": 31.6,
+      "fichier": "extraits/100.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1694,
+      "finS": 1711,
+      "secondes": 17,
+      "note": -9.2,
+      "ecartMoyen": 35,
+      "fichier": "extraits/101.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1711.5,
+      "finS": 1733.5,
+      "secondes": 22,
+      "note": 22.1,
+      "ecartMoyen": 36,
+      "fichier": "extraits/102.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1737,
+      "finS": 1740,
+      "secondes": 3,
+      "note": 20.7,
+      "ecartMoyen": 24.2,
+      "fichier": "extraits/103.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1741.5,
+      "finS": 1755.5,
+      "secondes": 14,
+      "note": 20,
+      "ecartMoyen": 30.2,
+      "fichier": "extraits/104.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1756,
+      "finS": 1770.5,
+      "secondes": 14.5,
+      "note": 23.1,
+      "ecartMoyen": 32.9,
+      "fichier": "extraits/105.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1771,
+      "finS": 1776.5,
+      "secondes": 5.5,
+      "note": 20.4,
+      "ecartMoyen": 26.1,
+      "fichier": "extraits/106.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1783,
+      "finS": 1790.5,
+      "secondes": 7.5,
+      "note": 20.2,
+      "ecartMoyen": 25.9,
+      "fichier": "extraits/107.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1802.5,
+      "finS": 1805.5,
+      "secondes": 3,
+      "note": 20.5,
+      "ecartMoyen": 25.6,
+      "fichier": "extraits/108.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1807.5,
+      "finS": 1815.5,
+      "secondes": 8,
+      "note": 2.4,
+      "ecartMoyen": 25.8,
+      "fichier": "extraits/109.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1816.5,
+      "finS": 1831,
+      "secondes": 14.5,
+      "note": -3.6,
+      "ecartMoyen": 31.9,
+      "fichier": "extraits/110.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1831.5,
+      "finS": 1835,
+      "secondes": 3.5,
+      "note": 7.3,
+      "ecartMoyen": 25.5,
+      "fichier": "extraits/111.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1836,
+      "finS": 1842,
+      "secondes": 6,
+      "note": 4.4,
+      "ecartMoyen": 25.9,
+      "fichier": "extraits/112.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1842.5,
+      "finS": 1845.5,
+      "secondes": 3,
+      "note": 20.8,
+      "ecartMoyen": 24.1,
+      "fichier": "extraits/113.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1846,
+      "finS": 1861,
+      "secondes": 15,
+      "note": -10.4,
+      "ecartMoyen": 32,
+      "fichier": "extraits/114.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1862.5,
+      "finS": 1883.5,
+      "secondes": 21,
+      "note": -9,
+      "ecartMoyen": 24.8,
+      "fichier": "extraits/115.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1883.5,
+      "finS": 1911.5,
+      "secondes": 28,
+      "note": -4.7,
+      "ecartMoyen": 30.4,
+      "fichier": "extraits/116.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1912,
+      "finS": 1935.5,
+      "secondes": 23.5,
+      "note": 23.9,
+      "ecartMoyen": 40.9,
+      "fichier": "extraits/117.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1935.5,
+      "finS": 1943.5,
+      "secondes": 8,
+      "note": -6.2,
+      "ecartMoyen": 33.3,
+      "fichier": "extraits/118.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1945,
+      "finS": 1968.5,
+      "secondes": 23.5,
+      "note": 20.9,
+      "ecartMoyen": 32.8,
+      "fichier": "extraits/119.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    },
+    {
+      "debutS": 1968.5,
+      "finS": 1981,
+      "secondes": 12.5,
+      "note": 24.6,
+      "ecartMoyen": 33.3,
+      "fichier": "extraits/120.wav",
+      "source": "https://youtu.be/r5Px6PBFbO0?si=uStin-W60Js5pnis"
+    }
+  ],
+  "totalS": 1835,
+  "majLe": "2026-09-01T19:32:49.304Z",
+  "referenceS": 42.5,
+  "marge": 20
+}

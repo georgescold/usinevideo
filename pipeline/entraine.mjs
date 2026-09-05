@@ -288,7 +288,50 @@ async function entraine(id) {
   // modèle bâti sur l'ancien corpus, et les extraits ajoutés ne pèseraient
   // presque rien. `--recommence` repart de zéro.
   if (drapeau(options, 'recommence')) argsTrain.push('--cleanup')
-  await applio(argsTrain, { etape: `L'entraînement` })
+  // LE TEMPS RESTANT, PARCE QU'UN POSTE DE TROIS HEURES SANS HORIZON EST
+  // INDISCERNABLE D'UN POSTE PLANTÉ.
+  //
+  // Applio affiche son époque et sa vitesse, noyées dans une barre de
+  // progression qui se réécrit en boucle. Le chiffre est là, il n'est pas
+  // lisible. On le relève au passage et on rend la seule phrase qu'on veut :
+  // combien d'époques, combien de temps, et à quelle heure ça finit.
+  //
+  // La vitesse est MESURÉE au poignet plutôt que lue dans `training_speed=` :
+  // la mesure encaisse une pause de la carte ou un ralentissement thermique,
+  // là où le chiffre d'Applio ne décrit que l'époque qui vient de passer.
+  let derniereEpoque = null
+  let derniereHeure = null
+  const intervalles = []
+  const suisLaProgression = (texte) => {
+    for (const ligne of String(texte).split(/[\r\n]+/)) {
+      const m = /\bepoch=(\d+)\b/.exec(ligne)
+      if (!m) continue
+      const epoque = Number(m[1])
+      if (epoque === derniereEpoque) continue
+      const maintenant = Date.now()
+      if (derniereHeure !== null && derniereEpoque !== null && epoque > derniereEpoque) {
+        const parEpoque = (maintenant - derniereHeure) / (epoque - derniereEpoque)
+        intervalles.push(parEpoque)
+        if (intervalles.length > 5) intervalles.shift()
+      }
+      derniereEpoque = epoque
+      derniereHeure = maintenant
+
+      if (!intervalles.length) continue
+      const tries = [...intervalles].sort((a, b) => a - b)
+      const parEpoque = tries[Math.floor(tries.length / 2)]
+      const reste = Math.max(0, EPOQUES - epoque)
+      const restantS = Math.round((reste * parEpoque) / 1000)
+      const fin = new Date(maintenant + restantS * 1000)
+      journal.detail(
+        `époque ${epoque}/${EPOQUES} · ${(parEpoque / 1000).toFixed(0)} s/époque · ` +
+          `reste ${duree(restantS)} · fin vers ` +
+          `${String(fin.getHours()).padStart(2, '0')}h${String(fin.getMinutes()).padStart(2, '0')}`
+      )
+    }
+  }
+
+  await applio(argsTrain, { etape: `L'entraînement`, surTexte: suisLaProgression })
 
   // -- 4. rangement ---------------------------------------------------------
   journal.etape(4, 4, `Rangement du modèle`)

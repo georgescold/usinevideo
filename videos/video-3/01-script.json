@@ -1,0 +1,142 @@
+{
+  "_lecture": "Déduit de la prise. Découpage et ancres calculés depuis 04-transcript.json ; requêtes d'images écrites en conversation, faute de clé API pour npm run ecris.",
+  "slug": "video-3",
+  "format": "short_faceless",
+  "destination": "tiktok-insta",
+  "duree_cible_s": 55,
+  "titre_travail": "Pourquoi c'est devenu si compliqué de trouver l'amour",
+  "avatar": "Le Desabuse",
+  "deduit_le": "2026-09-03T17:36:17.198Z",
+  "blocs": [
+    {
+      "id": "hook",
+      "role": "hook",
+      "texte": "Pourquoi c'est devenu si compliqué de trouver l'amour aujourd'hui ? On n'a jamais eu autant d'occasion de rencontrer quelqu'un avec toutes les applis qui existent, les centaines de profils et les potentiels matchs.",
+      "intention": "curieux",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "broll",
+          "ancre": "Pourquoi c'est devenu si",
+          "requete": "close up woman face doubt swiping phone"
+        }
+      ]
+    },
+    {
+      "id": "corps-1",
+      "role": "corps",
+      "texte": "Pourtant, on n'a jamais été aussi déçus qu'aujourd'hui. Donc, on a l'impression d'être seul, de rien pouvoir y faire et d'être condamné à être déçu par la bourre.",
+      "intention": "grave",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "broll",
+          "ancre": "Pourtant, on n'a jamais",
+          "requete": "young woman sighs putting phone down bed"
+        }
+      ]
+    },
+    {
+      "id": "corps-2",
+      "role": "corps",
+      "texte": "Le problème, c'est qu'avec autant de choix, on a l'impression qu'on va forcément mieux trouver à hier.",
+      "intention": "vif",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "broll",
+          "ancre": "Le problème, c'est qu'avec",
+          "requete": "hands scrolling endless dating profiles fast"
+        }
+      ]
+    },
+    {
+      "id": "corps-3",
+      "role": "corps",
+      "texte": "On enchaîne mes dates, on ne s'engage pas, on ghost, et il y a même quelque chose qui s'est complètement inversé.",
+      "intention": "tranchant",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "broll",
+          "ancre": "On enchaîne mes dates,",
+          "requete": "man walks away leaving cafe table alone"
+        }
+      ]
+    },
+    {
+      "id": "corps-4",
+      "role": "corps",
+      "texte": "C'est qu'aujourd'hui, on a plus de facilité à assumer un pointu que t'as celui-là quand on est amoureuse ou amoureuse.",
+      "intention": "complice",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "broll",
+          "ancre": "C'est qu'aujourd'hui, on a",
+          "requete": "two people laughing avoiding eye contact bar"
+        }
+      ]
+    },
+    {
+      "id": "corps-5",
+      "role": "corps",
+      "texte": "Sauf que quand t'approches la trentaine, t'as l'impression que tout le monde est déjà casé, qu'il ne reste plus que toi, et que c'est trop tard.",
+      "intention": "intime",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "broll",
+          "ancre": "Sauf que quand t'approches",
+          "requete": "woman alone watching couples walk past street"
+        }
+      ]
+    },
+    {
+      "id": "corps-6",
+      "role": "corps",
+      "texte": "Mais en réalité, il existe plein de solutions auxquelles on ne pense pas forcément pour trouver l'amour au corps aujourd'hui.",
+      "intention": "posé",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "broll",
+          "ancre": "Mais en réalité, il",
+          "requete": "woman opens curtains morning light smiling"
+        }
+      ]
+    },
+    {
+      "id": "corps-7",
+      "role": "corps",
+      "texte": "Et c'est pour ça que j'ai décidé d'écrire un guide totalement gratuit qui a l'afférence les meilleures méthodes pour trouver l'amour en 2026.",
+      "intention": "posé",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "broll",
+          "ancre": "Et c'est pour ça",
+          "requete": "person writing notebook at desk warm lamp"
+        }
+      ]
+    },
+    {
+      "id": "chute",
+      "role": "chute",
+      "texte": "Si tu souhaites le recevoir, il suffit simplement de commenter mon guide et d'être abonné à la chaîne, et je te l'envoie directement en message privé.",
+      "intention": "complice",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "broll",
+          "ancre": "Si tu souhaites le",
+          "requete": "thumb typing comment on phone screen night"
+        }
+      ]
+    }
+  ],
+  "maillage": {
+    "vers": [],
+    "depuis": []
+  }
+}

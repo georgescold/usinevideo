@@ -33,7 +33,8 @@ npm run voix -- <slug | fichier> [options]
                      (défaut : le choix de la vidéo, sinon celui de la chaîne)
   --stabilite=0.5    0 = très expressif, 1 = très plat
   --similarite=0.8   fidélité à la voix cible
-  --essai            ne convertit que les 30 premières secondes
+  --essai=10         ne convertit qu'un extrait (30 s si on ne dit rien)
+  --depart=45        où commence l'extrait, en secondes
   --catalogue        liste les voix disponibles et s'arrête
   --quota            affiche le quota du pool et s'arrête
   --sortie=nom.wav   nom du fichier produit
@@ -140,11 +141,30 @@ await principal(async () => {
     journal.detail(`Piste audio extraite de la vidéo.`)
   }
 
-  if (drapeau(options, 'essai')) {
+  // L'ESSAI SE RÈGLE, PARCE QU'UN RÉGLAGE SE JUGE SUR UN PASSAGE PRÉCIS.
+  //
+  // Il ne prenait que les trente premières secondes. C'est souvent le pire
+  // endroit d'une prise : on s'installe, on cherche son ton, et la transposition
+  // qu'on essaie justement de régler ne s'y entend pas comme dans le corps du
+  // texte. Sur une prise de deux minutes, ça revient à juger sur le quart le
+  // moins représentatif.
+  //
+  // `--essai` seul garde son comportement ; `--essai=8 --depart=45` vise.
+  if (options.essai !== undefined) {
+    const secondes = Math.max(2, Math.min(60, nombre(options, 'essai', 30)))
+    const depart = Math.max(0, nombre(options, 'depart', 0))
     const court = path.join(path.dirname(destination), '.essai.wav')
-    await ffmpeg(['-i', entree, '-t', '30', '-c', 'copy', court])
+    // On décode au lieu de recopier les octets : `-c copy` coupe aux frontières
+    // de trame et le départ demandé se décale de quelques dixièmes. Sur dix
+    // secondes, c'est visible.
+    await ffmpeg([
+      '-i', entree, '-ss', String(depart), '-t', String(secondes),
+      '-vn', '-ac', '1', '-ar', '44100', '-c:a', 'pcm_s16le', court,
+    ])
     entree = court
-    journal.detail(`Mode essai : 30 secondes seulement.`)
+    journal.detail(
+      `Mode essai : ${secondes} s` + (depart ? `, à partir de ${depart} s.` : ` depuis le début.`)
+    )
   }
 
   const { dureeS } = await sonde(entree)

@@ -52,6 +52,131 @@ export async function lanceOuEchoue(binaire, args, opts) {
 
 export const ffmpeg = (args, opts) => lanceOuEchoue(FFMPEG, ['-hide_banner', '-y', ...args], opts)
 
+/**
+ * Combien un plan bouge — l'écart moyen entre deux images consécutives.
+ *
+ * On ramène l'image à 160 px de large, on échantillonne, on soustrait chaque
+ * vue de la précédente, et on moyenne ce qui reste. Un plan fixe rend un écart
+ * proche de zéro ; un plan qui bouge rend un nombre d'autant plus grand que ça
+ * bouge. C'est l'un des trois signaux de `mesureLAccroche` — voir là-bas pour
+ * ce que l'ensemble prétend dire, et surtout pour ce qu'il ne dit pas.
+ *
+ * Rend `null` si le fichier ne se lit pas — un plan sans mesure ne doit jamais
+ * faire échouer un montage.
+ */
+export async function mesureLeMouvement(fichier, { parSeconde = 8, largeur = 160 } = {}) {
+  if (!fs.existsSync(fichier)) return null
+  const filtre =
+    `fps=${parSeconde},scale=${largeur}:-2,tblend=all_mode=difference,` +
+    `signalstats,metadata=print:key=lavfi.signalstats.YAVG:file=-`
+  let r
+  try {
+    r = await lance(FFMPEG, ['-hide_banner', '-v', 'error', '-i', fichier, '-vf', filtre, '-f', 'null', '-'])
+  } catch {
+    return null
+  }
+  if (r.code !== 0) return null
+  const valeurs = [...r.stdout.matchAll(/YAVG=([\d.]+)/g)]
+    .map((m) => Number(m[1]))
+    .filter(Number.isFinite)
+  if (!valeurs.length) return null
+  return valeurs.reduce((a, b) => a + b, 0) / valeurs.length
+}
+
+/**
+ * Ce qu'on peut mesurer d'un plan qui accroche l'œil — et ce qu'on ne peut pas.
+ *
+ * CE QUI NE SE MESURE PAS, ET IL FAUT LE DIRE D'ABORD.
+ *
+ * « Remarquable » n'est pas une grandeur. Un visage qui fixe l'objectif sans
+ * bouger d'un cil arrête davantage qu'une foule agitée ; un geste incongru
+ * arrête plus qu'un travelling. Aucun nombre ne rend ça, et prétendre le
+ * contraire ferait pire que rien : on remplacerait un jugement par un chiffre
+ * qui a l'air d'un jugement.
+ *
+ * CE QUI SE MESURE : L'ABSENCE.
+ *
+ * On ne sait pas reconnaître un plan qui accroche. On sait reconnaître un plan
+ * qui ne peut PAS accrocher — celui où il ne se passe rien, où rien ne tranche,
+ * où rien n'a de couleur. Trois signaux, relevés sur les trente-deux plans d'un
+ * montage réel :
+ *
+ *   | signal      | ce qu'il capte              | tiers bas | médiane | tiers haut |
+ *   |-------------|-----------------------------|-----------|---------|------------|
+ *   | mouvement   | ça bouge à l'image          | < 2       | 3,2     | > 5        |
+ *   | contraste   | ça tranche, il y a un sujet | < 35      | 39      | > 85       |
+ *   | couleur     | ce n'est pas du gris        | < 4       | 5,6     | > 10       |
+ *
+ * Un plan faible sur UN signal peut très bien être excellent : un portrait
+ * immobile et contrasté accroche. Un plan faible sur les TROIS ne peut pas —
+ * il ne bouge pas, ne tranche pas, ne colore pas. C'est le seul verdict qu'on
+ * se permet, et il est rare : un ou deux plans sur trente-deux.
+ *
+ * Le reste s'apprécie à l'œil, et l'œil est de l'autre côté.
+ *
+ * @returns {Promise<{mouvement:number, contraste:number, couleur:number}|null>}
+ */
+export async function mesureLAccroche(fichier, { parSeconde = 4, largeur = 160 } = {}) {
+  if (!fs.existsSync(fichier)) return null
+
+  // Une photo n'a qu'une image : la différence entre deux vues n'existe pas, et
+  // c'est un zéro, pas une panne. Un fichier vraiment illisible échouera à la
+  // passe suivante.
+  const mouvement = (await mesureLeMouvement(fichier)) ?? 0
+
+  // Le contraste se lit entre les percentiles, pas entre les extrêmes : un seul
+  // pixel brûlé ou un seul point noir suffirait à faire passer une image plate
+  // pour une image qui tranche.
+  const filtre = `fps=${parSeconde},scale=${largeur}:-2,signalstats,metadata=print:file=-`
+  let r
+  try {
+    r = await lance(FFMPEG, ['-hide_banner', '-v', 'error', '-i', fichier, '-vf', filtre, '-f', 'null', '-'])
+  } catch {
+    return null
+  }
+  if (r.code !== 0) return null
+
+  const suite = (cle) =>
+    [...r.stdout.matchAll(new RegExp(`signalstats\\.${cle}=([\\d.]+)`, 'g'))]
+      .map((m) => Number(m[1]))
+      .filter(Number.isFinite)
+  const bas = suite('YLOW')
+  const haut = suite('YHIGH')
+  const sat = suite('SATAVG')
+  if (!bas.length || !haut.length) return null
+
+  const moyenne = (t) => (t.length ? t.reduce((a, b) => a + b, 0) / t.length : 0)
+  const ecarts = haut.map((h, i) => h - (bas[i] ?? 0))
+  return {
+    mouvement: Math.round(mouvement * 10) / 10,
+    contraste: Math.round(moyenne(ecarts) * 10) / 10,
+    couleur: Math.round(moyenne(sat) * 10) / 10,
+  }
+}
+
+/** Le tiers bas de chaque signal, relevé sur un montage réel. Voir ci-dessus. */
+export const ACCROCHE_BASSE = { mouvement: 2, contraste: 35, couleur: 4 }
+
+/**
+ * Un plan qui ne bouge pas, ne tranche pas et ne colore pas ne peut pas
+ * accrocher — SAUF s'il y a un visage dedans.
+ *
+ * L'exception n'est pas une politesse, c'est une correction. Le plan 24 d'un
+ * montage réel sort 1,2 · 13,6 · 0,3 : terne sur les trois relevés, donc
+ * condamné. C'est un portrait en gros plan, en clair-obscur, noir et blanc —
+ * le plan le plus chargé du lot. Les trois nombres disaient exactement le
+ * contraire de ce qu'un œil voit en un dixième de seconde.
+ *
+ * Un visage suffit donc à lever le verdict. Le détecteur en rate, jamais
+ * l'inverse : il ne peut donc pas faussement innocenter un plan vide.
+ */
+export const accrocheFaible = (a) =>
+  Boolean(a) &&
+  !a.visage?.present &&
+  a.mouvement <= ACCROCHE_BASSE.mouvement &&
+  a.contraste <= ACCROCHE_BASSE.contraste &&
+  a.couleur <= ACCROCHE_BASSE.couleur
+
 /** Métadonnées d'un fichier média. */
 export async function sonde(fichier) {
   if (!fs.existsSync(fichier)) throw new Error(`Fichier introuvable : ${fichier}`)

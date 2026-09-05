@@ -1,0 +1,903 @@
+{
+  "id": "philo-sophia",
+  "cree": "2026-08-31T17:40:12.163Z",
+  "sources": [
+    {
+      "url": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-a2766d7ab008b62e.mp3",
+      "plateforme": "fichier",
+      "titre": "Video by philo_sophia_ig (2).mp3",
+      "secondes": 85.796281,
+      "recolteLe": "2026-08-31T19:47:13.751Z",
+      "reperes": {
+        "voixHaute": -14.6,
+        "voixMediane": -18.7,
+        "accompMedian": -64.6,
+        "ecartMedian": 44.9
+      },
+      "retenus": 5,
+      "retenuS": 84.5,
+      "raie": {
+        "hz": 13954,
+        "ecartDb": 16.9,
+        "extraits": 5
+      }
+    },
+    {
+      "url": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-736542a573658c2a.mp3",
+      "plateforme": "fichier",
+      "titre": "Video by philo_sophia_ig (5).mp3",
+      "secondes": 157.104762,
+      "recolteLe": "2026-08-31T19:43:26.433Z",
+      "reperes": {
+        "voixHaute": -14.7,
+        "voixMediane": -19.2,
+        "accompMedian": -35.4,
+        "ecartMedian": 15.7
+      },
+      "retenus": 7,
+      "retenuS": 30.5,
+      "raie": {
+        "hz": 12920,
+        "ecartDb": 5.4,
+        "extraits": 7
+      }
+    },
+    {
+      "url": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-19f978fe349c1a48.mp3",
+      "plateforme": "fichier",
+      "titre": "Video by philo_sophia_ig (6).mp3",
+      "secondes": 202.801633,
+      "recolteLe": "2026-08-31T19:40:50.503Z",
+      "reperes": {
+        "voixHaute": -15.6,
+        "voixMediane": -20.1,
+        "accompMedian": -65.6,
+        "ecartMedian": 44.9
+      },
+      "retenus": 9,
+      "retenuS": 201.5,
+      "raie": {
+        "hz": 16365,
+        "ecartDb": 11.8,
+        "extraits": 9
+      }
+    },
+    {
+      "url": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-00fd72cf60c958c6.mp3",
+      "plateforme": "fichier",
+      "titre": "Video by philo_sophia_ig (7).mp3",
+      "secondes": 108.110658,
+      "recolteLe": "2026-08-31T19:38:03.917Z",
+      "reperes": {
+        "voixHaute": -16.1,
+        "voixMediane": -20.5,
+        "accompMedian": -22.8,
+        "ecartMedian": 4.1
+      },
+      "retenus": 1,
+      "retenuS": 10,
+      "raie": {
+        "hz": 13264,
+        "ecartDb": 15,
+        "extraits": 1
+      }
+    },
+    {
+      "url": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-fdb709f81bb78d65.mp3",
+      "plateforme": "fichier",
+      "titre": "Video by philo_sophia_ig (11).mp3",
+      "secondes": 264.288073,
+      "recolteLe": "2026-09-01T07:14:46.034Z",
+      "reperes": {
+        "voixHaute": -15.5,
+        "voixMediane": -19.2,
+        "accompMedian": -52.1,
+        "ecartMedian": 32
+      },
+      "retenus": 19,
+      "retenuS": 225,
+      "raie": {
+        "hz": 13954,
+        "ecartDb": 16.2,
+        "extraits": 19
+      }
+    },
+    {
+      "url": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-d16c2f6b07384b18.mp3",
+      "plateforme": "fichier",
+      "titre": "Video by philo_sophia_ig (9).mp3",
+      "secondes": 249.636281,
+      "recolteLe": "2026-09-01T07:18:12.132Z",
+      "reperes": {
+        "voixHaute": -18.4,
+        "voixMediane": -22.4,
+        "accompMedian": -61.6,
+        "ecartMedian": 39
+      },
+      "retenus": 12,
+      "retenuS": 245,
+      "raie": {
+        "hz": 16365,
+        "ecartDb": 4.5,
+        "extraits": 12
+      }
+    },
+    {
+      "url": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-336698eb216e67bf.mp3",
+      "plateforme": "fichier",
+      "titre": "Video by philo_sophia_ig (8).mp3",
+      "secondes": 144.682086,
+      "recolteLe": "2026-09-01T07:19:39.763Z",
+      "reperes": {
+        "voixHaute": -13.5,
+        "voixMediane": -18.1,
+        "accompMedian": -66.5,
+        "ecartMedian": 46.8
+      },
+      "retenus": 8,
+      "retenuS": 137.5,
+      "raie": {
+        "hz": 17630,
+        "ecartDb": 4.5,
+        "extraits": 8
+      }
+    },
+    {
+      "url": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-2824\\depot-233e1bada3b6c911.mp3",
+      "plateforme": "fichier",
+      "titre": "Video by philo_sophia_ig (12).mp3",
+      "secondes": 179.186939,
+      "recolteLe": "2026-09-01T13:35:29.816Z",
+      "raie": {
+        "hz": 16785,
+        "ecartDb": 5.2,
+        "extraits": 8
+      },
+      "reperes": {
+        "voixHaute": -18.5,
+        "voixMediane": -22.5,
+        "accompMedian": -66.7,
+        "ecartMedian": 44.5
+      },
+      "retenus": 8,
+      "retenuS": 178.5
+    },
+    {
+      "url": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-14900\\depot-440fc336d4b50afe.mp3",
+      "plateforme": "fichier",
+      "titre": "Video by philo_sophia_ig (13).mp3",
+      "secondes": 176.052245,
+      "recolteLe": "2026-09-01T13:49:57.725Z",
+      "raie": {
+        "hz": 16365,
+        "ecartDb": 12.5,
+        "extraits": 10
+      },
+      "reperes": {
+        "voixHaute": -16.4,
+        "voixMediane": -20.7,
+        "accompMedian": -53.5,
+        "ecartMedian": 32.7
+      },
+      "retenus": 10,
+      "retenuS": 167.5
+    }
+  ],
+  "extraits": [
+    {
+      "debutS": 0,
+      "finS": 5,
+      "secondes": 5,
+      "note": 39.4,
+      "ecartMoyen": 44.5,
+      "fichier": "extraits/021.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-a2766d7ab008b62e.mp3"
+    },
+    {
+      "debutS": 5.5,
+      "finS": 29,
+      "secondes": 23.5,
+      "note": 24.5,
+      "ecartMoyen": 42.4,
+      "fichier": "extraits/022.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-a2766d7ab008b62e.mp3"
+    },
+    {
+      "debutS": 29,
+      "finS": 53,
+      "secondes": 24,
+      "note": 24.1,
+      "ecartMoyen": 44.2,
+      "fichier": "extraits/023.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-a2766d7ab008b62e.mp3"
+    },
+    {
+      "debutS": 53,
+      "finS": 75,
+      "secondes": 22,
+      "note": 29.7,
+      "ecartMoyen": 45.7,
+      "fichier": "extraits/024.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-a2766d7ab008b62e.mp3"
+    },
+    {
+      "debutS": 75.5,
+      "finS": 85.5,
+      "secondes": 10,
+      "note": 35.1,
+      "ecartMoyen": 45.1,
+      "fichier": "extraits/025.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-a2766d7ab008b62e.mp3"
+    },
+    {
+      "debutS": 10,
+      "finS": 14,
+      "secondes": 4,
+      "note": 21.4,
+      "ecartMoyen": 30,
+      "fichier": "extraits/034.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-736542a573658c2a.mp3"
+    },
+    {
+      "debutS": 21,
+      "finS": 25.5,
+      "secondes": 4.5,
+      "note": 20.7,
+      "ecartMoyen": 25.2,
+      "fichier": "extraits/035.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-736542a573658c2a.mp3"
+    },
+    {
+      "debutS": 56,
+      "finS": 59.5,
+      "secondes": 3.5,
+      "note": 20.6,
+      "ecartMoyen": 28.2,
+      "fichier": "extraits/036.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-736542a573658c2a.mp3"
+    },
+    {
+      "debutS": 96,
+      "finS": 100.5,
+      "secondes": 4.5,
+      "note": 21.4,
+      "ecartMoyen": 27.9,
+      "fichier": "extraits/037.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-736542a573658c2a.mp3"
+    },
+    {
+      "debutS": 103,
+      "finS": 106.5,
+      "secondes": 3.5,
+      "note": 21.6,
+      "ecartMoyen": 30.4,
+      "fichier": "extraits/038.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-736542a573658c2a.mp3"
+    },
+    {
+      "debutS": 109,
+      "finS": 112.5,
+      "secondes": 3.5,
+      "note": 21.3,
+      "ecartMoyen": 31.5,
+      "fichier": "extraits/039.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-736542a573658c2a.mp3"
+    },
+    {
+      "debutS": 138.5,
+      "finS": 145.5,
+      "secondes": 7,
+      "note": 20.8,
+      "ecartMoyen": 33,
+      "fichier": "extraits/040.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-736542a573658c2a.mp3"
+    },
+    {
+      "debutS": 0,
+      "finS": 24,
+      "secondes": 24,
+      "note": 30.1,
+      "ecartMoyen": 44.5,
+      "fichier": "extraits/041.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-19f978fe349c1a48.mp3"
+    },
+    {
+      "debutS": 24,
+      "finS": 45.5,
+      "secondes": 21.5,
+      "note": 29,
+      "ecartMoyen": 44.5,
+      "fichier": "extraits/042.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-19f978fe349c1a48.mp3"
+    },
+    {
+      "debutS": 45.5,
+      "finS": 70,
+      "secondes": 24.5,
+      "note": 25.8,
+      "ecartMoyen": 42.8,
+      "fichier": "extraits/043.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-19f978fe349c1a48.mp3"
+    },
+    {
+      "debutS": 70,
+      "finS": 92.5,
+      "secondes": 22.5,
+      "note": 23.6,
+      "ecartMoyen": 43.1,
+      "fichier": "extraits/044.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-19f978fe349c1a48.mp3"
+    },
+    {
+      "debutS": 92.5,
+      "finS": 118,
+      "secondes": 25.5,
+      "note": 21.8,
+      "ecartMoyen": 43.5,
+      "fichier": "extraits/045.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-19f978fe349c1a48.mp3"
+    },
+    {
+      "debutS": 118.5,
+      "finS": 137.5,
+      "secondes": 19,
+      "note": 20.1,
+      "ecartMoyen": 44.4,
+      "fichier": "extraits/046.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-19f978fe349c1a48.mp3"
+    },
+    {
+      "debutS": 138,
+      "finS": 167,
+      "secondes": 29,
+      "note": -1.4,
+      "ecartMoyen": 42.4,
+      "fichier": "extraits/047.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-19f978fe349c1a48.mp3"
+    },
+    {
+      "debutS": 167,
+      "finS": 195.5,
+      "secondes": 28.5,
+      "note": 8.3,
+      "ecartMoyen": 40.4,
+      "fichier": "extraits/048.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-19f978fe349c1a48.mp3"
+    },
+    {
+      "debutS": 195.5,
+      "finS": 202.5,
+      "secondes": 7,
+      "note": 25.2,
+      "ecartMoyen": 45.2,
+      "fichier": "extraits/049.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-19f978fe349c1a48.mp3"
+    },
+    {
+      "debutS": 0,
+      "finS": 10,
+      "secondes": 10,
+      "note": 20.6,
+      "ecartMoyen": 36.8,
+      "fichier": "extraits/050.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-17604\\depot-00fd72cf60c958c6.mp3"
+    },
+    {
+      "debutS": 0,
+      "finS": 9,
+      "secondes": 9,
+      "note": 21.6,
+      "ecartMoyen": 34.8,
+      "fichier": "extraits/047.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-fdb709f81bb78d65.mp3"
+    },
+    {
+      "debutS": 9.5,
+      "finS": 39,
+      "secondes": 29.5,
+      "note": 20.3,
+      "ecartMoyen": 35.2,
+      "fichier": "extraits/048.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-fdb709f81bb78d65.mp3"
+    },
+    {
+      "debutS": 39.5,
+      "finS": 55,
+      "secondes": 15.5,
+      "note": 22.3,
+      "ecartMoyen": 32.5,
+      "fichier": "extraits/049.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-fdb709f81bb78d65.mp3"
+    },
+    {
+      "debutS": 61,
+      "finS": 69,
+      "secondes": 8,
+      "note": 20.1,
+      "ecartMoyen": 27.6,
+      "fichier": "extraits/050.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-fdb709f81bb78d65.mp3"
+    },
+    {
+      "debutS": 70,
+      "finS": 75.5,
+      "secondes": 5.5,
+      "note": 21.2,
+      "ecartMoyen": 30.5,
+      "fichier": "extraits/051.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-fdb709f81bb78d65.mp3"
+    },
+    {
+      "debutS": 79,
+      "finS": 97.5,
+      "secondes": 18.5,
+      "note": 20.2,
+      "ecartMoyen": 34.1,
+      "fichier": "extraits/052.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-fdb709f81bb78d65.mp3"
+    },
+    {
+      "debutS": 99,
+      "finS": 103.5,
+      "secondes": 4.5,
+      "note": 21,
+      "ecartMoyen": 27.9,
+      "fichier": "extraits/053.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-fdb709f81bb78d65.mp3"
+    },
+    {
+      "debutS": 104,
+      "finS": 112.5,
+      "secondes": 8.5,
+      "note": 27.1,
+      "ecartMoyen": 38.8,
+      "fichier": "extraits/054.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-fdb709f81bb78d65.mp3"
+    },
+    {
+      "debutS": 113,
+      "finS": 128,
+      "secondes": 15,
+      "note": -9.2,
+      "ecartMoyen": 28.6,
+      "fichier": "extraits/055.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-fdb709f81bb78d65.mp3"
+    },
+    {
+      "debutS": 131.5,
+      "finS": 134.5,
+      "secondes": 3,
+      "note": 22.4,
+      "ecartMoyen": 26.3,
+      "fichier": "extraits/056.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-fdb709f81bb78d65.mp3"
+    },
+    {
+      "debutS": 135.5,
+      "finS": 160,
+      "secondes": 24.5,
+      "note": 23.1,
+      "ecartMoyen": 34.5,
+      "fichier": "extraits/057.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-fdb709f81bb78d65.mp3"
+    },
+    {
+      "debutS": 160.5,
+      "finS": 179,
+      "secondes": 18.5,
+      "note": 21.5,
+      "ecartMoyen": 38.8,
+      "fichier": "extraits/058.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-fdb709f81bb78d65.mp3"
+    },
+    {
+      "debutS": 183,
+      "finS": 188,
+      "secondes": 5,
+      "note": 22.9,
+      "ecartMoyen": 30.9,
+      "fichier": "extraits/059.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-fdb709f81bb78d65.mp3"
+    },
+    {
+      "debutS": 193,
+      "finS": 211,
+      "secondes": 18,
+      "note": 21.3,
+      "ecartMoyen": 37.7,
+      "fichier": "extraits/060.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-fdb709f81bb78d65.mp3"
+    },
+    {
+      "debutS": 212,
+      "finS": 223,
+      "secondes": 11,
+      "note": 20.2,
+      "ecartMoyen": 32.4,
+      "fichier": "extraits/061.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-fdb709f81bb78d65.mp3"
+    },
+    {
+      "debutS": 223.5,
+      "finS": 230,
+      "secondes": 6.5,
+      "note": 24.3,
+      "ecartMoyen": 33,
+      "fichier": "extraits/062.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-fdb709f81bb78d65.mp3"
+    },
+    {
+      "debutS": 236,
+      "finS": 241,
+      "secondes": 5,
+      "note": 22.3,
+      "ecartMoyen": 29.9,
+      "fichier": "extraits/063.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-fdb709f81bb78d65.mp3"
+    },
+    {
+      "debutS": 244,
+      "finS": 253,
+      "secondes": 9,
+      "note": 22,
+      "ecartMoyen": 35,
+      "fichier": "extraits/064.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-fdb709f81bb78d65.mp3"
+    },
+    {
+      "debutS": 253.5,
+      "finS": 264,
+      "secondes": 10.5,
+      "note": 21.2,
+      "ecartMoyen": 38,
+      "fichier": "extraits/065.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-fdb709f81bb78d65.mp3"
+    },
+    {
+      "debutS": 0,
+      "finS": 9.5,
+      "secondes": 9.5,
+      "note": 23,
+      "ecartMoyen": 38.2,
+      "fichier": "extraits/070.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-d16c2f6b07384b18.mp3"
+    },
+    {
+      "debutS": 11.5,
+      "finS": 40.5,
+      "secondes": 29,
+      "note": 20.1,
+      "ecartMoyen": 37.5,
+      "fichier": "extraits/071.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-d16c2f6b07384b18.mp3"
+    },
+    {
+      "debutS": 40.5,
+      "finS": 67.5,
+      "secondes": 27,
+      "note": 23.3,
+      "ecartMoyen": 37.2,
+      "fichier": "extraits/072.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-d16c2f6b07384b18.mp3"
+    },
+    {
+      "debutS": 67.5,
+      "finS": 94,
+      "secondes": 26.5,
+      "note": 10.4,
+      "ecartMoyen": 36.9,
+      "fichier": "extraits/073.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-d16c2f6b07384b18.mp3"
+    },
+    {
+      "debutS": 94.5,
+      "finS": 119.5,
+      "secondes": 25,
+      "note": 31.9,
+      "ecartMoyen": 40.9,
+      "fichier": "extraits/074.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-d16c2f6b07384b18.mp3"
+    },
+    {
+      "debutS": 119.5,
+      "finS": 142.5,
+      "secondes": 23,
+      "note": 23.9,
+      "ecartMoyen": 38.3,
+      "fichier": "extraits/075.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-d16c2f6b07384b18.mp3"
+    },
+    {
+      "debutS": 143,
+      "finS": 159,
+      "secondes": 16,
+      "note": 22.6,
+      "ecartMoyen": 35.2,
+      "fichier": "extraits/076.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-d16c2f6b07384b18.mp3"
+    },
+    {
+      "debutS": 159.5,
+      "finS": 187.5,
+      "secondes": 28,
+      "note": 20.5,
+      "ecartMoyen": 39.3,
+      "fichier": "extraits/077.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-d16c2f6b07384b18.mp3"
+    },
+    {
+      "debutS": 187.5,
+      "finS": 197.5,
+      "secondes": 10,
+      "note": 26,
+      "ecartMoyen": 40.3,
+      "fichier": "extraits/078.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-d16c2f6b07384b18.mp3"
+    },
+    {
+      "debutS": 198,
+      "finS": 202,
+      "secondes": 4,
+      "note": 23.2,
+      "ecartMoyen": 33,
+      "fichier": "extraits/079.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-d16c2f6b07384b18.mp3"
+    },
+    {
+      "debutS": 202.5,
+      "finS": 232,
+      "secondes": 29.5,
+      "note": 30.7,
+      "ecartMoyen": 41.2,
+      "fichier": "extraits/080.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-d16c2f6b07384b18.mp3"
+    },
+    {
+      "debutS": 232,
+      "finS": 249.5,
+      "secondes": 17.5,
+      "note": 25,
+      "ecartMoyen": 38.5,
+      "fichier": "extraits/081.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-d16c2f6b07384b18.mp3"
+    },
+    {
+      "debutS": 0,
+      "finS": 7.5,
+      "secondes": 7.5,
+      "note": 33,
+      "ecartMoyen": 44.2,
+      "fichier": "extraits/082.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-336698eb216e67bf.mp3"
+    },
+    {
+      "debutS": 8,
+      "finS": 33,
+      "secondes": 25,
+      "note": 22.5,
+      "ecartMoyen": 46.9,
+      "fichier": "extraits/083.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-336698eb216e67bf.mp3"
+    },
+    {
+      "debutS": 33,
+      "finS": 42.5,
+      "secondes": 9.5,
+      "note": 32.6,
+      "ecartMoyen": 44.6,
+      "fichier": "extraits/084.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-336698eb216e67bf.mp3"
+    },
+    {
+      "debutS": 43,
+      "finS": 68,
+      "secondes": 25,
+      "note": 22.3,
+      "ecartMoyen": 44.4,
+      "fichier": "extraits/085.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-336698eb216e67bf.mp3"
+    },
+    {
+      "debutS": 68.5,
+      "finS": 85.5,
+      "secondes": 17,
+      "note": 22,
+      "ecartMoyen": 44.1,
+      "fichier": "extraits/086.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-336698eb216e67bf.mp3"
+    },
+    {
+      "debutS": 90.5,
+      "finS": 95,
+      "secondes": 4.5,
+      "note": 20.8,
+      "ecartMoyen": 25.9,
+      "fichier": "extraits/087.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-336698eb216e67bf.mp3"
+    },
+    {
+      "debutS": 95.5,
+      "finS": 120,
+      "secondes": 24.5,
+      "note": 25.6,
+      "ecartMoyen": 47.1,
+      "fichier": "extraits/088.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-336698eb216e67bf.mp3"
+    },
+    {
+      "debutS": 120,
+      "finS": 144.5,
+      "secondes": 24.5,
+      "note": 30.4,
+      "ecartMoyen": 50.6,
+      "fichier": "extraits/089.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-7228\\depot-336698eb216e67bf.mp3"
+    },
+    {
+      "debutS": 0,
+      "finS": 13.5,
+      "secondes": 13.5,
+      "note": 28.1,
+      "ecartMoyen": 39.9,
+      "fichier": "extraits/090.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-2824\\depot-233e1bada3b6c911.mp3"
+    },
+    {
+      "debutS": 14,
+      "finS": 35.5,
+      "secondes": 21.5,
+      "note": 24.8,
+      "ecartMoyen": 43.3,
+      "fichier": "extraits/091.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-2824\\depot-233e1bada3b6c911.mp3"
+    },
+    {
+      "debutS": 35.5,
+      "finS": 65,
+      "secondes": 29.5,
+      "note": 30.1,
+      "ecartMoyen": 45.4,
+      "fichier": "extraits/092.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-2824\\depot-233e1bada3b6c911.mp3"
+    },
+    {
+      "debutS": 65,
+      "finS": 93.5,
+      "secondes": 28.5,
+      "note": 19,
+      "ecartMoyen": 42.6,
+      "fichier": "extraits/093.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-2824\\depot-233e1bada3b6c911.mp3"
+    },
+    {
+      "debutS": 93.5,
+      "finS": 118.5,
+      "secondes": 25,
+      "note": 26.7,
+      "ecartMoyen": 43.7,
+      "fichier": "extraits/094.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-2824\\depot-233e1bada3b6c911.mp3"
+    },
+    {
+      "debutS": 118.5,
+      "finS": 147,
+      "secondes": 28.5,
+      "note": 37,
+      "ecartMoyen": 44.5,
+      "fichier": "extraits/095.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-2824\\depot-233e1bada3b6c911.mp3"
+    },
+    {
+      "debutS": 147,
+      "finS": 168.5,
+      "secondes": 21.5,
+      "note": 33.5,
+      "ecartMoyen": 42.9,
+      "fichier": "extraits/096.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-2824\\depot-233e1bada3b6c911.mp3"
+    },
+    {
+      "debutS": 168.5,
+      "finS": 179,
+      "secondes": 10.5,
+      "note": 35.9,
+      "ecartMoyen": 42,
+      "fichier": "extraits/097.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-2824\\depot-233e1bada3b6c911.mp3"
+    },
+    {
+      "debutS": 0,
+      "finS": 11.5,
+      "secondes": 11.5,
+      "note": 25.1,
+      "ecartMoyen": 34.6,
+      "fichier": "extraits/098.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-14900\\depot-440fc336d4b50afe.mp3"
+    },
+    {
+      "debutS": 12,
+      "finS": 33.5,
+      "secondes": 21.5,
+      "note": 22.4,
+      "ecartMoyen": 31.7,
+      "fichier": "extraits/099.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-14900\\depot-440fc336d4b50afe.mp3"
+    },
+    {
+      "debutS": 34,
+      "finS": 39.5,
+      "secondes": 5.5,
+      "note": 22.5,
+      "ecartMoyen": 29.5,
+      "fichier": "extraits/100.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-14900\\depot-440fc336d4b50afe.mp3"
+    },
+    {
+      "debutS": 42,
+      "finS": 68.5,
+      "secondes": 26.5,
+      "note": 22.3,
+      "ecartMoyen": 30.8,
+      "fichier": "extraits/101.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-14900\\depot-440fc336d4b50afe.mp3"
+    },
+    {
+      "debutS": 71,
+      "finS": 77,
+      "secondes": 6,
+      "note": 29.6,
+      "ecartMoyen": 33.4,
+      "fichier": "extraits/102.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-14900\\depot-440fc336d4b50afe.mp3"
+    },
+    {
+      "debutS": 77.5,
+      "finS": 102,
+      "secondes": 24.5,
+      "note": 22.7,
+      "ecartMoyen": 32.6,
+      "fichier": "extraits/103.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-14900\\depot-440fc336d4b50afe.mp3"
+    },
+    {
+      "debutS": 102.5,
+      "finS": 121,
+      "secondes": 18.5,
+      "note": 23.7,
+      "ecartMoyen": 33.3,
+      "fichier": "extraits/104.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-14900\\depot-440fc336d4b50afe.mp3"
+    },
+    {
+      "debutS": 121.5,
+      "finS": 132.5,
+      "secondes": 11,
+      "note": 23.6,
+      "ecartMoyen": 32.2,
+      "fichier": "extraits/105.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-14900\\depot-440fc336d4b50afe.mp3"
+    },
+    {
+      "debutS": 133.5,
+      "finS": 157,
+      "secondes": 23.5,
+      "note": 23.9,
+      "ecartMoyen": 35.2,
+      "fichier": "extraits/106.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-14900\\depot-440fc336d4b50afe.mp3"
+    },
+    {
+      "debutS": 157,
+      "finS": 176,
+      "secondes": 19,
+      "note": 30.4,
+      "ecartMoyen": 41.6,
+      "fichier": "extraits/107.wav",
+      "source": "C:\\Users\\loysc\\AppData\\Local\\Temp\\atelier-14900\\depot-440fc336d4b50afe.mp3"
+    }
+  ],
+  "marge": 20,
+  "totalS": 1280,
+  "majLe": "2026-09-01T13:57:04.076Z",
+  "referenceS": 33.5
+}

@@ -24,6 +24,12 @@
     </h1>
     <p class="chapo" id="nomChaine"></p>
   </div>
+  <!-- LE BUDGET, SOUS LES YEUX PLUTOT QUE DANS UNE COMMANDE.
+       fal se paie a la generation, ElevenLabs a la minute convertie. Leur
+       solde ne se consultait qu en le demandant — donc jamais, et on le
+       decouvrait quand une generation s arretait au milieu. -->
+  <div class="budget" id="budget" hidden title="Solde des services payants"></div>
+
   <div class="choix-video">
     <select id="selVideo" aria-label="La vidéo sur laquelle on travaille"></select>
     <button type="button" class="bouton discret pastille-travail" id="btnTravail" hidden>En cours…</button>
@@ -45,21 +51,31 @@
           aria-selected="true" data-espace="production">Production</button>
   <button type="button" class="onglet" id="ongletInspirations" role="tab"
           aria-selected="false" data-espace="inspirations">Inspirations</button>
+  <!-- Les avatars appartiennent à la CHAÎNE, comme la voix : un espace, pas une
+       étape de production. On n'ajoute pas un visage à chaque tournage. -->
+  <button type="button" class="onglet" id="ongletAvatars" role="tab"
+          aria-selected="false" data-espace="avatars">Avatars</button>
 </nav>
 
 <!-- Le menu des chaînes. Une chaîne est un dossier : rien n'est à déclarer, on
      liste les dossiers voisins qui portent un `config/chaine.json`. En changer
      relance le serveur, `CHEMINS.racine` étant figé à l'import. -->
 <div class="voile" id="voileChaines" hidden>
-  <div class="panneau">
+  <!-- CRÉER N'EST PAS FERMER, ET LES DEUX N'AVAIENT RIEN À FAIRE CÔTE À CÔTE.
+
+       L'en-tête portait deux dalles grises de même taille et de même poids :
+       l'une fabrique une chaîne, l'autre referme une fenêtre. Rien ne les
+       départageait, et l'œil devait lire pour savoir laquelle était laquelle.
+       « Fermer » redevient discret — on sait déjà refermer un panneau — et
+       « Nouvelle chaîne » descend dans la liste, à sa place : une chaîne de
+       plus est une LIGNE de plus, pas une commande de la fenêtre. -->
+  <div class="panneau panneau-menu">
     <div class="tete-panneau">
       <h2>Chaînes</h2>
-      <div class="tete-actions">
-        <button type="button" class="bouton" id="btnNouvelleChaine">Nouvelle chaîne</button>
-        <button type="button" class="bouton discret" id="btnFermeChaines">Fermer</button>
-      </div>
+      <button type="button" class="bouton minuscule discret" id="btnFermeChaines">Fermer</button>
     </div>
     <div class="liste-chaines" id="listeChaines"></div>
+    <button type="button" class="ajoute" id="btnNouvelleChaine">Nouvelle chaîne</button>
     <p class="note" id="noteChaines"></p>
   </div>
 </div>
@@ -74,15 +90,13 @@
      alors derrière le voile. On n'ouvre pas un menu pour le refermer afin
      d'atteindre le bouton qu'on y cherchait. -->
 <div class="voile" id="voileVideos" hidden>
-  <div class="panneau">
+  <div class="panneau panneau-menu">
     <div class="tete-panneau">
       <h2>Vidéos</h2>
-      <div class="tete-actions">
-        <button type="button" class="bouton" id="btnNouvelleDepuisMenu">Nouvelle vidéo</button>
-        <button type="button" class="bouton discret" id="btnFermeVideos">Fermer</button>
-      </div>
+      <button type="button" class="bouton minuscule discret" id="btnFermeVideos">Fermer</button>
     </div>
     <div class="liste-videos" id="listeVideos"></div>
+    <button type="button" class="ajoute" id="btnNouvelleDepuisMenu">Nouvelle vidéo</button>
     <details class="repli" id="replCorbeille">
       <summary>Corbeille <span class="compteur" id="compteCorbeille"></span></summary>
       <div class="liste-corbeille" id="listeCorbeille"></div>
@@ -91,6 +105,26 @@
       </button>
     </details>
     <p class="note" id="noteVideos"></p>
+  </div>
+</div>
+
+<!-- UN PLAN SE JUGE EN GRAND, AVEC SA VOIX ET SON TEXTE.
+     Une vignette de 190 px dit si l image est jolie ; elle ne dit pas si elle
+     va avec ce qui est en train d etre dit. Ici les trois arrivent ensemble :
+     l image en grand, la voix off au bon endroit, et les mots prononces. -->
+<div class="voile" id="voilePlan" hidden>
+  <div class="panneau panneau-plan">
+    <div class="tete-panneau">
+      <h2 id="titrePlan">Plan</h2>
+      <button type="button" class="bouton discret" id="btnFermePlan">Fermer</button>
+    </div>
+    <div class="plan-grand" id="planGrand"></div>
+    <p class="plan-dit" id="planDit"></p>
+    <p class="note" id="planMeta"></p>
+    <div class="tete-actions">
+      <button type="button" class="bouton" id="btnAutrePexels">Un autre — banque d images</button>
+      <button type="button" class="bouton discret" id="btnAutreIa">Générer par IA — 0,18 $</button>
+    </div>
   </div>
 </div>
 
@@ -120,12 +154,141 @@
       </div>
 
       <p class="note" id="noteDestination"></p>
+
+      <!-- LE MODE VIENT APRÈS LE FORMAT, ET PAS AVANT.
+           Le format décide des dimensions, donc de tout le reste. Le mode ne
+           décide que de la façon dont l'image sera fabriquée — il n'a de sens
+           qu'une fois qu'on sait ce qu'on fabrique. -->
+      <div class="modes" id="zoneModes" hidden>
+        <h3>Comment fabriquer l'image ?</h3>
+        <div class="cartes" id="cartesMode">
+          <button type="button" class="carte" data-mode="simple">
+            <span class="carte-titre">Création simple</span>
+            <span class="carte-note">Tu déposes ta prise, le montage l'habille de plans de coupe.</span>
+          </button>
+          <button type="button" class="carte" data-mode="copie">
+            <span class="carte-titre">Copie IA</span>
+            <span class="carte-note">Tu donnes le lien d'une vidéo, elle est rejouée avec un avatar de la chaîne.</span>
+          </button>
+        </div>
+
+        <!-- LE PANNEAU DE COPIE NE S'OUVRE QUE SI ON A CHOISI CE MODE.
+             Montrer un champ de lien à quelqu'un qui va déposer un rush, c'est
+             lui proposer une porte qui ne mène nulle part. -->
+        <div class="copie" id="panneauCopie" hidden>
+          <div class="filtres">
+            <label>Lien de la vidéo de référence
+              <input type="url" id="copieLien" class="large" spellcheck="false"
+                     placeholder="https://www.tiktok.com/@…">
+            </label>
+            <label>Avatar
+              <select id="copieAvatar"></select>
+            </label>
+            <!-- LA CRÉATION D'UN AVATAR SE FAIT D'ICI, PAS D'UNE PHRASE.
+                 Le menu ne proposait que ce qui existe déjà, et l'absence
+                 renvoyait vers « l'onglet Avatars » — une consigne à lire au
+                 lieu d'un geste à faire. C'est exactement le défaut de la
+                 première interface (§2), remis à l'envers : une marche sans
+                 bouton là où rien ne s'argumente. -->
+            <button type="button" class="bouton" id="btnNouvelAvatar">Nouvel avatar</button>
+            <label>Plans
+              <input type="number" id="copiePlans" min="1" max="12" value="3">
+            </label>
+          </div>
+          <p class="note">La vidéo est rapatriée, découpée en tronçons de dix secondes,
+             et chaque tronçon sert de référence de mouvement. Le modèle en tire le cadrage
+             et l'énergie, et les rejoue avec les photos de l'avatar — il s'inspire, il ne
+             décalque pas.</p>
+          <p class="note" id="copieDevis"></p>
+          <button type="button" class="bouton primaire grand" id="btnCopie">
+            Générer les plans
+          </button>
+          <video class="master" id="lecteurCopie" controls preload="metadata" hidden></video>
+        </div>
+      </div>
     </section>
 
     <!-- ÉTAPE 2 ------------------------------------------------------------ -->
     <section class="etape" data-cle="rush" hidden>
       <h2>2. Dépôt de la prise</h2>
       <div class="blocage" hidden></div>
+
+      <!-- DEUX FAÇONS D'AVOIR UNE PRISE, ET LA QUESTION SE POSE D'ABORD.
+           Sur une chaîne à avatar, personne n'enregistre : le texte existe et
+           la voix se fabrique. Le résultat se dépose au même endroit, et rien
+           en aval ne fait la différence — un audio seul veut dire couverture
+           intégrale en plans de coupe (§3). -->
+      <div class="cartes" id="cartesPrise">
+        <button type="button" class="carte" data-prise="depot">
+          <span class="carte-titre">J'ai déjà l'audio</span>
+          <span class="carte-note">Tu déposes ton enregistrement.</span>
+        </button>
+        <button type="button" class="carte" data-prise="parle">
+          <span class="carte-titre">Fabriquer la voix</span>
+          <span class="carte-note">Tu colles ton texte, Fish le lit avec la voix de la chaîne.</span>
+        </button>
+      </div>
+
+      <!-- FABRIQUER LA VOIX ---------------------------------------------- -->
+      <div class="parle" id="panneauParle" hidden>
+        <label class="etiquette" for="parleTexte">Le texte à lire</label>
+        <textarea id="parleTexte" rows="10" spellcheck="true"
+                  placeholder="Colle ton script ici. Écris les intentions entre parenthèses — (soupir) (agacé) (rires) (chuchote) (surpris) — Fish les joue au lieu de les prononcer."></textarea>
+
+        <!-- LE TEXTE PORTE L'INTONATION PLUS QUE LES RÉGLAGES.
+             Mesuré le 4 septembre 2026 : à réglages égaux, c'est le texte marqué
+             qui rend la lecture la plus vivante. Une phrase plate reste plate
+             quel que soit le réglage — d'où les marqueurs à un clic. -->
+        <div class="marqueurs" id="marqueurs">
+          <!-- DIRIGER PASSE AVANT LES MARQUEURS À LA MAIN.
+               Sur un script de dix minutes, personne ne pose quarante marqueurs
+               un par un — et une lecture sans marqueur est une lecture
+               régulière, c'est-à-dire morte. Le bouton lit le script, comprend
+               ce que chaque phrase doit faire ressentir, et repose le texte
+               marqué ICI : on le relit, on le corrige, on le refuse. -->
+          <button type="button" class="marqueur diriger" id="btnDirige">
+            ✦ Diriger le texte
+          </button>
+        </div>
+
+        <div class="filtres">
+          <label>Voix
+            <select id="parleVoix"></select>
+          </label>
+          <label>Modèle
+            <select id="parleModele">
+              <option value="s2.1-pro">s2.1-pro — le plus de relief</option>
+              <option value="s1">s1 — plus rapide, plus sage</option>
+              <option value="speech-1.6">speech-1.6 — l'ancien</option>
+            </select>
+          </label>
+          <label>Débit
+            <select id="parleDebit">
+              <option value="1.2">très rapide — 1,20</option>
+              <option value="1.12" selected>rapide — 1,12</option>
+              <option value="1">naturel — 1,00</option>
+              <option value="0.92">posé — 0,92</option>
+            </select>
+          </label>
+          <label>Dynamique
+            <select id="parleTemp">
+              <option value="1.1">extrême — 1,10</option>
+              <option value="1.0" selected>très haute — 1,00</option>
+              <option value="0.92">haute — 0,92</option>
+              <option value="0.75">moyenne — 0,75</option>
+              <option value="0.5">plate — 0,5</option>
+            </select>
+          </label>
+        </div>
+
+        <p class="note" id="parleDevis"></p>
+
+        <div class="parle-actions">
+          <button type="button" class="bouton" id="btnParleEssai">Écouter 10 s</button>
+          <button type="button" class="bouton primaire" id="btnParle">Fabriquer la prise</button>
+        </div>
+        <audio class="lecteur" id="lecteurParle" controls preload="none" hidden></audio>
+      </div>
 
       <div class="depot" id="depot" tabindex="0" role="button"
            aria-label="Déposer la prise">
@@ -332,6 +495,22 @@
           YouTube, TikTok, Instagram, Facebook, X, Vimeo, Dailymotion, Twitch,
           SoundCloud. Tout est local : aucun crédit, aucun quota.
         </p>
+        <!-- LE DÉPÔT DE FICHIERS N'EST PAS UN REPLI, C'EST LA VOIE COURTE.
+             Instagram, Facebook et X ne servent plus rien à un visiteur
+             anonyme : leur adresse échouera toujours ici. Plutôt que d'envoyer
+             chercher un export de cookies pour trois vidéos, on télécharge
+             depuis le navigateur et on dépose. Aucune session en jeu, et le
+             traitement est identique — séparation, mesure, découpe dans
+             l'original. -->
+        <div class="depot-broll" id="depotEmpreinte" tabindex="0" role="button"
+             aria-label="Déposer des fichiers audio ou vidéo">
+          <p><b>Ou dépose des fichiers</b></p>
+          <p class="note">mp4 · mov · mkv · webm · mp3 · m4a · wav · flac · ogg</p>
+          <p class="note">Pour Instagram, Facebook et X, qui refusent les adresses
+             sans session : télécharge la vidéo, dépose-la ici.</p>
+          <input type="file" id="fichiersEmpreinte" multiple
+                 accept=".mp4,.mov,.mkv,.webm,.avi,.mp3,.m4a,.wav,.flac,.ogg,.opus,.aac" hidden>
+        </div>
 
         <!-- UN CHAMP À UNE LIGNE DISAIT LE CONTRAIRE DU BON GESTE.
              Un entraînement demande quinze à trente minutes de voix propre, et
@@ -343,8 +522,17 @@
         <textarea id="empreinteUrl" rows="4" spellcheck="false"
                   placeholder="https://www.youtube.com/watch?v=…&#10;https://www.instagram.com/reel/…&#10;https://soundcloud.com/…"></textarea>
 
+        <!-- UNE VOIX = UN DOSSIER, ET LE CHOIX DOIT SE VOIR AVANT DE RÉCOLTER.
+             Ce champ était une simple zone de texte, et laissé vide il faisait
+             un dossier PAR SOURCE, nommé d'après le titre de la vidéo : huit
+             fichiers du même locuteur pouvaient donner huit empreintes de deux
+             minutes, dont aucune n'était entraînable. La liste des voix déjà
+             récoltées répond à la question à la place de la mémoire. -->
         <div class="filtres">
           <label>Ranger sous
+            <select id="empreinteCible"></select>
+          </label>
+          <label id="labelNomEmpreinte">Nom de la voix
             <input type="text" id="empreinteNom" spellcheck="false"
                    placeholder="le nom du locuteur" maxlength="60">
           </label>
@@ -413,8 +601,39 @@
       </div>
       <p class="note" id="noteMoteur"></p>
 
+      <!-- ESSAYER AVANT DE REFAIRE TOUT.
+           La transposition ne se calcule pas, elle s'entend : le nombre qui met
+           la prise sur la hauteur du modèle n'est pas toujours celui qu'on
+           préfère. Sans cet essai, chaque demi-ton essayé coûtait une conversion
+           complète et la transcription qui suit. Le départ se règle parce que
+           les premières secondes d'une prise sont les moins représentatives —
+           on s'y installe. -->
+      <div class="filtres local-seul" hidden>
+        <label>Essai
+          <input type="number" id="essaiLocalDuree" min="2" max="30" step="1" value="8">
+        </label>
+        <label>secondes, à partir de
+          <input type="number" id="essaiLocalDepart" min="0" step="5" value="0">
+        </label>
+        <button type="button" class="bouton discret" id="btnEssaiLocal">Écouter l'essai</button>
+      </div>
+
+      <div class="ecoute" id="ecouteEssaiLocal" hidden>
+        <p class="note" id="nomEssaiLocal"></p>
+        <audio id="audioEssaiLocal" controls preload="metadata"></audio>
+      </div>
+
       <button type="button" class="bouton primaire grand" id="btnAudio">
         Générer la voix sur toute la prise
+      </button>
+
+      <!-- RETENIR CE MOTEUR ET SON RÉGLAGE POUR TOUTE LA CHAÎNE.
+           Régler le modèle et la transposition à chaque vidéo est un travail
+           perdu : c'est une décision de chaîne, pas de montage. Le bouton écrit
+           les deux ensemble — retenir le modèle sans la transposition ne
+           servirait à rien, le timbre se plaquerait une octave trop bas. -->
+      <button type="button" class="bouton discret local-seul" id="btnDefautVoix" hidden>
+        En faire le défaut de la chaîne
       </button>
     </section>
 
@@ -464,22 +683,22 @@
           <p class="alerte-police" id="alertePolice" hidden></p>
 
           <div class="grille2 curseurs">
-            <div class="groupe">
+            <div class="groupe" data-champ="motsParPage">
               <label class="etiquette" for="stMotsParPage">Mots par ligne
                 <b id="valMotsParPage">3</b></label>
               <input type="range" id="stMotsParPage">
             </div>
-            <div class="groupe">
+            <div class="groupe" data-champ="taille">
               <label class="etiquette" for="stTaille">Taille
                 <b id="valTaille">78</b></label>
               <input type="range" id="stTaille">
             </div>
-            <div class="groupe">
+            <div class="groupe" data-champ="positionBas">
               <label class="etiquette" for="stPositionBas">Hauteur
                 <b id="valPositionBas">30</b></label>
               <input type="range" id="stPositionBas">
             </div>
-            <div class="groupe">
+            <div class="groupe" data-champ="epaisseurContour">
               <label class="etiquette" for="stEpaisseurContour">Épaisseur
                 <b id="valEpaisseurContour">1</b></label>
               <input type="range" id="stEpaisseurContour">
@@ -547,10 +766,26 @@
             <span class="chrono" id="chrono">0:00</span>
           </div>
 
+          <!-- LA VOIX DE L'APERÇU. Sans elle, on règle un calage mot à mot en
+               regardant défiler du texte muet : on voit que ça bouge, on ne voit
+               pas si c'est juste. Elle sert aussi d'HORLOGE quand elle joue —
+               deux compteurs indépendants finiraient toujours par diverger. -->
+          <audio id="audioApercu" preload="metadata"></audio>
+
           <p class="note" id="noteApercu"></p>
 
           <button type="button" class="bouton primaire grand" id="btnValideStyle">
             Appliquer au montage
+          </button>
+
+          <!-- PROMOUVOIR CE RÉGLAGE EN DÉFAUT DE LA CHAÎNE.
+               Régler une fois par vidéo est un travail perdu : une direction
+               artistique se décide une fois. Ce bouton écrit les valeurs
+               EFFECTIVES dans config/chaine.json, et toutes les vidéos qui
+               n'ont pas de réglage propre les suivront — y compris les
+               anciennes. D'où la confirmation. -->
+          <button type="button" class="bouton discret" id="btnDefautChaine">
+            En faire le défaut de la chaîne
           </button>
         </div>
 
@@ -572,6 +807,13 @@
             <span class="etiquette">Texte</span>
             <input type="search" id="chercheTexte" placeholder="chercher un mot…"
                    spellcheck="false" aria-label="Chercher un mot dans le texte">
+            <!-- Whisper transcrit ce qui est PRONONCÉ : « voici trois signes ».
+                 Sur un sous-titre de trois mots qui passe en huit dixièmes de
+                 seconde, « 3 » est perçu là où « trois » doit être lu. Le bouton
+                 montre d'abord ce qu'il changerait — une conversion muette sur
+                 quatre cents mots serait impossible à relire. -->
+            <button type="button" class="bouton minuscule discret" id="btnChiffres"
+                    title="Écrire en chiffres les nombres dits en lettres">123</button>
           </div>
 
           <div class="liste-st" id="listeSt"></div>
@@ -595,6 +837,14 @@
 
 
       <div class="fiche" id="fichePlan" hidden></div>
+
+      <!-- LA REVUE DES PLANS DE COUPE.
+           Le montage en pose une trentaine sur deux minutes, choisis par une
+           requête en anglais dans une banque d'images. Les compter ne sert à
+           rien : il faut les regarder. Refuser un plan en appelle un autre —
+           le retirer laisserait le précédent s'étirer, et ce serait le temps
+           mort que le §10 interdit en premier. -->
+      <div class="revue-plans" id="revuePlans" hidden></div>
 
       <!-- ------------------------------------------- tes propres plans -- -->
       <!--
@@ -634,8 +884,20 @@
         </div>
       </details>
 
+      <!-- LE BOUTON PORTE LE NOM DE L ETAPE, PAS CELUI DE LA COMMANDE.
+           Il disait « Construire le montage » — le vocabulaire du pipeline. On
+           le cherche sous le nom de ce qu on est venu faire ici : generer les
+           plans. Un bouton qu on ne reconnait pas est un bouton qui n existe
+           pas, et celui-ci a ete cherche trois fois. -->
+      <!-- L OUVERTURE PAR IA SE COCHE, ELLE NE SE DEVINE PAS : elle se paie. -->
+      <label class="case" for="estOuvertureIa">
+        <input type="checkbox" id="estOuvertureIa">
+        <span>Ouverture générée par IA — 0,18 $
+          <small>un gros plan de visage avec l'émotion du passage, au lieu d'un plan de banque</small>
+        </span>
+      </label>
       <button type="button" class="bouton primaire grand" id="btnPlans">
-        Construire le montage
+        Générer les plans
       </button>
     </section>
 
@@ -644,21 +906,46 @@
       <h2>7. Téléchargement</h2>
       <div class="blocage" hidden></div>
 
+      <!-- LES DEUX CASES DISENT CE QU ELLES PRODUISENT, PAS CE QU ELLES SONT.
+           « Brouillon » ne disait rien de ce qu on obtient : moitie de
+           definition, pas d etalonnage, et un fichier a part qui ne remplace
+           jamais le master. « Extrait » non plus : on cliquait « Lancer le
+           rendu », l ecran annoncait un rendu termine, et la video n
+           apparaissait nulle part — parce qu on avait demande trois secondes
+           sans le savoir. -->
       <label class="case">
         <input type="checkbox" id="estBrouillon">
-        <span>Brouillon <small>définition réduite</small></span>
+        <span>Brouillon
+          <small>moitié de définition, sans étalonnage — deux fois plus rapide</small></span>
       </label>
 
       <label class="case">
         <input type="checkbox" id="estExtrait">
-        <span>Extrait de contrôle <small>3 s, pour vérifier avant les huit minutes</small></span>
+        <span>Extrait de contrôle seulement
+          <small>3 s à partir de la 10<sup>e</sup> — le master complet n'est PAS produit</small></span>
       </label>
 
       <button type="button" class="bouton primaire grand" id="btnRendu">Lancer le rendu</button>
 
       <div class="fiche" id="ficheRendu" hidden></div>
       <video class="master" id="lecteurMaster" controls preload="metadata" hidden></video>
-      <a class="bouton telecharge" id="lienMaster" hidden download>Télécharger le master</a>
+      <div class="sorties" id="sortiesMaster" hidden>
+        <a class="bouton telecharge" id="lienMaster" download>Télécharger le master</a>
+        <!-- LE DRIVE EST UNE SORTIE, PAS UNE ÉTAPE.
+             Télécharger et déposer dans le Drive de la chaîne sont deux façons
+             de récupérer le même fichier : elles vont donc côte à côte, au même
+             endroit, plutôt que d'ouvrir une huitième marche. -->
+        <button type="button" class="bouton" id="btnDrive" hidden>Envoyer sur le Drive</button>
+        <span class="note" id="noteDrive"></span>
+      </div>
+
+      <!-- L essai se regarde ici, sinon il n existe pas.
+           Il etait ecrit sur le disque et rien ne le montrait : on lisait
+           « rendu termine » devant un ecran vide, et on cherchait le master. -->
+      <div class="essai-rendu" id="essaiRendu" hidden>
+        <p class="note" id="nomEssaiRendu"></p>
+        <video class="master" id="lecteurEssai" controls preload="metadata"></video>
+      </div>
 
       <p class="note">Titre, description et miniature : <code>/publie</code> en conversation.</p>
     </section>
@@ -763,13 +1050,62 @@
 </div>
 
 <!-- Nouvelle vidéo --------------------------------------------------------- -->
+<!-- L'ESPACE AVATARS ---------------------------------------------------------
+     Un avatar est un JEU de photos, pas une image : une seule référence tient
+     tant que le cadrage reste proche de l'original, et rend quelqu'un d'autre
+     dès qu'on s'en éloigne. Deux à quatre angles suffisent. -->
+<div class="avatars" id="espaceAvatars" hidden>
+  <div class="entete-espace">
+    <h2>Avatars de la chaîne</h2>
+    <p class="note">Les visages que la chaîne peut mettre en scène. Ils vivent dans
+       <code>marque/avatars/</code>, ils suivent le dossier, et une nouvelle chaîne
+       ne les hérite pas.</p>
+  </div>
+
+  <div class="liste-avatars" id="listeAvatars"></div>
+
+  <details class="repli" id="replAjoutAvatar">
+    <summary>Ajouter un avatar</summary>
+    <div class="ajout-avatar">
+      <div class="filtres">
+        <label>Identifiant
+          <input type="text" id="avId" placeholder="valerie" maxlength="41" spellcheck="false">
+        </label>
+        <label>Nom affiché
+          <input type="text" id="avNom" placeholder="Valérie" maxlength="60">
+        </label>
+      </div>
+      <label class="etiquette" for="avSigne">Signe distinctif</label>
+      <input type="text" id="avSigne" maxlength="200"
+             placeholder="mèche orange sur le devant, cheveux blonds ondulés, la quarantaine">
+      <p class="note">C'est le détail que chaque prompt nommera. Il ancre l'identité
+         quand la scène change — sans lui, un plan éloigné rend une autre personne.</p>
+
+      <div class="depot" id="depotAvatar" tabindex="0" role="button"
+           aria-label="Déposer une photo">
+        <p>Dépose une photo, ou clique</p>
+        <p class="note">Une par une. Vise deux à quatre angles : de face, de trois quarts, en pied.</p>
+      </div>
+      <input type="file" id="fichierAvatar" accept="image/*" hidden>
+      <p class="note" id="noteAvatar"></p>
+    </div>
+  </details>
+</div>
+
 <div class="voile" id="voileNouvelle" hidden>
   <div class="dialogue" role="dialog" aria-modal="true" aria-labelledby="nouvTitre">
     <h3 id="nouvTitre">Nouvelle vidéo</h3>
-    <p>Minuscules, chiffres, traits d'union. Deux mots au plus.</p>
+    <p>Deux mots au plus : c'est un identifiant, pas un titre. Le vrai titre
+       s'écrit dans le script, où il n'a aucune limite.</p>
     <label class="etiquette" for="nouvSlug">Slug</label>
     <input type="text" id="nouvSlug" maxlength="80" spellcheck="false"
-           placeholder="trois-jours">
+           placeholder="trois jours">
+    <!-- ÉCRIS EN CLAIR CE QUI VA ÊTRE CRÉÉ.
+         Les accents et les espaces sont normalisés au lieu d'être refusés — mais
+         le résultat s'affiche AVANT de cliquer. Un slug corrigé en silence ne
+         désignerait plus la même vidéo que celui qu'on a tapé, et on chercherait
+         ensuite un dossier qui n'existe pas. Montré, il n'y a plus de silence. -->
+    <p class="note" id="nouvApercu" hidden></p>
     <p class="note erreur" id="nouvErreur" hidden></p>
     <div class="actions">
       <button type="button" class="bouton discret" id="nouvNon">Annuler</button>

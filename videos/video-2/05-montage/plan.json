@@ -1,0 +1,3387 @@
+{
+  "slug": "video-2",
+  "format": "short-faceless",
+  "largeur": 1080,
+  "hauteur": 1920,
+  "fps": 30,
+  "dureeFrames": 3436,
+  "theme": {
+    "fond": "#0e1718",
+    "texte": "#f5f3f2",
+    "accent": "#c9315e",
+    "accentSecondaire": "#7a5c8c",
+    "alerte": "#D93F3F",
+    "policeTitres": "Inter",
+    "policeSousTitres": "Montserrat",
+    "policeChiffres": "Montserrat",
+    "rayon": 14,
+    "pastille": "#a8264c",
+    "ambiance": "douce",
+    "variationsAffiche": "\"wght\" 900",
+    "polices": [
+      {
+        "famille": "Anton",
+        "fichier": "Anton-Regular.ttf",
+        "graisse": 400,
+        "style": "normal"
+      },
+      {
+        "famille": "ArchivoBlack",
+        "fichier": "ArchivoBlack-Regular.ttf",
+        "graisse": 900,
+        "style": "normal"
+      },
+      {
+        "famille": "Fraunces",
+        "fichier": "Fraunces-Variable.ttf",
+        "graisse": "100 900",
+        "style": "normal"
+      },
+      {
+        "famille": "Inter",
+        "fichier": "Inter-Variable.ttf",
+        "graisse": "100 900",
+        "style": "normal"
+      },
+      {
+        "famille": "Montserrat",
+        "fichier": "Montserrat-Variable.ttf",
+        "graisse": "100 900",
+        "style": "normal"
+      },
+      {
+        "famille": "Nunito",
+        "fichier": "Nunito-Variable.ttf",
+        "graisse": "100 900",
+        "style": "normal"
+      },
+      {
+        "famille": "OpenSans",
+        "fichier": "OpenSans-Variable.ttf",
+        "graisse": "100 900",
+        "style": "normal"
+      },
+      {
+        "famille": "Poppins",
+        "fichier": "Poppins-Bold.ttf",
+        "graisse": 700,
+        "style": "normal"
+      },
+      {
+        "famille": "Roboto",
+        "fichier": "Roboto-Variable.ttf",
+        "graisse": "100 900",
+        "style": "normal"
+      }
+    ],
+    "sousTitres": {
+      "police": "Roboto",
+      "style": "mot-a-mot-couleur",
+      "motsParPage": 2,
+      "casse": "majuscules",
+      "taille": 86,
+      "positionBas": 38,
+      "contour": true,
+      "epaisseurContour": 0.7,
+      "couleurTexte": "#f5f3f2",
+      "couleurSurligne": "#CA5377",
+      "couleurContour": "#000000",
+      "animation": "pop",
+      "ponctuation": false
+    }
+  },
+  "voix": {
+    "src": "voix.wav",
+    "volume": 1
+  },
+  "piste": {
+    "src": "image.mp4",
+    "dureeMs": 113333
+  },
+  "coupes": [
+    {
+      "debutMs": 0,
+      "dureeMs": 113304
+    }
+  ],
+  "punchs": [
+    {
+      "debutMs": 3540,
+      "amplitude": 0.06
+    },
+    {
+      "debutMs": 34440,
+      "amplitude": 0.05
+    },
+    {
+      "debutMs": 58660,
+      "amplitude": 0.06
+    },
+    {
+      "debutMs": 99120,
+      "amplitude": 0.07
+    }
+  ],
+  "mots": [
+    {
+      "texte": "Plus",
+      "debutMs": 240,
+      "finMs": 420,
+      "confiance": 0.13962745666503906,
+      "incertain": false
+    },
+    {
+      "texte": "quelqu'un",
+      "debutMs": 480,
+      "finMs": 740,
+      "confiance": 0.010991533597310385,
+      "incertain": false
+    },
+    {
+      "texte": "te",
+      "debutMs": 780,
+      "finMs": 860,
+      "confiance": 0.0079345703125,
+      "incertain": false
+    },
+    {
+      "texte": "donne",
+      "debutMs": 900,
+      "finMs": 1020,
+      "confiance": 0.0038354873657226564,
+      "incertain": false
+    },
+    {
+      "texte": "de",
+      "debutMs": 1060,
+      "finMs": 1100,
+      "confiance": 0.0023345947265625,
+      "incertain": false
+    },
+    {
+      "texte": "l'attention,",
+      "debutMs": 1120,
+      "finMs": 1520,
+      "confiance": 0.0507051944732666,
+      "incertain": false
+    },
+    {
+      "texte": "plus",
+      "debutMs": 1640,
+      "finMs": 1740,
+      "confiance": 0.0046443939208984375,
+      "incertain": false
+    },
+    {
+      "texte": "tu",
+      "debutMs": 1800,
+      "finMs": 1880,
+      "confiance": 0.0014903545379638672,
+      "incertain": false
+    },
+    {
+      "texte": "peux",
+      "debutMs": 1900,
+      "finMs": 2000,
+      "confiance": 0.00102996826171875,
+      "incertain": false
+    },
+    {
+      "texte": "croire",
+      "debutMs": 2020,
+      "finMs": 2200,
+      "confiance": 0.006465911865234375,
+      "incertain": false
+    },
+    {
+      "texte": "qu'il",
+      "debutMs": 2220,
+      "finMs": 2280,
+      "confiance": 0.051915740966796874,
+      "incertain": false
+    },
+    {
+      "texte": "est",
+      "debutMs": 2300,
+      "finMs": 2360,
+      "confiance": 0.11280314127604167,
+      "incertain": false
+    },
+    {
+      "texte": "intéressé,",
+      "debutMs": 2380,
+      "finMs": 2820,
+      "confiance": 0.08826742172241211,
+      "incertain": false
+    },
+    {
+      "texte": "alors",
+      "debutMs": 2960,
+      "finMs": 3120,
+      "confiance": 0.0054949760437011715,
+      "incertain": false
+    },
+    {
+      "texte": "qu'en",
+      "debutMs": 3140,
+      "finMs": 3300,
+      "confiance": 0.007353591918945313,
+      "incertain": false
+    },
+    {
+      "texte": "fait,",
+      "debutMs": 3340,
+      "finMs": 3500,
+      "confiance": 0.15916213989257813,
+      "incertain": false
+    },
+    {
+      "texte": "ce",
+      "debutMs": 3540,
+      "finMs": 3640,
+      "confiance": 0.0040035247802734375,
+      "incertain": false
+    },
+    {
+      "texte": "n'est",
+      "debutMs": 3660,
+      "finMs": 3830,
+      "confiance": 0.001214599609375,
+      "incertain": false
+    },
+    {
+      "texte": "pas",
+      "debutMs": 3920,
+      "finMs": 4040,
+      "confiance": 0.0023708343505859375,
+      "incertain": false
+    },
+    {
+      "texte": "forcément",
+      "debutMs": 4080,
+      "finMs": 4440,
+      "confiance": 0.0011774433983696832,
+      "incertain": false
+    },
+    {
+      "texte": "le",
+      "debutMs": 4480,
+      "finMs": 4560,
+      "confiance": 0.002971649169921875,
+      "incertain": false
+    },
+    {
+      "texte": "cas.",
+      "debutMs": 4580,
+      "finMs": 4700,
+      "confiance": 0.1213836669921875,
+      "incertain": false
+    },
+    {
+      "texte": "Voici",
+      "debutMs": 5160,
+      "finMs": 5439,
+      "confiance": 0.002790069580078125,
+      "incertain": false
+    },
+    {
+      "texte": "3",
+      "debutMs": 5500,
+      "finMs": 5680,
+      "confiance": 0.04864654541015625,
+      "incertain": false,
+      "corrige": true
+    },
+    {
+      "texte": "signes",
+      "debutMs": 5740,
+      "finMs": 5920,
+      "confiance": 0.00624696413675944,
+      "incertain": false
+    },
+    {
+      "texte": "qui",
+      "debutMs": 5960,
+      "finMs": 6060,
+      "confiance": 0.0033543904622395835,
+      "incertain": false
+    },
+    {
+      "texte": "montrent",
+      "debutMs": 6100,
+      "finMs": 6240,
+      "confiance": 0.24338769912719727,
+      "incertain": false
+    },
+    {
+      "texte": "qu'une",
+      "debutMs": 6250,
+      "finMs": 6380,
+      "confiance": 0.006906827290852864,
+      "incertain": false
+    },
+    {
+      "texte": "personne",
+      "debutMs": 6420,
+      "finMs": 6620,
+      "confiance": 0.0007688999176025391,
+      "incertain": false
+    },
+    {
+      "texte": "est",
+      "debutMs": 6660,
+      "finMs": 6720,
+      "confiance": 0.019692738850911457,
+      "incertain": false
+    },
+    {
+      "texte": "réellement",
+      "debutMs": 6740,
+      "finMs": 7020,
+      "confiance": 0.007996845245361327,
+      "incertain": false
+    },
+    {
+      "texte": "intéressée",
+      "debutMs": 7220,
+      "finMs": 7620,
+      "confiance": 0.015074396133422851,
+      "incertain": false
+    },
+    {
+      "texte": "par",
+      "debutMs": 7640,
+      "finMs": 7739,
+      "confiance": 0.0037943522135416665,
+      "incertain": false
+    },
+    {
+      "texte": "toi.",
+      "debutMs": 7760,
+      "finMs": 7939,
+      "confiance": 0.10842561721801758,
+      "incertain": false
+    },
+    {
+      "texte": "Le",
+      "debutMs": 8480,
+      "finMs": 8559,
+      "confiance": 0.0052642822265625,
+      "incertain": false
+    },
+    {
+      "texte": "premier",
+      "debutMs": 8580,
+      "finMs": 8819,
+      "confiance": 0.006264959062848773,
+      "incertain": false
+    },
+    {
+      "texte": "signe,",
+      "debutMs": 8880,
+      "finMs": 9080,
+      "confiance": 0.13203938802083334,
+      "incertain": false
+    },
+    {
+      "texte": "c'est",
+      "debutMs": 9340,
+      "finMs": 9480,
+      "confiance": 0.005100536346435547,
+      "incertain": false
+    },
+    {
+      "texte": "l'investissement.",
+      "debutMs": 9700,
+      "finMs": 10720,
+      "confiance": 0.032331719118006086,
+      "incertain": false
+    },
+    {
+      "texte": "Quelqu'un",
+      "debutMs": 10730,
+      "finMs": 11000,
+      "confiance": 0.005808843506707085,
+      "incertain": false
+    },
+    {
+      "texte": "peut",
+      "debutMs": 11060,
+      "finMs": 11110,
+      "confiance": 0.0017722845077514648,
+      "incertain": false
+    },
+    {
+      "texte": "t'envoyer",
+      "debutMs": 11160,
+      "finMs": 11390,
+      "confiance": 0.4214811325073242,
+      "incertain": true
+    },
+    {
+      "texte": "des",
+      "debutMs": 11420,
+      "finMs": 11480,
+      "confiance": 0.002593994140625,
+      "incertain": false
+    },
+    {
+      "texte": "messages",
+      "debutMs": 11520,
+      "finMs": 11780,
+      "confiance": 0.0010297298431396484,
+      "incertain": false
+    },
+    {
+      "texte": "toute",
+      "debutMs": 11800,
+      "finMs": 11920,
+      "confiance": 0.13328857421875,
+      "incertain": false
+    },
+    {
+      "texte": "la",
+      "debutMs": 11940,
+      "finMs": 12000,
+      "confiance": 0.013641357421875,
+      "incertain": false
+    },
+    {
+      "texte": "journée,",
+      "debutMs": 12020,
+      "finMs": 12580,
+      "confiance": 0.01928126811981201,
+      "incertain": false
+    },
+    {
+      "texte": "réagir",
+      "debutMs": 12640,
+      "finMs": 12960,
+      "confiance": 0.005046765009562175,
+      "incertain": false
+    },
+    {
+      "texte": "à",
+      "debutMs": 13000,
+      "finMs": 13010,
+      "confiance": 0.01055908203125,
+      "incertain": false
+    },
+    {
+      "texte": "tes",
+      "debutMs": 13060,
+      "finMs": 13120,
+      "confiance": 0.046452840169270836,
+      "incertain": false
+    },
+    {
+      "texte": "stories",
+      "debutMs": 13160,
+      "finMs": 13670,
+      "confiance": 0.03749901907784598,
+      "incertain": false
+    },
+    {
+      "texte": "et",
+      "debutMs": 13680,
+      "finMs": 13730,
+      "confiance": 0.019561767578125,
+      "incertain": false
+    },
+    {
+      "texte": "te",
+      "debutMs": 13780,
+      "finMs": 13900,
+      "confiance": 0.08845138549804688,
+      "incertain": false
+    },
+    {
+      "texte": "faire",
+      "debutMs": 13940,
+      "finMs": 14110,
+      "confiance": 0.002600955963134766,
+      "incertain": false
+    },
+    {
+      "texte": "énormément",
+      "debutMs": 14160,
+      "finMs": 14440,
+      "confiance": 0.0015732288360595704,
+      "incertain": false
+    },
+    {
+      "texte": "de",
+      "debutMs": 14460,
+      "finMs": 14520,
+      "confiance": 0.0250244140625,
+      "incertain": false
+    },
+    {
+      "texte": "compliments,",
+      "debutMs": 14540,
+      "finMs": 15200,
+      "confiance": 0.10390639305114746,
+      "incertain": false
+    },
+    {
+      "texte": "sans",
+      "debutMs": 15280,
+      "finMs": 15460,
+      "confiance": 0.004900932312011719,
+      "incertain": false
+    },
+    {
+      "texte": "jamais",
+      "debutMs": 15480,
+      "finMs": 15900,
+      "confiance": 0.006945093472798665,
+      "incertain": false
+    },
+    {
+      "texte": "chercher",
+      "debutMs": 15960,
+      "finMs": 16430,
+      "confiance": 0.0029534995555877686,
+      "incertain": false
+    },
+    {
+      "texte": "à",
+      "debutMs": 16560,
+      "finMs": 16570,
+      "confiance": 0.041259765625,
+      "incertain": false
+    },
+    {
+      "texte": "faire",
+      "debutMs": 16580,
+      "finMs": 16810,
+      "confiance": 0.002113819122314453,
+      "incertain": false
+    },
+    {
+      "texte": "évoluer",
+      "debutMs": 16860,
+      "finMs": 17310,
+      "confiance": 0.006560359682355609,
+      "incertain": false
+    },
+    {
+      "texte": "votre",
+      "debutMs": 17340,
+      "finMs": 17600,
+      "confiance": 0.012810635566711425,
+      "incertain": false
+    },
+    {
+      "texte": "relation.",
+      "debutMs": 17620,
+      "finMs": 18220,
+      "confiance": 0.00849902629852295,
+      "incertain": false
+    },
+    {
+      "texte": "A",
+      "debutMs": 18260,
+      "finMs": 18270,
+      "confiance": 1.0703125,
+      "incertain": true
+    },
+    {
+      "texte": "l'inverse,",
+      "debutMs": 18300,
+      "finMs": 18900,
+      "confiance": 0.010485649108886719,
+      "incertain": false
+    },
+    {
+      "texte": "une",
+      "debutMs": 18940,
+      "finMs": 19060,
+      "confiance": 0.004015962282816569,
+      "incertain": false
+    },
+    {
+      "texte": "personne",
+      "debutMs": 19100,
+      "finMs": 19600,
+      "confiance": 0.0009111166000366211,
+      "incertain": false
+    },
+    {
+      "texte": "réellement",
+      "debutMs": 19640,
+      "finMs": 19790,
+      "confiance": 0.5455338478088378,
+      "incertain": true
+    },
+    {
+      "texte": "intéressée",
+      "debutMs": 19900,
+      "finMs": 20340,
+      "confiance": 0.045738959312438966,
+      "incertain": false
+    },
+    {
+      "texte": "va",
+      "debutMs": 20360,
+      "finMs": 20410,
+      "confiance": 0.108612060546875,
+      "incertain": false
+    },
+    {
+      "texte": "progressivement",
+      "debutMs": 20520,
+      "finMs": 21040,
+      "confiance": 0.36288363138834634,
+      "incertain": true
+    },
+    {
+      "texte": "consacrer",
+      "debutMs": 21140,
+      "finMs": 21800,
+      "confiance": 0.01201221677992079,
+      "incertain": false
+    },
+    {
+      "texte": "quelque",
+      "debutMs": 21840,
+      "finMs": 22040,
+      "confiance": 0.0019276653017316545,
+      "incertain": false
+    },
+    {
+      "texte": "chose",
+      "debutMs": 22060,
+      "finMs": 22240,
+      "confiance": 0.0002803325653076172,
+      "incertain": false
+    },
+    {
+      "texte": "qui",
+      "debutMs": 22280,
+      "finMs": 22310,
+      "confiance": 0.11396026611328125,
+      "incertain": false
+    },
+    {
+      "texte": "a",
+      "debutMs": 22340,
+      "finMs": 22420,
+      "confiance": 0.0986328125,
+      "incertain": false
+    },
+    {
+      "texte": "beaucoup",
+      "debutMs": 22440,
+      "finMs": 22660,
+      "confiance": 0.002709686756134033,
+      "incertain": false
+    },
+    {
+      "texte": "plus",
+      "debutMs": 22680,
+      "finMs": 22780,
+      "confiance": 0.0023872852325439453,
+      "incertain": false
+    },
+    {
+      "texte": "de",
+      "debutMs": 22790,
+      "finMs": 22860,
+      "confiance": 0.0007090568542480469,
+      "incertain": false
+    },
+    {
+      "texte": "valeur",
+      "debutMs": 22880,
+      "finMs": 23080,
+      "confiance": 0.00033660729726155597,
+      "incertain": false
+    },
+    {
+      "texte": "que",
+      "debutMs": 23120,
+      "finMs": 23200,
+      "confiance": 0.0033556620279947915,
+      "incertain": false
+    },
+    {
+      "texte": "quelques",
+      "debutMs": 23240,
+      "finMs": 23420,
+      "confiance": 0.0017362087965011597,
+      "incertain": false
+    },
+    {
+      "texte": "messages,",
+      "debutMs": 23440,
+      "finMs": 23780,
+      "confiance": 0.14850009812249076,
+      "incertain": false
+    },
+    {
+      "texte": "son",
+      "debutMs": 24280,
+      "finMs": 24360,
+      "confiance": 0.016632080078125,
+      "incertain": false
+    },
+    {
+      "texte": "temps",
+      "debutMs": 24440,
+      "finMs": 25020,
+      "confiance": 0.18906402587890625,
+      "incertain": false
+    },
+    {
+      "texte": "et",
+      "debutMs": 25060,
+      "finMs": 25120,
+      "confiance": 0.0073089599609375,
+      "incertain": false
+    },
+    {
+      "texte": "son",
+      "debutMs": 25180,
+      "finMs": 25259,
+      "confiance": 0.012456258138020834,
+      "incertain": false
+    },
+    {
+      "texte": "énergie",
+      "debutMs": 25340,
+      "finMs": 25600,
+      "confiance": 0.00894674233027867,
+      "incertain": false
+    },
+    {
+      "texte": "surtout.",
+      "debutMs": 25640,
+      "finMs": 25920,
+      "confiance": 0.027780234813690186,
+      "incertain": false
+    },
+    {
+      "texte": "Elle",
+      "debutMs": 26460,
+      "finMs": 26560,
+      "confiance": 0.010008811950683594,
+      "incertain": false
+    },
+    {
+      "texte": "va",
+      "debutMs": 26600,
+      "finMs": 26680,
+      "confiance": 0.0029754638671875,
+      "incertain": false
+    },
+    {
+      "texte": "chercher",
+      "debutMs": 26700,
+      "finMs": 26920,
+      "confiance": 0.002483680844306946,
+      "incertain": false
+    },
+    {
+      "texte": "à",
+      "debutMs": 26960,
+      "finMs": 27000,
+      "confiance": 0.03173828125,
+      "incertain": false
+    },
+    {
+      "texte": "te",
+      "debutMs": 27020,
+      "finMs": 27100,
+      "confiance": 0.002040863037109375,
+      "incertain": false
+    },
+    {
+      "texte": "voir,",
+      "debutMs": 27140,
+      "finMs": 27360,
+      "confiance": 0.03170061111450195,
+      "incertain": false
+    },
+    {
+      "texte": "organiser",
+      "debutMs": 27500,
+      "finMs": 27840,
+      "confiance": 0.008201784557766385,
+      "incertain": false
+    },
+    {
+      "texte": "des",
+      "debutMs": 27860,
+      "finMs": 27940,
+      "confiance": 0.023579915364583332,
+      "incertain": false
+    },
+    {
+      "texte": "rendez-vous",
+      "debutMs": 27980,
+      "finMs": 28620,
+      "confiance": 0.00376129150390625,
+      "incertain": false
+    },
+    {
+      "texte": "et",
+      "debutMs": 28660,
+      "finMs": 28740,
+      "confiance": 0.003849029541015625,
+      "incertain": false
+    },
+    {
+      "texte": "faire",
+      "debutMs": 28760,
+      "finMs": 28880,
+      "confiance": 0.0060406684875488285,
+      "incertain": false
+    },
+    {
+      "texte": "naturellement",
+      "debutMs": 28920,
+      "finMs": 29320,
+      "confiance": 0.2684274453383226,
+      "incertain": false
+    },
+    {
+      "texte": "une",
+      "debutMs": 29360,
+      "finMs": 29460,
+      "confiance": 0.0033913453420003257,
+      "incertain": false
+    },
+    {
+      "texte": "place",
+      "debutMs": 29480,
+      "finMs": 29620,
+      "confiance": 0.000792694091796875,
+      "incertain": false
+    },
+    {
+      "texte": "pour",
+      "debutMs": 29660,
+      "finMs": 29740,
+      "confiance": 0.03326749801635742,
+      "incertain": false
+    },
+    {
+      "texte": "toi",
+      "debutMs": 29760,
+      "finMs": 29840,
+      "confiance": 2.458984375,
+      "incertain": true
+    },
+    {
+      "texte": "dans",
+      "debutMs": 29860,
+      "finMs": 29920,
+      "confiance": 1.3759765625,
+      "incertain": true
+    },
+    {
+      "texte": "son",
+      "debutMs": 29940,
+      "finMs": 30050,
+      "confiance": 1.4378255208333333,
+      "incertain": true
+    },
+    {
+      "texte": "quotidien.",
+      "debutMs": 30080,
+      "finMs": 30460,
+      "confiance": 0.08077325820922851,
+      "incertain": false
+    },
+    {
+      "texte": "Parce",
+      "debutMs": 31060,
+      "finMs": 31220,
+      "confiance": 0.014330291748046875,
+      "incertain": false
+    },
+    {
+      "texte": "que",
+      "debutMs": 31260,
+      "finMs": 31460,
+      "confiance": 0.010813673337300619,
+      "incertain": false
+    },
+    {
+      "texte": "l'attention",
+      "debutMs": 31540,
+      "finMs": 31880,
+      "confiance": 0.02062599225477739,
+      "incertain": false
+    },
+    {
+      "texte": "est",
+      "debutMs": 31900,
+      "finMs": 31980,
+      "confiance": 0.10398356119791667,
+      "incertain": false
+    },
+    {
+      "texte": "facile",
+      "debutMs": 32000,
+      "finMs": 32200,
+      "confiance": 0.2749074300130208,
+      "incertain": false
+    },
+    {
+      "texte": "à",
+      "debutMs": 32220,
+      "finMs": 32259,
+      "confiance": 0.044921875,
+      "incertain": false
+    },
+    {
+      "texte": "donner,",
+      "debutMs": 32280,
+      "finMs": 32480,
+      "confiance": 0.20058202743530273,
+      "incertain": false
+    },
+    {
+      "texte": "en",
+      "debutMs": 32980,
+      "finMs": 33040,
+      "confiance": 0.045440673828125,
+      "incertain": false
+    },
+    {
+      "texte": "réalité,",
+      "debutMs": 33080,
+      "finMs": 33400,
+      "confiance": 0.0500330924987793,
+      "incertain": false
+    },
+    {
+      "texte": "lui,",
+      "debutMs": 33500,
+      "finMs": 33600,
+      "confiance": 0.17245197296142578,
+      "incertain": false
+    },
+    {
+      "texte": "l'investissement,",
+      "debutMs": 33660,
+      "finMs": 34240,
+      "confiance": 0.06272357351639692,
+      "incertain": false
+    },
+    {
+      "texte": "il",
+      "debutMs": 34440,
+      "finMs": 34480,
+      "confiance": 0.0263671875,
+      "incertain": false
+    },
+    {
+      "texte": "a",
+      "debutMs": 34540,
+      "finMs": 34600,
+      "confiance": 0.953125,
+      "incertain": true
+    },
+    {
+      "texte": "un",
+      "debutMs": 34620,
+      "finMs": 34700,
+      "confiance": 0.002353668212890625,
+      "incertain": false
+    },
+    {
+      "texte": "coût.",
+      "debutMs": 34740,
+      "finMs": 34980,
+      "confiance": 0.08195343017578124,
+      "incertain": false
+    },
+    {
+      "texte": "Le",
+      "debutMs": 35480,
+      "finMs": 35560,
+      "confiance": 0.0028944015502929688,
+      "incertain": false
+    },
+    {
+      "texte": "deuxième",
+      "debutMs": 35580,
+      "finMs": 35860,
+      "confiance": 0.0124281644821167,
+      "incertain": false
+    },
+    {
+      "texte": "signe,",
+      "debutMs": 35920,
+      "finMs": 36110,
+      "confiance": 0.04080237944920858,
+      "incertain": false
+    },
+    {
+      "texte": "c'est",
+      "debutMs": 36400,
+      "finMs": 36500,
+      "confiance": 0.0016908884048461915,
+      "incertain": false
+    },
+    {
+      "texte": "la",
+      "debutMs": 36560,
+      "finMs": 36720,
+      "confiance": 0.0057392120361328125,
+      "incertain": false
+    },
+    {
+      "texte": "curiosité",
+      "debutMs": 36760,
+      "finMs": 37280,
+      "confiance": 0.5384428236219618,
+      "incertain": true
+    },
+    {
+      "texte": "personnelle.",
+      "debutMs": 37400,
+      "finMs": 37880,
+      "confiance": 0.3861707051595052,
+      "incertain": true
+    },
+    {
+      "texte": "Quelqu'un",
+      "debutMs": 38220,
+      "finMs": 38480,
+      "confiance": 0.08460956149631077,
+      "incertain": false
+    },
+    {
+      "texte": "peut",
+      "debutMs": 38580,
+      "finMs": 38680,
+      "confiance": 0.020942509174346924,
+      "incertain": false
+    },
+    {
+      "texte": "aimer",
+      "debutMs": 38740,
+      "finMs": 38900,
+      "confiance": 0.1202789306640625,
+      "incertain": false
+    },
+    {
+      "texte": "discuter",
+      "debutMs": 38940,
+      "finMs": 39220,
+      "confiance": 0.0043190717697143555,
+      "incertain": false
+    },
+    {
+      "texte": "avec",
+      "debutMs": 39260,
+      "finMs": 39400,
+      "confiance": 0.0013201236724853516,
+      "incertain": false
+    },
+    {
+      "texte": "toi",
+      "debutMs": 39420,
+      "finMs": 39540,
+      "confiance": 0.005911509195963542,
+      "incertain": false
+    },
+    {
+      "texte": "simplement",
+      "debutMs": 39600,
+      "finMs": 39880,
+      "confiance": 0.004275751113891601,
+      "incertain": false
+    },
+    {
+      "texte": "parce",
+      "debutMs": 39940,
+      "finMs": 40060,
+      "confiance": 0.01597757339477539,
+      "incertain": false
+    },
+    {
+      "texte": "qu'il",
+      "debutMs": 40080,
+      "finMs": 40160,
+      "confiance": 0.16111283302307128,
+      "incertain": false
+    },
+    {
+      "texte": "apprécie",
+      "debutMs": 40200,
+      "finMs": 40540,
+      "confiance": 0.18419480323791504,
+      "incertain": false
+    },
+    {
+      "texte": "ton",
+      "debutMs": 40580,
+      "finMs": 40660,
+      "confiance": 0.4888509114583333,
+      "incertain": true
+    },
+    {
+      "texte": "attention,",
+      "debutMs": 40700,
+      "finMs": 41020,
+      "confiance": 0.10480679273605346,
+      "incertain": false
+    },
+    {
+      "texte": "mais",
+      "debutMs": 41620,
+      "finMs": 41840,
+      "confiance": 0.0024127960205078125,
+      "incertain": false
+    },
+    {
+      "texte": "une",
+      "debutMs": 41860,
+      "finMs": 41980,
+      "confiance": 0.0026676257451375327,
+      "incertain": false
+    },
+    {
+      "texte": "personne",
+      "debutMs": 42000,
+      "finMs": 42320,
+      "confiance": 0.09945535659790039,
+      "incertain": false
+    },
+    {
+      "texte": "qui",
+      "debutMs": 42340,
+      "finMs": 42420,
+      "confiance": 0.002537965774536133,
+      "incertain": false
+    },
+    {
+      "texte": "s'intéresse",
+      "debutMs": 42430,
+      "finMs": 42840,
+      "confiance": 0.002833756533536044,
+      "incertain": false
+    },
+    {
+      "texte": "vraiment",
+      "debutMs": 42860,
+      "finMs": 43060,
+      "confiance": 0.0022301524877548218,
+      "incertain": false
+    },
+    {
+      "texte": "à",
+      "debutMs": 43080,
+      "finMs": 43120,
+      "confiance": 2.984375,
+      "incertain": true
+    },
+    {
+      "texte": "toi",
+      "debutMs": 43160,
+      "finMs": 43260,
+      "confiance": 0.022705078125,
+      "incertain": false
+    },
+    {
+      "texte": "va",
+      "debutMs": 43340,
+      "finMs": 43400,
+      "confiance": 0.2509765625,
+      "incertain": false
+    },
+    {
+      "texte": "chercher",
+      "debutMs": 43480,
+      "finMs": 43900,
+      "confiance": 0.2933647483587265,
+      "incertain": false
+    },
+    {
+      "texte": "à",
+      "debutMs": 43960,
+      "finMs": 44020,
+      "confiance": 0.041015625,
+      "incertain": false
+    },
+    {
+      "texte": "comprendre",
+      "debutMs": 44040,
+      "finMs": 44580,
+      "confiance": 0.041801166534423825,
+      "incertain": false
+    },
+    {
+      "texte": "qui",
+      "debutMs": 44640,
+      "finMs": 44760,
+      "confiance": 0.009159326553344727,
+      "incertain": false
+    },
+    {
+      "texte": "tu",
+      "debutMs": 44840,
+      "finMs": 44940,
+      "confiance": 0.0066204071044921875,
+      "incertain": false
+    },
+    {
+      "texte": "es",
+      "debutMs": 44960,
+      "finMs": 45140,
+      "confiance": 0.00595855712890625,
+      "incertain": false
+    },
+    {
+      "texte": "profondément.",
+      "debutMs": 45180,
+      "finMs": 45640,
+      "confiance": 0.016839064084566556,
+      "incertain": false
+    },
+    {
+      "texte": "Elle",
+      "debutMs": 45960,
+      "finMs": 46060,
+      "confiance": 0.010180950164794922,
+      "incertain": false
+    },
+    {
+      "texte": "va",
+      "debutMs": 46080,
+      "finMs": 46140,
+      "confiance": 0.041748046875,
+      "incertain": false
+    },
+    {
+      "texte": "retenir",
+      "debutMs": 46180,
+      "finMs": 46400,
+      "confiance": 0.6278250558035714,
+      "incertain": true
+    },
+    {
+      "texte": "des",
+      "debutMs": 46440,
+      "finMs": 46500,
+      "confiance": 0.06693522135416667,
+      "incertain": false
+    },
+    {
+      "texte": "détails",
+      "debutMs": 46540,
+      "finMs": 47200,
+      "confiance": 0.006425108228410993,
+      "incertain": false
+    },
+    {
+      "texte": "pour",
+      "debutMs": 47240,
+      "finMs": 47320,
+      "confiance": 0.06789398193359375,
+      "incertain": false
+    },
+    {
+      "texte": "revenir",
+      "debutMs": 47340,
+      "finMs": 47640,
+      "confiance": 0.0025229454040527344,
+      "incertain": false
+    },
+    {
+      "texte": "sur",
+      "debutMs": 47700,
+      "finMs": 47780,
+      "confiance": 0.5120442708333334,
+      "incertain": true
+    },
+    {
+      "texte": "ce",
+      "debutMs": 47820,
+      "finMs": 47840,
+      "confiance": 0.0015316009521484375,
+      "incertain": false
+    },
+    {
+      "texte": "que",
+      "debutMs": 47880,
+      "finMs": 47920,
+      "confiance": 0.0039689938227335615,
+      "incertain": false
+    },
+    {
+      "texte": "tu",
+      "debutMs": 47960,
+      "finMs": 48040,
+      "confiance": 0.0022554397583007812,
+      "incertain": false
+    },
+    {
+      "texte": "lui",
+      "debutMs": 48100,
+      "finMs": 48130,
+      "confiance": 2.7267049153645835,
+      "incertain": true
+    },
+    {
+      "texte": "as",
+      "debutMs": 48140,
+      "finMs": 48190,
+      "confiance": 0.2646484375,
+      "incertain": false
+    },
+    {
+      "texte": "raconté",
+      "debutMs": 48220,
+      "finMs": 48660,
+      "confiance": 0.008566907473972865,
+      "incertain": false
+    },
+    {
+      "texte": "et",
+      "debutMs": 48720,
+      "finMs": 48769,
+      "confiance": 0.028961181640625,
+      "incertain": false
+    },
+    {
+      "texte": "s'intéresser",
+      "debutMs": 48800,
+      "finMs": 49500,
+      "confiance": 0.1127836803595225,
+      "incertain": false
+    },
+    {
+      "texte": "à",
+      "debutMs": 49560,
+      "finMs": 49600,
+      "confiance": 0.01025390625,
+      "incertain": false
+    },
+    {
+      "texte": "tes",
+      "debutMs": 49700,
+      "finMs": 49840,
+      "confiance": 0.022084554036458332,
+      "incertain": false
+    },
+    {
+      "texte": "projets,",
+      "debutMs": 49880,
+      "finMs": 50380,
+      "confiance": 0.03777337074279785,
+      "incertain": false
+    },
+    {
+      "texte": "tes",
+      "debutMs": 50440,
+      "finMs": 50520,
+      "confiance": 0.2944590250651042,
+      "incertain": false
+    },
+    {
+      "texte": "valeurs",
+      "debutMs": 50560,
+      "finMs": 51000,
+      "confiance": 0.0009593963623046875,
+      "incertain": false
+    },
+    {
+      "texte": "et",
+      "debutMs": 51020,
+      "finMs": 51089,
+      "confiance": 0.03143310546875,
+      "incertain": false
+    },
+    {
+      "texte": "ta",
+      "debutMs": 51120,
+      "finMs": 51200,
+      "confiance": 0.225341796875,
+      "incertain": false
+    },
+    {
+      "texte": "façon",
+      "debutMs": 51260,
+      "finMs": 51420,
+      "confiance": 0.0006479263305664062,
+      "incertain": false
+    },
+    {
+      "texte": "de",
+      "debutMs": 51440,
+      "finMs": 51550,
+      "confiance": 0.002407073974609375,
+      "incertain": false
+    },
+    {
+      "texte": "penser.",
+      "debutMs": 51551,
+      "finMs": 52560,
+      "confiance": 0.016831329890659878,
+      "incertain": false
+    },
+    {
+      "texte": "Le",
+      "debutMs": 52600,
+      "finMs": 52720,
+      "confiance": 0.00748443603515625,
+      "incertain": false
+    },
+    {
+      "texte": "troisième",
+      "debutMs": 52740,
+      "finMs": 53040,
+      "confiance": 0.008617361386617025,
+      "incertain": false
+    },
+    {
+      "texte": "signe,",
+      "debutMs": 53120,
+      "finMs": 53280,
+      "confiance": 0.40011850992838544,
+      "incertain": true
+    },
+    {
+      "texte": "lui,",
+      "debutMs": 53320,
+      "finMs": 53480,
+      "confiance": 0.8878936767578125,
+      "incertain": true
+    },
+    {
+      "texte": "est",
+      "debutMs": 53620,
+      "finMs": 53710,
+      "confiance": 0.17714436848958334,
+      "incertain": false
+    },
+    {
+      "texte": "probablement",
+      "debutMs": 53740,
+      "finMs": 54180,
+      "confiance": 0.1338480313618978,
+      "incertain": false
+    },
+    {
+      "texte": "le",
+      "debutMs": 54260,
+      "finMs": 54360,
+      "confiance": 0.13330078125,
+      "incertain": false
+    },
+    {
+      "texte": "plus",
+      "debutMs": 54400,
+      "finMs": 54540,
+      "confiance": 0.008514404296875,
+      "incertain": false
+    },
+    {
+      "texte": "révélateur,",
+      "debutMs": 54640,
+      "finMs": 55100,
+      "confiance": 0.02651269869370894,
+      "incertain": false
+    },
+    {
+      "texte": "le",
+      "debutMs": 55260,
+      "finMs": 55360,
+      "confiance": 0.00466156005859375,
+      "incertain": false
+    },
+    {
+      "texte": "plus",
+      "debutMs": 55400,
+      "finMs": 55540,
+      "confiance": 0.0005891323089599609,
+      "incertain": false
+    },
+    {
+      "texte": "important",
+      "debutMs": 55580,
+      "finMs": 55880,
+      "confiance": 0.0006983810000949436,
+      "incertain": false
+    },
+    {
+      "texte": "de",
+      "debutMs": 55920,
+      "finMs": 55980,
+      "confiance": 0.0865325927734375,
+      "incertain": false
+    },
+    {
+      "texte": "tous.",
+      "debutMs": 56020,
+      "finMs": 56820,
+      "confiance": 0.1640345573425293,
+      "incertain": false
+    },
+    {
+      "texte": "Et",
+      "debutMs": 56920,
+      "finMs": 57140,
+      "confiance": 0.05834197998046875,
+      "incertain": false
+    },
+    {
+      "texte": "il",
+      "debutMs": 57160,
+      "finMs": 57190,
+      "confiance": 0.004422187805175781,
+      "incertain": false
+    },
+    {
+      "texte": "n'est",
+      "debutMs": 57200,
+      "finMs": 57310,
+      "confiance": 0.0163543701171875,
+      "incertain": false
+    },
+    {
+      "texte": "pas",
+      "debutMs": 57320,
+      "finMs": 57400,
+      "confiance": 0.0013440450032552083,
+      "incertain": false
+    },
+    {
+      "texte": "forcément",
+      "debutMs": 57420,
+      "finMs": 57730,
+      "confiance": 0.001381728384229872,
+      "incertain": false
+    },
+    {
+      "texte": "évident",
+      "debutMs": 57760,
+      "finMs": 58010,
+      "confiance": 0.09817968096051898,
+      "incertain": false
+    },
+    {
+      "texte": "dit",
+      "debutMs": 58040,
+      "finMs": 58140,
+      "confiance": 0.4098307291666667,
+      "incertain": true
+    },
+    {
+      "texte": "comme",
+      "debutMs": 58160,
+      "finMs": 58320,
+      "confiance": 0.0035318851470947264,
+      "incertain": false
+    },
+    {
+      "texte": "ça,",
+      "debutMs": 58360,
+      "finMs": 58440,
+      "confiance": 0.11896896362304688,
+      "incertain": false
+    },
+    {
+      "texte": "mais",
+      "debutMs": 58520,
+      "finMs": 58620,
+      "confiance": 0.003157377243041992,
+      "incertain": false
+    },
+    {
+      "texte": "c'est",
+      "debutMs": 58660,
+      "finMs": 58750,
+      "confiance": 0.003233528137207031,
+      "incertain": false
+    },
+    {
+      "texte": "la",
+      "debutMs": 58780,
+      "finMs": 58920,
+      "confiance": 0.0030117034912109375,
+      "incertain": false
+    },
+    {
+      "texte": "progression.",
+      "debutMs": 58960,
+      "finMs": 59980,
+      "confiance": 0.07367197672526042,
+      "incertain": false
+    },
+    {
+      "texte": "La",
+      "debutMs": 60020,
+      "finMs": 60120,
+      "confiance": 0.02994537353515625,
+      "incertain": false
+    },
+    {
+      "texte": "progression,",
+      "debutMs": 60140,
+      "finMs": 60530,
+      "confiance": 0.09631266196568807,
+      "incertain": false
+    },
+    {
+      "texte": "qu'est-ce",
+      "debutMs": 60589,
+      "finMs": 60740,
+      "confiance": 0.03178991211785211,
+      "incertain": false
+    },
+    {
+      "texte": "que",
+      "debutMs": 60760,
+      "finMs": 60820,
+      "confiance": 0.0020766258239746094,
+      "incertain": false
+    },
+    {
+      "texte": "c'est",
+      "debutMs": 60900,
+      "finMs": 61140,
+      "confiance": 0.0007352352142333985,
+      "incertain": false
+    },
+    {
+      "texte": "?",
+      "debutMs": 61150,
+      "finMs": 61151,
+      "confiance": 0.259765625,
+      "incertain": false
+    },
+    {
+      "texte": "En",
+      "debutMs": 61151,
+      "finMs": 61240,
+      "confiance": 0.029144287109375,
+      "incertain": false
+    },
+    {
+      "texte": "fait,",
+      "debutMs": 61260,
+      "finMs": 61780,
+      "confiance": 0.03216056823730469,
+      "incertain": false
+    },
+    {
+      "texte": "une",
+      "debutMs": 61820,
+      "finMs": 61900,
+      "confiance": 0.004664103190104167,
+      "incertain": false
+    },
+    {
+      "texte": "personne",
+      "debutMs": 61910,
+      "finMs": 62200,
+      "confiance": 0.00065593421459198,
+      "incertain": false
+    },
+    {
+      "texte": "peut",
+      "debutMs": 62260,
+      "finMs": 62340,
+      "confiance": 0.009510040283203125,
+      "incertain": false
+    },
+    {
+      "texte": "être",
+      "debutMs": 62360,
+      "finMs": 62840,
+      "confiance": 0.00220373272895813,
+      "incertain": false
+    },
+    {
+      "texte": "très",
+      "debutMs": 62850,
+      "finMs": 63080,
+      "confiance": 0.002765655517578125,
+      "incertain": false
+    },
+    {
+      "texte": "intéressée",
+      "debutMs": 63100,
+      "finMs": 63480,
+      "confiance": 0.009749507904052735,
+      "incertain": false
+    },
+    {
+      "texte": "au",
+      "debutMs": 63500,
+      "finMs": 63560,
+      "confiance": 0.00886988639831543,
+      "incertain": false
+    },
+    {
+      "texte": "début",
+      "debutMs": 63580,
+      "finMs": 64099,
+      "confiance": 0.0002649545669555664,
+      "incertain": false
+    },
+    {
+      "texte": "sans",
+      "debutMs": 64120,
+      "finMs": 64300,
+      "confiance": 0.22320175170898438,
+      "incertain": false
+    },
+    {
+      "texte": "jamais",
+      "debutMs": 64340,
+      "finMs": 64590,
+      "confiance": 0.01776840289433797,
+      "incertain": false
+    },
+    {
+      "texte": "vouloir",
+      "debutMs": 64620,
+      "finMs": 64860,
+      "confiance": 0.239837646484375,
+      "incertain": false
+    },
+    {
+      "texte": "aller",
+      "debutMs": 64900,
+      "finMs": 65040,
+      "confiance": 0.0452178955078125,
+      "incertain": false
+    },
+    {
+      "texte": "plus",
+      "debutMs": 65080,
+      "finMs": 65140,
+      "confiance": 0.0024526119232177734,
+      "incertain": false
+    },
+    {
+      "texte": "loin.",
+      "debutMs": 65180,
+      "finMs": 65700,
+      "confiance": 0.05455093383789063,
+      "incertain": false
+    },
+    {
+      "texte": "Ce",
+      "debutMs": 65760,
+      "finMs": 65820,
+      "confiance": 0.007961273193359375,
+      "incertain": false
+    },
+    {
+      "texte": "qui",
+      "debutMs": 65880,
+      "finMs": 66000,
+      "confiance": 0.003664811452229818,
+      "incertain": false
+    },
+    {
+      "texte": "compte,",
+      "debutMs": 66040,
+      "finMs": 66320,
+      "confiance": 0.04628481183733259,
+      "incertain": false
+    },
+    {
+      "texte": "c'est",
+      "debutMs": 66380,
+      "finMs": 66470,
+      "confiance": 0.004685401916503906,
+      "incertain": false
+    },
+    {
+      "texte": "donc",
+      "debutMs": 66520,
+      "finMs": 66700,
+      "confiance": 0.0060710906982421875,
+      "incertain": false
+    },
+    {
+      "texte": "ce",
+      "debutMs": 66900,
+      "finMs": 66940,
+      "confiance": 0.005414485931396484,
+      "incertain": false
+    },
+    {
+      "texte": "qui",
+      "debutMs": 66980,
+      "finMs": 67080,
+      "confiance": 0.0016160011291503906,
+      "incertain": false
+    },
+    {
+      "texte": "se",
+      "debutMs": 67090,
+      "finMs": 67240,
+      "confiance": 0.0018720626831054688,
+      "incertain": false
+    },
+    {
+      "texte": "passe",
+      "debutMs": 67280,
+      "finMs": 67500,
+      "confiance": 0.000453948974609375,
+      "incertain": false
+    },
+    {
+      "texte": "avec",
+      "debutMs": 67580,
+      "finMs": 67740,
+      "confiance": 0.0007026791572570801,
+      "incertain": false
+    },
+    {
+      "texte": "le",
+      "debutMs": 67780,
+      "finMs": 67840,
+      "confiance": 0.0018582344055175781,
+      "incertain": false
+    },
+    {
+      "texte": "temps.",
+      "debutMs": 67900,
+      "finMs": 68520,
+      "confiance": 0.044370174407958984,
+      "incertain": false
+    },
+    {
+      "texte": "Est-ce",
+      "debutMs": 68540,
+      "finMs": 68680,
+      "confiance": 0.01849206288655599,
+      "incertain": false
+    },
+    {
+      "texte": "que",
+      "debutMs": 68700,
+      "finMs": 68780,
+      "confiance": 0.0010101000467936199,
+      "incertain": false
+    },
+    {
+      "texte": "les",
+      "debutMs": 68800,
+      "finMs": 68900,
+      "confiance": 0.004122416178385417,
+      "incertain": false
+    },
+    {
+      "texte": "rendez-vous",
+      "debutMs": 68940,
+      "finMs": 69260,
+      "confiance": 0.004323742606423118,
+      "incertain": false
+    },
+    {
+      "texte": "deviennent",
+      "debutMs": 69320,
+      "finMs": 69570,
+      "confiance": 0.004222965240478516,
+      "incertain": false
+    },
+    {
+      "texte": "plus",
+      "debutMs": 69580,
+      "finMs": 69680,
+      "confiance": 0.002819538116455078,
+      "incertain": false
+    },
+    {
+      "texte": "réguliers",
+      "debutMs": 69720,
+      "finMs": 70030,
+      "confiance": 0.02376450432671441,
+      "incertain": false
+    },
+    {
+      "texte": "?",
+      "debutMs": 70440,
+      "finMs": 70441,
+      "confiance": 0.0206298828125,
+      "incertain": false
+    },
+    {
+      "texte": "Est-ce",
+      "debutMs": 70460,
+      "finMs": 70600,
+      "confiance": 0.029920260111490887,
+      "incertain": false
+    },
+    {
+      "texte": "que",
+      "debutMs": 70610,
+      "finMs": 70660,
+      "confiance": 0.0007519721984863281,
+      "incertain": false
+    },
+    {
+      "texte": "la",
+      "debutMs": 70700,
+      "finMs": 70740,
+      "confiance": 0.00415802001953125,
+      "incertain": false
+    },
+    {
+      "texte": "relation",
+      "debutMs": 70800,
+      "finMs": 71170,
+      "confiance": 0.008791178464889526,
+      "incertain": false
+    },
+    {
+      "texte": "devient",
+      "debutMs": 71240,
+      "finMs": 71540,
+      "confiance": 0.016713959830147878,
+      "incertain": false
+    },
+    {
+      "texte": "plus",
+      "debutMs": 71560,
+      "finMs": 71660,
+      "confiance": 0.0062198638916015625,
+      "incertain": false
+    },
+    {
+      "texte": "personnelle",
+      "debutMs": 71700,
+      "finMs": 72070,
+      "confiance": 0.11140719327059659,
+      "incertain": false
+    },
+    {
+      "texte": "?",
+      "debutMs": 72120,
+      "finMs": 72121,
+      "confiance": 0.01507568359375,
+      "incertain": false
+    },
+    {
+      "texte": "Est-ce",
+      "debutMs": 72540,
+      "finMs": 72680,
+      "confiance": 0.016576131184895832,
+      "incertain": false
+    },
+    {
+      "texte": "que",
+      "debutMs": 72700,
+      "finMs": 72780,
+      "confiance": 0.0006212393442789713,
+      "incertain": false
+    },
+    {
+      "texte": "la",
+      "debutMs": 72800,
+      "finMs": 72900,
+      "confiance": 0.0012187957763671875,
+      "incertain": false
+    },
+    {
+      "texte": "personne",
+      "debutMs": 72920,
+      "finMs": 73160,
+      "confiance": 0.0012192726135253906,
+      "incertain": false
+    },
+    {
+      "texte": "devient",
+      "debutMs": 73200,
+      "finMs": 73390,
+      "confiance": 0.01492910725729806,
+      "incertain": false
+    },
+    {
+      "texte": "progressivement",
+      "debutMs": 73440,
+      "finMs": 74000,
+      "confiance": 0.4088958422342936,
+      "incertain": true
+    },
+    {
+      "texte": "plus",
+      "debutMs": 74060,
+      "finMs": 74180,
+      "confiance": 0.0017752647399902344,
+      "incertain": false
+    },
+    {
+      "texte": "claire",
+      "debutMs": 74220,
+      "finMs": 74400,
+      "confiance": 1.5706793467203777,
+      "incertain": true
+    },
+    {
+      "texte": "sur",
+      "debutMs": 74440,
+      "finMs": 74560,
+      "confiance": 0.004847208658854167,
+      "incertain": false
+    },
+    {
+      "texte": "ce",
+      "debutMs": 74580,
+      "finMs": 74620,
+      "confiance": 0.0049343109130859375,
+      "incertain": false
+    },
+    {
+      "texte": "qu'elle",
+      "debutMs": 74640,
+      "finMs": 74760,
+      "confiance": 0.02063805716378348,
+      "incertain": false
+    },
+    {
+      "texte": "recherche",
+      "debutMs": 74780,
+      "finMs": 75140,
+      "confiance": 0.001188834508260091,
+      "incertain": false
+    },
+    {
+      "texte": "?",
+      "debutMs": 75560,
+      "finMs": 75561,
+      "confiance": 1.421875,
+      "incertain": true
+    },
+    {
+      "texte": "Parce",
+      "debutMs": 75600,
+      "finMs": 75780,
+      "confiance": 0.009782218933105468,
+      "incertain": false
+    },
+    {
+      "texte": "qu'un",
+      "debutMs": 75800,
+      "finMs": 75920,
+      "confiance": 0.014303636550903321,
+      "incertain": false
+    },
+    {
+      "texte": "intérêt",
+      "debutMs": 75960,
+      "finMs": 76380,
+      "confiance": 0.0010345322745186941,
+      "incertain": false
+    },
+    {
+      "texte": "réel",
+      "debutMs": 76440,
+      "finMs": 76640,
+      "confiance": 0.004505157470703125,
+      "incertain": false
+    },
+    {
+      "texte": "n'a",
+      "debutMs": 76680,
+      "finMs": 76780,
+      "confiance": 0.00417327880859375,
+      "incertain": false
+    },
+    {
+      "texte": "pas",
+      "debutMs": 76820,
+      "finMs": 76900,
+      "confiance": 0.0010935465494791667,
+      "incertain": false
+    },
+    {
+      "texte": "besoin",
+      "debutMs": 76940,
+      "finMs": 77100,
+      "confiance": 0.0003520846366882324,
+      "incertain": false
+    },
+    {
+      "texte": "d'être",
+      "debutMs": 77140,
+      "finMs": 77300,
+      "confiance": 0.0013154347737630208,
+      "incertain": false
+    },
+    {
+      "texte": "spectaculaire.",
+      "debutMs": 77400,
+      "finMs": 77980,
+      "confiance": 0.38423912865774973,
+      "incertain": true
+    },
+    {
+      "texte": "Il",
+      "debutMs": 78440,
+      "finMs": 78480,
+      "confiance": 0.014103889465332031,
+      "incertain": false
+    },
+    {
+      "texte": "a",
+      "debutMs": 78520,
+      "finMs": 78560,
+      "confiance": 0.0022430419921875,
+      "incertain": false
+    },
+    {
+      "texte": "besoin",
+      "debutMs": 78640,
+      "finMs": 79240,
+      "confiance": 0.00048146645228068036,
+      "incertain": false
+    },
+    {
+      "texte": "d'évoluer.",
+      "debutMs": 79280,
+      "finMs": 79780,
+      "confiance": 0.05019831657409668,
+      "incertain": false
+    },
+    {
+      "texte": "Alors,",
+      "debutMs": 80160,
+      "finMs": 80420,
+      "confiance": 0.11376603444417317,
+      "incertain": false
+    },
+    {
+      "texte": "retiens",
+      "debutMs": 80540,
+      "finMs": 80800,
+      "confiance": 0.811234610421317,
+      "incertain": true
+    },
+    {
+      "texte": "simplement",
+      "debutMs": 80860,
+      "finMs": 81170,
+      "confiance": 0.054071235656738284,
+      "incertain": false
+    },
+    {
+      "texte": "ça,",
+      "debutMs": 81260,
+      "finMs": 81400,
+      "confiance": 0.3862508138020833,
+      "incertain": true
+    },
+    {
+      "texte": "ne",
+      "debutMs": 81520,
+      "finMs": 81580,
+      "confiance": 0.057952880859375,
+      "incertain": false
+    },
+    {
+      "texte": "juge",
+      "debutMs": 81640,
+      "finMs": 81920,
+      "confiance": 0.0899200439453125,
+      "incertain": false
+    },
+    {
+      "texte": "jamais",
+      "debutMs": 82060,
+      "finMs": 82440,
+      "confiance": 0.008079846700032553,
+      "incertain": false
+    },
+    {
+      "texte": "l'intérêt",
+      "debutMs": 82500,
+      "finMs": 82860,
+      "confiance": 0.007028288311428494,
+      "incertain": false
+    },
+    {
+      "texte": "de",
+      "debutMs": 82880,
+      "finMs": 82960,
+      "confiance": 0.0030670166015625,
+      "incertain": false
+    },
+    {
+      "texte": "quelqu'un",
+      "debutMs": 83000,
+      "finMs": 83300,
+      "confiance": 0.001109162966410319,
+      "incertain": false
+    },
+    {
+      "texte": "sur",
+      "debutMs": 83320,
+      "finMs": 83460,
+      "confiance": 0.0035273234049479165,
+      "incertain": false
+    },
+    {
+      "texte": "un",
+      "debutMs": 83480,
+      "finMs": 83540,
+      "confiance": 0.017145156860351562,
+      "incertain": false
+    },
+    {
+      "texte": "comportement",
+      "debutMs": 83600,
+      "finMs": 84020,
+      "confiance": 0.1596726973851522,
+      "incertain": false
+    },
+    {
+      "texte": "isolé.",
+      "debutMs": 84040,
+      "finMs": 84280,
+      "confiance": 0.17484553654988608,
+      "incertain": false
+    },
+    {
+      "texte": "Regarde",
+      "debutMs": 84760,
+      "finMs": 85020,
+      "confiance": 0.005299568176269531,
+      "incertain": false
+    },
+    {
+      "texte": "la",
+      "debutMs": 85060,
+      "finMs": 85120,
+      "confiance": 0.003924369812011719,
+      "incertain": false
+    },
+    {
+      "texte": "direction",
+      "debutMs": 85160,
+      "finMs": 85620,
+      "confiance": 0.0007305807537502713,
+      "incertain": false
+    },
+    {
+      "texte": "que",
+      "debutMs": 85760,
+      "finMs": 85900,
+      "confiance": 0.007993698120117188,
+      "incertain": false
+    },
+    {
+      "texte": "prend",
+      "debutMs": 85960,
+      "finMs": 86320,
+      "confiance": 0.004323577880859375,
+      "incertain": false
+    },
+    {
+      "texte": "la",
+      "debutMs": 86440,
+      "finMs": 86540,
+      "confiance": 0.003814697265625,
+      "incertain": false
+    },
+    {
+      "texte": "relation.",
+      "debutMs": 86640,
+      "finMs": 87120,
+      "confiance": 0.06373400158352321,
+      "incertain": false
+    },
+    {
+      "texte": "C'est",
+      "debutMs": 87220,
+      "finMs": 87380,
+      "confiance": 0.017203712463378908,
+      "incertain": false
+    },
+    {
+      "texte": "hyper",
+      "debutMs": 87400,
+      "finMs": 87660,
+      "confiance": 1.308984375,
+      "incertain": true
+    },
+    {
+      "texte": "important.",
+      "debutMs": 87700,
+      "finMs": 88060,
+      "confiance": 0.017280101776123047,
+      "incertain": false
+    },
+    {
+      "texte": "Par",
+      "debutMs": 88100,
+      "finMs": 88200,
+      "confiance": 0.011118570963541666,
+      "incertain": false
+    },
+    {
+      "texte": "exemple,",
+      "debutMs": 88240,
+      "finMs": 88520,
+      "confiance": 0.02783733606338501,
+      "incertain": false
+    },
+    {
+      "texte": "un",
+      "debutMs": 88620,
+      "finMs": 88680,
+      "confiance": 0.006946563720703125,
+      "incertain": false
+    },
+    {
+      "texte": "message,",
+      "debutMs": 88720,
+      "finMs": 89040,
+      "confiance": 0.6998861134052277,
+      "incertain": true
+    },
+    {
+      "texte": "un",
+      "debutMs": 89160,
+      "finMs": 89260,
+      "confiance": 0.5279541015625,
+      "incertain": true
+    },
+    {
+      "texte": "like",
+      "debutMs": 89280,
+      "finMs": 89500,
+      "confiance": 0.029603958129882812,
+      "incertain": false
+    },
+    {
+      "texte": "ou",
+      "debutMs": 89580,
+      "finMs": 89620,
+      "confiance": 0.006771087646484375,
+      "incertain": false
+    },
+    {
+      "texte": "un",
+      "debutMs": 89660,
+      "finMs": 89720,
+      "confiance": 1.0714492797851562,
+      "incertain": true
+    },
+    {
+      "texte": "rendez-vous",
+      "debutMs": 89740,
+      "finMs": 90100,
+      "confiance": 0.009015365080399946,
+      "incertain": false
+    },
+    {
+      "texte": "ne",
+      "debutMs": 90480,
+      "finMs": 90540,
+      "confiance": 0.008523941040039062,
+      "incertain": false
+    },
+    {
+      "texte": "veulent",
+      "debutMs": 90580,
+      "finMs": 90740,
+      "confiance": 0.06318157059805733,
+      "incertain": false
+    },
+    {
+      "texte": "pas",
+      "debutMs": 90780,
+      "finMs": 90860,
+      "confiance": 0.0017293294270833333,
+      "incertain": false
+    },
+    {
+      "texte": "dire",
+      "debutMs": 90900,
+      "finMs": 91020,
+      "confiance": 0.0006681680679321289,
+      "incertain": false
+    },
+    {
+      "texte": "grand-chose",
+      "debutMs": 91060,
+      "finMs": 91520,
+      "confiance": 0.07260903445157138,
+      "incertain": false
+    },
+    {
+      "texte": "à",
+      "debutMs": 91580,
+      "finMs": 91620,
+      "confiance": 0.08642578125,
+      "incertain": false
+    },
+    {
+      "texte": "eux",
+      "debutMs": 91660,
+      "finMs": 91740,
+      "confiance": 2.5325520833333335,
+      "incertain": true
+    },
+    {
+      "texte": "tous",
+      "debutMs": 91780,
+      "finMs": 91900,
+      "confiance": 0.495635986328125,
+      "incertain": true
+    },
+    {
+      "texte": "seuls",
+      "debutMs": 91920,
+      "finMs": 92040,
+      "confiance": 0.805224609375,
+      "incertain": true
+    },
+    {
+      "texte": "isolés.",
+      "debutMs": 92060,
+      "finMs": 92660,
+      "confiance": 0.3947835649762835,
+      "incertain": true
+    },
+    {
+      "texte": "Mais",
+      "debutMs": 92700,
+      "finMs": 92840,
+      "confiance": 0.0038518905639648438,
+      "incertain": false
+    },
+    {
+      "texte": "si,",
+      "debutMs": 92920,
+      "finMs": 93080,
+      "confiance": 0.6628621419270834,
+      "incertain": true
+    },
+    {
+      "texte": "semaine",
+      "debutMs": 93220,
+      "finMs": 93480,
+      "confiance": 0.0474853515625,
+      "incertain": false
+    },
+    {
+      "texte": "après",
+      "debutMs": 93520,
+      "finMs": 93740,
+      "confiance": 0.05260543823242188,
+      "incertain": false
+    },
+    {
+      "texte": "semaine,",
+      "debutMs": 93780,
+      "finMs": 94080,
+      "confiance": 0.038451433181762695,
+      "incertain": false
+    },
+    {
+      "texte": "l'investissement",
+      "debutMs": 94260,
+      "finMs": 94920,
+      "confiance": 0.0007619336247444153,
+      "incertain": false
+    },
+    {
+      "texte": "augmente",
+      "debutMs": 94960,
+      "finMs": 95320,
+      "confiance": 0.001477852463722229,
+      "incertain": false
+    },
+    {
+      "texte": "et",
+      "debutMs": 95440,
+      "finMs": 95520,
+      "confiance": 0.012786865234375,
+      "incertain": false
+    },
+    {
+      "texte": "que",
+      "debutMs": 95540,
+      "finMs": 95640,
+      "confiance": 0.003733952840169271,
+      "incertain": false
+    },
+    {
+      "texte": "la",
+      "debutMs": 95660,
+      "finMs": 95700,
+      "confiance": 0.02142333984375,
+      "incertain": false
+    },
+    {
+      "texte": "relation",
+      "debutMs": 95740,
+      "finMs": 96660,
+      "confiance": 0.020705297589302063,
+      "incertain": false
+    },
+    {
+      "texte": "avance,",
+      "debutMs": 96740,
+      "finMs": 97120,
+      "confiance": 0.020273344857352122,
+      "incertain": false
+    },
+    {
+      "texte": "tu",
+      "debutMs": 97560,
+      "finMs": 97620,
+      "confiance": 0.0040721893310546875,
+      "incertain": false
+    },
+    {
+      "texte": "as",
+      "debutMs": 97680,
+      "finMs": 97740,
+      "confiance": 0.304534912109375,
+      "incertain": false
+    },
+    {
+      "texte": "un",
+      "debutMs": 97760,
+      "finMs": 97820,
+      "confiance": 0.001957714557647705,
+      "incertain": false
+    },
+    {
+      "texte": "signal",
+      "debutMs": 97880,
+      "finMs": 98140,
+      "confiance": 0.0011485616366068523,
+      "incertain": false
+    },
+    {
+      "texte": "beaucoup",
+      "debutMs": 98280,
+      "finMs": 98560,
+      "confiance": 0.0027751922607421875,
+      "incertain": false
+    },
+    {
+      "texte": "plus",
+      "debutMs": 98600,
+      "finMs": 98720,
+      "confiance": 0.0010989904403686523,
+      "incertain": false
+    },
+    {
+      "texte": "fiable.",
+      "debutMs": 98760,
+      "finMs": 99000,
+      "confiance": 0.026242051805768694,
+      "incertain": false
+    },
+    {
+      "texte": "Mais",
+      "debutMs": 99120,
+      "finMs": 99170,
+      "confiance": 0.004169464111328125,
+      "incertain": false
+    },
+    {
+      "texte": "attention,",
+      "debutMs": 99200,
+      "finMs": 99480,
+      "confiance": 0.019663679599761962,
+      "incertain": false
+    },
+    {
+      "texte": "il",
+      "debutMs": 99640,
+      "finMs": 99690,
+      "confiance": 0.034374237060546875,
+      "incertain": false
+    },
+    {
+      "texte": "y",
+      "debutMs": 99700,
+      "finMs": 99720,
+      "confiance": 0.028076171875,
+      "incertain": false
+    },
+    {
+      "texte": "a",
+      "debutMs": 99730,
+      "finMs": 99731,
+      "confiance": 0.0341796875,
+      "incertain": false
+    },
+    {
+      "texte": "une",
+      "debutMs": 99740,
+      "finMs": 99790,
+      "confiance": 1.2176666259765625,
+      "incertain": true
+    },
+    {
+      "texte": "différence",
+      "debutMs": 99800,
+      "finMs": 100120,
+      "confiance": 0.006017279624938965,
+      "incertain": false
+    },
+    {
+      "texte": "encore",
+      "debutMs": 100160,
+      "finMs": 100320,
+      "confiance": 0.00385284423828125,
+      "incertain": false
+    },
+    {
+      "texte": "plus",
+      "debutMs": 100360,
+      "finMs": 100440,
+      "confiance": 0.0020079612731933594,
+      "incertain": false
+    },
+    {
+      "texte": "importante.",
+      "debutMs": 100480,
+      "finMs": 100840,
+      "confiance": 0.05589628219604492,
+      "incertain": false
+    },
+    {
+      "texte": "Quelqu'un",
+      "debutMs": 101040,
+      "finMs": 101280,
+      "confiance": 0.0046806467903984916,
+      "incertain": false
+    },
+    {
+      "texte": "peut",
+      "debutMs": 101340,
+      "finMs": 101460,
+      "confiance": 0.008358240127563477,
+      "incertain": false
+    },
+    {
+      "texte": "sincèrement",
+      "debutMs": 101520,
+      "finMs": 101840,
+      "confiance": 0.22480372949080032,
+      "incertain": false
+    },
+    {
+      "texte": "être",
+      "debutMs": 101880,
+      "finMs": 101970,
+      "confiance": 0.029355496168136597,
+      "incertain": false
+    },
+    {
+      "texte": "intéressé",
+      "debutMs": 102000,
+      "finMs": 102320,
+      "confiance": 0.002438134617275662,
+      "incertain": false
+    },
+    {
+      "texte": "par",
+      "debutMs": 102360,
+      "finMs": 102440,
+      "confiance": 0.002594629923502604,
+      "incertain": false
+    },
+    {
+      "texte": "toi",
+      "debutMs": 102480,
+      "finMs": 102720,
+      "confiance": 0.0033200581868489585,
+      "incertain": false
+    },
+    {
+      "texte": "sans",
+      "debutMs": 102800,
+      "finMs": 102940,
+      "confiance": 0.05161285400390625,
+      "incertain": false
+    },
+    {
+      "texte": "pour",
+      "debutMs": 102960,
+      "finMs": 103060,
+      "confiance": 0.009765625,
+      "incertain": false
+    },
+    {
+      "texte": "autant",
+      "debutMs": 103080,
+      "finMs": 103290,
+      "confiance": 0.0076007843017578125,
+      "incertain": false
+    },
+    {
+      "texte": "être",
+      "debutMs": 103380,
+      "finMs": 103600,
+      "confiance": 0.0030685067176818848,
+      "incertain": false
+    },
+    {
+      "texte": "capable",
+      "debutMs": 103610,
+      "finMs": 103800,
+      "confiance": 0.21736621856689453,
+      "incertain": false
+    },
+    {
+      "texte": "de",
+      "debutMs": 103840,
+      "finMs": 103900,
+      "confiance": 0.0015001296997070312,
+      "incertain": false
+    },
+    {
+      "texte": "construire",
+      "debutMs": 103920,
+      "finMs": 104180,
+      "confiance": 0.018781471252441406,
+      "incertain": false
+    },
+    {
+      "texte": "la",
+      "debutMs": 104200,
+      "finMs": 104260,
+      "confiance": 0.05126953125,
+      "incertain": false
+    },
+    {
+      "texte": "relation",
+      "debutMs": 104300,
+      "finMs": 104580,
+      "confiance": 0.0012591183185577393,
+      "incertain": false
+    },
+    {
+      "texte": "que",
+      "debutMs": 104620,
+      "finMs": 104660,
+      "confiance": 0.0045083363850911455,
+      "incertain": false
+    },
+    {
+      "texte": "tu",
+      "debutMs": 104700,
+      "finMs": 104760,
+      "confiance": 0.0016040802001953125,
+      "incertain": false
+    },
+    {
+      "texte": "recherches",
+      "debutMs": 104820,
+      "finMs": 105100,
+      "confiance": 0.0071624755859375,
+      "incertain": false
+    },
+    {
+      "texte": "précisément.",
+      "debutMs": 105120,
+      "finMs": 105880,
+      "confiance": 0.00772319237391154,
+      "incertain": false
+    },
+    {
+      "texte": "Donc,",
+      "debutMs": 105920,
+      "finMs": 106060,
+      "confiance": 0.2461538314819336,
+      "incertain": false
+    },
+    {
+      "texte": "si",
+      "debutMs": 106260,
+      "finMs": 106320,
+      "confiance": 0.0022497177124023438,
+      "incertain": false
+    },
+    {
+      "texte": "tu",
+      "debutMs": 106380,
+      "finMs": 106440,
+      "confiance": 0.001241445541381836,
+      "incertain": false
+    },
+    {
+      "texte": "veux",
+      "debutMs": 106480,
+      "finMs": 106560,
+      "confiance": 0.0014963150024414062,
+      "incertain": false
+    },
+    {
+      "texte": "maintenant",
+      "debutMs": 106600,
+      "finMs": 106840,
+      "confiance": 0.0008843660354614258,
+      "incertain": false
+    },
+    {
+      "texte": "recevoir",
+      "debutMs": 106920,
+      "finMs": 107560,
+      "confiance": 0.008822128176689148,
+      "incertain": false
+    },
+    {
+      "texte": "la",
+      "debutMs": 107640,
+      "finMs": 107680,
+      "confiance": 0.00753021240234375,
+      "incertain": false
+    },
+    {
+      "texte": "méthode",
+      "debutMs": 107720,
+      "finMs": 107940,
+      "confiance": 0.00227703366960798,
+      "incertain": false
+    },
+    {
+      "texte": "complète",
+      "debutMs": 108000,
+      "finMs": 108280,
+      "confiance": 0.0019207596778869629,
+      "incertain": false
+    },
+    {
+      "texte": "pour",
+      "debutMs": 108300,
+      "finMs": 108380,
+      "confiance": 0.0047149658203125,
+      "incertain": false
+    },
+    {
+      "texte": "nos",
+      "debutMs": 108420,
+      "finMs": 108520,
+      "confiance": 2.4450276692708335,
+      "incertain": true
+    },
+    {
+      "texte": "plus",
+      "debutMs": 108540,
+      "finMs": 108660,
+      "confiance": 0.0258636474609375,
+      "incertain": false
+    },
+    {
+      "texte": "célibataires",
+      "debutMs": 108860,
+      "finMs": 109320,
+      "confiance": 0.5909678141276041,
+      "incertain": true
+    },
+    {
+      "texte": "en",
+      "debutMs": 109380,
+      "finMs": 109420,
+      "confiance": 0.035938262939453125,
+      "incertain": false
+    },
+    {
+      "texte": "2026,",
+      "debutMs": 109500,
+      "finMs": 109940,
+      "confiance": 0.046632575988769534,
+      "incertain": false
+    },
+    {
+      "texte": "il",
+      "debutMs": 110240,
+      "finMs": 110290,
+      "confiance": 0.008329033851623535,
+      "incertain": false
+    },
+    {
+      "texte": "suffit",
+      "debutMs": 110320,
+      "finMs": 110520,
+      "confiance": 0.0036137898763020835,
+      "incertain": false
+    },
+    {
+      "texte": "simplement",
+      "debutMs": 110600,
+      "finMs": 110880,
+      "confiance": 0.06015772819519043,
+      "incertain": false
+    },
+    {
+      "texte": "de",
+      "debutMs": 110900,
+      "finMs": 110980,
+      "confiance": 0.072479248046875,
+      "incertain": false
+    },
+    {
+      "texte": "commenter",
+      "debutMs": 111000,
+      "finMs": 111220,
+      "confiance": 0.016798231336805556,
+      "incertain": false
+    },
+    {
+      "texte": "le",
+      "debutMs": 111240,
+      "finMs": 111270,
+      "confiance": 0.578125,
+      "incertain": true
+    },
+    {
+      "texte": "mot",
+      "debutMs": 111360,
+      "finMs": 111440,
+      "confiance": 1.7649739583333333,
+      "incertain": true
+    },
+    {
+      "texte": "guide.",
+      "debutMs": 111460,
+      "finMs": 111620,
+      "confiance": 1.0283304850260417,
+      "incertain": true
+    },
+    {
+      "texte": "C'est",
+      "debutMs": 111880,
+      "finMs": 111980,
+      "confiance": 0.03407397270202637,
+      "incertain": false
+    },
+    {
+      "texte": "gratuit",
+      "debutMs": 112000,
+      "finMs": 112460,
+      "confiance": 0.005404336111886161,
+      "incertain": false
+    },
+    {
+      "texte": "et",
+      "debutMs": 112500,
+      "finMs": 112540,
+      "confiance": 0.044189453125,
+      "incertain": false
+    },
+    {
+      "texte": "on",
+      "debutMs": 112560,
+      "finMs": 112620,
+      "confiance": 0.43878173828125,
+      "incertain": true
+    },
+    {
+      "texte": "te",
+      "debutMs": 112660,
+      "finMs": 112720,
+      "confiance": 1.1015625,
+      "incertain": true
+    },
+    {
+      "texte": "l'envoie.",
+      "debutMs": 112740,
+      "finMs": 113000,
+      "confiance": 0.36762237548828125,
+      "incertain": true
+    }
+  ],
+  "evenements": [
+    {
+      "type": "broll",
+      "src": "broll/broll-01-v6.mp4",
+      "requete": "phone screen notifications glowing at night",
+      "ancre": "Plus quelqu'un te donne",
+      "source": "fal",
+      "ken": false,
+      "debutMs": 0,
+      "dureeMs": 5660,
+      "dureeSourceMs": 3720,
+      "_essais": 6,
+      "_mediaId": "https://videos.pexels.com/video-files/7986754/7986754-hd_1080_1920_25fps.mp4",
+      "_auteur": "SHVETS production",
+      "_accroche": {
+        "mouvement": 0.7,
+        "contraste": 2.3,
+        "couleur": 0.4,
+        "visage": {
+          "present": false,
+          "taille": 0,
+          "vues": 8,
+          "trouve": 0
+        }
+      }
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-02.mp4",
+      "requete": "young woman thinking looking out window",
+      "ancre": "Voici 3 signes",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 5160,
+      "dureeMs": 3820,
+      "entreeSection": true,
+      "dureeSourceMs": 13840
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-03.mp4",
+      "requete": "hands typing message smartphone close up",
+      "ancre": "Le premier signe",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 8480,
+      "dureeMs": 2250,
+      "entreeSection": true,
+      "dureeSourceMs": 21922
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-04.mp4",
+      "requete": "hands typing message smartphone close up",
+      "ancre": "Le premier signe",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 10730,
+      "dureeMs": 4550,
+      "variante": 1,
+      "dureeSourceMs": 24120
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-05.mp4",
+      "requete": "unread messages phone screen alone",
+      "ancre": "sans jamais chercher",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 15280,
+      "dureeMs": 2980,
+      "dureeSourceMs": 16720
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-06.mp4",
+      "requete": "two people meeting cafe talking evening",
+      "ancre": "A l'inverse",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 18260,
+      "dureeMs": 3010,
+      "dureeSourceMs": 24274
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-07.mp4",
+      "requete": "two people meeting cafe talking evening",
+      "ancre": "A l'inverse",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 21270,
+      "dureeMs": 3010,
+      "variante": 1,
+      "dureeSourceMs": 32680
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-08.mp4",
+      "requete": "two people meeting cafe talking evening",
+      "ancre": "A l'inverse",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 24280,
+      "dureeMs": 2180,
+      "variante": 2,
+      "dureeSourceMs": 9875
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-09.mp4",
+      "requete": "couple walking together street evening",
+      "ancre": "Elle va chercher",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 26460,
+      "dureeMs": 4600,
+      "dureeSourceMs": 10112
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-10.mp4",
+      "requete": "couple walking together street evening",
+      "ancre": "Elle va chercher",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 31060,
+      "dureeMs": 4920,
+      "variante": 1,
+      "dureeSourceMs": 8567
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-11.mp4",
+      "requete": "woman listening attentively conversation",
+      "ancre": "Le deuxième signe",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 35480,
+      "dureeMs": 2740,
+      "entreeSection": true,
+      "dureeSourceMs": 13600
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-12.mp4",
+      "requete": "woman listening attentively conversation",
+      "ancre": "Le deuxième signe",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 38220,
+      "dureeMs": 3400,
+      "variante": 1,
+      "dureeSourceMs": 7217
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-13.mp4",
+      "requete": "close up face listening intently",
+      "ancre": "va chercher à comprendre",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 41620,
+      "dureeMs": 4340,
+      "dureeSourceMs": 115680
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-14.mp4",
+      "requete": "person writing notes remembering",
+      "ancre": "Elle va retenir des détails",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 45960,
+      "dureeMs": 3320,
+      "dureeSourceMs": 9600
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-15.mp4",
+      "requete": "person writing notes remembering",
+      "ancre": "Elle va retenir des détails",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 49280,
+      "dureeMs": 3820,
+      "variante": 1,
+      "dureeSourceMs": 36720
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-16.mp4",
+      "requete": "hourglass sand falling moody light",
+      "ancre": "Le troisième signe",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 52600,
+      "dureeMs": 4320,
+      "entreeSection": true,
+      "dureeSourceMs": 22233
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-17.mp4",
+      "requete": "hourglass sand falling moody light",
+      "ancre": "Le troisième signe",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 56920,
+      "dureeMs": 3100,
+      "variante": 1,
+      "dureeSourceMs": 25000
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-18.mp4",
+      "requete": "hourglass sand falling moody light",
+      "ancre": "Le troisième signe",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 60020,
+      "dureeMs": 5740,
+      "variante": 2,
+      "dureeSourceMs": 10010
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-19.mp4",
+      "requete": "hourglass sand falling moody light",
+      "ancre": "Le troisième signe",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 65760,
+      "dureeMs": 2780,
+      "variante": 3,
+      "dureeSourceMs": 34218
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-20.mp4",
+      "requete": "calendar dates marked repeated meetings",
+      "ancre": "Est-ce que les rendez-vous",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 68540,
+      "dureeMs": 4000,
+      "dureeSourceMs": 28760
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-21.mp4",
+      "requete": "calendar dates marked repeated meetings",
+      "ancre": "Est-ce que les rendez-vous",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 72540,
+      "dureeMs": 3060,
+      "variante": 1,
+      "dureeSourceMs": 27280
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-22.mp4",
+      "requete": "calendar dates marked repeated meetings",
+      "ancre": "Est-ce que les rendez-vous",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 75600,
+      "dureeMs": 2840,
+      "variante": 2,
+      "dureeSourceMs": 16127
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-23.mp4",
+      "requete": "road path forward sunset walking",
+      "ancre": "Il a besoin d'évoluer",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 78440,
+      "dureeMs": 3160,
+      "dureeSourceMs": 20520
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-25.mp4",
+      "requete": "road path forward sunset walking",
+      "ancre": "Il a besoin d'évoluer",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 81600,
+      "dureeMs": 3160,
+      "variante": 1,
+      "dureeSourceMs": 18333
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-26.mp4",
+      "requete": "compass pointing direction closeup",
+      "ancre": "Regarde la direction",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 84760,
+      "dureeMs": 2460,
+      "dureeSourceMs": 4033
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-27.mp4",
+      "requete": "compass pointing direction closeup",
+      "ancre": "Regarde la direction",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 87220,
+      "dureeMs": 5480,
+      "variante": 1,
+      "dureeSourceMs": 6006
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-28.mp4",
+      "requete": "time lapse weeks passing city",
+      "ancre": "semaine après semaine",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 92700,
+      "dureeMs": 4170,
+      "dureeSourceMs": 7367
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-29.mp4",
+      "requete": "time lapse weeks passing city",
+      "ancre": "semaine après semaine",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 96870,
+      "dureeMs": 4170,
+      "variante": 1,
+      "dureeSourceMs": 59263
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-30.mp4",
+      "requete": "two people sitting apart distant",
+      "ancre": "sans pour autant",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 101040,
+      "dureeMs": 5380,
+      "dureeSourceMs": 22000
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-31.mp4",
+      "requete": "two people sitting apart distant",
+      "ancre": "sans pour autant",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 105920,
+      "dureeMs": 5960,
+      "variante": 1,
+      "entreeSection": true,
+      "dureeSourceMs": 23160
+    },
+    {
+      "type": "broll",
+      "src": "broll/broll-32.mp4",
+      "requete": "social media comment section phone",
+      "ancre": "commenter le mot guide",
+      "source": "pexels",
+      "ken": false,
+      "debutMs": 111880,
+      "dureeMs": 2620,
+      "insert": {
+        "src": "broll/perso-36.jpeg",
+        "image": true,
+        "cote": "droite"
+      },
+      "_perso": {
+        "fichier": "conseils-relationnels-logo.jpeg",
+        "motscles": [
+          "guide"
+        ]
+      },
+      "dureeSourceMs": 12202
+    }
+  ],
+  "titre": "3 signes qu'une personne est réellement intéressée"
+}

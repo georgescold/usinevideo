@@ -390,7 +390,7 @@ async function installeLesDependances({ silencieux = false } = {}) {
  * sortie passe au fur et à mesure, et on n'en garde que la fin — de quoi
  * expliquer un échec sans retenir cent mille lignes.
  */
-export function lanceEnDirect(binaire, args, { cwd = undefined, prefixe = '  ' } = {}) {
+export function lanceEnDirect(binaire, args, { cwd = undefined, prefixe = '  ' , surTexte = null } = {}) {
   return new Promise((resoud, rejette) => {
     const p = spawn(binaire, args, { cwd, windowsHide: true })
     const fin = []
@@ -402,6 +402,10 @@ export function lanceEnDirect(binaire, args, { cwd = undefined, prefixe = '  ' }
       const t = d.toString()
       garde(t)
       process.stdout.write(t.replace(/^/gm, prefixe))
+      // L'appelant peut vouloir LIRE ce qui passe, pas seulement le montrer.
+      // Applio annonce son époque et sa vitesse à chaque passage : c'est de là
+      // que vient le temps restant, et ça ne s'invente pas depuis l'extérieur.
+      if (surTexte) { try { surTexte(t) } catch { /* un lecteur ne casse pas un entraînement */ } }
       void flux
     }
     p.stdout.on('data', relaie('out'))
@@ -412,13 +416,13 @@ export function lanceEnDirect(binaire, args, { cwd = undefined, prefixe = '  ' }
 }
 
 /** Idem, mais échoue si le code de retour n'est pas 0. */
-export async function applio(args, { etape = 'Applio' } = {}) {
+export async function applio(args, { etape = 'Applio', surTexte = null } = {}) {
   if (!applioPose()) {
     throw new Error(
       `Applio n'est pas installé. Pose-le d'abord :\n  npm run entraine -- --installe`
     )
   }
-  const r = await lanceEnDirect(pythonApplio(), [coreApplio(), ...args], { cwd: DOSSIER_APPLIO })
+  const r = await lanceEnDirect(pythonApplio(), [coreApplio(), ...args], { cwd: DOSSIER_APPLIO, surTexte })
   if (r.code !== 0) {
     throw new Error(
       `${etape} a échoué (code ${r.code}).\n${r.fin.trim().split('\n').slice(-12).join('\n')}`
@@ -543,6 +547,19 @@ export function modelePour(slug, forcee = null) {
  * sur ce fichier. On convertit d'un seul tenant, et on vérifie la durée après.
  */
 export async function convertitAvecModele(entree, sortie, modele, options = {}) {
+  // ON ATTEND L'OBJET MODÈLE, PAS SON IDENTIFIANT.
+  //
+  // Passer la chaîne « myriam » donnait un `--pth-path` vide à Applio, qui
+  // chargeait un modèle nul et échouait trente lignes plus bas sur
+  // `'NoneType' object has no attribute 'pipeline'`. Le message ne désignait
+  // rien de ce qui était réellement faux.
+  if (typeof modele === 'string' || !modele?.pth) {
+    throw new Error(
+      `convertitAvecModele attend l'objet modèle, pas « ${modele?.id ?? modele} ».
+` +
+        `  modelesEntraines().find((m) => m.id === …) ou modelePour(slug, id)`
+    )
+  }
   const {
     transpose = 0,
     index = 0.3,
@@ -689,5 +706,57 @@ export async function mesure(voix, accompagnement) {
     return JSON.parse(stdout)
   } catch {
     throw new Error(`L'analyse n'a pas rendu de JSON lisible.\n${stdout.slice(0, 400)}`)
+  }
+}
+
+/**
+ * Cherche un sifflement fixe dans des extraits déjà découpés.
+ *
+ * ON MESURE LE CORPUS, PAS LE TÉLÉCHARGEMENT.
+ *
+ * Les extraits SONT ce que le moteur verra : une raie qui ne vivrait que dans
+ * les passages écartés n'apprendrait rien à personne. C'est aussi ce qui rend
+ * la mesure rejouable sur une empreinte déjà récoltée, dont le fichier source a
+ * disparu depuis longtemps.
+ *
+ * Une empreinte peut porter des centaines d'extraits, et une ligne de commande
+ * Windows plafonne à 32 000 caractères : on envoie par paquets et on refait la
+ * médiane ici.
+ */
+export async function raieTonale(fichiers) {
+  const script = path.join(CHEMINS.outils, 'python', 'raie-tonale.py')
+  if (!fs.existsSync(script)) throw new Error(`Script d'analyse introuvable : ${script}`)
+  if (!fichiers.length) return { raie: null, parExtrait: [] }
+
+  const PAR_PAQUET = 60
+  const parExtrait = []
+  for (let i = 0; i < fichiers.length; i += PAR_PAQUET) {
+    const { stdout } = await lanceOuEchoue(pythonDuVenv(), [
+      script,
+      ...fichiers.slice(i, i + PAR_PAQUET),
+    ])
+    let bloc
+    try {
+      bloc = JSON.parse(stdout)
+    } catch {
+      throw new Error(`L'analyse de raie n'a pas rendu de JSON lisible.\n${stdout.slice(0, 400)}`)
+    }
+    parExtrait.push(...(bloc.parExtrait ?? []))
+  }
+
+  const mesurables = parExtrait.filter((m) => typeof m.ecartDb === 'number')
+  if (!mesurables.length) return { raie: null, parExtrait }
+
+  const medianeDe = (cle) => {
+    const t = mesurables.map((m) => m[cle]).sort((a, b) => a - b)
+    return t[Math.floor(t.length / 2)]
+  }
+  return {
+    raie: {
+      hz: Math.round(medianeDe('hz')),
+      ecartDb: +medianeDe('ecartDb').toFixed(1),
+      extraits: mesurables.length,
+    },
+    parExtrait,
   }
 }

@@ -64,6 +64,7 @@ const SERVICES = {
   pixabay: { role: 'banque de plans de coupe (secours)', prefixe: '' },
   heygen: { role: 'avatar de synthèse', prefixe: '' },
   fal: { role: 'génération de plans', prefixe: '' },
+  fish: { role: 'voix off — clonage et synthèse', prefixe: 'sk-fish-' },
   // Le jeton OAuth de Claude Code, pour que le logiciel puisse faire réfléchir
   // le cerveau sans passer par une conversation. Ce n'est pas une clé d'API :
   // c'est la session du forfait, obtenue par « claude setup-token ».
@@ -194,6 +195,26 @@ async function quotas() {
     }
   } catch (e) {
     sortie.elevenlabs = { erreur: e.message.split('\n')[0] }
+  }
+
+  // FAL SE COMPTE EN DOLLARS, PAS EN CRÉDITS NI EN MINUTES.
+  //
+  // Chaque service a son unité, et les traduire en une seule les rendrait tous
+  // faux. On rend donc ce que le service dit, avec son unité.
+  try {
+    const { soldeFal } = await import('./fal-video.mjs')
+    const reste = await soldeFal()
+    sortie.fal =
+      reste === null
+        ? { erreur: `solde indisponible` }
+        : {
+            resume: `${reste.toFixed(2)} $`,
+            detail: `génération de plans`,
+            alerte: reste < 1,
+            cles: [],
+          }
+  } catch (e) {
+    sortie.fal = { erreur: e.message.split('\n')[0] }
   }
 
   return sortie

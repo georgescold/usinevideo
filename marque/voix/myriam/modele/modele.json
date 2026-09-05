@@ -1,0 +1,16 @@
+{
+  "id": "myriam",
+  "entraineLe": "2026-09-02T13:02:22.860Z",
+  "epoques": 300,
+  "lot": 8,
+  "frequence": 48000,
+  "f0": "rmvpe",
+  "embedder": "contentvec",
+  "vocoder": "HiFi-GAN",
+  "corpusS": 1835,
+  "extraits": 120,
+  "sources": 1,
+  "moteur": "applio",
+  "pth": "modele/myriam.pth",
+  "index": "modele/myriam.index"
+}

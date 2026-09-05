@@ -13,12 +13,43 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { lance } from './ffmpeg.mjs'
-import { CHEMINS, assureDossier, env } from './chemins.mjs'
+import { CHEMINS, CACHE_PARTAGE, assureDossier, env } from './chemins.mjs'
 import { journal } from './journal.mjs'
 
-/** Emplacements où chercher yt-dlp, du plus probable au moins probable. */
+/**
+ * Emplacements où chercher yt-dlp, du plus probable au moins probable.
+ *
+ * LE PLUS RÉCENT D'ABORD, ET CE N'EST PAS UN DÉTAIL DE CONFORT.
+ *
+ * yt-dlp se périme vite : YouTube change sa signature d'URL toutes les quelques
+ * semaines, et une version de trois mois se fait renvoyer un
+ * « HTTP Error 403: Forbidden » sur le téléchargement — après avoir listé les
+ * formats sans broncher, ce qui rend le diagnostic trompeur. C'est arrivé le
+ * 1er septembre 2026 avec la version du 9 juin, trouvée dans le PATH ; celle du
+ * 19 août téléchargeait la même vidéo sans rien changer d'autre.
+ *
+ * Le cache partagé vient donc EN PREMIER, parce que c'est le seul yt-dlp que
+ * cette stack sait mettre à jour. Ceux du PATH appartiennent à d'autres
+ * applications : on s'en sert s'il n'y a rien de mieux, on ne les touche jamais.
+ */
 const CANDIDATS_YTDLP = [
   env('YTDLP_PATH', null),
+  path.join(CACHE_PARTAGE, 'venv-ytdlp', 'Scripts', 'yt-dlp.exe'),
+  path.join(CACHE_PARTAGE, 'venv-ytdlp', 'bin', 'yt-dlp'),
+  // UN REPLI DANS LE DOSSIER DE LA CHAÎNE, QUAND LE CACHE N'EST PAS ACCESSIBLE.
+  //
+  // Le cache partagé reste le bon endroit — un seul yt-dlp pour toutes les
+  // chaînes, hors du dossier qu'on copie. Mais il n'est pas toujours
+  // atteignable : un poste où `AppData` est virtualisé (application empaquetée,
+  // profil géré, dossier redirigé) écrit ailleurs que là où le pipeline lit,
+  // et l'installation semble réussir sans que rien ne change.
+  //
+  // Ce chemin-ci est dans le dossier de la chaîne, donc toujours accessible à
+  // qui peut lancer le pipeline. Il passe APRÈS le cache : dès que
+  // `--installe-ytdlp` a fait son travail au bon endroit, c'est celui-là qui
+  // sert, et ce repli redevient ce qu'il doit être — un filet.
+  path.join(CHEMINS.racine, '.outils-ytdlp', 'Scripts', 'yt-dlp.exe'),
+  path.join(CHEMINS.racine, '.outils-ytdlp', 'bin', 'yt-dlp'),
   'yt-dlp',
   path.join(
     process.env.LOCALAPPDATA || '',
@@ -35,14 +66,227 @@ let cheminYtdlp = null
 export async function trouveYtdlp() {
   if (cheminYtdlp) return cheminYtdlp
   for (const candidat of CANDIDATS_YTDLP) {
-    const { code } = await lance(candidat, ['--version'])
-    if (code === 0) {
-      cheminYtdlp = candidat
-      return candidat
+    // UN CANDIDAT ABSENT EST UN NON, PAS UNE PANNE.
+    //
+    // `lance` REJETTE quand le binaire n'existe pas — c'est juste pour ffmpeg,
+    // dont l'absence est une vraie panne. Ici c'est l'inverse : cette boucle est
+    // une liste d'endroits où REGARDER, et le premier qui manque doit laisser
+    // sa place au suivant. Sans ce `catch`, le premier chemin inexistant faisait
+    // échouer toute la recherche — et l'utilisateur recevait « yt-dlp
+    // introuvable » en désignant un chemin précis, alors qu'un yt-dlp
+    // parfaitement fonctionnel attendait deux lignes plus bas dans le PATH.
+    //
+    // Le défaut ne s'est vu qu'en mettant un nouveau chemin en tête de liste :
+    // tant que le premier candidat existait, la boucle ne s'exerçait jamais.
+    try {
+      const { code } = await lance(candidat, ['--version'])
+      if (code === 0) {
+        cheminYtdlp = candidat
+        return candidat
+      }
+    } catch {
+      // absent, ou pas exécutable : on essaie le suivant.
     }
   }
   return null
 }
+
+/** Le venv que CETTE stack maintient, seul yt-dlp qu'elle sait mettre à jour. */
+const VENV_YTDLP = path.join(CACHE_PARTAGE, 'venv-ytdlp')
+
+/** La version de yt-dlp employée, ou `null` s'il n'y en a aucun. */
+export async function versionYtdlp() {
+  const bin = await trouveYtdlp()
+  if (!bin) return null
+  try {
+    const { code, stdout } = await lance(bin, ['--version'])
+    return code === 0 ? stdout.trim() : null
+  } catch {
+    return null
+  }
+}
+
+/**
+ * yt-dlp est-il assez récent pour YouTube ?
+ *
+ * YOUTUBE REFUSE LES VIEUX yt-dlp, ET IL LE FAIT DE LA PIRE FAÇON.
+ *
+ * Il change la signature de ses URL toutes les quelques semaines. Une version
+ * dépassée liste les formats sans broncher, puis se fait renvoyer un
+ * « HTTP Error 403: Forbidden » au moment de télécharger — un message qui
+ * ressemble à une restriction de droits ou à un blocage régional, et qui envoie
+ * chercher des cookies, un VPN, une autre vidéo. Le 1er septembre 2026, ça a
+ * coûté une demi-journée : la version du 9 juin échouait, celle du 19 août
+ * téléchargeait la même vidéo sans rien changer d'autre.
+ *
+ * Deux mois est large : yt-dlp publie toutes les deux à trois semaines, et on
+ * ne veut pas crier au loup sur une version encore bonne.
+ */
+export function ytdlpEstVieux(version, moisMax = 2) {
+  const m = /^(\d{4})\.(\d{2})\.(\d{2})/.exec(String(version ?? ''))
+  if (!m) return false
+  const sortie = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]))
+  const jours = (Date.now() - sortie.getTime()) / 86_400_000
+  return jours > moisMax * 30
+}
+
+/**
+ * Pose ou met à jour yt-dlp dans le cache partagé.
+ *
+ * POURQUOI UN VENV À NOUS PLUTÔT QUE CELUI DU POSTE.
+ *
+ * Le yt-dlp trouvé dans le PATH appartient souvent à une autre application —
+ * ici, à un studio de voix installé à côté. Le mettre à jour, c'est toucher aux
+ * dépendances de quelqu'un d'autre pour régler notre problème. On installe donc
+ * le nôtre, dans le cache partagé entre chaînes, et `CANDIDATS_YTDLP` le prend
+ * en premier. Celui du poste reste le filet de sécurité, intact.
+ */
+export async function installeYtdlp({ silencieux = false } = {}) {
+  const pythons = [env('PYTHON_PATH', null), 'py', 'python3', 'python'].filter(Boolean)
+  let python = null
+  for (const candidat of pythons) {
+    try {
+      const args = candidat === 'py' ? ['-3', '--version'] : ['--version']
+      const { code } = await lance(candidat, args)
+      if (code === 0) { python = candidat; break }
+    } catch { /* absent : au suivant */ }
+  }
+  if (!python) {
+    throw new Error(
+      `Python est introuvable. Installe Python 3.10 ou plus récent, ` +
+        `ou renseigne PYTHON_PATH dans .env.`
+    )
+  }
+  const prefixe = python === 'py' ? ['-3'] : []
+
+  if (!silencieux) {
+    journal.info(`Installation de yt-dlp dans le cache partagé (quelques mégaoctets).`)
+    journal.detail(VENV_YTDLP)
+  }
+
+  assureDossier(path.dirname(VENV_YTDLP))
+  const venv = await lance(python, [...prefixe, '-m', 'venv', VENV_YTDLP])
+  if (venv.code !== 0) {
+    throw new Error(`La création de l'environnement a échoué :\n${venv.stderr.trim().slice(0, 400)}`)
+  }
+
+  const pythonDuVenv = path.join(
+    VENV_YTDLP,
+    process.platform === 'win32' ? 'Scripts' : 'bin',
+    process.platform === 'win32' ? 'python.exe' : 'python'
+  )
+  const pip = await lance(pythonDuVenv, ['-m', 'pip', 'install', '--upgrade', '--quiet', 'yt-dlp'])
+  if (pip.code !== 0) {
+    throw new Error(`L'installation de yt-dlp a échoué :\n${pip.stderr.trim().slice(0, 400)}`)
+  }
+
+  // Le chemin mémorisé pointe peut-être sur l'ancien : on oblige la relecture.
+  cheminYtdlp = null
+  const version = await versionYtdlp()
+  if (!silencieux) journal.ok(`yt-dlp ${version ?? '?'} — prêt.`)
+  return { dossier: VENV_YTDLP, version }
+}
+
+/**
+ * Les cookies, pour les plateformes qui ne servent plus rien sans session.
+ *
+ * INSTAGRAM NE RÉPOND PLUS À UN VISITEUR ANONYME, ET ÇA NE SE CONTOURNE PAS.
+ *
+ *   ERROR: [Instagram] …: Requested content is not available, rate-limit
+ *   reached or login required. Use --cookies-from-browser or --cookies
+ *
+ * C'est le mécanisme documenté de yt-dlp, et le seul. Facebook et X sont dans
+ * le même cas ; YouTube y bascule par intermittence sur les vidéos avec
+ * restriction d'âge.
+ *
+ * IL N'Y A PAS DE DÉFAUT, ET C'EST DÉLIBÉRÉ. Lire les cookies d'un navigateur,
+ * c'est lire une session ouverte — celle d'un compte réel. Le faire d'office
+ * parce qu'un téléchargement a échoué serait prendre cette décision à la place
+ * de son propriétaire. On le demande donc explicitement, à chaque fois ou une
+ * fois pour toutes dans `.env`, et on le dit dans le message d'erreur plutôt
+ * que de le faire dans son dos.
+ *
+ * Les cookies ne traversent jamais ce processus : yt-dlp les lit lui-même et
+ * les envoie à la plateforme. Rien n'en est journalisé — le nom du navigateur
+ * n'est pas un secret, son contenu ne passe pas par ici.
+ *
+ * SOUS WINDOWS, `--cookies-from-browser` NE MARCHE PLUS SUR CHROME NI EDGE.
+ *
+ * Depuis Chrome 127, la clé qui déchiffre les cookies est liée au processus du
+ * navigateur lui-même — c'est l'« App-Bound Encryption », posée exprès contre
+ * les voleurs de session. Aucun programme extérieur ne peut plus les lire, et
+ * yt-dlp échoue sur « failed to decrypt with DPAPI ». Edge partage le moteur,
+ * donc le même verrou. Firefox, lui, reste lisible.
+ *
+ * La voie fiable sur ce poste est donc le FICHIER : on exporte ses cookies
+ * depuis le navigateur, et on donne le fichier. C'est ce que dit le message
+ * d'erreur, plutôt que de proposer une commande qui ne peut pas fonctionner.
+ */
+const NAVIGATEURS = new Set([
+  'brave', 'chrome', 'chromium', 'edge', 'firefox', 'opera', 'safari', 'vivaldi', 'whale',
+])
+
+/**
+ * L'EN-TÊTE D'UN NAVIGATEUR, PARCE QUE TIKTOK NE SERT PLUS PERSONNE D'AUTRE.
+ *
+ * Relevé le 4 septembre 2026 : toute vidéo TikTok — y compris une déjà rapatriée
+ * par ce dossier en janvier — échouait sur « Unexpected response from webpage
+ * request ». Ni la version (le stable 2026.08.19 et le nightly 2026.08.30
+ * échouent pareil), ni l'accès n'étaient en cause.
+ *
+ * La mesure est nette. La même page demandée avec un en-tête de Chrome rend
+ * 403 ko et son bloc `__UNIVERSAL_DATA_FOR_REHYDRATION__` complet —
+ * `statusCode: 0`, l'auteur, la durée. Demandée avec l'en-tête par défaut de
+ * yt-dlp, elle rend une page que l'extracteur ne reconnaît pas. TikTok ne
+ * bloque pas : il sert autre chose.
+ *
+ * C'est donc un en-tête, pas une session. La différence compte, parce que les
+ * deux gestes n'ont rien à voir : un en-tête ne porte l'identité de personne,
+ * là où un fichier de cookies porte une session vivante et appartient à son
+ * propriétaire (voir §8 du CLAUDE.md). Celui-ci est posé par défaut ; les
+ * cookies, jamais.
+ *
+ * `YTDLP_UA=` dans `.env` le remplace, le jour où c'est cette chaîne-là qui
+ * sera reconnue et écartée.
+ */
+export const UA_NAVIGATEUR =
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
+  '(KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
+
+/** Les arguments d'en-tête, à poser sur CHAQUE appel de yt-dlp. */
+export const argumentsDEnTete = () => ['--user-agent', env('YTDLP_UA', UA_NAVIGATEUR)]
+
+export function argumentsDeCookies({ navigateur = null, fichier = null } = {}) {
+  const nav = navigateur ?? env('YTDLP_COOKIES_NAVIGATEUR', null)
+  const fic = fichier ?? env('YTDLP_COOKIES_FICHIER', null)
+
+  if (fic) {
+    if (!fs.existsSync(fic)) throw new Error(`Fichier de cookies introuvable : ${fic}`)
+    return ['--cookies', fic]
+  }
+  if (!nav) return []
+
+  // `chrome`, ou `chrome:Profile 2` pour un second profil. La forme part en
+  // argument d'un programme : on la borne au lieu de la recopier telle quelle.
+  const [base, ...reste] = String(nav).split(':')
+  if (!NAVIGATEURS.has(base.toLowerCase())) {
+    throw new Error(
+      `Navigateur « ${base} » inconnu de yt-dlp.\n` +
+        `  Attendu : ${[...NAVIGATEURS].join(', ')}`
+    )
+  }
+  const profil = reste.join(':')
+  if (profil && !/^[\w .:+-]{1,80}$/.test(profil)) {
+    throw new Error(`Profil de navigateur refusé : « ${profil} ».`)
+  }
+  return ['--cookies-from-browser', profil ? `${base.toLowerCase()}:${profil}` : base.toLowerCase()]
+}
+
+/** Le refus vient-il d'un manque de session, plutôt que d'une vraie panne ? */
+export const demandeUneSession = (texte) =>
+  /login required|rate-limit reached|requested content is not available|sign in to confirm|private (video|account)|only available for registered/i.test(
+    String(texte ?? '')
+  )
 
 const nombre = (v) => (typeof v === 'number' && Number.isFinite(v) ? v : null)
 
@@ -76,13 +320,22 @@ function normalise(brut) {
  *
  * @returns null si yt-dlp échoue — l'appelant bascule alors sur Apify.
  */
-export async function metadonnees(url) {
+export async function metadonnees(url, cookies = {}, { silencieux = false } = {}) {
   const bin = await trouveYtdlp()
   if (!bin) return null
 
-  const { code, stdout, stderr } = await lance(bin, ['-J', '--no-warnings', '--no-playlist', url])
+  const { code, stdout, stderr } = await lance(bin, [
+    '-J', '--no-warnings', '--no-playlist',
+    ...argumentsDEnTete(), ...argumentsDeCookies(cookies), url,
+  ])
   if (code !== 0) {
-    journal.detail(`yt-dlp a échoué sur ${url} : ${stderr.trim().split('\n').slice(-1)[0]}`)
+    // `silencieux` sert à l'appelant qui va de toute façon tenter le
+    // téléchargement juste après : sur un lot de quarante liens protégés, cette
+    // ligne doublait chaque échec et l'on croyait à deux pannes distinctes.
+    // C'est le téléchargement qui porte le message utile.
+    if (!silencieux) {
+      journal.detail(`yt-dlp a échoué sur ${url} : ${stderr.trim().split('\n').slice(-1)[0]}`)
+    }
     return null
   }
   try {
@@ -93,7 +346,7 @@ export async function metadonnees(url) {
 }
 
 /** Télécharge l'audio d'un post, pour le transcrire ensuite. */
-export async function telechargeAudio(url, destinationSansExtension) {
+export async function telechargeAudio(url, destinationSansExtension, cookies = {}) {
   const bin = await trouveYtdlp()
   if (!bin) throw new Error(`yt-dlp est introuvable. Renseigne YTDLP_PATH dans .env.`)
 
@@ -105,13 +358,35 @@ export async function telechargeAudio(url, destinationSansExtension) {
     '--audio-quality', '0',
     '--no-warnings',
     '--no-playlist',
+    ...argumentsDEnTete(),
+    ...argumentsDeCookies(cookies),
     '-o', `${destinationSansExtension}.%(ext)s`,
     url,
   ])
   const attendu = `${destinationSansExtension}.wav`
   if (code !== 0 || !fs.existsSync(attendu)) {
+    // ON NOMME LA CAUSE QUAND ON LA CONNAÎT.
+    //
+    // « Téléchargement impossible » suivi de trois lignes d'anglais laissait
+    // chercher une panne de réseau là où il ne manquait qu'une session. Sur un
+    // lot de quarante liens, l'explication utile est celle qui dit quoi taper.
+    const aBesoinDeSession = demandeUneSession(stderr)
+    const dejaFournis = argumentsDeCookies(cookies).length > 0
     throw new Error(
-      `Téléchargement de l'audio impossible.\n${stderr.trim().split('\n').slice(-3).join('\n')}`
+      `Téléchargement de l'audio impossible.\n` +
+        (aBesoinDeSession
+          ? dejaFournis
+            ? `  La plateforme refuse malgré les cookies fournis : la session est\n` +
+              `  peut-être expirée, ou le compte n'a pas accès à ce contenu.\n`
+            : `  Cette plateforme ne sert plus rien sans session ouverte.\n` +
+              `  Exporte tes cookies dans un fichier, puis :\n` +
+              `    npm run empreinte -- <url> --cookies-fichier=cookies.txt\n` +
+              `  Sous Windows, Chrome et Edge chiffrent leurs cookies depuis la\n` +
+              `  version 127 : --cookies=chrome ne peut plus les lire. Le fichier,\n` +
+              `  si — une extension « Get cookies.txt » l'exporte au bon format.\n` +
+              `  Firefox reste lisible directement : --cookies=firefox.\n`
+          : '') +
+        stderr.trim().split('\n').slice(-3).join('\n')
     )
   }
   return attendu
@@ -181,6 +456,7 @@ export async function telechargeVideo(url, destinationSansExtension, { hauteurMa
       '--merge-output-format', 'mp4',
       '--no-warnings',
       '--no-playlist',
+      ...argumentsDEnTete(),
       '-o', `${destinationSansExtension}.%(ext)s`,
       url,
     ])

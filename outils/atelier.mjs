@@ -51,6 +51,7 @@ import { randomUUID, randomBytes } from 'node:crypto'
 import { Readable } from 'node:stream'
 
 import { CHEMINS, dossierVideo, litJson, assureDossierVideo, litChaine } from '../pipeline/lib/chemins.mjs'
+import { ffmpeg } from '../pipeline/lib/ffmpeg.mjs'
 import { journal, nettoie } from '../pipeline/lib/journal.mjs'
 import { litArgs, aide, drapeau, nombre, principal } from '../pipeline/lib/args.mjs'
 import { policesDisponibles, fichiersDePolice } from '../pipeline/lib/soustitres.mjs'
@@ -486,14 +487,31 @@ function extraisJson(texte) {
   try {
     return JSON.parse(brut)
   } catch {
-    const debut = brut.search(/[[{]/)
-    if (debut < 0) return null
+    /* du texte est mêlé au JSON : on cherche où il commence vraiment */
+  }
+
+  // ON REPART DE LA FIN, ET C'EST TOUT LE CORRECTIF.
+  //
+  // La version d'avant cherchait le PREMIER `[` ou `{` de la sortie. Ça marche
+  // tant que le journal n'en contient aucun — et `journal.etape` écrit
+  // « [1/4] ». Le crochet du compteur d'étape était donc pris pour le début du
+  // résultat, l'analyse échouait, et `resultat` valait `null` sur une commande
+  // parfaitement réussie. L'écran annonçait « rien de récolté » devant un
+  // journal qui affichait quatre extraits gardés.
+  //
+  // Les commandes impriment leur journal PUIS leur JSON : la fin est le bon
+  // bout par lequel prendre. On essaie chaque début de bloc en remontant, et on
+  // garde le premier qui s'analyse — celui du vrai résultat.
+  const lignes = brut.split(/\r?\n/)
+  for (let i = lignes.length - 1; i >= 0; i--) {
+    if (!/^[[{]/.test(lignes[i])) continue
     try {
-      return JSON.parse(brut.slice(debut))
+      return JSON.parse(lignes.slice(i).join('\n'))
     } catch {
-      return null
+      /* pas ce début-là : on continue de remonter */
     }
   }
+  return null
 }
 
 /** Attend la fin d'un travail, ou rend la main au bout de `msMax`. */
@@ -1037,6 +1055,23 @@ async function routeApi(req, res, url, segments) {
     motif.every((p, i) => (p === '*' ? true : p === segments[i]))
 
   // ------------------------------------------------------------- la chaîne --
+  // LE BUDGET RESTANT, EN PERMANENCE SOUS LES YEUX.
+  //
+  // Trois services se paient : fal à la génération, ElevenLabs à la minute
+  // convertie, Apify au scraping. Leur solde ne se consultait qu'en tapant
+  // `npm run cles -- --quotas` — c'est-à-dire jamais, et on le découvrait quand
+  // une génération s'arrêtait au milieu. Un chiffre qu'on ne voit pas n'existe
+  // pas.
+  //
+  // AUCUNE CLÉ NE TRAVERSE CETTE ROUTE : la commande fille interroge les
+  // services dans son propre processus et ne rend que des soldes.
+  if (est('GET', 'api', 'quotas')) {
+    const t = await lanceEtAttends([scriptOutil('cles.mjs'), '--quotas', '--json'], {
+      msMax: 30_000,
+    })
+    return repondJson(res, 200, travailFini(t))
+  }
+
   if (est('GET', 'api', 'chaine')) {
     const chaine = litChaine()
     // `config/chaine.json` ne porte pas de secret aujourd'hui. On retire quand
@@ -1418,6 +1453,43 @@ ${essai.raison}`
     return repondJson(res, 200, travailFini(t))
   }
 
+  // UN ESSAI COURT AVANT DE REFAIRE TOUT L'AUDIO.
+  //
+  // La transposition ne se calcule pas, elle s'entend : le nombre juste — celui
+  // qui met la prise sur la hauteur du modèle — n'est pas toujours celui qu'on
+  // préfère. On l'ajuste donc par essais, et chaque essai coûtait jusqu'ici une
+  // conversion complète de toute la prise, plus la transcription qui suit.
+  //
+  // Rien n'est payant : le local tourne sur la carte. Le seul coût est le temps,
+  // et c'est précisément ce qu'on économise. La sortie porte son propre nom :
+  // un essai ne doit jamais écraser le master qu'on est en train de juger.
+  if (est('POST', 'api', 'videos', '*', 'audio', 'essai')) {
+    const slug = exigeVideo(slugDeLaVideo(segments))
+    const corps = await litCorpsJson(req)
+    if (!corps?.modele || !/^[a-z0-9][a-z0-9-]{0,60}$/i.test(String(corps.modele))) {
+      throw new ErreurHttp(400, `Identifiant de modèle refusé.`)
+    }
+    const secondes = Math.max(2, Math.min(30, Math.round(Number(corps.secondes) || 8)))
+    const depart = Math.max(0, Math.min(36_000, Math.round(Number(corps.depart) || 0)))
+    const transpose = Math.max(-24, Math.min(24, Math.round(Number(corps.transpose) || 0)))
+
+    const t = await lanceEtAttends(
+      [
+        scriptPipeline('voix.mjs'), slug, '--local',
+        `--modele=${corps.modele}`,
+        `--transpose=${transpose}`,
+        `--essai=${secondes}`,
+        `--depart=${depart}`,
+        '--sortie=essai-local.wav',
+      ],
+      { msMax: 180_000 }
+    )
+    return repondJson(res, 200, {
+      ...travailFini(t),
+      fichier: `videos/${slug}/03-audio/essai-local.wav`,
+    })
+  }
+
   if (est('POST', 'api', 'videos', '*', 'voix', 'essai')) {
     const slug = exigeVideo(slugDeLaVideo(segments))
     const corps = await litCorpsJson(req)
@@ -1509,7 +1581,13 @@ ${essai.raison}`
         if (!/^[a-z0-9][a-z0-9-]{0,60}$/i.test(String(corps.modele))) {
           throw new ErreurHttp(400, `Identifiant de modèle refusé.`)
         }
-        args.push(`--modele=${corps.modele}`)
+        // `--modele-voix=`, jamais `--modele=` : dans `monte`, ce dernier a
+        // longtemps désigné aussi le modèle de transcription. Un nom de voix
+        // partait alors à whisper, qui répondait « Invalid whisper model » —
+        // après avoir converti la voix, donc douze minutes trop tard. La
+        // commande sait maintenant reconnaître les deux, mais l'écran n'a
+        // aucune raison de compter là-dessus : il nomme ce qu'il veut.
+        args.push(`--modele-voix=${corps.modele}`)
       }
       if (moteur === 'local' && corps?.transpose !== undefined) {
         args.push(`--transpose=${Math.max(-24, Math.min(24, Number(corps.transpose) || 0))}`)
@@ -1544,6 +1622,39 @@ ${essai.raison}`
     return repondJson(res, 200, travailFini(t))
   }
 
+  // RENDRE UN CHAMP À LA CASCADE, PAS LUI RÉÉCRIRE SA VALEUR D'ORIGINE.
+  //
+  // La flèche à côté d'un curseur annule une modification. La tentation est de
+  // réécrire l'ancienne valeur : ce serait la FIGER sur cette vidéo, et le jour
+  // où la chaîne change sa taille de sous-titres, celle-ci garderait l'ancienne
+  // sans que rien ne l'explique. On retire le champ, il redevient hérité.
+  if (est('POST', 'api', 'videos', '*', 'soustitres', 'oublie')) {
+    const slug = exigeVideo(slugDeLaVideo(segments))
+    const corps = await litCorpsJson(req)
+    const champs = Array.isArray(corps?.champs) ? corps.champs : []
+    if (!champs.length) throw new ErreurHttp(400, `Dis quels champs oublier.`)
+    if (champs.some((c) => !/^[a-zA-Z][a-zA-Z0-9]{0,40}$/.test(String(c)))) {
+      throw new ErreurHttp(400, `Nom de champ refusé.`)
+    }
+    const t = await lanceEtAttends(
+      [scriptPipeline('soustitres.mjs'), slug, `--oublie=${champs.join(',')}`, '--json'],
+      { msMax: 30_000 }
+    )
+    return repondJson(res, 200, travailFini(t))
+  }
+
+  // Promouvoir les réglages de cette vidéo en défaut de la CHAÎNE. Ça touche
+  // `config/chaine.json`, donc toutes les vidéos à venir : la commande écrit ce
+  // qui est EFFECTIF à l'écran, et l'interface demande confirmation avant.
+  if (est('POST', 'api', 'videos', '*', 'soustitres', 'defaut')) {
+    const slug = exigeVideo(slugDeLaVideo(segments))
+    const t = await lanceEtAttends(
+      [scriptPipeline('soustitres.mjs'), slug, '--defaut', '--json'],
+      { msMax: 30_000 }
+    )
+    return repondJson(res, 200, travailFini(t))
+  }
+
   if (est('POST', 'api', 'videos', '*', 'soustitres', 'valide')) {
     const slug = exigeVideo(slugDeLaVideo(segments))
     const corps = await litCorpsJson(req)
@@ -1568,6 +1679,93 @@ ${essai.raison}`
   //
   // Le patch passe par la commande, qui refuse tout ce qui toucherait aux
   // horodatages : c'est eux qui calent les sous-titres, les punchs et les plans.
+  // LE MOTEUR DE VOIX DE LA CHAÎNE, ET SON RÉGLAGE.
+  //
+  // Écrire dans `config/chaine.json` touche toutes les vidéos à venir : c'est
+  // une décision de chaîne, et l'écran demande confirmation avant. Le modèle et
+  // la transposition partent ensemble — retenir l'un sans l'autre donnerait un
+  // timbre plaqué une octave trop bas, qu'on mettrait sur le dos du modèle.
+  if (est('POST', 'api', 'chaine', 'voix', 'defaut')) {
+    const corps = await litCorpsJson(req)
+    if (!corps?.modele || !/^[a-z0-9][a-z0-9-]{0,60}$/i.test(String(corps.modele))) {
+      throw new ErreurHttp(400, `Identifiant de modèle refusé.`)
+    }
+    const transpose = Math.max(-24, Math.min(24, Math.round(Number(corps.transpose) || 0)))
+    const t = await lanceEtAttends(
+      [
+        scriptOutil('choix-voix.mjs'), '--defaut', '--local',
+        `--modele=${corps.modele}`,
+        `--transpose=${transpose}`,
+        '--json',
+      ],
+      { msMax: 30_000 }
+    )
+    return repondJson(res, 200, travailFini(t))
+  }
+
+  // LES PLANS DE COUPE, UN PAR UN.
+  //
+  // Le montage en pose une trentaine sur deux minutes, choisis par une requête
+  // en anglais dans une banque d'images. La plupart tombent juste ; deux ou
+  // trois ne veulent rien dire, et ce sont ceux-là qu'on voit. Les compter ne
+  // sert à rien — il faut les REGARDER.
+  if (est('GET', 'api', 'videos', '*', 'plans')) {
+    const slug = exigeVideo(slugDeLaVideo(segments))
+    const t = await lanceEtAttends(
+      [scriptPipeline('broll.mjs'), slug, '--plans', '--json'],
+      { msMax: 30_000 }
+    )
+    return repondJson(res, 200, travailFini(t))
+  }
+
+  // Refuser un plan en appelle un autre — on ne laisse jamais un trou, le
+  // précédent s'étirerait et on fabriquerait le temps mort qu'on évitait.
+  // Gratuit : la banque d'images ne se facture pas.
+  if (est('POST', 'api', 'videos', '*', 'plans', '*', 'remplace')) {
+    const slug = exigeVideo(slugDeLaVideo(segments))
+    const numero = Number(segments[4])
+    if (!Number.isInteger(numero) || numero < 1 || numero > 999) {
+      throw new ErreurHttp(400, `Numéro de plan invalide.`)
+    }
+    // LA SOURCE SE DEMANDE, ELLE NE SE DEVINE PAS — L UNE EST GRATUITE, L AUTRE
+    // SE PAIE.
+    //
+    // Pexels ne coûte rien ; une génération fal coûte ~0,18 $. Le §2 du
+    // CLAUDE.md interdit de lancer un appel payant sans annoncer son prix, donc
+    // l écran le demande avant d appeler cette route. Ici on se contente de
+    // refuser une source inconnue.
+    const corps = await litCorpsJson(req).catch(() => ({}))
+    const source = corps?.source === 'ia' ? 'ia' : 'pexels'
+    const args = [scriptPipeline('broll.mjs'), slug, `--remplace=${numero}`, '--json']
+    if (source === 'ia') args.push('--source=ia')
+
+    // UNE GÉNÉRATION DURE TROIS MINUTES : ELLE NE PEUT PAS ATTENDRE EN SILENCE.
+    //
+    // La recherche en banque rend la main en quelques secondes — l attendre est
+    // sans conséquence. La génération, non : le bouton restait figé deux à trois
+    // minutes sans une ligne, ce qui est indiscernable d un plantage. Elle part
+    // donc en travail de fond, comme l entraînement et la récolte, et son
+    // journal défile pendant qu elle tourne.
+    if (source === 'ia') {
+      return repondJson(res, 202, travailLance(lanceTravail(args)))
+    }
+    const t = await lanceEtAttends(args, { msMax: 120_000 })
+    return repondJson(res, 200, travailFini(t))
+  }
+
+  // Les nombres dits en lettres, réécrits en chiffres. `voir` ne touche à rien
+  // et rend la liste de ce qui changerait : sur quatre cents mots, appliquer
+  // sans montrer serait impossible à relire.
+  if (est('POST', 'api', 'videos', '*', 'texte', 'chiffres')) {
+    const slug = exigeVideo(slugDeLaVideo(segments))
+    const corps = await litCorpsJson(req)
+    const args = [scriptPipeline('texte.mjs'), slug]
+    args.push(corps?.applique === true ? '--chiffres' : '--chiffres=voir')
+    args.push('--json')
+    const t = await lanceEtAttends(args, { msMax: 30_000 })
+    return repondJson(res, 200, travailFini(t))
+  }
+
   if (est('PUT', 'api', 'videos', '*', 'texte')) {
     const slug = exigeVideo(slugDeLaVideo(segments))
     const corps = await litCorpsJson(req)
@@ -1800,10 +1998,89 @@ ${essai.raison}`
     return repondJson(res, 202, travailLance(lanceTravail(args)))
   }
 
+  // ---- déposer un fichier plutôt que de donner une adresse ----------------
+  //
+  // POURQUOI UN FICHIER À LA FOIS, ET PAS UN LOT.
+  //
+  // `litMultipart` refuse par principe plus d'un fichier par envoi, et c'est
+  // une brique de sécurité qu'on n'élargit pas pour un confort d'écran. Le
+  // client boucle donc, un envoi par fichier — ce qui n'enlève rien : le
+  // manifeste cumule et se réécrit après CHAQUE source, donc déposer cinq
+  // fichiers l'un après l'autre dans le même `--nom=` donne exactement la même
+  // empreinte qu'un lot, et une interruption au troisième garde les deux
+  // premiers.
+  //
+  // C'est aussi la sortie de secours des plateformes qui exigent une session :
+  // on télécharge la vidéo à la main, on la dépose ici, aucun cookie en jeu.
+  if (est('POST', 'api', 'empreintes', 'fichier')) {
+    const { champs, fichier } = await litMultipart(req, { tailleMax: TAILLE_MAX })
+    let aEffacer = true
+    try {
+      if (!fichier) throw new ErreurHttp(400, `Aucun fichier reçu.`)
+
+      const args = [scriptPipeline('empreinte.mjs'), fichier.chemin]
+      const nom = String(champs?.nom ?? '').trim().slice(0, 60)
+      if (nom) args.push(`--nom=${nom}`)
+      // Le nom d'origine, pour que le manifeste garde autre chose que le nom
+      // temporaire. Il vient du client : on le borne et on lui retire tout ce
+      // qui pourrait passer pour autre chose qu'un titre.
+      const titre = String(fichier.nom ?? '').replace(/[\r\n"]/g, '').trim().slice(0, 120)
+      if (titre) args.push(`--titre=${titre}`)
+      if (champs?.marge !== undefined) {
+        args.push(`--marge=${Math.max(0, Math.min(60, Number(champs.marge) || 20))}`)
+      }
+      args.push('--json')
+
+      const t = lanceTravail(args)
+      // LE TEMPORAIRE NE S'EFFACE PAS ICI : L'ENFANT LE LIT ENCORE.
+      //
+      // Même piège que le dépôt d'un rush. `empreinte.mjs` sépare, mesure et
+      // découpe — plusieurs minutes pendant lesquelles le fichier doit rester.
+      // On attend donc la vraie fin, en arrière-plan, pour le retirer.
+      attendTravail(t, 3_600_000).then(() => supprime(fichier.chemin), () => {})
+      aEffacer = false
+      return repondJson(res, 202, travailLance(t))
+    } finally {
+      if (aEffacer && fichier) supprime(fichier.chemin)
+    }
+  }
+
   if (est('DELETE', 'api', 'empreintes', '*')) {
     const t = await lanceEtAttends(
       [scriptPipeline('empreinte.mjs'), `--retire=${segments[2]}`, '--json'],
       { msMax: 30_000 }
+    )
+    return repondJson(res, 200, travailFini(t))
+  }
+
+  // RETIRER UNE SOURCE, PAS L'EMPREINTE ENTIÈRE.
+  //
+  // ON DÉSIGNE PAR LE TITRE, ET SÛREMENT PAS PAR LE RANG.
+  //
+  // Le rang était le premier choix, parce que c'est ce qu'affiche `--detail`.
+  // C'était un piège : retirer une source RENUMÉROTE toutes les suivantes. Entre
+  // le clic et la fin de la commande, la liste à l'écran porte encore les
+  // anciens numéros — et un second clic pendant ce temps désigne une autre
+  // source que celle qu'on regarde. La confirmation, elle, affiche le bon titre.
+  // On supprime donc autre chose que ce qu'on vient de lire et d'approuver, en
+  // silence, sans retour possible : les extraits sont effacés et le fichier
+  // d'origine d'un dépôt n'existe plus.
+  //
+  // Le titre ne bouge pas quand la liste change. La commande refuse s'il en
+  // désigne deux, ce qui est le bon comportement : mieux vaut demander le rang
+  // que retirer au hasard.
+  if (est('DELETE', 'api', 'empreintes', '*', 'sources')) {
+    const corps = await litCorpsJson(req)
+    const titre = String(corps?.titre ?? '').trim()
+    if (!titre) throw new ErreurHttp(400, `Donne le titre de la source à retirer.`)
+    const t = await lanceEtAttends(
+      [
+        scriptPipeline('empreinte.mjs'),
+        `--retire-source=${titre}`,
+        `--de=${segments[2]}`,
+        '--json',
+      ],
+      { msMax: 60_000 }
     )
     return repondJson(res, 200, travailFini(t))
   }
@@ -1898,6 +2175,22 @@ ${essai.raison}`
       ))
     }
 
+    // L'ouverture générée coûte dix-huit centimes : même devis que les autres
+    // appels payants, même accord explicite avant de partir (§2, §7).
+    if (corps.ouvertureIa === true) {
+      exigeConfirmation(corps, `plans-ia:${slug}`, {
+        service: 'fal',
+        dollars: 0.18,
+        bareme: `environ 0,18 $ par plan généré`,
+        quoi:
+          `Le plan d'ouverture de « ${slug} » sera généré par IA — un gros plan de ` +
+          `visage avec l'émotion du passage — au lieu d'être pris en banque.`,
+      })
+      return repondJson(res, 202, travailLance(
+        lanceTravail([scriptPipeline('monte.mjs'), slug, '--depuis=cale', '--ouverture=ia'])
+      ))
+    }
+
     return repondJson(res, 202, travailLance(
       lanceTravail([scriptPipeline('monte.mjs'), slug, '--depuis=cale'])
     ))
@@ -1921,7 +2214,197 @@ ${essai.raison}`
     if (corps.extrait && /^\d+-\d+$/.test(String(corps.extrait))) {
       args.push(`--extrait=${corps.extrait}`, `--sortie=videos/${slug}/06-rendu/${slug}-extrait.mp4`)
     }
-    return repondJson(res, 202, travailLance(lanceTravail(args)))
+    // ON REND LE CHEMIN DE CE QU'ON PRODUIT, PAS SEULEMENT LE TRAVAIL.
+    //
+    // Un brouillon et un extrait n'écrivent pas sur le master — c'est voulu,
+    // sinon trois secondes remplaceraient la vidéo entière. Mais l'écran ne
+    // savait pas non plus où ils atterrissaient : il annonçait « rendu
+    // terminé » et continuait de montrer le master absent. Le fichier existait,
+    // sur le disque, et nulle part ailleurs.
+    const fichier =
+      corps.extrait && /^\d+-\d+$/.test(String(corps.extrait))
+        ? `videos/${slug}/06-rendu/${slug}-extrait.mp4`
+        : corps.brouillon === true
+          ? `videos/${slug}/06-rendu/${slug}-brouillon.mp4`
+          : null
+    return repondJson(res, 202, { ...travailLance(lanceTravail(args)), fichier })
+  }
+
+  // ------------------------------------------------------ fabriquer la voix --
+  //
+  // Le texte devient une prise. Payant chez Fish, mais à un dixième de centime
+  // la minute : le devis est annoncé à l'écran, et la route le borne.
+  if (est('GET', 'api', 'voix-fish')) {
+    const t = await lanceEtAttends([scriptPipeline('parle.mjs'), '--voix=?', '--json'], { msMax: 20_000 })
+    return repondJson(res, 200, travailFini(t))
+  }
+
+  // DIRIGER LE TEXTE — la passe qui comprend l'émotion avant qu'on fabrique.
+  //
+  // Synchrone, parce qu'elle rend du TEXTE qu'on repose dans le champ de saisie.
+  // Un travail asynchrone aurait obligé l'écran à retrouver la phrase dans un
+  // journal, ce qui casse au premier message reformulé.
+  if (est('POST', 'api', 'videos', '*', 'dirige')) {
+    const slug = exigeVideo(slugDeLaVideo(segments))
+    const corps = await litCorpsJson(req)
+    const texte = String(corps?.texte ?? '').trim()
+    if (!texte) throw new ErreurHttp(400, `Le texte à diriger est vide.`)
+    if (texte.length > 20_000) throw new ErreurHttp(400, `Texte trop long (${texte.length} caractères).`)
+    const t = await lanceEtAttends(
+      [scriptPipeline('parle.mjs'), slug, '--dirige', '--json', '--texte=-'],
+      { msMax: 180_000, entree: texte }
+    )
+    return repondJson(res, 200, travailFini(t))
+  }
+
+  if (est('POST', 'api', 'videos', '*', 'parle')) {
+    const slug = exigeVideo(slugDeLaVideo(segments))
+    const corps = await litCorpsJson(req)
+    const texte = String(corps?.texte ?? '').trim()
+    if (!texte) throw new ErreurHttp(400, `Le texte à lire est vide.`)
+    // Un script de dix minutes fait environ dix mille caractères ; au-delà de
+    // vingt mille, c'est une erreur de collage, pas une intention.
+    if (texte.length > 20_000) throw new ErreurHttp(400, `Texte trop long (${texte.length} caractères).`)
+
+    // Le texte passe par l'entrée standard : un script porte des sauts de ligne,
+    // et le garde des arguments les refuse — à raison.
+    const args = [scriptPipeline('parle.mjs'), slug, '--texte=-']
+    if (corps?.voix) {
+      const v = String(corps.voix)
+      if (!/^[a-z0-9]{8,64}$/i.test(v)) throw new ErreurHttp(400, `Voix invalide.`)
+      args.push(`--voix=${v}`)
+    }
+    if (corps?.modele) {
+      const m = String(corps.modele)
+      if (!['s1', 's2.1-pro', 'speech-1.6'].includes(m)) throw new ErreurHttp(400, `Modèle inconnu.`)
+      args.push(`--modele=${m}`)
+    }
+    const t = Number(corps?.temperature)
+    if (Number.isFinite(t)) args.push(`--temperature=${Math.max(0.1, Math.min(1.5, t))}`)
+    const d = Number(corps?.debit)
+    if (Number.isFinite(d)) args.push(`--debit=${Math.max(0.5, Math.min(2, d))}`)
+    if (corps?.modeleLocal) {
+      const m = String(corps.modeleLocal)
+      if (!/^[a-z0-9][a-z0-9-]{0,40}$/.test(m)) throw new ErreurHttp(400, `Modèle local invalide.`)
+      args.push(`--modele-local=${m}`)
+    }
+    if (corps?.essai === true) args.push('--essai')
+    else if (corps?.refais === true) args.push('--refais')
+
+    return repondJson(res, 202, travailLance(lanceTravail(args, { entree: texte })))
+  }
+
+  // -------------------------------------------------------------- la copie --
+  //
+  // Reproduire une vidéo de référence avec un avatar. Payant, donc annoncé :
+  // l'écran donne son devis avant, et la route le répète (§2, §7).
+  if (est('POST', 'api', 'videos', '*', 'copie')) {
+    const slug = exigeVideo(slugDeLaVideo(segments))
+    const corps = await litCorpsJson(req)
+    const lien = String(corps?.lien ?? '').trim()
+    const avatar = String(corps?.avatar ?? '').trim()
+    if (!/^https?:\/\//i.test(lien)) throw new ErreurHttp(400, `Donne un lien http(s) valide.`)
+    if (!/^[a-z0-9][a-z0-9-]{0,40}$/.test(avatar)) throw new ErreurHttp(400, `Avatar invalide.`)
+    const plans = Math.max(1, Math.min(12, Number(corps?.plans) || 3))
+    return repondJson(res, 202, travailLance(lanceTravail([
+      scriptPipeline('copie.mjs'), slug, `--lien=${lien}`, `--avatar=${avatar}`, `--plans=${plans}`,
+    ])))
+  }
+
+  // ------------------------------------------------------------ les avatars --
+  //
+  // UN AVATAR APPARTIENT À LA CHAÎNE, PAS À UNE VIDÉO.
+  //
+  // Comme la voix et la direction artistique, il vit dans `marque/` et sert à
+  // toutes les vidéos. D'où un espace à lui dans l'atelier plutôt qu'une étape
+  // de production : on n'ajoute pas un visage à chaque tournage.
+  if (est('GET', 'api', 'avatars')) {
+    const t = await lanceEtAttends([scriptPipeline('avatars.mjs'), '--json'], { msMax: 15_000 })
+    return repondJson(res, 200, travailFini(t))
+  }
+
+  if (est('POST', 'api', 'avatars')) {
+    const { champs, fichier } = await litMultipart(req, { tailleMax: TAILLE_MAX })
+    try {
+      const id = String(champs.id ?? '').trim()
+      if (!/^[a-z0-9][a-z0-9-]{0,40}$/.test(id)) {
+        throw new ErreurHttp(400, `Identifiant invalide : minuscules, chiffres et tirets.`)
+      }
+      // `--ajoute` crée, `--photos` complète : c'est l'écran qui sait lequel des
+      // deux, puisque lui seul connaît la liste déjà affichée.
+      const drapeau = champs.existe === 'oui' ? '--photos' : '--ajoute'
+      const args = [scriptPipeline('avatars.mjs'), `${drapeau}=${id}`]
+      if (champs.nom) args.push(`--nom=${String(champs.nom).slice(0, 60)}`)
+      if (champs.signe) args.push(`--signe=${String(champs.signe).slice(0, 200)}`)
+      args.push(fichier.chemin)
+      const t = await lanceEtAttends(args, { msMax: 60_000 })
+      return repondJson(res, 200, travailFini(t))
+    } finally {
+      supprime(fichier.chemin)
+    }
+  }
+
+  // L'IDENTITÉ DE JEU — ce qui fait qu'on reconnaît quelqu'un d'une vidéo à
+  // l'autre. Se corrige à la main, ou se déduit de ses photos et de la marque.
+  if (est('POST', 'api', 'avatars', '*', 'identite')) {
+    const id = segments[2]
+    if (!/^[a-z0-9][a-z0-9-]{0,40}$/.test(id)) throw new ErreurHttp(400, `Avatar invalide.`)
+    const corps = await litCorpsJson(req)
+    const args = [scriptPipeline('avatars.mjs'), `--identite=${id}`]
+    if (corps?.deduis === true) args.push('--deduis')
+    else {
+      const texte = String(corps?.texte ?? '').trim()
+      if (!texte) throw new ErreurHttp(400, `L'identité est vide.`)
+      args.push(`--texte=${texte.slice(0, 2000)}`)
+    }
+    // La déduction interroge un modèle : une minute au pire, pas quinze secondes.
+    const t = await lanceEtAttends(args, { msMax: 120_000 })
+    return repondJson(res, 200, travailFini(t))
+  }
+
+  if (est('DELETE', 'api', 'avatars', '*')) {
+    const t = await lanceEtAttends(
+      [scriptPipeline('avatars.mjs'), `--retire=${segments[2]}`],
+      { msMax: 15_000 }
+    )
+    return repondJson(res, 200, travailFini(t))
+  }
+
+  // ------------------------------------------- déduire le script d'une prise --
+  //
+  // CE N'EST PAS ÉCRIRE UN SCRIPT, ET C'EST POUR ÇA QUE ÇA A UN BOUTON.
+  //
+  // Écrire un script — choisir un angle, un hook, une chute — reste dans la
+  // conversation (§2). Mais quand la prise est DÉJÀ enregistrée, l'éditorial a
+  // eu lieu : il ne reste qu'à découper et à traduire chaque passage en requête
+  // d'images. Aucune décision, donc aucune raison de renvoyer vers le fil.
+  if (est('POST', 'api', 'videos', '*', 'script')) {
+    const slug = exigeVideo(slugDeLaVideo(segments))
+    return repondJson(
+      res,
+      202,
+      travailLance(lanceTravail([scriptPipeline('script.mjs'), slug, '--force']))
+    )
+  }
+
+  // ------------------------------------------------------------- le drive ---
+  //
+  // L'ENVOI EST UN GESTE, PAS UNE DÉCISION — DONC IL A SA PLACE ICI (§2).
+  //
+  // Déposer un master dans un dossier ne s'argumente pas : on le fait, on voit
+  // la barre avancer, on récupère un lien. La commande existe seule au terminal
+  // (`npm run drive`), l'atelier ne fait que l'appeler et montrer son journal.
+  //
+  // Ce qui NE passe pas par ici : la connexion. Elle ouvre le navigateur sur un
+  // écran de consentement Google et écrit un jeton dans le trousseau — un poste
+  // s'autorise au terminal, une fois, en connaissance de cause.
+  if (est('GET', 'api', 'drive')) {
+    const t = await lanceEtAttends([scriptPipeline('drive.mjs'), '--etat', '--json'], { msMax: 15_000 })
+    return repondJson(res, 200, travailFini(t))
+  }
+  if (est('POST', 'api', 'videos', '*', 'drive')) {
+    const slug = exigeVideo(slugDeLaVideo(segments))
+    return repondJson(res, 202, travailLance(lanceTravail([scriptPipeline('drive.mjs'), slug, '--json'])))
   }
 
   // -------------------------------------------------------------- travaux ---
@@ -2003,6 +2486,38 @@ async function traite(req, res) {
 
   // ------------------------------------------------ vignettes de tes plans ---
   //
+  // Les photos des avatars, en lecture seule — l'écran ne peut pas les montrer
+  // autrement : elles vivent dans `marque/`, hors de `/media` qui exige un slug.
+  //
+  // ET IL LES SERT EN VIGNETTE, PAS EN ORIGINAL.
+  //
+  // Une photo de référence pèse deux à trois mégaoctets ; la carte l'affiche
+  // dans un carré de cinquante-quatre pixels. Servir l'original, c'est dix
+  // mégaoctets pour quatre timbres-poste — l'écran restait vide plusieurs
+  // secondes. La vignette est fabriquée une fois, puis relue.
+  if (segments[0] === 'avatar') {
+    if (!['GET', 'HEAD'].includes(req.method)) throw new ErreurHttp(405, `Méthode refusée.`)
+    const reste = segments.slice(1).join('/')
+    if (!reste) throw new ErreurHttp(400, `Précise le fichier.`)
+    const racineAvatars = path.join(CHEMINS.marque, 'avatars')
+    const chemin = sousDossier(racineAvatars, reste)
+    if (!['.png', '.jpg', '.jpeg', '.webp'].includes(path.extname(chemin).toLowerCase())) {
+      throw new ErreurHttp(403, `Ce type de fichier ne se sert pas depuis ici.`)
+    }
+    if (!fs.existsSync(chemin)) throw new ErreurHttp(404, `Photo introuvable.`)
+
+    if (url.searchParams.has('vignette')) {
+      const cache = path.join(path.dirname(chemin), '.vignettes')
+      const petite = path.join(cache, path.basename(chemin, path.extname(chemin)) + '.jpg')
+      if (!fs.existsSync(petite) || fs.statSync(petite).mtimeMs < fs.statSync(chemin).mtimeMs) {
+        fs.mkdirSync(cache, { recursive: true })
+        await ffmpeg(['-i', chemin, '-vf', 'scale=180:-2', '-q:v', '4', petite])
+      }
+      return sertFichier(req, res, petite)
+    }
+    return sertFichier(req, res, chemin)
+  }
+
   // Servir `assets/broll/` en lecture seule, pour que la bibliothèque se voie.
   // Le dossier n'appartient pas à une vidéo : il ne passe donc pas par `/media`,
   // qui exige un slug — et cette route-ci n'accepte que le dossier des plans.

@@ -1,0 +1,196 @@
+{
+  "slug": "video-2",
+  "format": "short-faceless",
+  "duree_cible_s": 113,
+  "titre_travail": "3 signes qu'une personne est réellement intéressée",
+  "mot_cle": "signes personne vraiment intéressée",
+  "intention": "informative",
+  "pilier": "H2. Ce qui fait qu'une relation tient",
+  "angle": "L'attention ne coûte rien ; l'investissement, la curiosité et la progression, si. Ce sont les trois seuls signaux qui distinguent un intérêt réel d'une habitude.",
+  "avatar": "Le Désabusé",
+  "niveau_conscience": 2,
+  "blocs": [
+    {
+      "id": "hook",
+      "role": "hook",
+      "texte": "Plus quelqu'un te donne de l'attention, plus tu peux croire qu'il est intéressé, alors qu'en fait, ce n'est pas forcément le cas.",
+      "intention": "posé",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "broll",
+          "ancre": "Plus quelqu'un te donne",
+          "requete": "phone screen notifications glowing at night"
+        },
+        {
+          "type": "punch-in",
+          "ancre": "ce n'est pas forcément le cas",
+          "amplitude": 0.06
+        }
+      ]
+    },
+    {
+      "id": "promesse",
+      "role": "promesse",
+      "texte": "Voici 3 signes qui montrent qu'une personne est réellement intéressée par toi.",
+      "intention": "vif",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "broll",
+          "ancre": "Voici 3 signes",
+          "requete": "young woman thinking looking out window"
+        }
+      ]
+    },
+    {
+      "id": "signe-1",
+      "role": "corps",
+      "texte": "Le premier signe, c'est l'investissement. Quelqu'un peut t'envoyer des messages toute la journée, réagir à tes stories et te faire énormément de compliments, sans jamais chercher à faire évoluer votre relation. A l'inverse, une personne réellement intéressée va progressivement consacrer quelque chose qui a beaucoup plus de valeur que quelques messages, son temps et son énergie surtout. Elle va chercher à te voir, organiser des rendez-vous et faire naturellement une place pour toi dans son quotidien. Parce que l'attention est facile à donner, en réalité, lui, l'investissement, il a un coût.",
+      "intention": "posé",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "broll",
+          "ancre": "Le premier signe",
+          "requete": "hands typing message smartphone close up"
+        },
+        {
+          "type": "broll",
+          "ancre": "sans jamais chercher",
+          "requete": "unread messages phone screen alone"
+        },
+        {
+          "type": "broll",
+          "ancre": "A l'inverse",
+          "requete": "two people meeting cafe talking evening"
+        },
+        {
+          "type": "broll",
+          "ancre": "Elle va chercher",
+          "requete": "couple walking together street evening"
+        },
+        {
+          "type": "punch-in",
+          "ancre": "il a un coût",
+          "amplitude": 0.05
+        }
+      ]
+    },
+    {
+      "id": "signe-2",
+      "role": "corps",
+      "texte": "Le deuxième signe, c'est la curiosité personnelle. Quelqu'un peut aimer discuter avec toi simplement parce qu'il apprécie ton attention, mais une personne qui s'intéresse vraiment à toi va chercher à comprendre qui tu es profondément. Elle va retenir des détails pour revenir sur ce que tu lui as raconté et s'intéresser à tes projets, tes valeurs et ta façon de penser.",
+      "intention": "curieux",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "broll",
+          "ancre": "Le deuxième signe",
+          "requete": "woman listening attentively conversation"
+        },
+        {
+          "type": "broll",
+          "ancre": "va chercher à comprendre",
+          "requete": "close up face listening intently"
+        },
+        {
+          "type": "broll",
+          "ancre": "Elle va retenir des détails",
+          "requete": "person writing notes remembering"
+        }
+      ]
+    },
+    {
+      "id": "signe-3",
+      "role": "corps",
+      "texte": "Le troisième signe, lui, est probablement le plus révélateur, le plus important de tous. Et il n'est pas forcément évident dit comme ça, mais c'est la progression. La progression, qu'est-ce que c'est ? En fait, une personne peut être très intéressée au début sans jamais vouloir aller plus loin. Ce qui compte, c'est donc ce qui se passe avec le temps. Est-ce que les rendez-vous deviennent plus réguliers ? Est-ce que la relation devient plus personnelle ? Est-ce que la personne devient progressivement plus claire sur ce qu'elle recherche ? Parce qu'un intérêt réel n'a pas besoin d'être spectaculaire. Il a besoin d'évoluer.",
+      "intention": "posé",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "broll",
+          "ancre": "Le troisième signe",
+          "requete": "hourglass sand falling moody light"
+        },
+        {
+          "type": "punch-in",
+          "ancre": "c'est la progression",
+          "amplitude": 0.06
+        },
+        {
+          "type": "broll",
+          "ancre": "Est-ce que les rendez-vous",
+          "requete": "calendar dates marked repeated meetings"
+        },
+        {
+          "type": "broll",
+          "ancre": "Il a besoin d'évoluer",
+          "requete": "road path forward sunset walking"
+        }
+      ]
+    },
+    {
+      "id": "synthese",
+      "role": "chute",
+      "texte": "Alors, retiens simplement ça, ne juge jamais l'intérêt de quelqu'un sur un comportement isolé. Regarde la direction que prend la relation. C'est hyper important. Par exemple, un message, un like ou un rendez-vous ne veulent pas dire grand-chose à eux tous seuls isolés. Mais si, semaine après semaine, l'investissement augmente et que la relation avance, tu as un signal beaucoup plus fiable.",
+      "intention": "tranchant",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "broll",
+          "ancre": "Alors, retiens simplement",
+          "requete": "person reflecting calm window light"
+        },
+        {
+          "type": "broll",
+          "ancre": "Regarde la direction",
+          "requete": "compass pointing direction closeup"
+        },
+        {
+          "type": "broll",
+          "ancre": "semaine après semaine",
+          "requete": "time lapse weeks passing city"
+        }
+      ]
+    },
+    {
+      "id": "nuance",
+      "role": "relance",
+      "texte": "Mais attention, il y a une différence encore plus importante. Quelqu'un peut sincèrement être intéressé par toi sans pour autant être capable de construire la relation que tu recherches précisément.",
+      "intention": "grave",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "punch-in",
+          "ancre": "Mais attention",
+          "amplitude": 0.07
+        },
+        {
+          "type": "broll",
+          "ancre": "sans pour autant",
+          "requete": "two people sitting apart distant"
+        }
+      ]
+    },
+    {
+      "id": "sortie",
+      "role": "sortie",
+      "texte": "Donc, si tu veux maintenant recevoir la méthode complète pour nos plus célibataires en 2026, il suffit simplement de commenter le mot guide. C'est gratuit et on te l'envoie.",
+      "intention": "complice",
+      "prise": 1,
+      "visuel": [
+        {
+          "type": "broll",
+          "ancre": "commenter le mot guide",
+          "requete": "social media comment section phone"
+        }
+      ]
+    }
+  ],
+  "maillage": {
+    "vers": [],
+    "depuis": []
+  },
+  "notes": "Script écrit APRÈS la prise : les textes sont le transcript mot pour mot, découpé en blocs. Rien n'est réécrit — la voix off existe déjà, et le moindre écart ferait dériver le calage. Le bloc « nuance » ouvre volontairement sur la compatibilité sans la traiter : c'est le pont vers une prochaine vidéo du même pilier."
+}
