@@ -1,0 +1,88 @@
+# --- Secrets : ne sortent JAMAIS du poste -----------------------------------
+.env
+config/keys.json
+# Les sauvegardes ecrites par les outils avant d'ecraser un fichier de config :
+# elles portent l'etat d'un poste a un instant, pas une decision de la chaine.
+config/*.precedent
+config/.trousseau-etat.json
+config/.voix-catalogue.json
+**/*.key
+# Un export de cookies porte une SESSION OUVERTE : quiconque l'a est connecté au
+# compte. C'est un secret au même titre qu'une clé d'API, et il arrive ici sous
+# un nom banal — d'ou le filet large.
+cookies.txt
+*.cookies.txt
+**/cookies*.txt
+
+# --- Dependances ------------------------------------------------------------
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+
+# --- Media lourds : regenerables ou irrecuperables, jamais versionnes -------
+videos/*/02-tournage/
+videos/*/03-audio/
+videos/*/06-rendu/
+# `05-montage/` voyage — c'est ce que dit le §4 — mais son sous-dossier `public/`
+# non : Remotion y recopie les plans de coupe telecharges et la piste voix, soit
+# trois cents megaoctets que `npm run monte` reconstruit a partir du plan. Le
+# plan, lui, pese quatre-vingts kilooctets et reste versionne.
+videos/*/05-montage/public/
+# `copie/` non plus : c'est le plan de travail de la copie IA — la video de
+# reference RAPATRIEE (celle de quelqu'un d'autre), les troncons decoupes, les
+# plans generes et une liste de chemins ABSOLUS propres a ce poste. Tout se
+# refait d'une commande, et rien la-dedans n'a de raison de voyager.
+videos/*/05-montage/copie/
+videos/*/05-montage/copie.mp4
+veille/youtube/miniatures/
+veille/youtube/raw/
+veille/tiktok/media/
+veille/tiktok/raw/
+# Les vidéos rapatriées au carnet d'inspirations pèsent des dizaines de
+# mégaoctets et se retéléchargent d'une commande. L'index et les transcripts,
+# eux, restent versionnés : ce sont eux qu'on relit, et ils tiennent en
+# kilooctets.
+veille/inspirations/media/
+veille/inspirations/raw/
+# Les extraits de voix recoltes : plusieurs megaoctets de wav par empreinte, et
+# ils se refont d'une commande a partir des sources. `empreinte.json` reste
+# versionne — c'est lui qui porte les adresses, les durees et les mesures, donc
+# de quoi tout reconstruire.
+marque/voix/*/extraits/
+marque/voix/*/reference.wav
+# Le modele entrainé pèse 60 Mo et son index 30 : ils se refont a partir des
+# extraits. `modele.json` reste versionne — il dit sur quoi et comment.
+marque/voix/*/modele/*.pth
+marque/voix/*/modele/*.index
+# Les vignettes des avatars : un cache de 180 px que le serveur refabrique.
+marque/avatars/**/.vignettes/
+assets/broll/
+assets/musique/
+assets/sfx/
+remotion/out/
+outils/bin/
+outils/modeles/
+
+# --- Caches -----------------------------------------------------------------
+.cache/
+*.log
+.remotion/
+
+# --- Ancien projet, conserve comme reference le temps de la migration -------
+Youtube automatisé/
+
+# --- Systeme ----------------------------------------------------------------
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Permissions locales, propres a chaque poste
+.claude/settings.local.json
+
+# Les vidéos mises de côté : elles attendent une décision, pas un versionnement.
+videos/.corbeille/
+
+# yt-dlp posé dans le dossier de la chaîne, quand le cache partagé est
+# inaccessible (AppData virtualisé). Voir pipeline/lib/tiktok.mjs.
+.outils-ytdlp/

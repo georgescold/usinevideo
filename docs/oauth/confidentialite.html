@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="fr">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Règles de confidentialité — Usine à vidéo</title>
+<style>
+  :root { color-scheme: light; }
+  body {
+    margin: 0; padding: 48px 24px;
+    font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #17202b; background: #fbfaf9;
+  }
+  main { max-width: 640px; margin: 0 auto; }
+  h1 { font-size: 28px; line-height: 1.25; margin: 0 0 8px; }
+  .maj { color: #5b6675; margin: 0 0 36px; font-size: 15px; }
+  h2 { font-size: 19px; margin: 34px 0 10px; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 8px; }
+  code { background: #efece8; border-radius: 4px; padding: 1px 5px; font-size: 15px; }
+  footer { margin-top: 44px; padding-top: 20px; border-top: 1px solid #e3e0dc; color: #5b6675; font-size: 15px; }
+  a { color: #a3204c; }
+</style>
+
+<main>
+  <h1>Règles de confidentialité</h1>
+  <p class="maj">Usine à vidéo — dernière mise à jour : 3 septembre 2026</p>
+
+  <p>
+    Usine à vidéo est un outil personnel de production vidéo, exécuté localement sur l'ordinateur
+    de son propriétaire. Il n'a pas d'utilisateurs tiers, pas de serveur, pas de base de données.
+  </p>
+
+  <h2>Les données auxquelles l'application accède</h2>
+  <p>
+    L'application demande une seule permission Google :
+    <code>https://www.googleapis.com/auth/drive.file</code>.
+  </p>
+  <p>
+    Cette permission ne donne accès qu'aux fichiers <strong>créés par l'application elle-même</strong>.
+    Elle ne permet ni de lire, ni de lister, ni de modifier, ni de supprimer les autres fichiers du
+    Drive. Aucun autre service Google n'est sollicité : ni contacts, ni agenda, ni messagerie, ni
+    profil.
+  </p>
+
+  <h2>Ce qui est fait de ces données</h2>
+  <ul>
+    <li>
+      L'application crée un dossier dans le Drive de son propriétaire et y dépose les vidéos qu'il a
+      lui-même produites, quand il le demande.
+    </li>
+    <li>Aucune donnée n'est lue depuis Drive.</li>
+    <li>
+      Aucune donnée n'est transmise à un tiers, revendue, analysée, ni employée pour entraîner un
+      modèle.
+    </li>
+  </ul>
+
+  <h2>Ce qui est conservé, et où</h2>
+  <ul>
+    <li>
+      Le jeton d'autorisation Google est enregistré <strong>uniquement</strong> dans un fichier local
+      de l'ordinateur (<code>config/keys.json</code>), jamais transmis ni sauvegardé ailleurs.
+    </li>
+    <li>
+      Les vidéos et les fichiers de travail restent sur cet ordinateur, sauf ceux que le propriétaire
+      choisit d'envoyer dans son propre Drive.
+    </li>
+    <li>Aucun journal d'utilisation n'est collecté ni transmis.</li>
+  </ul>
+
+  <h2>Révoquer l'accès</h2>
+  <p>
+    L'accès se retire à tout moment depuis
+    <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>.
+    Le jeton local s'efface avec la commande <code>npm run drive -- --deconnecte</code>.
+    Les fichiers déjà déposés dans le Drive appartiennent à son propriétaire et y restent.
+  </p>
+
+  <h2>Contact</h2>
+  <p>Pour toute question sur ces règles : <!-- remplace par ton adresse de contact -->.</p>
+
+  <footer>
+    Cet outil n'est pas distribué publiquement et n'a pas d'utilisateurs autres que son propriétaire.
+  </footer>
+</main>
+</html>

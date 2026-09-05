@@ -1,0 +1,176 @@
+{
+  "_lecture": "Carte d'identite de la chaine. VIDE au depart : c'est /init-chaine qui le remplit, en interrogeant l'utilisateur puis la veille. Tout le reste de la stack lit ce fichier. Ne jamais l'editer a la main sans prevenir l'utilisateur.",
+  "initialise": false,
+  "date_init": null,
+  "identite": {
+    "id": null,
+    "nom": null,
+    "langue": "fr",
+    "promesse": null,
+    "en_une_phrase": null
+  },
+  "produit": {
+    "nom": null,
+    "type": null,
+    "prix": null,
+    "url": null,
+    "fiche": "marque/Fiche-Produit.md"
+  },
+  "avatar": {
+    "_lecture": "L'avatar GÉNÉRAL de la chaîne : celui à qui toutes les vidéos parlent. Les autres avatars restent dans marque/Fiche-Avatars.md et servent à varier les angles.",
+    "nom": null,
+    "segment": null,
+    "niveau_de_conscience": null,
+    "fiche": "marque/Fiche-Avatars.md",
+    "hooks": "marque/Hook-Bank.md"
+  },
+  "marketeur": {
+    "nom": null,
+    "posture": null,
+    "fiche": "marque/Le-Marketeur.md"
+  },
+  "avatars": {
+    "_lecture": "Le registre de jeu commun a TOUS les avatars de cette chaine. Il ne fige pas une expression : il donne le temperament dont chaque avatar decline ses reactions. Vide = aucun registre impose, l'identite se deduit des seules photos et de la marque.",
+    "registre": null
+  },
+  "plateformes": {
+    "youtube": {
+      "actif": true,
+      "handle": null,
+      "url": null,
+      "id_chaine": null
+    },
+    "tiktok": {
+      "actif": true,
+      "handle": null,
+      "url": null
+    },
+    "instagram": {
+      "actif": false,
+      "handle": null,
+      "url": null
+    }
+  },
+  "formats": {
+    "_lecture": "Actives par /init-chaine apres la veille : on ne choisit un format qu'une fois qu'on a vu ce qui marche dans la niche.",
+    "long_face_camera": {
+      "actif": false,
+      "duree_cible_s": [
+        480,
+        900
+      ]
+    },
+    "long_faceless": {
+      "actif": false,
+      "duree_cible_s": [
+        720,
+        960
+      ]
+    },
+    "long_screencast": {
+      "actif": false,
+      "duree_cible_s": [
+        720,
+        960
+      ],
+      "_lecture_locale": "Active le 26 aout 2026. L auteur peut filmer son ecran, ce qui reste compatible avec le sans-visage : on voit l ecran, pas la personne. Reserve aux RELEVES CHIFFRES, jamais aux modes d emploi : le screencast tutoriel a une mediane de ratio de 0,02 sur 33 videos du corpus. Deux videos sur dix au lot 1, pas davantage."
+    },
+    "long_avatar": {
+      "actif": false,
+      "duree_cible_s": [
+        300,
+        600
+      ]
+    },
+    "short_face_camera": {
+      "actif": false,
+      "duree_cible_s": [
+        25,
+        55
+      ]
+    },
+    "short_faceless": {
+      "actif": false,
+      "duree_cible_s": [
+        45,
+        75
+      ]
+    },
+    "short_avatar": {
+      "actif": false,
+      "duree_cible_s": [
+        20,
+        45
+      ]
+    }
+  },
+  "voix": {
+    "mode": "local",
+    "_modes": "sts = tu enregistres, ElevenLabs remplace le timbre | brute = ta voix telle quelle | tts = voix entierement synthetique | avatar = HeyGen genere image + voix",
+    "elevenlabs_voice_id": null,
+    "fish_voice_id": null,
+    "_fish_voice_id": "La voix Fish employee quand la video n en choisit pas. npm run parle -- --voix=? pour la liste du compte.",
+    "voix_de_reference": null,
+    "modele_local": null,
+    "transpose": 0,
+    "_modele_local": "Le modele entraine employe quand la video n en choisit pas. npm run entraine -- --liste",
+    "_transpose": "Demi-tons ajoutes a TA hauteur avant la conversion. Mesure : ta prise 125 Hz, myriam 216 Hz, soit +9,5 au calcul et +12 a l oreille. Sans lui, le timbre feminin se plaque une octave trop bas et sonne robotique."
+  },
+  "identite_visuelle": {
+    "fiche": "marque/identite-visuelle.md",
+    "police_titres": "Inter",
+    "police_soustitres": "Montserrat",
+    "couleur_accent": "#c9315e",
+    "couleur_fond": "#0e1718",
+    "lut": null,
+    "logo": null,
+    "style_soustitres": "mot-a-mot-couleur",
+    "couleur_texte": "#f5f3f2",
+    "couleur_accent_secondaire": "#7a5c8c",
+    "police_chiffres": "Montserrat",
+    "derivee_de": "marque/identite/conseils relationnels logo.jpeg",
+    "couleur_pastille": "#a8264c",
+    "ambiance": "douce",
+    "_ambiance": "douce | neutre | dure — regle la vignette, le grain et le contraste d ensemble",
+    "direction_plans": "low key lighting, dark, night, intimate, cinematic, film grain",
+    "_direction_plans": "ajoutee a CHAQUE requete de banque d images : c est elle qui empeche une chaine douce de recevoir des plans durs",
+    "variations_affiche": "\"wght\" 900",
+    "_variations_affiche": "axes d une police VARIABLE. Se limiter a wght : les axes optiques (opsz) interagissent mal avec font-size au rendu et peuvent faire s effondrer le texte.",
+    "soustitres": {
+      "style": "mot-a-mot-couleur",
+      "police": "Montserrat",
+      "motsParPage": 3,
+      "casse": "majuscules",
+      "taille": 86,
+      "positionBas": 22,
+      "contour": true,
+      "epaisseurContour": 1,
+      "couleurTexte": "#f5f3f2",
+      "couleurSurligne": "#a8264c",
+      "couleurContour": "#000000",
+      "animation": "pop",
+      "ponctuation": false
+    },
+    "_soustitres": "Direction artistique validee a l ecran le 28 aout 2026. Ce bloc prime sur les couleurs eparses ci-dessus. Se regle par video avec: npm run soustitres -- <slug>"
+  },
+  "seo": {
+    "mot_cle_pilier": null,
+    "piliers": [],
+    "playlists": []
+  },
+  "cadence": {
+    "long_par_semaine": 0,
+    "short_par_semaine": 0
+  },
+  "transcription": {
+    "modele": "large-v3-turbo",
+    "_note": "medium perd des mots sur une voix douce ; turbo est plus fidele ET plus rapide"
+  },
+  "audio": {
+    "musique": null,
+    "_musique": "chemin relatif depuis la racine, ex. assets/musique/tension-sourde.mp3",
+    "musique_gain_db": -16,
+    "_musique_gain": "la musique s efface automatiquement sous la voix ; ce gain est son niveau quand la voix se tait",
+    "_aucun_traitement": "Aucun modificateur audio n'est applique : ni debruitage, ni normalisation, ni compression. L'audio depose sort tel quel, seule la coupe des silences et le remplacement de timbre y touchent."
+  }
+}
