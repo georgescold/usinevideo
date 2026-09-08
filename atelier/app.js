@@ -4092,13 +4092,32 @@ function arreteLaRevue() {
  * et comme un clic qui n'avait rien fait. C'est le défaut de la colonne de
  * texte, une troisième fois, et il se répare pareil : on garde la position.
  */
-async function dessineLaRevueDesPlans({ gardeLaPosition = false } = {}) {
+async function dessineLaRevueDesPlans() {
   const zone = $('revuePlans')
-  const defilement = gardeLaPosition ? window.scrollY : null
+  // LA POSITION SE GARDE TOUJOURS, SAUF EN CHANGEANT DE VIDÉO.
+  //
+  // Le premier correctif en faisait une option, que l'appelant devait penser
+  // à passer. Elle l'était à un seul endroit — et `rafraichitEtat()`, appelé
+  // juste après pour péremper la marche 7, repassait par `dessinePlan()` et
+  // redessinait TOUT sans elle : le correctif se défaisait dans la ligne
+  // suivante. Deux endroits qui doivent rester d'accord finissent toujours
+  // par diverger ; la règle vit donc ici, une fois.
+  //
+  // `replaceChildren()` vide la zone : la page rétrécit, le navigateur rabat
+  // le défilement sur la nouvelle hauteur, et le contenu revient trop tard
+  // pour qu'il remonte. C'est ça, « ça saute ».
+  const memeVideo = zone.dataset.slug === appli.slug && zone.childElementCount > 0
+  const defilement = memeVideo ? window.scrollY : null
+  zone.dataset.slug = appli.slug ?? ''
   arreteLaRevue()
-  zone.replaceChildren()
-  zone.hidden = true
-  if (!appli.slug) return
+  // ON NE VIDE PAS AVANT D'AVOIR DE QUOI REMPLIR.
+  //
+  // La zone était vidée AVANT la requête, donc la page rétrécissait pendant
+  // tout l'aller-retour : le défilement était rabattu, et le remettre après
+  // coup se voyait comme un sursaut. On construit dans un fragment, et la
+  // grille est remplacée d'un seul coup, en une image.
+  const morceau = document.createDocumentFragment()
+  if (!appli.slug) { zone.replaceChildren(); zone.hidden = true; return }
 
   let plans
   try {
@@ -4123,7 +4142,8 @@ async function dessineLaRevueDesPlans({ gardeLaPosition = false } = {}) {
       `Aucun plan de coupe pour l'instant. Une fois le montage construit, ils ` +
       `s'affichent ici un par un : la flèche joue le passage avec sa voix et ses ` +
       `sous-titres, et « Agrandir » l'ouvre en grand pour le juger.`
-    zone.append(rien)
+    morceau.append(rien)
+    zone.replaceChildren(morceau)
     zone.hidden = false
     if (defilement !== null) window.scrollTo({ top: defilement })
     return
@@ -4136,7 +4156,7 @@ async function dessineLaRevueDesPlans({ gardeLaPosition = false } = {}) {
     `passent au plan suivant sans refermer, et c'est là qu'on l'échange. ` +
     `Le premier plan est celui qui décide si les autres seront vus : ce qui arrête ` +
     `le mieux, c'est un visage qui porte une émotion.`
-  zone.append(tete)
+  morceau.append(tete)
 
   for (const p of plans) {
     const carte = creer('div', 'plan-vignette')
@@ -4325,9 +4345,12 @@ async function dessineLaRevueDesPlans({ gardeLaPosition = false } = {}) {
     autre.addEventListener('click', () => ouvreLePlan(p))
     carte.append(autre)
 
-    zone.append(carte)
+    morceau.append(carte)
   }
+  zone.replaceChildren(morceau)
   zone.hidden = false
+  // Filet : si la nouvelle grille est plus courte que l'ancienne, le
+  // navigateur a rabattu le défilement pendant le remplacement.
   if (defilement !== null) window.scrollTo({ top: defilement })
 }
 
@@ -4346,7 +4369,7 @@ async function remplaceUnPlanDeCoupe(numero, source = 'pexels') {
     const vue = r.travail?.etat === 'encours' ? await suisLeTravail(r.travail) : r.travail
     if (vue?.etat === 'echec') { annonce(derniereErreur(vue), 'erreur'); return }
 
-    await dessineLaRevueDesPlans({ gardeLaPosition: true })
+    await dessineLaRevueDesPlans()
     // ET LE PANNEAU OUVERT MONTRE LE NOUVEAU PLAN.
     //
     // L'échange se fait depuis « Agrandir » : la grille se refaisait derrière,

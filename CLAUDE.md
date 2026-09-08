@@ -2117,8 +2117,26 @@ plus, le texte entier dans l'infobulle — au-delà, la grille se met à onduler
 
 **Échanger un plan ramenait la page en haut.** La revue se reconstruit en entier
 — quatre-vingt-cinq vignettes — et le plan qu'on venait d'échanger sortait de
-l'écran. C'est le défaut de la colonne de texte, une troisième fois, et le même
-remède : on garde la position. Mesuré : 3 129 px avant, 3 129 px après.
+l'écran. C'est le défaut de la colonne de texte, une troisième fois.
+
+**LE PREMIER CORRECTIF S'EST DÉFAIT DANS LA LIGNE SUIVANTE.** Il en faisait une
+OPTION, que l'appelant devait penser à passer. Elle l'était à un seul endroit —
+et `rafraichitEtat()`, appelé juste après pour péremper la marche 7, repasse par
+`dessinePlan()` et redessinait tout sans elle. Deux endroits qui doivent rester
+d'accord finissent toujours par diverger : la règle vit donc dans la fonction,
+une fois. On garde la position **sauf** en changeant de vidéo, ce que
+`zone.dataset.slug` suffit à dire.
+
+**ET ON NE VIDE PLUS AVANT D'AVOIR DE QUOI REMPLIR.** `replaceChildren()` partait
+AVANT la requête : la page rétrécissait pendant tout l'aller-retour, le
+navigateur rabattait le défilement sur la nouvelle hauteur, et le remettre après
+coup se voyait comme un sursaut. La grille se construit dans un fragment et
+remplace l'ancienne d'un seul coup ; le `scrollTo` ne reste qu'en filet, pour le
+cas où la nouvelle grille serait plus courte.
+
+Mesuré à l'écoute de l'événement `scroll`, à 14 003 px de défilement, sur trois
+échanges d'affilée : **zéro mouvement**. Ce qui déplace encore l'écran, et
+délibérément : changer d'étape.
 
 **Et le panneau agrandi gardait l'ancien clip.** L'échange se fait depuis
 « Agrandir » ; la grille se refaisait derrière, le panneau non — alors même que
