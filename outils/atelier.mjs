@@ -371,6 +371,57 @@ function verifieArguments(args) {
   return args
 }
 
+/**
+ * DEUX TRAVAUX QUI ÉCRIVENT DANS LA MÊME VIDÉO NE PEUVENT PAS TOURNER ENSEMBLE.
+ *
+ * Le 8 septembre 2026, un montage et un rendu ont tourné en même temps sur la
+ * même VSL : Remotion a recopié `public/image.mp4` pendant que le montage
+ * l'écrivait, et le rendu est mort sur « moov atom not found » — une pile
+ * d'erreurs Rust illisible, sur un fichier qui, vérifié après coup, était
+ * parfaitement valide. Le journal montrait les deux sorties entrelacées, et
+ * c'était le seul indice.
+ *
+ * Le §4 pose déjà la règle entre deux MACHINES : une vidéo appartient à une
+ * machine à la fois pendant son montage. Elle vaut tout autant entre deux
+ * boutons du même écran, et là on peut la faire respecter.
+ *
+ * On ne liste que ce qui ÉCRIT dans `05-montage/` et `06-rendu/` : lire un
+ * transcript ou des réglages pendant un montage ne gêne personne.
+ */
+// Les commandes qui écrivent VRAIMENT dans `05-montage/` ou `06-rendu/`.
+// `broll.mjs` n'en est qu'avec `--remplace` : `--plans`, `--estime` et
+// `--lisibilite` sont des lectures, et l'écran les lance tout seul pour
+// dessiner la revue. Les compter refuserait un rendu parce qu'une grille de
+// vignettes était en train de se rafraîchir.
+const ecritDansLaVideo = (commande) =>
+  /(monte|rends)\.mjs/.test(commande) ||
+  (/broll\.mjs/.test(commande) && commande.includes('--remplace'))
+
+function exigeVideoLibre(slug) {
+  const occupe = [...travaux.values()].find(
+    (t) =>
+      t.etat === 'encours' &&
+      ecritDansLaVideo(t.commande) &&
+      // PAS DE REGEX ICI : `\` dans un gabarit vaut UN antislash, et
+      // `[ /\]` est alors une classe qui ne se ferme jamais — la construction
+      // LÈVE au lieu de comparer, et toute la route rendrait 500. Le slug est
+      // un mot de la ligne de commande : on découpe et on compare.
+      t.commande.split(/\s+/).includes(slug)
+  )
+  if (!occupe) return
+  const s = Math.round((Date.now() - new Date(occupe.debut).getTime()) / 1000)
+  throw new ErreurHttp(
+    409,
+    `« ${slug} » est déjà en travail depuis ${s} s :` +
+      String.fromCharCode(10) +
+      `  · ${occupe.commande}` +
+      String.fromCharCode(10) +
+      `Deux travaux qui écrivent dans la même vidéo se marchent dessus — un rendu ` +
+      `qui recopie la piste image pendant qu'elle s'écrit meurt sur un fichier ` +
+      `tronqué. Attends la fin, le journal la dira.`
+  )
+}
+
 function lanceTravail(args, { etiquette = null, entree = null, cwd = null, pourLEcran = false } = {}) {
   verifieArguments(args)
   purgeLesTravaux()
@@ -2518,6 +2569,7 @@ ${essai.raison}`
   // ---------------------------------------------------------- plans, rendu --
   if (est('POST', 'api', 'videos', '*', 'plans')) {
     const slug = exigeVideo(slugDeLaVideo(segments))
+    exigeVideoLibre(slug)
     const corps = await litCorpsJson(req)
 
     // « `--depuis=cale`, C'EST GRATUIT » : C'ÉTAIT FAUX, ET DE FAÇON ATTEIGNABLE.
@@ -2640,6 +2692,7 @@ ${essai.raison}`
 
   if (est('POST', 'api', 'videos', '*', 'rendu')) {
     const slug = exigeVideo(slugDeLaVideo(segments))
+    exigeVideoLibre(slug)
     const corps = await litCorpsJson(req)
     const args = [scriptPipeline('rends.mjs'), slug]
     if (corps.brouillon === true) {

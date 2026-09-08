@@ -2082,6 +2082,47 @@ de coupe, et les refaire coûterait une conversion payante pour rien.
 image n'est ni l'un ni l'autre. Cinq cents mégaoctets de clips de banque « mis de côté » sont cinq
 cents mégaoctets qu'on ne rouvrira jamais.
 
+### DEUX TRAVAUX DANS LA MÊME VIDÉO SE MARCHENT DESSUS
+
+Le 8 septembre 2026, un rendu est mort sur :
+
+```
+moov atom not found
+Invalid data found when processing input
+```
+
+…suivi d'une pile d'erreurs Rust. Vérifié après coup, **tous les fichiers
+étaient sains** : `image.mp4` se décode entièrement, `voix.wav` fait ses 311 s,
+et les 101 clips de `public/broll/` passent `ffprobe` sans une plainte. Le
+fichier invalide était la COPIE que Remotion s'était faite dans son dossier
+temporaire.
+
+L'indice était dans le journal, et il n'était pas lu : la bannière du rendu et
+les lignes du montage y étaient **entrelacées**. Les deux tournaient en même
+temps. Remotion recopiait `public/image.mp4` pendant que le montage l'écrivait,
+et il a copié la moitié d'un fichier.
+
+Le §4 pose déjà la règle entre deux MACHINES — une vidéo appartient à une
+machine à la fois pendant son montage. Elle vaut tout autant entre deux boutons
+du même écran, et là on peut la faire respecter : un rendu ou un montage est
+refusé tant qu'un autre travail écrit dans la même vidéo, et le refus **nomme**
+le travail et son âge.
+
+**ON NE LISTE QUE CE QUI ÉCRIT.** `broll.mjs` n'en est qu'avec `--remplace` :
+`--plans`, `--estime` et `--lisibilite` sont des lectures que l'écran lance de
+lui-même pour dessiner la revue. Les compter refuserait un rendu parce qu'une
+grille de vignettes se rafraîchissait — le défaut du garde de bascule, repris
+tel quel.
+
+**ET PAS DE REGEX POUR RECONNAÎTRE LE SLUG.** `\` dans un gabarit vaut UN
+antislash : `` `[ /\]` `` devient `[ /\]`, une classe de caractères qui ne se
+ferme jamais, et `new RegExp` LÈVE au lieu de comparer — la route aurait rendu
+500 à chaque appel. Le slug est un mot de la ligne de commande : on découpe sur
+les espaces et on compare.
+
+Vérifié : montage lancé, rendu demandé une seconde plus tard → **409**, avec la
+commande en cours et son âge. Et le rendu seul repasse : 60 images en 14 s.
+
 ### LA REQUÊTE EST LE VRAI LEVIER, ET ELLE ÉTAIT INVISIBLE
 
 « Un autre » rejouait la même recherche et descendait d'un candidat. Sur une
