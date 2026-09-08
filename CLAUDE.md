@@ -1421,6 +1421,47 @@ toujours à leur place. Vérifié : 14 événements et 1 coupe identiques après
 Ce qui ne bouge pas non plus : la **voix** (aucune conversion payante ne repart) et les réglages de
 style, qui vivent dans `soustitres.json`.
 
+### UNE SEULE PORTE D'ÉCRITURE DU TRANSCRIPT
+
+Supprimer une ligne effaçait les corrections tapées juste avant. Deux fautes, toutes deux dans la
+poubelle et dans l'insertion — et **aucune dans le chemin des corrections**, qui avait déjà été
+réparé. C'est le signe qu'il fallait une porte unique plutôt que trois chemins à tenir d'accord.
+
+1. **Elles n'envoyaient pas ce qui attendait.** L'écriture des corrections part 450 ms après la
+   dernière frappe ; cliquer sur une poubelle dans cet intervalle envoyait la suppression SEULE,
+   puis la relecture rendait le disque — où la correction n'était jamais arrivée. Elle disparaissait
+   comme si on ne l'avait jamais tapée.
+2. **Elles portaient des index figés au dessin.** `poubelleDeLigne(l)` capture `l.de` et `l.a` dans
+   sa fermeture. Depuis que la colonne se met à jour EN PLACE — le DOM rafraîchi, pas reconstruit —
+   ces valeurs vieillissent : une correction qui change le nombre de mots décale tous les index
+   suivants, et la poubelle aurait retiré une plage à cheval sur deux lignes.
+
+`ecrisDansLeTexte()` vide la file, PUIS recalcule les index depuis `appli.st.mots`, PUIS écrit. Une
+ligne s'y désigne par son **instant de départ**, qui ne bouge pas. La conversion des nombres passe
+par le même préalable — elle finit par un rechargement complet, où une correction non écrite serait
+relue depuis un disque qui ne l'a jamais reçue.
+
+**UNE ÉCRITURE À LA FOIS.** Deux poubelles cliquées coup sur coup recalculeraient leurs index sur
+des mots que la première est en train de changer. Le verrou est global parce que le danger l'est :
+toutes ces écritures visent la même liste. Il **refuse** et le dit, plutôt que de corrompre.
+
+**ET LA DERNIÈRE VOIE D'ÉVAPORATION EST FERMÉE.** `if (!patch.length) return` sortait sans un mot
+quand la file n'était pas vide : la ligne visée avait été redécoupée par un autre enregistrement, et
+plus rien ne la désignait. Le texte restait à l'écran, l'écran disait « enregistré », le disque ne
+l'avait jamais reçu. On ne peut pas l'appliquer sans risquer d'écraser une autre ligne — mais on
+peut le DIRE, et rendre la ligne à ce qu'elle contient vraiment.
+
+Vérifié le 8 septembre 2026, sur le disque à chaque fois :
+
+| geste | résultat |
+|---|---|
+| correction puis poubelle d'une autre ligne, 120 ms après | correction gardée, **la bonne** ligne retirée, 214 → 211 mots |
+| correction puis insertion, sans attendre | les deux écrites |
+| correction puis « 123 », sans attendre | correction gardée |
+| deux poubelles coup sur coup | la seconde **refusée** et annoncée — aucune corruption |
+| dix corrections d'affilée | **10/10 sur le disque**, 224 mots exactement |
+| correction + suppression + insertion + deux corrections entrelacées | les cinq marques sur le disque |
+
 ### VIDER UN CHAMP N'EST PAS SUPPRIMER UNE LIGNE
 
 Côté commande, un texte vide **retire** les mots visés — c'est le comportement documenté de

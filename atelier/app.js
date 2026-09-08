@@ -1015,6 +1015,9 @@ $('selVideo').addEventListener('change', async () => {
     await enregistreLesCorrections().catch(() => { /* `mene` a déjà annoncé */ })
     corrections.clear()
   }
+  // Le texte retiré appartient à la vidéo où on l'a retiré. Gardé, il serait
+  // reproposé dans un silence de la SUIVANTE dont l'instant coïnciderait.
+  retires.length = 0
   appli.slug = $('selVideo').value
   appli.st = null
   appli.catalogue = null
@@ -6320,6 +6323,94 @@ function dessineLeTexte() {
 }
 
 /**
+ * LA SEULE PORTE D'ÉCRITURE DU TRANSCRIPT, ET IL EN FALLAIT UNE.
+ *
+ * CE QUI EST ARRIVÉ. Supprimer une ligne effaçait les corrections tapées juste
+ * avant. Deux fautes, toutes deux dans la poubelle et dans l'insertion, et
+ * aucune dans le chemin des corrections — qui, lui, avait déjà été réparé :
+ *
+ * 1. ELLES N'ENVOYAIENT PAS CE QUI ATTENDAIT. L'écriture des corrections part
+ *    450 ms après la dernière frappe ; cliquer sur une poubelle dans cet
+ *    intervalle envoyait la suppression SEULE, puis `relisLesMots()` relisait le
+ *    disque — où la correction n'était jamais arrivée. Elle disparaissait de
+ *    l'écran comme si on ne l'avait jamais tapée.
+ *
+ * 2. ELLES PORTAIENT DES INDEX FIGÉS AU DESSIN. `poubelleDeLigne(l)` capture
+ *    `l.de` et `l.a` dans sa fermeture. Depuis que la colonne se met à jour EN
+ *    PLACE — le DOM est rafraîchi, pas reconstruit —, ces valeurs vieillissent
+ *    sans que rien ne les rafraîchisse : une correction qui change le nombre de
+ *    mots décale tous les index suivants, et la poubelle aurait retiré une
+ *    plage à cheval sur deux lignes.
+ *
+ * D'où cette porte unique : elle vide la file, PUIS recalcule les index depuis
+ * `appli.st.mots`, PUIS écrit. Une ligne s'y désigne par son instant de départ,
+ * qui ne bouge pas — `pipeline/texte.mjs` conserve les bornes de toute plage
+ * récrite.
+ *
+ * Rend `true` si l'écriture a eu lieu.
+ */
+let ecritureEnCours = false
+
+async function ecrisDansLeTexte({ cle, mode, texte }) {
+  if (!appli.st) return false
+  // UNE ÉCRITURE À LA FOIS, ET C'EST STRUCTUREL.
+  //
+  // Deux poubelles cliquées coup sur coup, ou une poubelle pendant une
+  // insertion : la seconde recalculerait ses index sur des mots que la première
+  // est en train de changer. Le verrou est global parce que le danger l'est —
+  // toutes ces écritures visent la même liste de mots.
+  if (ecritureEnCours) {
+    annonce(`Une écriture est déjà en cours — laisse-la finir.`, 'attention')
+    return false
+  }
+  ecritureEnCours = true
+  try {
+    return await ecrisVraiment({ cle, mode, texte })
+  } finally {
+    ecritureEnCours = false
+  }
+}
+
+async function ecrisVraiment({ cle, mode, texte }) {
+
+  // 1. CE QUI ATTEND PART D'ABORD, ET ON ATTEND VRAIMENT.
+  if (corrections.size) {
+    await enregistreLesCorrections()
+    // S'il en reste, c'est que l'envoi a échoué : on n'écrit surtout pas
+    // par-dessus, sinon on perdrait ce qui n'est pas encore sur le disque.
+    if (corrections.size) {
+      annonce(`Tes corrections en attente n'ont pas pu être écrites — rien d'autre n'a été touché.`, 'erreur')
+      return false
+    }
+  }
+
+  // 2. LES INDEX SE RECALCULENT MAINTENANT, jamais avant.
+  const ligne = lignesDuTexte().find((l) => l.debutMs === cle)
+  if (!ligne) {
+    annonce(`Cette ligne a bougé entre-temps — rien n'a été modifié. Réessaie.`, 'attention')
+    dessineLeTexte()
+    return false
+  }
+
+  const patch = mode === 'insere'
+    ? [{ apres: ligne.a, texte }]
+    : [{ de: ligne.de, a: ligne.a, texte }]
+  const fait = await mene(() =>
+    api(`/api/videos/${encodeURIComponent(appli.slug)}/texte`, {
+      methode: 'PUT',
+      corps: { corrections: patch },
+    })
+  )
+  if (!fait) return false
+
+  etatEcriture = 'enregistre'
+  lignesRecalees = 0
+  await relisLesMots()
+  majPiedDeTexte()
+  return true
+}
+
+/**
  * SUPPRIMER UNE LIGNE EST UN GESTE À PART, ET IL SE VISE.
  *
  * Côté commande, un texte vide retire les mots — c'était donc un
@@ -6361,24 +6452,21 @@ function poubelleDeLigne(ligne) {
     }
     desarme()
     b.disabled = true
-    const fait = await mene(() =>
-      api(`/api/videos/${encodeURIComponent(appli.slug)}/texte`, {
-        methode: 'PUT',
-        corps: { corrections: [{ de: ligne.de, a: ligne.a, texte: '' }] },
-      })
-    )
-    if (!fait) { b.disabled = false; return }
+    // LE TEXTE RETIRÉ SE LIT DANS LE CHAMP, PAS DANS LA FERMETURE.
+    //
+    // `ligne.texte` date du dessin ; le champ, lui, porte ce qu'on voit. Une
+    // correction enregistrée entre-temps aurait fait reproposer l'ancienne
+    // version dans la bande de silence.
+    const champ = b.parentElement?.querySelector('.texte-st')
+    const texteVu = champ ? champ.dataset.origine : ligne.texte
+    const fait = await ecrisDansLeTexte({ cle: ligne.debutMs, mode: 'remplace', texte: '' })
+    b.disabled = false
+    if (!fait) return
     // Ce qu'on vient de retirer, pour que la bande de silence le repropose.
-    retires.push({ debutMs: ligne.debutMs, finMs: ligne.finMs, texte: ligne.texte })
-    corrections.delete(ligne.debutMs)
-    etatEcriture = 'enregistre'
-    lignesRecalees = 0
-    // Le découpage figé garde une fenêtre qui n'a plus aucun mot : on le refait,
-    // sinon la ligne resterait à l'écran, vide.
-    await relisLesMots()
-    figeLeDecoupage()
-    dessineLeTexte()
-    majPiedDeTexte()
+    // La fenêtre figée n'a plus aucun mot : `groupeParFenetres` la saute
+    // d'elle-même, donc rien à refiger — et refiger repaginerait TOUTE la
+    // colonne, ce que le gel existe précisément pour éviter.
+    retires.push({ debutMs: ligne.debutMs, finMs: ligne.finMs, texte: texteVu })
   })
   return b
 }
@@ -6476,22 +6564,12 @@ function ouvreLInsertion(trou, ligne, silenceMs) {
     if (champ.disabled) return
     champ.disabled = true
     ajoute.disabled = true
-    // `a` est l'index du DERNIER mot de la ligne : le silence commence juste
-    // après lui, et c'est exactement ce que `apres` attend.
-    const fait = await mene(() =>
-      api(`/api/videos/${encodeURIComponent(appli.slug)}/texte`, {
-        methode: 'PUT',
-        corps: { corrections: [{ apres: ligne.a, texte }] },
-      })
-    )
-    if (!fait) { champ.disabled = false; ajoute.disabled = false; return }
-    etatEcriture = 'enregistre'
-    lignesRecalees = 0
-    // Les mots ont changé : on relit, et `dessineLeTexte` reconstruit la
-    // colonne — la zone d'insertion disparaît d'elle-même, le silence n'existe
-    // plus.
-    await relisLesMots()
-    majPiedDeTexte()
+    // On insère APRÈS le dernier mot de cette ligne : le silence commence juste
+    // là. L'index se recalcule dans `ecrisDansLeTexte`, qui vide aussi la file
+    // des corrections en attente avant d'écrire — sans quoi une frappe non
+    // encore partie disparaîtrait à la relecture.
+    const fait = await ecrisDansLeTexte({ cle: ligne.debutMs, mode: 'insere', texte })
+    if (!fait) { champ.disabled = false; ajoute.disabled = false; ferme() }
   }
 
   champ.addEventListener('keydown', (e) => {
@@ -6649,6 +6727,18 @@ $('chercheTexte').addEventListener('input', filtreLeTexte)
 $('btnChiffres').addEventListener('click', (ev) =>
   pendant(ev.currentTarget, '…', async () => {
     if (!appli.st) return
+    // CE QUI ATTEND PART D'ABORD, ICI AUSSI.
+    //
+    // Ce chemin finit par `appli.st = null` puis un rechargement complet : une
+    // correction pas encore écrite serait relue depuis un disque où elle n'est
+    // jamais arrivée. Même faute que la poubelle, même remède.
+    if (corrections.size) {
+      await enregistreLesCorrections()
+      if (corrections.size) {
+        annonce(`Tes corrections en attente n'ont pas pu être écrites — rien n'a été converti.`, 'erreur')
+        return
+      }
+    }
     try {
       const vu = await api(`/api/videos/${encodeURIComponent(appli.st.slug)}/texte/chiffres`, {
         methode: 'POST', corps: { applique: false },
@@ -6895,18 +6985,43 @@ async function corrigeVraiment() {
   // seule source à jour. Le DOM ne décide plus de rien.
   const patch = []
   const envoyees = []
+  const refusees = []
   for (const l of lignesDuTexte()) {
     const enAttente = corrections.get(l.debutMs)
     if (!enAttente) continue
     // La ligne a-t-elle encore le texte sur lequel on a écrit ? Sinon elle a
     // bougé sous la correction, et l'appliquer écraserait autre chose.
-    if (enAttente.origine !== l.texte) continue
+    if (enAttente.origine !== l.texte) { refusees.push(enAttente.texte); continue }
     patch.push({ de: l.de, a: l.a, texte: enAttente.texte })
     // Le TEXTE EXACT qui part, pas seulement sa clé : si la frappe continue
     // pendant l'aller-retour, la ligne a changé et ne doit pas être oubliée.
     envoyees.push([l.debutMs, enAttente.texte])
   }
-  if (!patch.length) return
+
+  // LA SEULE VOIE PAR LAQUELLE UNE CORRECTION POUVAIT S'ÉVAPORER EN SILENCE.
+  //
+  // `if (!patch.length) return` sortait sans un mot quand la file n'était pas
+  // vide : la ligne visée avait bougé sous la correction — un autre
+  // enregistrement l'avait redécoupée — et plus rien ne la désignait. Le texte
+  // restait à l'écran, l'écran disait « enregistré », et le disque ne l'avait
+  // jamais reçu. C'est ce qu'on a vu comme « ça a effacé mes modifications ».
+  //
+  // On ne peut pas l'appliquer sans risquer d'écraser une autre ligne. Mais on
+  // peut le DIRE, et rendre la ligne à ce qu'elle contient vraiment — plutôt
+  // que de laisser à l'écran un texte qui n'existe nulle part.
+  if (!patch.length) {
+    if (corrections.size) {
+      const perdu = refusees[0] ?? ''
+      corrections.clear()
+      dessineLeTexte()
+      annonce(
+        `Cette ligne a été redécoupée entre-temps : ta correction n'a pas pu être ` +
+          `posée${perdu ? ` (« ${perdu.slice(0, 60)} »)` : ''}. Rien d'autre n'a bougé — récris-la.`,
+        'erreur'
+      )
+    }
+    return
+  }
   const r = await mene(() =>
     api(`/api/videos/${encodeURIComponent(appli.slug)}/texte`, { methode: 'PUT', corps: { corrections: patch } })
   )
