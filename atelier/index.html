@@ -286,6 +286,17 @@
     <div class="plan-grand" id="planGrand"></div>
     <p class="plan-dit" id="planDit"></p>
     <p class="note" id="planMeta"></p>
+    <!-- LA REQUÊTE EST LE VRAI LEVIER, ET ELLE ÉTAIT INVISIBLE.
+         « Un autre » rejouait la même recherche et descendait d'un candidat.
+         Sur une requête qui décrit la mauvaise scène, on tourne en boucle :
+         les dix suivants ne valent pas mieux que le premier. Le §10 le dit —
+         « femme qui encaisse une nouvelle » rend des visages, une requête
+         d'ambiance rend des décors. On la voit donc, et on la récrit. -->
+    <label class="requete-plan" for="planRequete">
+      <span>Ce qu'on cherche en banque <small>en anglais, 4 à 8 mots — une personne et une action</small></span>
+      <input type="text" id="planRequete" placeholder="woman receiving bad news, close up on face"
+             maxlength="200" autocomplete="off" spellcheck="false">
+    </label>
     <div class="tete-actions">
       <button type="button" class="bouton" id="btnAutrePexels">Un autre — banque d images</button>
       <!-- Le prix vient du modèle retenu : il est écrit ici au moment où le panneau

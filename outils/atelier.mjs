@@ -2105,6 +2105,19 @@ ${essai.raison}`
     const source = corps?.source === 'ia' ? 'ia' : 'pexels'
     const args = [scriptPipeline('broll.mjs'), slug, `--remplace=${numero}`, '--json']
     if (source === 'ia') args.push('--source=ia')
+    // LA REQUÊTE RÉÉCRITE, QUAND ON EN DONNE UNE.
+    //
+    // « Un autre » sur une requête qui décrit la mauvaise scène descend dans
+    // une liste qui ne contient rien de bon : on tourne en boucle. C'est la
+    // recherche qu'il faut changer, et c'est le §10 — le levier le plus fort
+    // est à l'écriture.
+    const requete = String(corps?.requete ?? '').trim()
+    if (requete) {
+      // Quelques mots-clés, pas un paragraphe : au-delà, la banque ne rend
+      // plus rien et le message d'échec serait incompréhensible.
+      if (requete.length > 200) throw new ErreurHttp(400, `Requête trop longue (200 caractères).`)
+      args.push(`--requete=${requete}`)
+    }
 
     // UNE GÉNÉRATION DURE TROIS MINUTES : ELLE NE PEUT PAS ATTENDRE EN SILENCE.
     //

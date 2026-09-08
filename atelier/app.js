@@ -4354,10 +4354,10 @@ async function dessineLaRevueDesPlans() {
   if (defilement !== null) window.scrollTo({ top: defilement })
 }
 
-async function remplaceUnPlanDeCoupe(numero, source = 'pexels') {
+async function remplaceUnPlanDeCoupe(numero, source = 'pexels', requete = '') {
   try {
     const r = await api(`/api/videos/${encodeURIComponent(appli.slug)}/plans/${numero}/remplace`, {
-      methode: 'POST', corps: { source },
+      methode: 'POST', corps: { source, requete: String(requete ?? '').trim() },
     })
 
     // UNE GÉNÉRATION PART EN TRAVAIL DE FOND, ET SON JOURNAL DOIT SE VOIR.
@@ -4543,6 +4543,13 @@ function ouvreLePlan(p) {
   // quoi en proposer un autre.
   $('btnAutrePexels').hidden = !p.requete
   $('btnAutreIa').hidden = !p.requete
+  // La requête telle qu'elle est ENREGISTRÉE : c'est celle qui repartira au
+  // prochain montage, pas une suggestion d'écran.
+  const champRequete = $('planRequete')
+  if (champRequete) {
+    champRequete.value = p.requete ?? ''
+    champRequete.closest('.requete-plan').hidden = !p.requete
+  }
 
   // ON PASSE AU SUIVANT SANS REFERMER.
   //
@@ -4593,8 +4600,12 @@ $('btnFermePlan').addEventListener('click', () => fermeVoile('voilePlan'))
 $('btnAutrePexels').addEventListener('click', (ev) =>
   pendant(ev.currentTarget, 'Recherche…', async () => {
     const n = planOuvert?.numero
-    fermeVoile('voilePlan')
-    if (n) await remplaceUnPlanDeCoupe(n, 'pexels')
+    // ON NE FERME PLUS LE PANNEAU.
+    //
+    // Il se refermait, et `remplaceUnPlanDeCoupe` le rouvrait : le champ de
+    // requête qu'on venait de remplir aurait été perdu entre les deux. Et
+    // c'est un geste qu'on répète — on récrit, on regarde, on récrit.
+    if (n) await remplaceUnPlanDeCoupe(n, 'pexels', $('planRequete')?.value ?? '')
   })
 )
 
@@ -4628,7 +4639,7 @@ $('btnAutreIa').addEventListener('click', async (ev) => {
   })
   if (!ok) return
   fermeVoile('voilePlan')
-  await pendant(bouton, 'Génération…', () => remplaceUnPlanDeCoupe(p.numero, 'ia'))
+  await pendant(bouton, 'Génération…', () => remplaceUnPlanDeCoupe(p.numero, 'ia', $('planRequete')?.value ?? ''))
 })
 
 $('btnEffacePlans').addEventListener('click', async (ev) => {

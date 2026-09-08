@@ -688,6 +688,18 @@ await principal(async () => {
     : evenementsDAvant.filter(
         (e) => e._essais && e.src && fs.existsSync(path.join(v.montage, 'public', e.src))
       )
+  // LA REQUÊTE RÉÉCRITE SURVIT MÊME À « REPRENDRE DES PLANS DIFFÉRENTS ».
+  //
+  // Les deux demandes ne sont pas la même : « un autre plan » veut une autre
+  // image POUR CETTE RECHERCHE-LÀ ; oublier la recherche renverrait chercher
+  // la scène qu'on venait justement de corriger. La requête est du travail
+  // d'écriture, le plan est un choix d'image — on peut lâcher l'un sans
+  // l'autre.
+  const requetesAMoi = evenementsDAvant.filter((e) => e._requeteAMoi && e.requete)
+  if (requetesAMoi.length && drapeau(options, 'refais-plans')) {
+    journal.info(`${requetesAMoi.length} requête(s) réécrite(s) à la main sont conservées.`)
+  }
+
   if (aGarder.length) {
     journal.info(
       `${aGarder.length} plan(s) choisis à la main seront conservés ` +
@@ -732,6 +744,18 @@ await principal(async () => {
       mots: transcript.mots,
     })
     choixIa = r.choix
+  }
+
+  // LES REQUÊTES RÉÉCRITES SE POSENT AVANT LA RECHERCHE, PAS APRÈS.
+  //
+  // Posées après, l'image serait venue de la requête du script et le plan
+  // porterait la nôtre : deux choses qui ne se correspondent plus, et un
+  // champ qui décrit autre chose que ce qu'on regarde.
+  for (const ancien of requetesAMoi) {
+    const cible = evenements.find((e) => e.type === 'broll' && e.debutMs === ancien.debutMs)
+    if (!cible) continue
+    cible.requete = ancien.requete
+    cible._requeteAMoi = true
   }
 
   const broll = await resoudBroll(evenements, {
@@ -801,6 +825,14 @@ await principal(async () => {
       cible._essais = ancien._essais
       cible.source = ancien.source ?? 'pexels'
       cible.ken = ancien.ken ?? false
+      // LA REQUÊTE RÉÉCRITE À LA MAIN EST DU TRAVAIL, ELLE AUSSI.
+      // Sans elle, la reconstruction depuis le script remettrait celle du
+      // modèle, et le prochain « un autre » repartirait chercher la mauvaise
+      // scène — celle qu'on venait justement de corriger.
+      if (ancien._requeteAMoi) {
+        cible.requete = ancien.requete
+        cible._requeteAMoi = true
+      }
       rendus++
     }
     journal.ok(`${rendus} plan(s) choisis à la main conservés.`)

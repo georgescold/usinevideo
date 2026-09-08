@@ -80,6 +80,10 @@ npm run broll -- [<slug>] [options]
                         banque. Refuser un plan doit en appeler un autre :
                         le retirer laisserait le précédent s'étirer, et c'est
                         le temps mort que la doctrine interdit.
+  --requete="…"         récrit la recherche de CE plan, en anglais, et la garde.
+                        C'est le vrai levier : « femme qui encaisse une
+                        nouvelle » rend des visages, une requête d'ambiance
+                        rend des décors. Un remontage la conserve.
   --source=ia           le fait GÉNÉRER au lieu de le chercher en banque.
                         ~0,18 $ le plan, sur ton solde fal. Pour les scènes
                         qu aucune banque ne tient.
@@ -273,13 +277,21 @@ await principal(async () => {
           throw new Error(`Donne le numéro du plan : --remplace=3 (voir --plans).`)
         }
         const chaine = litChaine({ exigeInitialisee: false })
+        // LA REQUÊTE EST LE VRAI LEVIER (§10).
+        //
+        // « Un autre » sur une requête qui décrit la mauvaise scène ne fait que
+        // descendre dans une liste qui ne contient rien de bon. `--requete=`
+        // change la recherche elle-même, et la garde : c'est du travail, au
+        // même titre que le plan qu'on a choisi.
         const r = await remplaceUnPlan(slugVise, numero, {
           direction: chaine?.identite_visuelle?.direction_plans ?? null,
           source: options.source === 'ia' ? 'ia' : 'pexels',
+          requete: options.requete !== undefined ? String(options.requete) : null,
         })
         if (enJson) { console.log(JSON.stringify({ ok: true, ...r, plans: plansDe(slugVise) }, null, 2)); return }
         journal.titre(`Plan de coupe n° ${r.numero} · ${slugVise}`)
         journal.ok(`${r.avant ?? '(rien)'} → ${r.apres}`)
+        if (r.requete) journal.detail(`requête : ${r.requete}`)
         journal.detail(
           `${r.essais}e proposition · ${r.restants} candidat(s) pour cette requête` +
             (r.media.auteur ? ` · ${r.media.auteur}` : '')

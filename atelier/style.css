@@ -1877,6 +1877,12 @@ dl.cout dd { margin: 0; font-size: 17px; font-weight: 700; font-variant-numeric:
 /* Les mots dits pendant ce plan. Deux lignes au plus : au-delà, les vignettes
    n'ont plus la même hauteur et la grille se met à onduler. Le texte entier
    reste dans l'infobulle. */
+/* La requête du plan ouvert : elle se lit et se récrit sur place. */
+.requete-plan { display: block; margin: 12px 0 10px; }
+.requete-plan > span { display: block; font-size: 13px; color: var(--doux); margin-bottom: 6px; }
+.requete-plan small { display: block; opacity: .75; }
+.requete-plan input { width: 100%; }
+
 .plan-sur {
   font-size: 13px; overflow-wrap: anywhere;
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;

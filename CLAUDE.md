@@ -636,6 +636,7 @@ npm run monte -- <slug> --refais-plans # écarte les plans déjà employés — 
                                        #   ceux qu'on avait échangés à la main
 npm run monte -- <slug> --fenetre-reemploi=0   # autorise les plans des autres vidéos
 npm run broll -- <slug> --remplace=3   # en échange un contre un autre candidat
+npm run broll -- <slug> --remplace=3 --requete="…"   # et récrit la recherche
 npm run studio -- <slug>     # aperçu, pour contrôler avant de rendre
 npm run initialise           # l'identité de la chaîne : nom, formats, palette
 npm run initialise -- --etat # ce qu'elle porte déjà
@@ -2080,6 +2081,50 @@ de coupe, et les refaire coûterait une conversion payante pour rien.
 **On détruit vraiment, on n'archive pas.** Le §6 protège les rushes et les rendus ; une piste
 image n'est ni l'un ni l'autre. Cinq cents mégaoctets de clips de banque « mis de côté » sont cinq
 cents mégaoctets qu'on ne rouvrira jamais.
+
+### LA REQUÊTE EST LE VRAI LEVIER, ET ELLE ÉTAIT INVISIBLE
+
+« Un autre » rejouait la même recherche et descendait d'un candidat. Sur une
+requête qui décrit la mauvaise scène, les dix suivants ne valent pas mieux que
+le premier : on regénère en boucle sans jamais s'approcher. Le §10 le dit
+pourtant — le levier le plus fort est à l'écriture : « femme qui encaisse une
+nouvelle » rend des visages, une requête d'ambiance rend des décors.
+
+Le panneau d'un plan agrandi porte donc **la requête, en clair et modifiable**.
+Elle sert à la banque comme à la génération, sinon le champ ne changerait la
+scène que d'un côté.
+
+```bash
+npm run broll -- <slug> --remplace=12 --requete="man alone opening a letter, worried face"
+```
+
+**UNE NOUVELLE REQUÊTE REPART DU MEILLEUR CANDIDAT.** `essais` sert à descendre
+dans une liste ; changer la liste rend ce compteur absurde — on irait chercher
+le septième résultat d'une recherche qu'on vient de faire pour la première fois.
+
+**ET ELLE EST À TOI : UN REMONTAGE LA GARDE.** Sans cette marque, la
+reconstruction depuis le script remettrait la requête du modèle, et le plan
+redeviendrait faux. Elle survit même à « reprendre des plans différents » : les
+deux demandes ne sont pas la même — « un autre plan » veut une autre image POUR
+CETTE RECHERCHE-LÀ, oublier la recherche renverrait chercher la scène qu'on
+venait de corriger. Les requêtes se reposent **avant** la recherche : posées
+après, l'image viendrait du script et le champ décrirait autre chose que ce
+qu'on regarde.
+
+**LE PIÈGE QUI A FAILLI TOUT ANNULER : `rapatrie` NE RETÉLÉCHARGE PAS.** Il rend
+la main quand le fichier existe déjà — une bonne chose quand le nom désigne le
+média, une catastrophe ici : `broll-12-v1.mp4` ne désigne qu'un RANG D'ESSAI, et
+une requête réécrite remet le compteur à 1. Mesuré le 8 septembre 2026 : deux
+requêtes différentes à la suite sur le même plan ont laissé le fichier
+**identique** (même empreinte md5) pendant que le plan enregistrait un autre
+auteur et une autre requête. On regardait un clip en croyant en regarder un
+autre, et le crédit CC-BY nommait quelqu'un qui n'y est pour rien. La cible est
+maintenant effacée avant le rapatriement — vérifié : `f51d7e72` → `91b157f7` →
+`a0ce51c7` sur trois requêtes.
+
+**LE PANNEAU NE SE REFERME PLUS.** Il se fermait puis se rouvrait : le champ
+qu'on venait de remplir aurait été perdu entre les deux, et c'est un geste qu'on
+répète — on récrit, on regarde, on récrit.
 
 ### UN PLAN CHOISI À LA MAIN EST DU TRAVAIL HUMAIN
 

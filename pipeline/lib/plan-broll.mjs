@@ -162,7 +162,7 @@ export function styleDesSousTitres(slug) {
 export async function remplaceUnPlan(
   slug,
   numero,
-  { direction = null, source = 'pexels', modele = null } = {}
+  { direction = null, source = 'pexels', modele = null, requete = null } = {}
 ) {
   const v = dossierVideo(slug)
   const plan = litJson(v.plan, null)
@@ -183,7 +183,29 @@ export async function remplaceUnPlan(
   }
 
   const evenement = plan.evenements[vise.rang]
-  const essais = (evenement._essais ?? 0) + 1
+
+  // LA REQUÊTE EST LE VRAI LEVIER, ET ELLE SE RÉÉCRIT ICI.
+  //
+  // « Un autre » rejouait la même recherche et descendait d'un candidat :
+  // sur une requête qui ne décrit pas la bonne scène, on tourne en rond,
+  // de plus en plus loin du sujet. Le §10 le dit déjà — le levier le plus
+  // fort est à l'écriture : « femme qui encaisse une nouvelle » rend des
+  // visages, une requête d'ambiance rend des décors.
+  //
+  // UNE NOUVELLE REQUÊTE REPART DU MEILLEUR CANDIDAT. `essais` sert à
+  // descendre dans une liste ; changer la liste rend ce compteur absurde —
+  // on chercherait le septième résultat d'une recherche qu'on vient de
+  // faire pour la première fois.
+  const voulue = String(requete ?? '').trim()
+  const neuve = Boolean(voulue) && voulue !== String(evenement.requete ?? '').trim()
+  if (neuve) {
+    evenement.requete = voulue
+    // Elle est à TOI : un remontage la garde, comme il garde le plan que tu
+    // as choisi. Sans cette marque, la reconstruction depuis le script la
+    // remplacerait par celle du modèle, et le plan redeviendrait faux.
+    evenement._requeteAMoi = true
+  }
+  const essais = neuve ? 1 : (evenement._essais ?? 0) + 1
 
   // Le plan porte ses dimensions à la racine — c'est Remotion qui les lit.
   const largeur = plan.largeur ?? 1080
@@ -249,7 +271,10 @@ export async function remplaceUnPlan(
     // plus pauvre), l'intention du bloc traduite en direction d'image, et la
     // direction de plans de la chaîne.
     const prompt = promptDePlan({
-      requete: vise.requete,
+      // Celle qu'on vient éventuellement de réécrire : elle sert à la
+      // génération comme à la banque, sinon le champ ne changerait la scène
+      // que d'un côté.
+      requete: evenement.requete ?? vise.requete,
       intention: bloc?.intention ?? null,
       direction,
       ouverture: vise.ouverture,
@@ -295,11 +320,12 @@ export async function remplaceUnPlan(
   // On demande de quoi descendre : le candidat retenu jusqu'ici, plus tous ceux
   // déjà refusés, plus celui qu'on veut.
   const combien = 10 + essais * 3
-  const requete = direction ? `${vise.requete} ${direction}` : vise.requete
-  const candidats = await chercheVideos(requete, { largeur, hauteur, combien }).catch(() => [])
+  const cherchee = evenement.requete ?? vise.requete
+  const recherche = direction ? `${cherchee} ${direction}` : cherchee
+  const candidats = await chercheVideos(recherche, { largeur, hauteur, combien }).catch(() => [])
   const secours =
     candidats.length === 0
-      ? await cherchePhotos(requete, { largeur, hauteur, combien }).catch(() => [])
+      ? await cherchePhotos(recherche, { largeur, hauteur, combien }).catch(() => [])
       : []
   const tous = candidats.length ? candidats : secours
 
@@ -338,7 +364,7 @@ export async function remplaceUnPlan(
   const restants = neufs.length ? neufs : disponibles
   if (!restants.length) {
     throw new Error(
-      `La banque n'a rien d'autre pour « ${vise.requete} ».\n` +
+      `La banque n'a rien d'autre pour « ${cherchee} ».\n` +
         `  Change la requête dans le script, ou dépose un plan à toi : npm run broll -- --ajoute=…`
     )
   }
@@ -348,10 +374,24 @@ export async function remplaceUnPlan(
   let pris = null
   for (const media of restants.slice(depart).concat(restants.slice(0, depart))) {
     const nom = `broll-${String(vise.numero).padStart(2, '0')}-v${essais}.${media.type === 'image' ? 'jpg' : 'mp4'}`
-    const chemin = await rapatrie(media, path.join(dossier, nom))
+    const cible = path.join(dossier, nom)
+    // LE NOM SE RÉUTILISE, LE CONTENU NON : ON EFFACE AVANT DE RAPATRIER.
+    //
+    // `rapatrie` rend la main sans rien télécharger quand le fichier existe
+    // déjà — une bonne chose quand le nom désigne le média, une catastrophe
+    // ici : le nom ne désigne qu'un RANG D'ESSAI. Une requête réécrite remet
+    // le compteur à 1, donc vise `-v1`, qui existait souvent déjà.
+    //
+    // Mesuré le 8 septembre 2026 : deux requêtes différentes à la suite sur le
+    // même plan ont laissé le fichier IDENTIQUE (même empreinte md5) pendant
+    // que le plan enregistrait un autre auteur et une autre requête. On
+    // regardait un clip en croyant en regarder un autre, et le crédit CC-BY
+    // nommait quelqu'un qui n'y est pour rien.
+    fs.rmSync(cible, { force: true })
+    const chemin = await rapatrie(media, cible)
     if (chemin) { pris = { media, nom }; break }
   }
-  if (!pris) throw new Error(`Aucun candidat n'a pu être téléchargé pour « ${vise.requete} ».`)
+  if (!pris) throw new Error(`Aucun candidat n'a pu être téléchargé pour « ${cherchee} ».`)
 
   const ancien = evenement.src
   evenement.src = `broll/${pris.nom}`
@@ -385,6 +425,7 @@ export async function remplaceUnPlan(
     numero: vise.numero,
     avant: ancien,
     apres: evenement.src,
+    requete: evenement.requete ?? null,
     essais,
     source: 'pexels',
     media: { type: pris.media.type, auteur: pris.media.auteur ?? null, url: pris.media.url ?? null },
