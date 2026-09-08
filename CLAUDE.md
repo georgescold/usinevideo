@@ -632,7 +632,8 @@ npm run broll -- <slug>      # où ils tomberaient dans cette vidéo, et pourquo
 npm run broll -- <slug> --plans        # les plans de coupe du montage, un par un
 npm run broll -- <slug> --lisibilite   # les plans dont le fond avalerait les sous-titres
 npm run broll -- <slug> --efface-plans # détruit la piste image, garde les sous-titres
-npm run monte -- <slug> --refais-plans # écarte les plans déjà employés, pour en avoir d'autres
+npm run monte -- <slug> --refais-plans # écarte les plans déjà employés — ET lâche
+                                       #   ceux qu'on avait échangés à la main
 npm run monte -- <slug> --fenetre-reemploi=0   # autorise les plans des autres vidéos
 npm run broll -- <slug> --remplace=3   # en échange un contre un autre candidat
 npm run studio -- <slug>     # aperçu, pour contrôler avant de rendre
@@ -2079,6 +2080,31 @@ de coupe, et les refaire coûterait une conversion payante pour rien.
 **On détruit vraiment, on n'archive pas.** Le §6 protège les rushes et les rendus ; une piste
 image n'est ni l'un ni l'autre. Cinq cents mégaoctets de clips de banque « mis de côté » sont cinq
 cents mégaoctets qu'on ne rouvrira jamais.
+
+### UN PLAN CHOISI À LA MAIN EST DU TRAVAIL HUMAIN
+
+Le 8 septembre 2026, un remontage a écrasé **sept plans échangés un par un**
+dans l'écran — le travail d'une soirée, refait par la banque en deux minutes,
+sans une question ni un avertissement. Le §6 protège les rushes et les rendus ;
+un plan qu'on a regardé, refusé, remplacé et validé n'est pas moins du travail.
+
+**`_essais` les désigne sans ambiguïté** : il n'est posé que par
+`remplaceUnPlan`, jamais par la banque. Le montage les **conserve par défaut**,
+et `--refais-plans` — « reprendre des plans différents », qui demande
+explicitement que tout change — est le seul moyen de les lâcher.
+
+**ILS SONT ÉCARTÉS DE LA RECHERCHE AVANT D'ÊTRE REMIS.** Sans ça, la banque
+reposerait le même média à un autre rang et on le rendrait en doublon : ils
+partent donc dans `exclus`, et sont replacés après. **Par l'INSTANT, pas par le
+rang** — le découpage est stable tant que le transcript et le script ne bougent
+pas, mais s'il changeait, un rang poserait le plan sur un autre passage, en
+silence. Ce qui n'a pas retrouvé son passage est annoncé.
+
+**ET LE CRÉDIT SUIT LE FICHIER.** `resoudBroll` avait écrit l'attribution de SON
+candidat pour ce rang : la garder afficherait l'auteur d'un plan qu'on ne montre
+pas, et une licence CC-BY n'est pas une formalité (§10). La ligne est remplacée
+en même temps que le plan. Vérifié après remontage : 7 sur 7 conservés, 7 sur 7
+crédités juste, 85 médias distincts, aucun fichier manquant.
 
 ### DEUX FOIS LE MÊME PLAN : UNE CLÉ ÉCRITE SOUS DEUX FORMES
 

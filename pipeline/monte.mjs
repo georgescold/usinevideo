@@ -663,10 +663,37 @@ await principal(async () => {
   // LES PLANS DU MONTAGE PRÉCÉDENT, lus AVANT que le plan soit réécrit :
   // après, ils n'existent plus. Ils servent à deux choses — les écarter quand
   // on demande à en changer, et DIRE ensuite ce qui a bougé.
-  const plansDAvant = (litJson(v.plan, null)?.evenements ?? [])
-    .filter((e) => e.type === 'broll' && e._mediaId)
-    .map((e) => e._mediaId)
+  const evenementsDAvant = (litJson(v.plan, null)?.evenements ?? []).filter(
+    (e) => e.type === 'broll' && e._mediaId
+  )
+  const plansDAvant = evenementsDAvant.map((e) => e._mediaId)
   const dejaEmployes = drapeau(options, 'refais-plans') ? plansDAvant : []
+
+  // UN PLAN CHOISI À LA MAIN EST DU TRAVAIL HUMAIN. UN REMONTAGE NE L'EFFACE PAS.
+  //
+  // Le 8 septembre 2026, un remontage a écrasé sept plans échangés un par un
+  // dans l'écran — le travail d'une soirée, refait par la banque en deux
+  // minutes. Le §6 protège les rushes et les rendus ; un plan qu'on a regardé,
+  // refusé, remplacé et validé n'est pas moins du travail.
+  //
+  // `_essais` les désigne sans ambiguïté : il n'est posé que par
+  // `remplaceUnPlan`, jamais par la banque. On les garde par défaut, et
+  // `--refais-plans` — « reprendre des plans différents », qui demande
+  // explicitement que tout change — est le seul moyen de les lâcher.
+  //
+  // ILS SONT ÉCARTÉS DE LA RECHERCHE AVANT D'ÊTRE REMIS : sans ça, la banque
+  // pourrait reposer le même média ailleurs, et le rendre en doublon.
+  const aGarder = drapeau(options, 'refais-plans')
+    ? []
+    : evenementsDAvant.filter(
+        (e) => e._essais && e.src && fs.existsSync(path.join(v.montage, 'public', e.src))
+      )
+  if (aGarder.length) {
+    journal.info(
+      `${aGarder.length} plan(s) choisis à la main seront conservés ` +
+        `(--refais-plans pour les reprendre aussi).`
+    )
+  }
 
   // COMBIEN DE MONTAGES RÉCENTS ÉCARTENT LEURS PLANS.
   //
@@ -716,7 +743,7 @@ await principal(async () => {
     combleMax,
     aGenerer: choixIa,
     blocs: script?.blocs ?? [],
-    exclus: dejaEmployes,
+    exclus: [...dejaEmployes, ...aGarder.map((e) => e._mediaId)],
     fenetreReemploi,
     // CELUI QU'ON VIENT D'ANNONCER, PAS CELUI DU FICHIER. `--modele-video=` est
     // posé dans `chaine` en mémoire vingt lignes plus haut ; sans ce passage,
@@ -743,6 +770,47 @@ await principal(async () => {
   //
   // Le compte tranche, et il ne coûte rien : les identifiants d'avant sont
   // déjà lus.
+  // ON REND LEURS PLANS AUX RANGS CHOISIS À LA MAIN.
+  //
+  // Par l'INSTANT, pas par le rang : le découpage est le même tant que le
+  // transcript et le script ne bougent pas, mais s'il changeait, un rang
+  // poserait le plan sur un autre passage — silencieusement.
+  if (aGarder.length) {
+    let rendus = 0
+    for (const ancien of aGarder) {
+      const cible = evenements.find((e) => e.type === 'broll' && e.debutMs === ancien.debutMs)
+      if (!cible) continue
+      // LE CRÉDIT SUIT LE FICHIER. `resoudBroll` a écrit celui de SON candidat
+      // pour ce rang ; le garder afficherait l'auteur d'un plan qu'on ne montre
+      // pas, et une licence CC-BY n'est pas une formalité (§10).
+      const remplace = cible.src
+      const numero = String(ancien._mediaId).match(/\/(\d{5,})\//)?.[1]
+      const credit = [
+        ancien.src.replace(/^broll\//, ''),
+        ancien._auteur ? `par ${ancien._auteur}` : null,
+        numero ? `https://www.pexels.com/video/${numero}/` : ancien._mediaId,
+      ].filter(Boolean).join(' — ')
+      const rang = broll.attributions.findIndex((l) =>
+        String(l).startsWith(String(remplace ?? '').replace(/^broll\//, '') + ' ')
+      )
+      if (rang >= 0) broll.attributions[rang] = credit
+      else broll.attributions.push(credit)
+      cible.src = ancien.src
+      cible._mediaId = ancien._mediaId
+      cible._auteur = ancien._auteur ?? null
+      cible._essais = ancien._essais
+      cible.source = ancien.source ?? 'pexels'
+      cible.ken = ancien.ken ?? false
+      rendus++
+    }
+    journal.ok(`${rendus} plan(s) choisis à la main conservés.`)
+    if (rendus < aGarder.length) {
+      journal.attention(
+        `${aGarder.length - rendus} n'ont pas retrouvé leur passage : le découpage a changé.`
+      )
+    }
+  }
+
   // DEUX FOIS LE MÊME PLAN DANS UNE VIDÉO : ON LE COMPTE, ET ON LE DIT.
   //
   // La déduplication existe à trois endroits — dans la vidéo, entre vidéos, et
