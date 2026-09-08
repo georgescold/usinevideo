@@ -1355,6 +1355,40 @@ Deux corrections successives **sans redessin entre elles** — le cas qui mélan
 au bon endroit, 214 → 216 mots sur le disque, **aucun mot d'origine perdu**. Et la ligne corrigée
 s'affiche à l'identique dans la colonne et dans l'aperçu.
 
+### LA LARGEUR D'UNE PAGE SE CALCULE, ELLE N'EST PLUS UNE CONSTANTE
+
+`CARACTERES_MAX_PAGE` valait **42**, en dur. C'était calibré pour la verticale — 1080 de large, un
+corps de 78 à 86 — et faux partout ailleurs :
+
+| | tiennent sur deux lignes | la constante en autorisait |
+|---|---|---|
+| vertical 1080, corps 86 | **33** | 42 → les pages débordaient sur une TROISIÈME ligne |
+| 16:9 1920, corps 94 | **54** | 42 |
+| 16:9 1920, corps 59 | **86** | 42 → on coupait à la moitié de la place |
+
+D'où « des retours à la ligne tout le temps » sur une vidéo YouTube : la ligne est 1,78 fois plus
+large et on continuait de couper comme en vertical.
+
+**LA CHASSE EST MESURÉE, PAS ESTIMÉE.** Relevé le 8 septembre 2026 sur le bloc réel de l'atelier —
+police, graisse, remplissage des mots et gouttière compris — en majuscules, sur trois longueurs de
+phrase : **0,614 à 0,624 em par caractère** en Montserrat, la plus large des polices courantes ;
+0,53 en Roboto, 0,40 en Anton. On retient **0,65**, au-dessus de la plus large : une ligne n'est
+jamais calculée plus étroite qu'elle ne l'est. Le prix est quelques caractères perdus sur une police
+étroite ; l'inverse ferait déborder, et un sous-titre qui déborde se voit sur toute la vidéo.
+
+**ET LE CURSEUR PLAFONNAIT À CINQ.** Cinq mots remplissent une ligne verticale ; en 16:9 ils en
+laissent la moitié vide. La borne passe à **12** — au-delà, c'est la durée maximale (3,5 s) qui
+ferme la page, et une page qu'on ne finit pas de lire avant qu'elle change n'est pas un sous-titre.
+Le défaut du format horizontal passe de 5 à 8 mots.
+
+Vérifié sur une VSL 16:9 réelle : à 9 mots par ligne, **201 → 161 pages**, la ligne « décédée juste
+après son père d'une grave maladie » tient ses 8 mots sur **1 651 px pour 1 651 disponibles** — deux
+lignes pleines, sans débordement.
+
+**L'APERÇU LIT LE DÉCOUPAGE FIGÉ : il faut le relancer APRÈS l'avoir refait.** Changer « mots par
+ligne » refigeait le découpage et redessinait la colonne, sans toucher à l'image : la colonne
+montrait huit mots par ligne et l'aperçu cinq — les deux vérités qu'on venait justement de réunir.
+
 ### LE MODÈLE DE TRANSCRIPTION SE MESURE, IL NE SE DEVINE PAS
 
 Relevé le 8 septembre 2026 sur une VSL réelle de 897 mots, dont le script donne la vérité.

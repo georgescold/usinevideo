@@ -161,7 +161,18 @@ export const MODELES = {
 
 /** Les bornes des curseurs, reprises de leur `index.html`. */
 export const BORNES = {
-  motsParPage: { min: 1, max: 5, pas: 1 },
+  // CINQ ÉTAIT LE PLAFOND DE LA VERTICALE, IMPOSÉ AU 16:9.
+  //
+  // Une ligne de 1080 de large à 86 px tient environ dix-sept caractères ; cinq
+  // mots la remplissent. Une ligne de 1920 à 59 px en tient quarante-trois — on
+  // y met le double de mots, et le curseur refusait d'aller plus loin. C'est ce
+  // qu'on lit comme « sur une vidéo YouTube on peut afficher beaucoup plus ».
+  //
+  // Douze plutôt qu'à l'infini : au-delà, la borne de DURÉE (3,5 s) ferme la
+  // page avant le compteur de mots, et une page qu'on ne finit pas de lire
+  // avant qu'elle change n'est pas un sous-titre. La largeur réelle, elle, est
+  // calculée à part — voir `caracteresParPage` dans SousTitres.tsx.
+  motsParPage: { min: 1, max: 12, pas: 1 },
   // Leur curseur « Taille » va de 60 % à 170 % d'un corps de 78 px.
   taille: { min: 47, max: 133, pas: 1 },
   positionBas: { min: 4, max: 84, pas: 1 },
@@ -212,7 +223,11 @@ function depuisIdentite(chaine, { vertical }) {
   if (!vertical) {
     r.taille = Math.round(r.taille * 0.75)
     r.positionBas = Math.min(r.positionBas, 12)
-    r.motsParPage = Math.max(r.motsParPage, 5)
+    // La ligne est 1,78 fois plus large et le corps réduit d'un quart : elle
+    // tient environ deux fois et demie plus de caractères. Cinq mots y
+    // laissaient la moitié de la place vide, avec une coupure toutes les deux
+    // secondes. Huit remplissent la ligne sans atteindre la borne de durée.
+    r.motsParPage = Math.max(r.motsParPage, 8)
   }
   return r
 }

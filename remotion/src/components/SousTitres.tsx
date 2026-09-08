@@ -26,7 +26,46 @@ const SILENCE_QUI_COUPE_MS = 350
 // groupe de quatre mots lents pouvait tenir cinq secondes a l ecran, et une
 // suite de mots longs deborder sur trois lignes.
 const DUREE_MAX_PAGE_MS = 3500
-const CARACTERES_MAX_PAGE = 42
+
+/**
+ * LA LARGEUR D'UNE PAGE SE CALCULE, ELLE N'EST PLUS UNE CONSTANTE.
+ *
+ * Elle valait 42 caractères, en dur. C'était calibré pour la VERTICALE — 1080
+ * de large, un corps de 78 à 86 — et faux partout ailleurs :
+ *
+ *   vertical 1080, corps 86  →  33 caractères tiennent sur deux lignes.
+ *                               La constante en autorisait 42 : les pages
+ *                               débordaient sur une TROISIÈME ligne.
+ *   16:9 1920, corps 59      →  86 caractères tiennent sur deux lignes.
+ *                               La constante en autorisait 42 : on coupait à
+ *                               la moitié de la place disponible, d'où « des
+ *                               retours à la ligne tout le temps » sur une
+ *                               vidéo YouTube.
+ *
+ * LA CHASSE EST MESURÉE, PAS ESTIMÉE. Relevé le 8 septembre 2026 sur le bloc
+ * réel de l'atelier — police, graisse, remplissage des mots et gouttière
+ * compris — en majuscules, sur trois longueurs de phrase : **0,614 à 0,624 em
+ * par caractère** en Montserrat, la plus large des polices courantes. Les
+ * autres descendent à 0,53 (Roboto) et 0,40 (Anton, condensé).
+ *
+ * On retient 0,65 : au-dessus de la plus large, donc une ligne n'est jamais
+ * calculée plus étroite qu'elle ne l'est. Le prix est quelques caractères
+ * perdus sur une police étroite ; l'inverse ferait déborder, et un sous-titre
+ * qui déborde se voit sur toute la vidéo.
+ */
+const CHASSE_EM = 0.65
+
+/** Deux lignes : au-delà, un sous-titre cesse d'être lu et devient un pavé. */
+const LIGNES_PAR_PAGE = 2
+
+/** Ce que `maxWidth: '86%'` laisse au texte. */
+const PART_UTILE = 0.86
+
+export function caracteresParPage(largeurPx: number, corpsPx: number) {
+  const utile = largeurPx * PART_UTILE
+  const parLigne = utile / (CHASSE_EM * Math.max(1, corpsPx))
+  return Math.max(12, Math.round(parLigne * LIGNES_PAR_PAGE))
+}
 
 /**
  * Au-delà de ce délai après le dernier mot, la page disparaît au lieu d'attendre
@@ -71,7 +110,13 @@ const estMotOutil = (texte: string) => {
   return /^(qu|l|d|n|s|c|j|t|m)'/.test(nu) && nu.length <= 5
 }
 
-export function pagine(mots: Mot[], motsParPage: number): Page[] {
+export function pagine(
+  mots: Mot[],
+  motsParPage: number,
+  // Par défaut, la valeur d'avant le calcul : un appel qui ne la passe pas
+  // garde exactement le découpage qu'il avait.
+  caracteresMaxPage: number = 42
+): Page[] {
   const pages: Page[] = []
   let courante: Mot[] = []
 
@@ -110,7 +155,7 @@ export function pagine(mots: Mot[], motsParPage: number): Page[] {
     // Les deux bornes dures passent avant la regle grammaticale : une page trop
     // longue ou trop large est illisible, quel que soit l endroit de la coupe.
     else if (dureePage >= DUREE_MAX_PAGE_MS) ferme()
-    else if (largeurPage >= CARACTERES_MAX_PAGE) ferme()
+    else if (largeurPage >= caracteresMaxPage) ferme()
     // La taille cible ne ferme que sur un mot plein, et jamais juste avant la
     // chute de la phrase…
     else if (courante.length >= motsParPage && !estMotOutil(mot.texte) && !suivantClot) ferme()
@@ -503,9 +548,12 @@ export const SousTitres: React.FC<{
 }> = ({ mots, theme, punchs }) => {
   const { fps, width, height } = useVideoConfig()
 
+  // La largeur d'une page dépend du format ET du corps de police : les deux
+  // sont connus ici, et nulle part dans `pagine`.
+  const corps = theme.sousTitres.taille * echelleDe(width, height)
   const pages = React.useMemo(
-    () => pagine(mots, theme.sousTitres.motsParPage),
-    [mots, theme.sousTitres.motsParPage]
+    () => pagine(mots, theme.sousTitres.motsParPage, caracteresParPage(width, corps)),
+    [mots, theme.sousTitres.motsParPage, width, corps]
   )
 
   return (

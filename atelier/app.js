@@ -4845,7 +4845,22 @@ $('btnRendu').addEventListener('click', () => pendant($('btnRendu'), 'Rendu…',
 // --- Portage littéral de `pagine()` et de ses constantes -------------------
 const SILENCE_QUI_COUPE_MS = 350
 const DUREE_MAX_PAGE_MS = 3500
-const CARACTERES_MAX_PAGE = 42
+/**
+ * LA LARGEUR D'UNE PAGE SE CALCULE — VALEURS JUMELLES DE `SousTitres.tsx`.
+ *
+ * 42 caractères en dur était calibré pour la verticale : en 16:9, on coupait à
+ * la moitié de la place disponible. La chasse est mesurée sur le bloc réel de
+ * cet écran — 0,614 à 0,624 em par caractère en Montserrat, la plus large des
+ * polices courantes —, et on retient 0,65 pour ne jamais calculer une ligne
+ * plus étroite qu'elle ne l'est.
+ */
+const CHASSE_EM = 0.65
+const LIGNES_PAR_PAGE = 2
+const PART_UTILE = 0.86
+
+const caracteresParPage = (largeurPx, corpsPx) =>
+  Math.max(12, Math.round((largeurPx * PART_UTILE) / (CHASSE_EM * Math.max(1, corpsPx)) * LIGNES_PAR_PAGE))
+
 const TENUE_MAX_MS = 2000
 const FIN_DE_PHRASE = /[.!?…:]$/
 const VIRGULE = /,$/
@@ -4870,7 +4885,7 @@ function estMotOutil(texte) {
   return /^(qu|l|d|n|s|c|j|t|m)'/.test(nu) && nu.length <= 5
 }
 
-function pagine(mots, motsParPage) {
+function pagine(mots, motsParPage, caracteresMaxPage = 42) {
   const pages = []
   let courante = []
   const ferme = () => {
@@ -4896,7 +4911,7 @@ function pagine(mots, motsParPage) {
 
     if (FIN_DE_PHRASE.test(mot.texte) || VIRGULE.test(mot.texte)) ferme()
     else if (dureePage >= DUREE_MAX_PAGE_MS) ferme()
-    else if (largeurPage >= CARACTERES_MAX_PAGE) ferme()
+    else if (largeurPage >= caracteresMaxPage) ferme()
     else if (courante.length >= motsParPage && !estMotOutil(mot.texte) && !suivantClot) ferme()
     else if (courante.length >= motsParPage + 2 && !suivantClot) ferme()
     else if (courante.length >= motsParPage + 3) ferme()
@@ -5276,6 +5291,10 @@ for (const [id, champ, lis] of CONTROLES) {
     if (['motsParPage', 'ponctuation'].includes(champ) && $('listeSt').children.length) {
       figeLeDecoupage()
       dessineLeTexte()
+      // L'APERÇU LIT LE DÉCOUPAGE FIGÉ : il faut le relancer APRÈS l'avoir
+      // refait. Sans ça, la colonne montrait huit mots par ligne et l'image
+      // cinq — les deux vérités qu'on venait justement de réunir.
+      relanceLApercu({ sansTexte: true, gardeLaPosition: true })
     }
   })
 }
@@ -6061,6 +6080,20 @@ const auDixieme = (ms) => {
  * pied de colonne propose « Redécouper » dès que les deux divergent.
  */
 /**
+ * Combien de caractères tiennent sur une page, ici et maintenant.
+ *
+ * Le format vient de l'état de la vidéo, le corps des réglages courants : les
+ * deux changent sous les doigts, donc ça se recalcule à chaque pagination
+ * plutôt que de se figer au chargement.
+ */
+function largeurDePage() {
+  const { largeur, hauteur } = dimensions()
+  // Même échelle que le rendu : le corps est exprimé pour un petit côté de 1080.
+  const corps = (appli.st?.reglages?.taille ?? 86) * (Math.min(largeur, hauteur) / 1080)
+  return caracteresParPage(largeur, corps)
+}
+
+/**
  * Les pages telles que l'écran les montre — colonne ET aperçu.
  *
  * C'est le découpage figé tant qu'on édite ; celui du rendu sinon. Un seul
@@ -6071,7 +6104,7 @@ function pagesCourantes() {
   const mots = appli.st.mots
   return appli.st.decoupage
     ? groupeParFenetres(mots, appli.st.decoupage)
-    : pagine(mots, appli.st.reglages.motsParPage)
+    : pagine(mots, appli.st.reglages.motsParPage, largeurDePage())
 }
 
 function lignesDuTexte() {
@@ -6098,7 +6131,7 @@ function lignesDuTexte() {
 /** Le découpage courant, en fenêtres de temps — à figer avant d'éditer. */
 function figeLeDecoupage() {
   if (!appli.st?.mots?.length) return
-  appli.st.decoupage = pagine(appli.st.mots, appli.st.reglages.motsParPage)
+  appli.st.decoupage = pagine(appli.st.mots, appli.st.reglages.motsParPage, largeurDePage())
     .map((p) => ({ debutMs: p.debutMs, finMs: p.finMs }))
 }
 
@@ -6159,7 +6192,7 @@ function groupeParFenetres(mots, fenetres) {
 /** Le découpage figé dit-il encore la même chose que celui du rendu ? */
 function decoupageADerive() {
   if (!appli.st?.decoupage || !appli.st.mots?.length) return false
-  const vrai = pagine(appli.st.mots, appli.st.reglages.motsParPage)
+  const vrai = pagine(appli.st.mots, appli.st.reglages.motsParPage, largeurDePage())
   const vu = groupeParFenetres(appli.st.mots, appli.st.decoupage)
   if (vrai.length !== vu.length) return true
   return vrai.some((p, i) => p.mots.length !== vu[i].mots.length)
