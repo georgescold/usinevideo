@@ -6207,11 +6207,32 @@ function dessineLeTexte() {
     if (reprise) champ.classList.add('modifie')
 
     champ.addEventListener('focus', () => { if (!focusRendu) sauteDansLApercu(l.debutMs) })
+    // Quitter un champ laissé vide le rend à son texte : les mots sont toujours
+    // là, et une ligne vide à l'écran ferait croire le contraire.
+    champ.addEventListener('blur', () => {
+      if (champ.value.trim()) return
+      champ.value = champ.dataset.origine
+      champ.classList.remove('vide', 'modifie')
+      hauteurAuContenu(champ)
+    })
     champ.addEventListener('input', () => {
       hauteurAuContenu(champ)
-      if (champ.value === champ.dataset.origine) corrections.delete(l.debutMs)
-      else corrections.set(l.debutMs, { origine: champ.dataset.origine, texte: champ.value })
+      // UN CHAMP VIDÉ N'EST PAS UNE DEMANDE DE SUPPRESSION.
+      //
+      // Côté commande, un texte vide RETIRE les mots visés. C'était donc un
+      // sélectionner-tout suivi d'une frappe qui effaçait la ligne — et le
+      // temps de retaper, le demi-battement d'écriture était déjà passé.
+      // Vider est le début normal d'une réécriture, pas une décision.
+      //
+      // Supprimer une ligne se demande maintenant à la poubelle, à droite : un
+      // geste distinct pour un résultat distinct.
+      if (!champ.value.trim() || champ.value === champ.dataset.origine) {
+        corrections.delete(l.debutMs)
+      } else {
+        corrections.set(l.debutMs, { origine: champ.dataset.origine, texte: champ.value })
+      }
       champ.classList.toggle('modifie', corrections.has(l.debutMs))
+      champ.classList.toggle('vide', !champ.value.trim())
       majPiedDeTexte()
       // La frappe repousse l'écriture : dix lignes corrigées à la file font une
       // seule requête, et une correction tapée pendant qu'une autre part n'a
@@ -6228,7 +6249,7 @@ function dessineLeTexte() {
       if (suivant) suivant.focus()
       else $('btnCorrige').focus()
     })
-    ligne.append(champ)
+    ligne.append(champ, poubelleDeLigne(l))
     zone.append(ligne)
 
     // LE SILENCE QUI SUIT, QUAND IL EST ASSEZ LARGE POUR CACHER DES MOTS.
@@ -6288,6 +6309,73 @@ function dessineLeTexte() {
   zone.scrollTop = defilement
 }
 
+/**
+ * SUPPRIMER UNE LIGNE EST UN GESTE À PART, ET IL SE VISE.
+ *
+ * Côté commande, un texte vide retire les mots — c'était donc un
+ * sélectionner-tout suivi d'une frappe qui effaçait la ligne, sans que rien ne
+ * l'ait demandé. Vider un champ est le début normal d'une réécriture ; la
+ * suppression est une décision, elle a son bouton.
+ *
+ * PAS DE BOÎTE DE DIALOGUE, MAIS PAS D'UN SEUL CLIC NON PLUS. On supprime
+ * plusieurs lignes à la suite, et une fenêtre à chaque fois serait insupportable.
+ * Le premier clic arme le bouton — il devient rouge et dit « Sûr ? » — et un
+ * second, dans les trois secondes, retire les mots. Un clic ailleurs le désarme.
+ *
+ * ET LE TEXTE RETIRÉ RESTE RÉCUPÉRABLE. Les mots partent, leurs instants
+ * restent libres : le silence qu'ils laissent porte aussitôt une bande
+ * d'insertion, pré-remplie avec ce qu'on vient de retirer. Se tromper coûte
+ * deux clics, pas une retranscription.
+ */
+function poubelleDeLigne(ligne) {
+  const b = creer('button', 'poubelle')
+  b.type = 'button'
+  b.textContent = '🗑'
+  b.title = `Retirer cette ligne du transcript`
+  let armee = null
+  const desarme = () => {
+    clearTimeout(armee)
+    armee = null
+    b.classList.remove('armee')
+    b.textContent = '🗑'
+    b.title = `Retirer cette ligne du transcript`
+  }
+  b.addEventListener('blur', desarme)
+  b.addEventListener('click', async () => {
+    if (!armee) {
+      b.classList.add('armee')
+      b.textContent = 'Sûr ?'
+      b.title = `Clique à nouveau pour retirer « ${ligne.texte} »`
+      armee = setTimeout(desarme, 3000)
+      return
+    }
+    desarme()
+    b.disabled = true
+    const fait = await mene(() =>
+      api(`/api/videos/${encodeURIComponent(appli.slug)}/texte`, {
+        methode: 'PUT',
+        corps: { corrections: [{ de: ligne.de, a: ligne.a, texte: '' }] },
+      })
+    )
+    if (!fait) { b.disabled = false; return }
+    // Ce qu'on vient de retirer, pour que la bande de silence le repropose.
+    retires.push({ debutMs: ligne.debutMs, finMs: ligne.finMs, texte: ligne.texte })
+    corrections.delete(ligne.debutMs)
+    etatEcriture = 'enregistre'
+    lignesRecalees = 0
+    // Le découpage figé garde une fenêtre qui n'a plus aucun mot : on le refait,
+    // sinon la ligne resterait à l'écran, vide.
+    await relisLesMots()
+    figeLeDecoupage()
+    dessineLeTexte()
+    majPiedDeTexte()
+  })
+  return b
+}
+
+/** Ce qui a été retiré dans cette séance, pour pouvoir le remettre. */
+const retires = []
+
 // ---------------------------------------------------------------------------
 //  Les mots que Whisper a sautés
 // ---------------------------------------------------------------------------
@@ -6337,8 +6425,19 @@ function ouvreLInsertion(trou, ligne, silenceMs) {
   const champ = creer('input', 'trou-champ')
   champ.type = 'text'
   champ.spellcheck = false
-  champ.placeholder = `les mots manquants (${secondesFr(silenceMs)})`
   champ.maxLength = 200
+  // SI ON VIENT DE RETIRER UNE LIGNE ICI, ON LA REPROPOSE.
+  //
+  // Le silence qu'on regarde est peut-être celui qu'une suppression vient de
+  // creuser. Redemander de retaper ce qu'on avait sous les yeux dix secondes
+  // plus tôt serait punir une erreur de visée.
+  const rendu = retires.find((r) => r.debutMs >= ligne.finMs && r.finMs <= ligne.finMs + silenceMs)
+  if (rendu) {
+    champ.value = rendu.texte
+    champ.placeholder = rendu.texte
+  } else {
+    champ.placeholder = `les mots manquants (${secondesFr(silenceMs)})`
+  }
 
   const ferme = () => {
     trou.classList.remove('ouvert')
@@ -6378,6 +6477,9 @@ function ouvreLInsertion(trou, ligne, silenceMs) {
 
   trou.append(champ)
   champ.focus()
+  // Le texte reproposé est sélectionné : on valide d'un Entrée pour le remettre,
+  // ou on tape par-dessus pour écrire autre chose.
+  if (champ.value) champ.select()
 }
 
 /** Un `textarea` ne grandit pas tout seul : on le remet à la hauteur du texte. */

@@ -610,9 +610,28 @@ input[type="text"].hexa {
 }
 
 .page-st {
-  display: grid; grid-template-columns: 54px minmax(0, 1fr);
+  display: grid; grid-template-columns: 54px minmax(0, 1fr) 26px;
   gap: 6px; align-items: start;
   padding: 3px 5px; border-radius: 8px;
+}
+
+/* LA POUBELLE GARDE SA PLACE, ELLE NE SE MONTRE QU'AU SURVOL.
+ *
+ * Deux cents corbeilles alignées seraient deux cents invitations à supprimer,
+ * sur un écran dont le métier est de RELIRE. La colonne existe quand même —
+ * sinon le texte se décalerait de vingt-six pixels au passage de la souris,
+ * ligne après ligne, et la lecture deviendrait impossible. */
+.poubelle {
+  border: 0; background: none; cursor: pointer; padding: 3px 0 0;
+  font-size: 13px; line-height: 1.2; color: var(--doux);
+  opacity: 0; transition: opacity var(--t-court) var(--duo), color var(--t-court) var(--duo);
+}
+.page-st:hover .poubelle, .poubelle:focus-visible, .poubelle.armee { opacity: 1; }
+.poubelle:hover { color: var(--attention); }
+/* Armée : le second clic retire vraiment. Elle le dit avant de le faire. */
+.poubelle.armee {
+  font-size: 11px; font-weight: 700; color: #ffc9cf;
+  background: #3a1c22; border-radius: 6px; padding: 3px 4px;
 }
 .page-st:hover { background: var(--panneau-3); }
 .page-st.en-cours { background: #5b8cff22; box-shadow: inset 2px 0 0 var(--accent); }
@@ -656,6 +675,10 @@ input[type="text"].hexa {
 /* Whisper doutait quelque part dans cette ligne : à relire en premier. */
 .page-st textarea.texte-st.doute { border-left: 2px solid var(--attention); border-radius: 2px 6px 6px 2px; }
 .page-st textarea.texte-st.modifie { background: #f0b13322; border-color: var(--attention); }
+/* Vidé : ce n'est PAS une suppression, c'est une réécriture qui commence. Le
+   champ le dit — pointillés plutôt que la couleur d'une modification en
+   attente — et rend son texte si on le quitte sans avoir retapé. */
+.page-st textarea.texte-st.vide { border-style: dashed; border-color: var(--bord-vif); }
 
 /* ------------------------------------------- le silence entre deux lignes -- */
 /*

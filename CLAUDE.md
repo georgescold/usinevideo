@@ -1353,6 +1353,39 @@ Deux corrections successives **sans redessin entre elles** — le cas qui mélan
 au bon endroit, 214 → 216 mots sur le disque, **aucun mot d'origine perdu**. Et la ligne corrigée
 s'affiche à l'identique dans la colonne et dans l'aperçu.
 
+### VIDER UN CHAMP N'EST PAS SUPPRIMER UNE LIGNE
+
+Côté commande, un texte vide **retire** les mots visés — c'est le comportement documenté de
+`--corrige`. À l'écran, c'en était un piège : sélectionner tout et retaper commence par vider le
+champ, et le demi-battement d'écriture passait avant qu'on ait fini de taper. La ligne disparaissait
+pour un geste qui ne demandait rien.
+
+Un champ vidé n'est donc plus une correction : rien ne part, et le quitter sans avoir retapé rend
+son texte — les mots sont toujours là, une ligne vide à l'écran ferait croire le contraire. Le champ
+le dit pendant ce temps, en pointillés plutôt qu'à la couleur d'une modification en attente.
+
+**Supprimer a son bouton : une poubelle par ligne.** Elle garde sa place — vingt-six pixels de
+colonne — et ne se montre qu'au survol : deux cents corbeilles alignées seraient deux cents
+invitations à supprimer sur un écran dont le métier est de relire. Sans la colonne réservée, le
+texte se décalerait au passage de la souris, ligne après ligne.
+
+**Pas de boîte de dialogue, mais pas d'un seul clic non plus.** On supprime plusieurs lignes à la
+suite, et une fenêtre à chaque fois serait insupportable. Le premier clic **arme** le bouton — il
+devient rouge et dit « Sûr ? » — et un second, dans les trois secondes, retire les mots. Un clic
+ailleurs le désarme.
+
+**ET LE TEXTE RETIRÉ RESTE RÉCUPÉRABLE.** Les mots partent, leurs instants restent libres : le
+silence qu'ils laissent porte aussitôt une bande d'insertion (§ ci-dessous), **pré-remplie avec ce
+qu'on vient de retirer** et sélectionnée — Entrée le remet, taper écrit autre chose. Se tromper
+coûte deux clics, pas une retranscription.
+
+Vérifié le 8 septembre 2026 : vider un champ ne fait rien partir même après deux secondes, et le
+texte revient au `blur` ; premier clic « Sûr ? » sans rien retirer, second clic 67 → 66 lignes ; la
+bande « + 1,8 s de silence » repropose « et les potentiels matchs. », et un Entrée rend un
+transcript **identique mot pour mot** à celui d'avant — 214 mots. Les instants **internes**, eux,
+sont redistribués dans le silence : les bornes tiennent, le surlignage à l'intérieur de la ligne
+devient approximatif, comme pour toute réécriture qui change le nombre de mots.
+
 ### Whisper ne se trompe pas seulement, il SAUTE des mots
 
 Corriger une ligne couvre le mot mal entendu. Ça ne couvre pas le mot **absent** : « les droits
