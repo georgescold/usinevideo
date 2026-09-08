@@ -2865,8 +2865,58 @@ ${essai.raison}`
     const corps = await litCorpsJson(req).catch(() => ({}))
     const args = [scriptPipeline('transcris.mjs'), slug]
     if (corps?.refais === true) args.push('--refais')
+    if (corps?.modele) {
+      if (!/^[a-z0-9.-]{2,20}$/i.test(String(corps.modele))) {
+        throw new ErreurHttp(400, `Modèle de transcription refusé.`)
+      }
+      args.push(`--modele=${corps.modele}`)
+    }
     return repondJson(res, 202, travailLance(
       lanceTravail(args, { etiquette: `transcription — ${slug}` })
+    ))
+  }
+
+  // TOUT RÉANALYSER : on repart de l'audio, on oublie les corrections.
+  //
+  // C'est la sortie de secours de l'étape 5 — celle qu'on cherche quand on
+  // s'est perdu dans les corrections, qu'on a supprimé la mauvaise ligne, ou
+  // qu'on veut simplement repartir de ce que la machine entend.
+  //
+  // ON NE REFAIT PAS LE MONTAGE, ON REMET LE TEXTE.
+  //
+  // `monte --depuis=transcris` aurait été le geste évident, et il en fait
+  // beaucoup trop : il reconstruit la piste image, donc trente recherches
+  // d'images et autant de clips retéléchargés — pour un texte à corriger. Pire,
+  // la fenêtre de réemploi des dix derniers montages ferait valser des plans
+  // qu'on avait validés.
+  //
+  // `transcris --refais` suffit : il réécrit le transcript ET remet les mots du
+  // plan d'accord avec lui, sans toucher aux plans de coupe, aux coupes ni au
+  // thème. L'audio n'a pas changé — leurs instants sont toujours justes.
+  //
+  // CE QUI NE BOUGE PAS : la voix (aucune conversion payante ne repart) et les
+  // réglages de style, qui vivent dans `soustitres.json`.
+  if (est('POST', 'api', 'videos', '*', 'reanalyse')) {
+    const slug = exigeVideo(slugDeLaVideo(segments))
+    const corps = await litCorpsJson(req).catch(() => ({}))
+    const modele = corps?.modele ? String(corps.modele) : null
+    if (modele && !/^[a-z0-9.-]{2,20}$/i.test(modele)) {
+      throw new ErreurHttp(400, `Modèle de transcription refusé.`)
+    }
+    // Le modèle demandé devient celui de la CHAÎNE avant de partir : `monte`
+    // n'a pas d'option pour le passer, et le poser ici évite d'en ajouter une
+    // qui ne servirait qu'à ce bouton.
+    if (modele) {
+      await lanceEtAttends(
+        [scriptPipeline('transcris.mjs'), `--defaut=${modele}`, '--json'],
+        { msMax: 15_000 }
+      )
+    }
+    return repondJson(res, 202, travailLance(
+      lanceTravail(
+        [scriptPipeline('transcris.mjs'), slug, '--refais'],
+        { etiquette: `réanalyse du texte — ${slug}` }
+      )
     ))
   }
 

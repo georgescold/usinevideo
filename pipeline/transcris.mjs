@@ -29,7 +29,12 @@ aide(
 npm run transcris -- <slug de vidéo | fichier> [options]
 
   --libre            transcription libre, même si un script existe
-  --modele=medium    tiny | base | small | medium | large-v3 | large-v3-turbo
+  --modele=<m>       tiny | base | small | medium | large-v3-turbo | large-v3
+                     Mesuré le 8 septembre 2026 sur 897 mots réels :
+                       large-v3-turbo  96,8 %  12,9 s   ← le défaut
+                       medium          94,6 %  20,5 s
+                       large-v3        77,5 % 482,9 s   ← saute des passages
+  --defaut=<m>       retient ce modèle pour la CHAÎNE, sans rien transcrire
   --langue=fr
   --srt              écrit aussi un .srt à côté
   --refais           ignore le résultat déjà en cache
@@ -38,7 +43,34 @@ Sortie : videos/<slug>/04-transcript.json
 `
 )
 
+/** Les modèles que whisper.cpp sait télécharger. */
+const MODELES = ['tiny', 'base', 'small', 'medium', 'large-v3-turbo', 'large-v3', 'large-v2', 'large-v1']
+
 await principal(async () => {
+  // LE MODÈLE DE LA CHAÎNE SE POSE PAR COMMANDE, PAS EN ÉDITANT UN FICHIER.
+  //
+  // Il vivait dans `.env`, qui ne s'ouvre qu'à la main — c'est-à-dire nulle
+  // part, puisque le §2 dit que rien ne se tape. `config/chaine.json` a ses
+  // commandes et ses écrans : la qualité de transcription y devient une
+  // décision de chaîne, réglable là où l'on travaille.
+  if (options.defaut !== undefined) {
+    const m = String(options.defaut)
+    if (!MODELES.includes(m)) {
+      throw new Error(`Modèle inconnu « ${m} ». Connus : ${MODELES.join(', ')}.`)
+    }
+    const chemin = path.join(CHEMINS.config, 'chaine.json')
+    const chaine = litJson(chemin, {})
+    chaine.transcription = { ...(chaine.transcription ?? {}), modele: m }
+    ecritJson(chemin, chaine)
+    if (drapeau(options, 'json')) {
+      console.log(JSON.stringify({ ok: true, modele: m }, null, 2))
+      return
+    }
+    journal.ok(`Modèle de transcription de la chaîne : « ${m} ».`)
+    journal.detail(`Les prochaines transcriptions l'emploieront. Les anciennes ne bougent pas.`)
+    return
+  }
+
   const cible = positionnels[0]
   if (!cible) throw new Error(`Donne un slug de vidéo ou un chemin de fichier.`)
 
@@ -133,6 +165,34 @@ await principal(async () => {
     `${donnees.mots.length} mots · mode ${donnees.mode} · ` +
       `${duree((Date.now() - debut) / 1000)} de calcul`
   )
+
+  // LE PLAN PORTE SA PROPRE COPIE DES MOTS, ET IL FAUT LA REMETTRE D'ACCORD.
+  //
+  // C'est elle que Remotion lit. Retranscrire sans y toucher laisserait le
+  // rendu afficher l'ANCIEN texte, sans que rien ne le dise — le même piège que
+  // `texte.mjs` désamorce déjà après chaque correction.
+  //
+  // ON REMPLACE LES MOTS, ET RIEN D'AUTRE. Les plans de coupe, les coupes, le
+  // thème et les événements gardent leurs instants : l'audio n'a pas changé,
+  // donc ils sont toujours à leur place. Refaire le montage entier pour mettre
+  // un texte à jour ferait repartir trente recherches d'images et retéléchargerait
+  // autant de clips — pour un mot corrigé.
+  if (estVideoDuProjet) {
+    const v = dossierVideo(path.basename(dossierPossible))
+    if (fs.existsSync(v.plan)) {
+      const plan = litJson(v.plan, null)
+      if (plan && Array.isArray(plan.mots)) {
+        const avant = plan.mots.length
+        plan.mots = donnees.mots
+        // Écriture par fichier temporaire puis renommage : un plan à moitié
+        // écrit fait échouer le rendu bien plus tard, sans dire pourquoi.
+        const temporaire = `${v.plan}.temporaire`
+        ecritJson(temporaire, plan)
+        fs.renameSync(temporaire, v.plan)
+        journal.detail(`Plan de montage remis d'accord : ${avant} → ${plan.mots.length} mots.`)
+      }
+    }
+  }
 
   if (drapeau(options, 'srt')) {
     const srt = versSrt(donnees.mots)

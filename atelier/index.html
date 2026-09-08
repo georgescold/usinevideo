@@ -1042,6 +1042,31 @@
             <button type="button" class="bouton primaire" id="btnCorrige" disabled>
               Enregistrer
             </button>
+
+            <!-- LA SORTIE DE SECOURS DE CET ÉCRAN.
+                 On corrige, on insère, on supprime — et on finit par se perdre :
+                 la mauvaise ligne retirée, un découpage qu'on ne reconnaît plus.
+                 Il manquait le geste qui rend tout à ce que la machine entend.
+                 Elle réécoute l'audio en entier et reconstruit le plan derrière :
+                 sans ça le plan garderait sa propre copie des mots, et le rendu
+                 afficherait le texte d'avant sans que rien ne le dise.
+                 La VOIX n'est pas refaite — aucune conversion payante ne repart —
+                 et les réglages de style ne bougent pas. -->
+            <details class="repli repli-secours">
+              <summary>Repartir de zéro</summary>
+              <p class="note">
+                Réécoute l'audio en entier, réécrit tous les mots et remet les
+                lignes par défaut. <b>Tes corrections, insertions et suppressions
+                de texte sont perdues.</b> La voix et les réglages de style ne
+                bougent pas.
+              </p>
+              <label class="etiquette-bloc" for="modeleTranscription">Qualité d'écoute</label>
+              <select id="modeleTranscription"></select>
+              <p class="note" id="noteModeleTranscription"></p>
+              <button type="button" class="bouton alerte pleine" id="btnReanalyse">
+                Tout réanalyser
+              </button>
+            </details>
           </div>
         </div>
       </div>

@@ -15,7 +15,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import os from 'node:os'
 import { transcribe, downloadWhisperModel, toCaptions } from '@remotion/install-whisper-cpp'
-import { CHEMINS, assureDossier, env } from './chemins.mjs'
+import { CHEMINS, assureDossier, env, litChaine } from './chemins.mjs'
 import { journal, duree } from './journal.mjs'
 import { telecharge } from './http.mjs'
 import { lance, lanceOuEchoue, extraitAudio, sonde } from './ffmpeg.mjs'
@@ -145,9 +145,66 @@ export async function installe({ gpu = null, silencieux = false } = {}) {
   return { dejaLa: false, variante: voulue, chemin: cheminExecutable() }
 }
 
+/**
+ * LE MODÈLE PAR DÉFAUT EST `large-v3-turbo`, ET C'EST MESURÉ.
+ *
+ * Relevé le 8 septembre 2026 sur une VSL réelle de 897 mots, dont le script
+ * donne la vérité — exactitude après correction par le script, la seule qui
+ * compte puisque c'est ce que le pipeline produit :
+ *
+ *   medium           94,6 %   20,5 s
+ *   large-v3-turbo   96,8 %   12,9 s
+ *   large-v3         77,5 %  482,9 s
+ *
+ * `large-v3` complet est un PIÈGE, et c'est contre-intuitif : il a rendu 756
+ * mots pour 897 attendus — il saute des passages entiers — en trente-cinq fois
+ * le temps. Le prendre pour « le meilleur parce que le plus gros » aurait dégradé
+ * la transcription en la ralentissant. C'est exactement pourquoi on mesure.
+ *
+ * `turbo` est meilleur ET plus rapide que `medium` : il n'y a pas d'arbitrage à
+ * faire, seulement un défaut à corriger.
+ *
+ * ON REVIENT EN ARRIÈRE SANS TOUCHER AU CODE : `transcription.modele` dans
+ * `config/chaine.json`, `WHISPER_MODELE=` dans `.env`, ou `--modele=` sur la
+ * commande.
+ *
+ * CE QUI N'A RIEN CHANGÉ, ET QUI A ÉTÉ RETIRÉ. Un beam search élargi
+ * (`-bs 8 -bo 8`) et un seuil d'entropie relevé (`-et 2.8`) rendent EXACTEMENT
+ * le même résultat sur ce modèle — 860 mots justes des deux côtés. Le décodeur
+ * distillé de `turbo` n'a que deux couches : il n'y a presque rien à explorer.
+ * Du code qui prétend améliorer sans rien changer fait perdre du temps à qui le
+ * lit ; ne pas le remettre sans une mesure qui le justifie.
+ */
+export const MODELE_DEFAUT = 'large-v3-turbo'
+
+/**
+ * Le modèle à employer, et d'où il vient.
+ *
+ * LA CHAÎNE PASSE AVANT `.env`, ET C'EST UNE QUESTION D'ACCÈS.
+ *
+ * `.env` ne s'édite qu'à la main, dans un fichier — c'est-à-dire nulle part,
+ * puisque le §2 dit que rien ne se tape. `config/chaine.json` a sa commande et
+ * son écran : la qualité de transcription devient donc une décision de chaîne,
+ * réglable là où on travaille. `.env` reste pour ce qui appartient à la
+ * MACHINE — un poste sans GPU ni patience peut y imposer `medium` pour toutes
+ * les chaînes… mais alors le choix de la chaîne primerait. D'où l'ordre : ce
+ * qu'on demande explicitement, puis la chaîne, puis la machine, puis le défaut.
+ */
+export function modeleVoulu(force = null) {
+  if (force) return { modele: String(force), origine: 'ligne de commande' }
+  let deLaChaine = null
+  try {
+    deLaChaine = litChaine({ exigeInitialisee: false })?.transcription?.modele ?? null
+  } catch { /* pas de chaîne lisible : on descend d'un cran */ }
+  if (deLaChaine) return { modele: String(deLaChaine), origine: 'chaîne' }
+  const deLEnv = env('WHISPER_MODELE', null)
+  if (deLEnv) return { modele: deLEnv, origine: '.env' }
+  return { modele: MODELE_DEFAUT, origine: 'défaut' }
+}
+
 /** Télécharge un modèle. Les tailles vont de 75 Mo (tiny) à 3 Go (large-v3). */
 export async function installeModele(modele = null, { silencieux = false } = {}) {
-  const m = modele || env('WHISPER_MODELE', 'medium')
+  const m = modeleVoulu(modele).modele
   assureDossier(CHEMINS.outilsModeles)
   const attendu = path.join(CHEMINS.outilsModeles, `ggml-${m}.bin`)
   if (fs.existsSync(attendu)) return { modele: m, chemin: attendu, dejaLa: true }
@@ -191,7 +248,7 @@ export async function transcris(fichier, { modele = null, langue = null, silenci
       tokenLevelTimestamps: true,
       splitOnWord: true,
       language: lang,
-      printOutput: false,
+      printOutput: false,
       onProgress: (p) => {
         if (silencieux) return
         const pc = Math.round(p * 100)
@@ -355,7 +412,7 @@ export async function aligne(fichier, texteAttendu, options = {}) {
 
 /** État de l'installation, pour `npm run verifie`. */
 export async function etat() {
-  const modele = env('WHISPER_MODELE', 'medium')
+  const { modele, origine: origineModele } = modeleVoulu()
   const cheminModele = path.join(CHEMINS.outilsModeles, `ggml-${modele}.bin`)
   const gpu = await carteNvidia()
   let tailleModele = null
@@ -368,6 +425,9 @@ export async function etat() {
     version: VERSION_WHISPER,
     chemin: cheminExecutable(),
     modele,
+    // D'où vient ce choix : quand une transcription déçoit, la première
+    // question est « avec quel modèle », et la seconde « qui l'a décidé ».
+    origineModele,
     modelePresent: fs.existsSync(cheminModele),
     tailleModeleMo: tailleModele,
     gpu,

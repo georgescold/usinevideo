@@ -553,6 +553,16 @@ input[type="number"] { width: 6.5em; }
    laissait une bande vide sous chaque repli replié. */
 .repli[open] > *:last-child { margin-bottom: 14px; }
 
+/* LA SORTIE DE SECOURS EST REPLIÉE, ET ELLE LE RESTE.
+   « Tout réanalyser » efface un travail de relecture : ce n'est pas un bouton
+   qu'on doit croiser en cherchant autre chose. Replié, il faut le vouloir pour
+   l'ouvrir ; ouvert, il dit d'abord ce qu'il détruit. */
+.repli-secours { margin-top: 4px; }
+.repli-secours > summary { color: #a08a5a; font-weight: 400; font-size: 13.5px; }
+.repli-secours > summary:hover { color: #f2dfae; }
+.repli-secours select { width: 100%; }
+.repli-secours .bouton.pleine { width: 100%; margin-top: 10px; }
+
 .rang-couleurs { gap: 12px; }
 .paire { display: flex; gap: 8px; align-items: center; }
 .paire input[type="color"] {
@@ -689,24 +699,37 @@ input[type="text"].hexa {
  * l'intervalle médian entre deux mots vaut 40 ms, et un silence de six cents
  * peut cacher une dizaine de mots.
  *
- * LA BANDE NE SE MONTRE QU'AU SURVOL, et c'est une question de nombre. Sur les
- * deux cents lignes d'une prise, une soixantaine de silences dépassent le
- * seuil : un marqueur permanent sur chacun serait exactement le bruit qui
- * empêche de lire — or ce qu'on cherche ici se repère EN LISANT, pas en
- * balayant des boutons. La bande garde donc sa place (quatre pixels, pas de
- * saut de mise en page au survol) et ne s'encre qu'au passage de la souris.
+ * ELLE SE VOIT AU REPOS, PARCE QU'UNE FONCTION QU'ON NE TROUVE PAS N'EXISTE PAS.
+ *
+ * Elle ne se montrait qu'au survol, au motif qu'une soixantaine de marqueurs
+ * sur deux cents lignes seraient du bruit. L'argument tenait sur le papier et
+ * a échoué à l'usage : la fonction a été redemandée alors qu'elle était déjà
+ * là. Un raisonnement sur l'encombrement ne vaut rien contre une découverte qui
+ * n'a pas lieu.
+ *
+ * Le compromis est dans le POIDS, pas dans la présence : au repos un « + » de
+ * dix pixels, presque de la couleur du fond, sans texte — assez pour qu'on
+ * sache qu'on peut cliquer, trop peu pour gêner la lecture. Au survol, la durée
+ * du silence s'affiche, qui dit combien de mots peuvent y tenir.
+ *
+ * La bande garde sa hauteur dans les deux états : pas de saut de mise en page
+ * quand la souris passe.
  */
-.trou { height: 4px; display: flex; align-items: center; justify-content: center; }
+.trou { height: 13px; display: flex; align-items: center; justify-content: center; }
 .trou.ouvert { height: auto; padding: 3px 5px 3px 60px; }
 .trou-plus {
   border: 0; background: none; cursor: pointer; padding: 0 8px;
-  font: inherit; font-size: 12px; color: var(--doux);
-  border-radius: 6px; line-height: 16px;
-  opacity: 0; transition: opacity var(--t-court) var(--duo);
+  font: inherit; font-size: 11px; color: #46536a;
+  border-radius: 6px; line-height: 13px; white-space: nowrap;
+  transition: color var(--t-court) var(--duo), background var(--t-court) var(--duo);
 }
+/* Au repos, seul le « + » : la durée est cachée par un span, pas par l'opacité,
+   pour que la bande ne change pas de hauteur en s'ouvrant. */
+.trou-plus .duree { display: none; }
 .trou:hover .trou-plus, .trou-plus:focus-visible {
-  opacity: 1; background: var(--panneau-3); color: var(--accent-clair);
+  background: var(--panneau-3); color: var(--accent-clair);
 }
+.trou:hover .trou-plus .duree, .trou-plus:focus-visible .duree { display: inline; }
 .trou-champ {
   width: 100%; font: inherit; font-size: 14.5px; line-height: 1.35;
   color: var(--texte); background: var(--panneau);

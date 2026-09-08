@@ -584,6 +584,8 @@ npm run soustitres -- <slug> --applique   # les pose dans le plan SANS remonter
 npm run texte -- <slug>      # les mots transcrits, avec leurs temps
 npm run texte -- <slug> --incertains  # ceux dont Whisper doutait — à relire en premier
 npm run texte -- <slug> --trous       # les silences où des mots ont pu être SAUTÉS
+npm run transcris -- --defaut=<modele>   # la qualité d'écoute de la CHAÎNE
+npm run transcris -- <slug> --refais     # tout réécouter, et remettre le plan d'accord
 npm run texte -- <slug> --chiffres    # les nombres dits en lettres, mis en chiffres
 npm run soustitres -- <slug> --defaut # ces réglages deviennent ceux de la chaîne
 npm run broll                # tes propres plans de coupe, et leurs mots-clés
@@ -1353,6 +1355,63 @@ Deux corrections successives **sans redessin entre elles** — le cas qui mélan
 au bon endroit, 214 → 216 mots sur le disque, **aucun mot d'origine perdu**. Et la ligne corrigée
 s'affiche à l'identique dans la colonne et dans l'aperçu.
 
+### LE MODÈLE DE TRANSCRIPTION SE MESURE, IL NE SE DEVINE PAS
+
+Relevé le 8 septembre 2026 sur une VSL réelle de 897 mots, dont le script donne la vérité.
+Exactitude **après** correction par le script — la seule qui compte, puisque c'est ce que le
+pipeline produit :
+
+| modèle | exactitude | temps |
+|---|---|---|
+| `medium` | 94,6 % | 20,5 s |
+| **`large-v3-turbo`** | **96,8 %** | **12,9 s** |
+| `large-v3` | 77,5 % | 482,9 s |
+
+**`large-v3` complet est un PIÈGE, et c'est contre-intuitif.** Il a rendu 756 mots pour 897
+attendus — il saute des passages entiers — en trente-cinq fois le temps. Le prendre pour « le
+meilleur parce que le plus gros » dégrade la transcription en la ralentissant. Il reste dans la
+liste de l'écran, avec son chiffre : le cacher obligerait à refaire la mesure pour savoir pourquoi
+il n'y est pas.
+
+`turbo` est meilleur ET plus rapide que `medium` : il n'y a pas d'arbitrage, seulement un défaut à
+corriger. C'est le nouveau défaut de `MODELE_DEFAUT`.
+
+**CE QUI N'A RIEN CHANGÉ, ET QUI A ÉTÉ RETIRÉ.** Un beam search élargi (`-bs 8 -bo 8`) et un seuil
+d'entropie relevé (`-et 2.8`) rendent **exactement** le même résultat — 860 mots justes des deux
+côtés. Le décodeur distillé de `turbo` n'a que deux couches : il n'y a presque rien à explorer. Du
+code qui prétend améliorer sans rien changer fait perdre du temps à qui le lit ; ne pas le remettre
+sans une mesure qui le justifie.
+
+**LE MODÈLE SE POSE PAR COMMANDE, PLUS EN ÉDITANT `.env`.** Il n'y vivait que là — c'est-à-dire
+nulle part, puisque le §2 dit que rien ne se tape. `config/chaine.json → transcription.modele` a sa
+commande et son écran, et **prime sur `.env`** : la qualité d'écoute devient une décision de
+chaîne, réglable là où l'on travaille. `.env` reste pour ce qui appartient à la MACHINE.
+
+```bash
+npm run transcris -- --defaut=large-v3-turbo   # pour la chaîne
+npm run transcris -- <slug> --modele=medium    # pour cette fois
+```
+
+### REPARTIR DE ZÉRO, QUAND ON S'EST PERDU
+
+On corrige, on insère, on supprime — et on finit par ne plus reconnaître son texte. Il manquait le
+geste qui rend tout à ce que la machine entend. Il est à l'étape 5, replié : « Tout réanalyser »
+efface un travail de relecture, ce n'est pas un bouton qu'on doit croiser en cherchant autre chose.
+
+**ON NE REFAIT PAS LE MONTAGE, ON REMET LE TEXTE.** `monte --depuis=transcris` aurait été le geste
+évident, et il en fait beaucoup trop : il reconstruit la piste image, donc trente recherches
+d'images et autant de clips retéléchargés — pour un texte à corriger. Pire, la fenêtre de réemploi
+des dix derniers montages ferait valser des plans qu'on avait validés.
+
+`transcris --refais` suffit, **et il remet lui-même les mots du plan d'accord**. C'est le point qui
+manquait : `plan.json` porte sa propre copie des mots — celle que Remotion lit —, et retranscrire
+sans y toucher laissait le rendu afficher l'ancien texte sans que rien ne le dise. Le reste du plan
+ne bouge pas : l'audio n'a pas changé, donc les plans de coupe, les coupes et le thème sont
+toujours à leur place. Vérifié : 14 événements et 1 coupe identiques après réanalyse.
+
+Ce qui ne bouge pas non plus : la **voix** (aucune conversion payante ne repart) et les réglages de
+style, qui vivent dans `soustitres.json`.
+
 ### VIDER UN CHAMP N'EST PAS SUPPRIMER UNE LIGNE
 
 Côté commande, un texte vide **retire** les mots visés — c'est le comportement documenté de
@@ -1425,12 +1484,15 @@ ne le dise. Une insertion cherche donc son point d'ancrage : le premier mot qui 
 silence. Et une insertion qui tombe au milieu d'une plage récrite dans le même envoi est
 **refusée** : les mots qui l'entourent sont sur le point de disparaître.
 
-**LA BANDE NE SE MONTRE QU'AU SURVOL, et c'est une question de nombre.** Sur les 201 lignes d'une
-prise, une soixantaine de silences dépassent le seuil : un marqueur permanent sur chacun serait
-exactement le bruit qui empêche de lire — or ce qu'on cherche ici se repère **en lisant**, deux
-lignes qui ne s'enchaînent pas, pas en balayant des boutons. La bande garde sa place (quatre
-pixels, aucun saut de mise en page au survol) et affiche la durée du trou, qui dit combien de mots
-peuvent y tenir.
+**ELLE SE VOIT AU REPOS, PARCE QU'UNE FONCTION QU'ON NE TROUVE PAS N'EXISTE PAS.** Elle ne se
+montrait qu'au survol, au motif qu'une soixantaine de marqueurs sur deux cents lignes seraient du
+bruit. L'argument tenait sur le papier et a échoué à l'usage : **la fonction a été redemandée alors
+qu'elle était déjà là**. Un raisonnement sur l'encombrement ne vaut rien contre une découverte qui
+n'a pas lieu.
+
+Le compromis est dans le POIDS, pas dans la présence : au repos un « + » de onze pixels, presque de
+la couleur du fond, sans texte ; au survol, la durée du silence s'affiche — elle dit combien de mots
+peuvent y tenir. La bande garde sa hauteur dans les deux états, donc aucun saut de mise en page.
 
 **Le seuil voyage, il ne se recopie pas.** La soustraction entre deux instants n'est pas une règle
 métier et se fait à l'écran ; le seuil en est une, et il sort de `soustitres.mjs --json`

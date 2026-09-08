@@ -5073,6 +5073,7 @@ async function chargeLeStudio() {
   // là, et ne rebougera que sur un geste : « mots par ligne », la ponctuation,
   // ou le bouton « Redécouper ».
   figeLeDecoupage()
+  batisLesModelesDEcoute()
   dessineLeTexte()
 }
 
@@ -6409,8 +6410,13 @@ function zoneDInsertion(ligne, silenceMs) {
   const trou = creer('div', 'trou')
   const bouton = creer('button', 'trou-plus')
   bouton.type = 'button'
-  bouton.textContent = `+ ${secondesFr(silenceMs)} de silence`
-  bouton.title = `Ajouter les mots prononcés ici et que la transcription a manqués`
+  // Le « + » est toujours là ; la durée n'apparaît qu'au survol (voir `.duree`
+  // dans style.css). Deux niveaux de lecture, une seule hauteur de bande.
+  bouton.append('+')
+  const duree = creer('span', 'duree')
+  duree.textContent = ` ${secondesFr(silenceMs)} de silence`
+  bouton.append(duree)
+  bouton.title = `Ajouter les mots prononcés ici et que la transcription a manqués (${secondesFr(silenceMs)})`
   bouton.addEventListener('click', () => ouvreLInsertion(trou, ligne, silenceMs))
   trou.append(bouton)
   return trou
@@ -6719,6 +6725,74 @@ async function enregistreMaintenant() {
 }
 
 $('btnCorrige').addEventListener('click', enregistreLesCorrections)
+
+// ---------------------------------------------------------------------------
+//  Repartir de zéro
+// ---------------------------------------------------------------------------
+//
+// LES CHIFFRES VIENNENT D'UNE MESURE, PAS D'UNE RÉPUTATION.
+//
+// Relevé le 8 septembre 2026 sur une VSL réelle de 897 mots, dont le script
+// donne la vérité. C'est l'exactitude APRÈS correction par le script — celle du
+// texte qui finit à l'écran.
+//
+// `large-v3` est le piège : le plus gros modèle est le plus mauvais ici, parce
+// qu'il saute des passages entiers. Il reste dans la liste, avec son chiffre :
+// le cacher obligerait à refaire la mesure pour savoir pourquoi il n'y est pas.
+const MODELES_ECOUTE = [
+  { id: 'large-v3-turbo', nom: 'Fine — 96,8 % · 13 s', note: `Le défaut. Le meilleur des trois, et le plus rapide.` },
+  { id: 'medium', nom: 'Rapide — 94,6 % · 21 s', note: `Deux points de moins, et plus lent. À réserver aux machines à court d'espace.` },
+  { id: 'large-v3', nom: 'Lourde — 77,5 % · 8 min', note: `Mesurée MOINS bonne : elle saute des passages entiers, en trente-cinq fois le temps.` },
+]
+
+function batisLesModelesDEcoute() {
+  const sel = $('modeleTranscription')
+  if (sel.options.length) return
+  for (const m of MODELES_ECOUTE) {
+    const o = creer('option')
+    o.value = m.id
+    o.textContent = m.nom
+    sel.append(o)
+  }
+  const majNote = () => {
+    $('noteModeleTranscription').textContent =
+      MODELES_ECOUTE.find((m) => m.id === sel.value)?.note ?? ''
+  }
+  sel.addEventListener('change', majNote)
+  majNote()
+}
+
+$('btnReanalyse').addEventListener('click', (ev) =>
+  pendant(ev.currentTarget, 'Réanalyse…', async () => {
+    const combien = appli.st?.mots?.length ?? 0
+    const ok = await demandeConfirmation({
+      titre: `Tout réanalyser ?`,
+      quoi:
+        `Les ${combien} mots seront réécrits depuis l'audio, et les lignes ` +
+        `reviendront à leur découpage par défaut.\n\n` +
+        `Tes corrections, insertions et suppressions de texte sont perdues. ` +
+        `La voix n'est pas refaite — rien de payant ne repart — et les réglages ` +
+        `de style ne bougent pas.`,
+      action: 'Tout réanalyser',
+    })
+    if (!ok) return
+    const vue = await mene(() =>
+      api(`/api/videos/${encodeURIComponent(appli.slug)}/reanalyse`, {
+        methode: 'POST',
+        corps: { modele: $('modeleTranscription').value },
+      })
+    )
+    if (vue?.etat !== 'fini') return
+    // Tout a bougé : les mots, le plan, le découpage. On relit le studio en
+    // entier plutôt que de rafistoler — c'est le seul endroit où un
+    // rechargement complet est ce qu'on demande.
+    corrections.clear()
+    retires.length = 0
+    etatEcriture = 'repos'
+    await rechargeLeStudio()
+    annonce(`Réanalysé — ${appli.st?.mots?.length ?? 0} mots, lignes remises par défaut.`, 'ok')
+  })
+)
 
 // REDÉCOUPER EST UN GESTE, PAS UN EFFET DE BORD.
 //
