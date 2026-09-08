@@ -333,6 +333,12 @@ input[type="number"] { width: 6.5em; }
   color: var(--doux); margin-bottom: 8px;
 }
 .etiquette b { color: var(--texte); font-variant-numeric: tabular-nums; }
+/* Pourquoi le curseur s'arrête là : en minuscules et sans graisse, pour que
+   ça se lise comme une explication et non comme une seconde étiquette. */
+.etiquette .plafond {
+  font-weight: 400; text-transform: none; letter-spacing: 0;
+  color: var(--doux); opacity: 0.75;
+}
 
 .rang { display: flex; gap: 16px; align-items: flex-start; }
 .rang > .groupe { flex: 1; min-width: 0; }
@@ -531,6 +537,10 @@ input[type="number"] { width: 6.5em; }
 .grille3.rang-couleurs { grid-template-columns: repeat(auto-fit, minmax(148px, 1fr)); }
 .curseurs { gap: 10px 14px; }
 .curseurs .etiquette { margin-bottom: 4px; }
+/* L'étiquette de « mots par ligne » porte la raison de son plafond et passe
+   parfois sur deux lignes. Sans cet alignement, son curseur descendait d'un
+   cran et les deux réglages voisins ne se lisaient plus sur la même ligne. */
+.curseurs .groupe { display: flex; flex-direction: column; justify-content: space-between; }
 
 .note-modele { font-size: 14px; color: var(--doux); line-height: 1.4; margin: -6px 0 0; }
 .alerte-police { font-size: 14px; color: var(--attention); margin: -4px 0 0; line-height: 1.4; }

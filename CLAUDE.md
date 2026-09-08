@@ -2087,6 +2087,49 @@ la case avant de partir. Le détecteur trouve un
 visage, pas ce qu'il porte ; la génération, elle, reçoit l'intention du bloc. Les trente plans
 suivants restent en banque.
 
+### Ajouter un mot sur une ligne : ce qui marche, et ce qui l'écrase
+
+Le geste est intact, et c'est mesuré. « 82 194 € » ajouté à la ligne
+« les potentiels matchs » : les bornes de la ligne ne bougent pas d'une
+milliseconde — 8559 → 9399 avant comme après —, le mot suivant reste à 10239, et
+le plan de montage ressort identique au transcript, mot pour mot. La chaîne
+d'écriture n'est pas en cause.
+
+**CE QUI DISPERSE LES MOTS AJOUTÉS, C'EST « MOTS PAR LIGNE ».** À 3, une ligne
+tient trois mots : en ajouter trois la fait forcément déborder, et
+`pagine` répartit le reste — « matchs 82 194 » puis « € » tout seul. À 6, les six
+mots tiennent sur une ligne. Rien n'était mal câblé : le réglage était trop bas
+pour ce qu'on lui demandait.
+
+**LE CURSEUR S'ARRÊTE OÙ LA LARGEUR DE L'IMAGE L'ARRÊTE.** `pagine` a deux
+plafonds, et le second gagne toujours : le nombre de caractères que la ligne peut
+tenir, calculé depuis la largeur du format et le corps du texte. Mesuré sur un
+format vertical à 86 px : au-delà de 6 mots par ligne, 7, 8, 9 rendent
+**exactement** le même découpage — 46 lignes à chaque fois. Six positions du
+curseur ne faisaient rien, et rien ne le disait : on traîne, on ne voit pas
+bouger, on croit le réglage cassé. En 16:9 le même calcul donne une soixantaine
+de caractères, donc une dizaine de mots — c'est le format qui décide, pas une
+constante.
+
+Le plafond ne s'estime pas, il se **mesure** : c'est la plus grande valeur qui
+change encore le découpage. Diviser la largeur par une longueur de mot moyenne
+aurait été un chiffre inventé, faux dès la première phrase courte. L'étiquette
+porte la raison — « au-delà de 6, la largeur de l'image décide » —, sans quoi un
+curseur qui s'arrête avant sa graduation ressemble à un bug.
+
+**ET LE RECALAGE NE SE LANCE PAS APRÈS UN AJOUT DE TEXTE NON PRONONCÉ.** `⇉`
+mesure les instants sur l'audio ; un mot qui n'y est pas ne peut pas être ancré,
+et se retrouve comprimé entre ses deux voisins — « 82 194 € » passait de 200 ms
+par mot à 18 ms, soit un clignotement en surbrillance mot à mot. Du texte qu'on
+**affiche** sans le dire se rattache à la phrase voisine et se laisse tranquille.
+
+La commande le dit maintenant, et sans heuristique : `aligne()` marque déjà
+`incertain` les mots qu'il n'a pas retrouvés dans l'audio. Trois seuils de durée
+avaient échoué avant — 80 ms signalait 56 mots, le contraste avant/après 9,
+« moins d'une image » (33 ms) 9 aussi, dont « a », « à », « y », « ? » qui durent
+réellement 20 ms et sont bel et bien prononcés. Le fait cherché était dans le
+fichier depuis le début : 3 sur 217, exactement les trois mots ajoutés.
+
 Les sous-titres sont **calés mot à mot** sur l'audio, jamais approximés. Le détail des styles vit dans `marque/identite-visuelle.md` et les skills de montage.
 
 ### L'échelle des sous-titres se prend sur le PETIT CÔTÉ

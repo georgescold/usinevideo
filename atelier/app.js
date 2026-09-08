@@ -5192,8 +5192,56 @@ function versLesControles() {
   majAlertePolice()
 }
 
+/**
+ * LE CURSEUR S'ARRÊTE OÙ LA LARGEUR DE L'IMAGE L'ARRÊTE.
+ *
+ * `pagine` a deux plafonds : le nombre de mots voulu, et le nombre de
+ * caractères que la ligne peut tenir — calculé depuis la largeur du format et
+ * le corps du texte. Le second gagne toujours. Mesuré sur video-3, un format
+ * vertical à 86 px : au-delà de 6 mots par ligne, 7, 8, 9… donnent EXACTEMENT
+ * le même découpage, 46 lignes à chaque fois. Six positions du curseur ne
+ * faisaient rien, sans que rien ne le dise — on traîne, on ne voit pas bouger,
+ * et on croit le réglage cassé.
+ *
+ * Le plafond ne s'estime pas, il se mesure : c'est la plus grande valeur qui
+ * change encore le découpage. Diviser la largeur par une longueur de mot
+ * moyenne aurait été un chiffre inventé, faux dès la première phrase courte.
+ */
+function motsParLignePossibles() {
+  const mots = appli.st?.mots
+  const dur = Number(appli.st?.bornes?.motsParPage?.max) || 12
+  if (!mots?.length) return dur
+  const largeur = largeurDePage()
+  const taille = (n) => pagine(mots, n, largeur).length
+  let dernier = taille(1)
+  let plafond = 1
+  for (let n = 2; n <= dur; n++) {
+    const combien = taille(n)
+    if (combien !== dernier) plafond = n
+    dernier = combien
+  }
+  return plafond
+}
+
+/** Le maximum du curseur, et la raison quand il n'est pas celui des bornes. */
+function ajusteLeMaximumDeMotsParLigne() {
+  if (!appli.st?.mots?.length) return
+  const e = $('stMotsParPage')
+  const dur = Number(appli.st.bornes?.motsParPage?.max) || 12
+  const plafond = motsParLignePossibles()
+  e.max = String(plafond)
+  if (Number(e.value) > plafond) e.value = String(plafond)
+  if (appli.st.reglages.motsParPage > plafond) appli.st.reglages.motsParPage = plafond
+  const note = $('plafondMotsParLigne')
+  if (note) {
+    note.textContent =
+      plafond < dur ? ` · au-delà de ${plafond}, la largeur de l'image décide` : ''
+  }
+}
+
 function majLesValeurs() {
   const r = appli.st.reglages
+  ajusteLeMaximumDeMotsParLigne()
   $('valMotsParPage').textContent = r.motsParPage
   $('valTaille').textContent = r.taille
   $('valPositionBas').textContent = r.positionBas

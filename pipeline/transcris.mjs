@@ -344,6 +344,37 @@ await principal(async () => {
   // que le texte et l'audio ne se ressemblent plus assez pour s'ancrer : les
   // instants sont alors interpolés, donc approximatifs, et il vaut mieux le
   // savoir que de le découvrir sur des sous-titres qui glissent.
+  // LES MOTS QUI NE SONT PAS DANS L'AUDIO, LE RECALAGE LES CONNAÎT DÉJÀ.
+  //
+  // Un mot ajouté à la main — un montant affiché à l'écran, une mention — n'est
+  // pas prononcé : l'alignement ne peut pas l'ancrer, et le comprime dans ce qui
+  // reste entre ses deux voisins ancrés. Mesuré : « 82 194 € » occupait 200 ms
+  // par mot avant recalage, 18 ms après. En surbrillance mot à mot, ça clignote.
+  //
+  // TROIS SEUILS DE DURÉE ONT ÉCHOUÉ AVANT CELUI-CI, ET ILS DISENT LA MÊME
+  // CHOSE : la durée ne distingue pas un mot absent d'un mot bref. Un seuil
+  // absolu à 80 ms signalait 56 mots ; le contraste avant/après, 9 ; « moins
+  // d'une image » (33 ms), 9 aussi — dont « a », « à », « y », « ? », qui durent
+  // réellement 20 ms et sont bel et bien prononcés. Un signal noyé à un pour
+  // neuf ne se lit pas.
+  //
+  // Or `aligne()` marque déjà `incertain` sur les mots qu'il n'a PAS retrouvés
+  // dans l'audio et dont il a deviné la position. Ce n'est pas une heuristique,
+  // c'est ce que l'algorithme a fait. Sur le même essai : 3 sur 217, exactement
+  // les trois mots ajoutés, aucun faux positif. L'information était dans le
+  // fichier depuis le début.
+  const devines = (resultat.mots ?? []).filter((m) => m.incertain)
+  if (drapeau(options, 'recale') && devines.length) {
+    journal.attention(
+      `${devines.length} mot(s) ne sont pas dans l'audio : leur position est devinée.`
+    )
+    journal.detail(`  ${devines.slice(0, 12).map((m) => m.texte).join(' ')}`)
+    journal.detail(
+      `Du texte qu'on AFFICHE sans le dire se rattache à la phrase voisine et ` +
+        `se laisse tranquille : le recaler le comprime entre deux mots prononcés.`
+    )
+  }
+
   if (typeof resultat.tauxAncrage === 'number') {
     const pc = Math.round(resultat.tauxAncrage * 100)
     const dire = pc >= 90 ? journal.detail : journal.attention
