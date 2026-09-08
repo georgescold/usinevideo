@@ -33,6 +33,36 @@ const URL = 'https://api.anthropic.com/v1/messages'
  * telle quelle — un mauvais prompt ne doit pas consommer toutes les clés.
  */
 export async function demande(consigne, question, { max = 4000, modele = MODELE } = {}) {
+  // DEUX PORTES POUR LE MÊME TRAVAIL, ET LA SECONDE EXISTE PARCE QUE LA
+  // PREMIÈRE SE FERME.
+  //
+  // Le seul appel de langage du pipeline — traduire un passage en requête
+  // d'images — dépendait d'une clé `sk-ant-api…`. Le jeton OAuth de Claude Code
+  // (`sk-ant-oat…`) est refusé en 401, et la déduction de script s'arrêtait
+  // alors net : le transcript était là, le découpage calculé, et il manquait
+  // quatre mots d'anglais par bloc.
+  //
+  // fal sert la même famille de modèles derrière une clé qu'on a déjà pour les
+  // plans générés. On essaie donc Claude, et on retombe sur fal — dans cet
+  // ordre, parce que le résultat de Claude est meilleur et que la clé, quand
+  // elle est là, est déjà payée.
+  try {
+    return await demandeAClaude(consigne, question, { max, modele })
+  } catch (e) {
+    const { pool } = await import('./trousseau.mjs')
+    if (!pool('fal').length) throw e
+    const { journal } = await import('./journal.mjs')
+    journal.attention(`Claude indisponible (${e.message.split('\n')[0]}) — on passe par fal.`)
+    const fal = await import('./fal.mjs')
+    // MEME FORME QUE LA BRANCHE CLAUDE, sinon `demandeJson` casse au
+    // destructurage : elle attend `{ texte, jetons }` et recevrait une chaine.
+    // `jetons` reste `null` — fal ne rend pas de compte de jetons, et inventer
+    // un chiffre ferait mentir le cout affiche.
+    return { texte: await fal.texte(consigne, question), jetons: null }
+  }
+}
+
+async function demandeAClaude(consigne, question, { max, modele }) {
   return avecCle(SERVICE, async (cle) => {
     const r = await fetch(URL, {
       method: 'POST',
@@ -92,7 +122,7 @@ export async function demandeJson(consigne, question, options = {}) {
         return { valeur: JSON.parse(nu.slice(de, a + 1)), jetons }
       } catch { /* on tombe dans l'erreur ci-dessous */ }
     }
-    throw new Error(`Claude n'a pas rendu de JSON lisible :\n${nu.slice(0, 300)}`)
+    throw new Error(`Le modèle n'a pas rendu de JSON lisible :\n${nu.slice(0, 300)}`)
   }
 }
 
@@ -105,10 +135,21 @@ export function cout(jetons) {
 }
 
 /** Y a-t-il de quoi interroger Claude ? */
+/**
+ * Y a-t-il de quoi poser une question ? Claude OU fal suffit.
+ *
+ * La fonction ne regardait que `claude` : l'écran annonçait donc « pas de
+ * cerveau » sur une chaîne parfaitement capable de répondre par fal.
+ */
 export function cerveauDisponible() {
   try {
     // `pool` lève si le trousseau est absent ; ici on veut juste un booléen.
-    return import('./trousseau.mjs').then(({ pool }) => pool(SERVICE).length > 0).catch(() => false)
+    // fal compte autant que claude : c'est la seconde porte vers le même
+    // travail, et ne regarder que la première annonçait « pas de cerveau » sur
+    // une chaîne parfaitement capable de répondre.
+    return import('./trousseau.mjs')
+      .then(({ pool }) => pool(SERVICE).length > 0 || pool('fal').length > 0)
+      .catch(() => false)
   } catch {
     return Promise.resolve(false)
   }

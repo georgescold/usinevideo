@@ -37,7 +37,8 @@
     "maj-chaine": "node outils/maj-chaine.mjs",
     "inspire": "node pipeline/inspirations.mjs",
     "empreinte": "node pipeline/empreinte.mjs",
-    "entraine": "node pipeline/entraine.mjs"
+    "entraine": "node pipeline/entraine.mjs",
+    "initialise": "node pipeline/initialise.mjs"
   },
   "dependencies": {
     "@remotion/bundler": "4.0.516",

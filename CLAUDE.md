@@ -14,7 +14,8 @@ Ce dossier est un **template réplicable**. On le copie pour lancer une nouvelle
 
 ## 2. Règle d'or
 
-**L'écriture se décide dans la conversation. La fabrication se pilote dans l'atelier.**
+**L'écriture se décide dans la conversation. TOUT LE RESTE se pilote dans l'atelier — et rien ne
+se tape au terminal.**
 
 La ligne ne passe pas entre « avec interface » et « sans interface » : elle passe entre **juger**
 et **exécuter**.
@@ -36,11 +37,59 @@ son texte à côté. Ni étape, ni ordre, ni slug : ce qu'on y garde resservira 
 la dixième vidéo comme sur la première. Le second n'est pas une huitième marche
 du premier, et le présenter ainsi mentirait sur ce qu'il est.
 
+### RIEN NE SE TAPE AU TERMINAL. C'EST LA RÈGLE, ET ELLE PRIME.
+
+Demandé quatre fois, refusé trois : **aucune capacité de ce dossier ne s'atteint en tapant une
+commande à la main.** Tout ce qui s'exécute a son bouton dans l'atelier. Un chemin qui n'existe
+qu'au terminal est un défaut à corriger, pas un arbitrage à défendre.
+
+Ça ne contredit pas la contrainte 1 ci-dessous, et il faut voir pourquoi : **une commande existe
+toujours, elle ne se TAPE plus.** Le CLI reste la couche qui fait le travail — c'est ce qui rend
+l'atelier remplaçable et testable — mais l'écran doit toujours offrir de quoi la lancer.
+
+**Le trousseau a son écran**, et c'était le dernier geste qui obligeait le terminal. On clique sur
+les soldes, dans l'en-tête : la liste par service, l'état de chaque clé, l'ajout, le retrait, le
+dégel. Un message d'échec de clé porte un bouton qui y mène — on ne réécrit pas le message de la
+commande, qui est juste au terminal, on lui accroche la porte qui va avec.
+
+**La valeur saisie part sur l'ENTRÉE STANDARD**, jamais en argument : une ligne de commande se lit
+dans la liste des processus et finit dans `t.commande`, donc dans le journal affiché à l'écran.
+`cles.mjs --valeur=-` existe précisément pour ça. La promesse de démarrage a donc été corrigée —
+elle disait « aucune clé ne traverse ce serveur », ce qui cesse d'être vrai pour celle qu'on tape ;
+elle dit maintenant ce qui l'est : aucune clé n'est journalisée ni passée en argument. Vérifié : la
+commande enregistrée est `--ajoute=claude --valeur=- --json`, et la valeur n'apparaît nulle part
+dans la réponse.
+
+**`cles.mjs --ajoute` NE VÉRIFIE PAS la clé** — il refuse un doublon et le gabarit d'exemple, rien
+de plus, aucun appel au service. L'écran ne dit donc pas « vérifiée » : il dit qu'elle sera essayée
+au premier appel, et qu'un refus l'enverra au frigo. Annoncer une vérification qui n'a pas eu lieu
+ferait chercher ailleurs le jour où la clé est fausse.
+
+**Ce que ça impose à chaque modification** — et c'est une consigne d'écriture de code, pas un vœu :
+
+- une capacité nouvelle se livre avec sa **commande ET son bouton**, dans le même changement ;
+- un message d'erreur qui dit « lance `npm run …` » est un **bug d'ergonomie** : il doit nommer
+  l'écran où le geste se fait. La commande, elle, garde son message de terminal — « va à l'étape 3 »
+  ne veut rien dire dans un terminal, et les deux publics ne lisent pas au même endroit ;
+- un manque qui bloque (pas de clés, pas de dépendances, pas de modèle entraîné, pas d'identité)
+  s'affiche **là où il bloque**, avec le bouton qui le comble ;
+- ce qui se répare deux écrans plus loin se dit **aussi** là où on le constate, avec de quoi y
+  aller.
+
+**La seule exception, et elle est étroite : ce qui s'ÉCRIT.** Un script, un angle, un hook, un
+verdict de performance. Ce ne sont pas des gestes qu'on exécute, ce sont des textes qu'on
+argumente, qu'on reprend et qu'on refuse. La première interface de ce dossier est morte d'avoir
+voulu les mettre sur un bouton — un clic sur « Écrire le script » a rendu un brief puis s'est
+arrêté, faute de pouvoir donner la validation que la skill exigeait.
+
+Tout le reste — y compris l'identité de la chaîne, qui était l'exception d'hier — est à l'écran.
+
 **Trois contraintes, et elles ne se négocient pas :**
 
 1. **Aucune logique métier dans l'atelier.** Chaque capacité existe d'abord comme commande
    utilisable seule au terminal. L'interface l'appelle, affiche son journal, montre son résultat.
-   Si l'atelier disparaît demain, la chaîne se produit encore.
+   Si l'atelier disparaît demain, la chaîne se produit encore. Ce n'est PAS une permission de
+   s'arrêter à la commande : voir la règle ci-dessus.
 2. **Chaque étape se valide avant la suivante.** L'atelier ne fabrique jamais une vidéo d'un
    bout à l'autre sans qu'on ait dit oui entre-temps. C'est précisément ce qui manquait à la
    première tentative.
@@ -66,6 +115,128 @@ prétend pas écrire.
 Reste hors atelier, définitivement : l'écriture de script, le choix d'un angle, la stratégie, le
 bilan de performance. Et `npx remotion studio` reste ce qu'il était — un scrub de timeline, pas
 un pilotage.
+
+### L'identité se déclare à l'écran. Le socle, lui, se discute.
+
+`/init-chaine` était le SEUL chemin vers un nom, un format actif et une palette — et il sort du
+logiciel. Une chaîne neuve restait donc sans identité, et l'écran ne pouvait que le constater :
+pour poser deux couleurs, il fallait fermer l'atelier, ouvrir Claude Code et entamer un entretien
+d'une heure.
+
+`npm run initialise` est l'autre chemin. Elle **DÉCLARE** ce qu'on sait déjà — nom, promesse,
+produit, avatar, marketeur, registre, formats actifs, cadence, palette, polices —, sans appel
+réseau, sans clé, sans modèle. L'atelier l'appelle depuis le bandeau d'initialisation et depuis
+« Identité » sur la ligne de la chaîne ouverte. Un champ laissé vide reste vide ; on revient
+régler une couleur six mois plus tard sans retaper la promesse.
+
+**Une chaîne est « initialisée » dès qu'elle a un NOM, et rien d'autre.** Le drapeau ne dit pas
+que le socle marketing est fait — aucun champ de `chaine.json` ne peut le dire. Il dit qu'une
+identité existe. Exiger davantage le rendrait inatteignable depuis un écran, ce qui était le
+problème.
+
+**Ce que la commande n'est pas.** Elle n'invente pas d'avatar, ne fait pas de veille, n'écrit pas
+de hook bank. Les quatre fiches de `marque/` sont posées en **gabarits**, et leur en-tête dit
+franchement qu'elles n'ont pas été écrites — une fiche produit de trois lignes qui ressemble à une
+fiche produit est le pire des deux mondes : on croit l'avoir faite, on ne la refait jamais, et
+chaque script s'écrit sur du vide. Une fiche déjà présente n'est jamais écrasée.
+
+L'entretien reste, et reste meilleur pour le socle. Il n'est simplement plus la porte d'entrée.
+
+**`cle` EST UN MOT INTERDIT DANS UNE SORTIE `--json`.** `lib/journal.mjs` masque la valeur de
+toute propriété dont le nom correspond à `/token|key|cle|secret|password|authorization/`. Le champ
+`{ cle: 'long_face_camera' }` ressortait donc de l'atelier en « long…mera », et les cases à cocher
+de l'écran étaient illisibles. Le filet faisait exactement son travail, sur un mot qui ne désignait
+ici qu'un format vidéo. **On ne desserre pas le filet, on nomme le champ autrement** — ici
+`format`.
+
+### Une chaîne neuve s'ouvre. Elle ne se remplit pas toute seule.
+
+L'atelier exigeait `initialise: true` pour démarrer, et refusait la bascule vers une chaîne qui
+ne l'était pas. Or **aucune chaîne fraîchement copiée ne l'est** : le bouton « Nouvelle chaîne »
+de cet écran fabriquait donc, à tous les coups, une ligne que le même écran refusait ensuite
+d'ouvrir — « pas encore initialisée », et un chemin à copier. Un bouton qui produit une chose que
+l'écran ne sait pas afficher est un bouton qui ment.
+
+Le verrou n'était pas dans le pipeline : **aucune commande de `pipeline/` n'exige
+l'initialisation**. L'atelier était plus strict que ce qu'il pilote. Il s'ouvre maintenant, et
+écrit en tête ce qui manque avec le dossier où ouvrir Claude Code.
+
+Ce qui n'a pas bougé : `/init-chaine` reste un entretien, et il se mène en conversation. Le dépôt,
+la transcription, le carnet et les avatars n'attendent rien de lui ; le montage, si — sans
+direction artistique il n'a ni police, ni couleur, ni style de sous-titres.
+
+**Créer une chaîne est UN geste, pas trois.** « Créer » ne faisait que copier le code. Il fallait
+ensuite cliquer « Installer ses dépendances » dans une note en bas du panneau, puis retrouver la
+ligne de la chaîne et cliquer « Ouvrir » — trois gestes séparés par deux écrans, pour une suite
+qui n'a qu'un ordre possible et aucune décision. C'était le §2 mal appliqué : la règle sépare ce
+qui se JUGE de ce qui s'exécute, pas les étapes d'une même exécution. Copier, installer, entrer
+s'enchaînent maintenant sous un seul bouton, journal ouvert. Les clés sont copiées **par défaut** :
+sans elles une chaîne neuve ne peut ni chercher un plan de coupe, ni fabriquer une voix, ni
+scraper la niche.
+
+**Et une chaîne neuve PRODUIT, même sans `/init-chaine`.** La cascade des sous-titres retombe sur
+le modèle Hormozi et les polices embarquées : vérifié sur une chaîne à `identite_visuelle` vide,
+elle rend treize réglages complets — Montserrat, mot-à-mot couleur, 78 px. Le montage tourne avec.
+Ce que l'entretien apporte est **éditorial** — produit, avatar, marketeur — et une direction
+artistique qui soit la sienne plutôt qu'un défaut neutre. L'écran le disait de travers : il
+annonçait « ni police, ni couleur, ni style de sous-titres », ce qui est faux et décourageait
+d'essayer.
+
+Ce qui ne s'enchaîne toujours pas : `/init-chaine`. C'est un entretien, et la première interface
+de ce dossier est morte d'avoir voulu le mettre sur un bouton.
+
+**`node_modules` ne voyage pas, et la liste le dit.** Il pèse trois cents mégaoctets,
+`nouvelle-chaine` ne le copie pas, et §4 pose qu'un dossier de chaîne se déplace d'un poste à
+l'autre : le second n'a rien d'installé. La ligne proposait « Ouvrir », l'essai à blanc échouait
+sur un `ERR_MODULE_NOT_FOUND` illisible, et on restait sur place sans savoir quoi faire. Le manque
+est maintenant écrit sur la ligne, avec le bouton qui le comble.
+
+**On change de chaîne en cliquant sur la CHAÎNE.** Le bouton portait le mot « Atelier » — le nom
+du logiciel — et le nom de la chaîne vivait juste en dessous, en gris, inerte. Pour en changer il
+fallait cliquer sur ce qui ne la désignait pas. Le titre redevient un titre, le nom de la chaîne
+devient le bouton, et il porte un chevron. Il retombe sur le **nom du dossier** quand
+`identite.nom` est vide : sur une chaîne neuve le bouton se réduisait à son chevron, trois pixels
+de large, et on se retrouvait enfermé dans la chaîne qu'on venait d'ouvrir.
+
+**Le solde Fish est dans l'en-tête, à côté de fal et d'ElevenLabs.** Il manquait alors que c'est le
+plus vite dépensé des trois : une voix off de dix minutes coûte quinze centimes, et on en refait
+cinq avant d'être content. Les deux services de voix se suivent — on arbitre entre eux, et un
+arbitrage se lit mieux quand les deux chiffres sont côte à côte. `cles.mjs --quotas` distingue
+« aucune clé fish » de « solde indisponible » : `credit()` rend `null` dans les deux cas, et les
+deux appellent des gestes opposés.
+
+**Le garde « travail en cours » attend avant de refuser.** Il existe pour une bonne raison — un
+montage qui écrit dans l'ancienne chaîne pendant qu'on regarde la nouvelle —, mais il refusait au
+PREMIER travail venu, et l'atelier en lance tout seul : le solde des services payants se relit à
+chaque retour dans la fenêtre, et rouvrir le menu des chaînes EST un retour dans la fenêtre.
+`cles.mjs --quotas` met quatre secondes. Cliquer « Ouvrir » pendant ces quatre secondes se soldait
+donc par un refus, sur une commande qui ne fait que lire des soldes. Relevé le 7 septembre 2026 :
+six lancements en trois minutes, rien qu'en cliquant dans l'écran — d'où un refus qui paraissait
+aléatoire, sa cause étant invisible.
+
+Classer les commandes en « lit » et « écrit » aurait demandé d'auditer quarante appels et de
+rejuger chaque nouveau. **Le temps suffit à trancher** : ce que l'atelier lance de lui-même dure
+des secondes, ce qui écrit vraiment — montage, rendu, entraînement — dure des minutes. On attend
+donc cinq secondes, et on ne refuse que ce qui tourne encore après. Et le refus **nomme** le
+travail et son âge : « 1 travail(aux) en cours » n'apprenait ni quoi, ni depuis quand, ni s'il
+fallait attendre ou aller le tuer.
+
+### Une chaîne n'hérite de RIEN, pas même de l'esthétique
+
+`nouvelle-chaine` vidait l'identité, le produit, l'avatar, la voix et le Drive, et laissait passer
+deux choses qui disent la marque aussi fort que les autres :
+
+- **le bloc `identite_visuelle`** entier — polices, palette, style de sous-titres, ambiance, et
+  jusqu'à `direction_plans`, cette phrase ajoutée à *chaque* requête de banque d'images. Une
+  chaîne neuve recevait l'esthétique de la précédente sans que rien ne le dise, et `derivee_de`
+  pointait un logo qui n'existait pas chez elle ;
+- **`marque/identite-visuelle.md` et `marque/ligne-editoriale.md`**, copiés comme des gabarits
+  alors que `marque/LISEZ-MOI.md` dit qu'ils sont écrits par `/init-chaine` après la veille. Dans
+  une chaîne qui produit, ce sont deux documents pleins : une promesse, des piliers, ce qu'on ne
+  dit jamais.
+
+Les deux repartent vides, avec les handles de plateforme et la musique de fond. Le §6 l'interdit,
+le §1 dit pourquoi.
 
 ## 3. Le pipeline
 
@@ -232,6 +403,22 @@ calculée.
 `prosody.normalize_loudness` est explicitement à `false` : il écraserait la dynamique qu'on vient
 de payer pour obtenir, et c'est le §9 appliqué à la synthèse.
 
+### Déposer deux fois EMPILE, et rien ne le disait
+
+Le montage colle les prises bout à bout, dans l'ordre alphabétique — c'est ce qui permet de tourner
+en plusieurs fois. Mais déposer trois fois le même fichier donne trois prises, donc quinze minutes
+là où on en voulait cinq. Le doublon se voyait dans la **durée**, jamais dans une action : la fiche
+joignait les noms par des points, et le seul geste possible était `--retire`, qui enlève TOUT.
+
+`--retire=<prise>` n'en enlève qu'une — « prise-02.mp3 », « prise-02 » ou « 2 », parce qu'on
+désigne ce qu'on lit à l'écran. Chaque prise a maintenant sa ligne et son bouton à l'étape 2, et le
+compte est écrit quand il y en a plusieurs.
+
+**Ce qui découle part avec, même pour une seule prise.** La piste est la concaténation : en
+retirer une la raccourcit, et tout ce qui était calé dessus devient faux. Garder le transcript
+donnerait des sous-titres qui suivent une voix qui n'existe plus — le §9, nommément. Rien n'est
+détruit : tout va dans `.prises-precedentes/`.
+
 ### Le mode de production se lit sur le rush, jamais sur le script
 
 Le fichier déposé dans `02-tournage/` décide du montage :
@@ -361,7 +548,12 @@ npm run parle -- <slug> --devis        # ce que ça coûterait
 npm run transcris            # transcription locale mot à mot
 npm run voix                 # remplacement du timbre (ElevenLabs)
 npm run monte                # construit le plan de montage
-npm run monte -- <slug> --ouverture=ia   # le premier plan généré par IA (0,18 $), les autres en banque
+npm run monte -- <slug> --ouverture=ia   # le premier plan généré par IA, les autres en banque
+npm run monte -- <slug> --comble=ia      # génère un plan là où la banque n'a RIEN rendu
+npm run monte -- <slug> --comble=ia --comble-max=5   # et son plafond
+npm run monte -- <slug> --plans-ia=5     # budget de 5 plans générés, placés là où ils
+                                         #   servent le plus : le script est lu en entier
+npm run broll -- <slug> --estime         # combien de plans de coupe aura ce montage
 npm run rends                # produit le MP4
 npm run avatars              # les visages de la chaîne, et leurs photos
 npm run avatars -- --ajoute=<id> --nom="…" --signe="…" <photos…>
@@ -381,6 +573,7 @@ npm run drive -- <slug>      # y dépose le master de cette vidéo
 npm run etat                 # où en est chaque vidéo, déduit du disque
 npm run etat -- <slug>       # le détail d'une vidéo, étape par étape
 npm run depose -- <slug> <fichier>    # range un rush dans 02-tournage/
+npm run depose -- <slug> --retire=2   # ne retire QUE cette prise-là
 npm run depose -- <slug> --retire     # met de côté la prise ET ce qui en découle,
                                       #   pour en déposer une autre
 npm run supprime -- <slug>   # met la vidéo de côté dans videos/.corbeille/
@@ -396,10 +589,16 @@ npm run broll                # tes propres plans de coupe, et leurs mots-clés
 npm run broll -- --ajoute=<fichier> --mots="produit,guide"
 npm run broll -- <slug>      # où ils tomberaient dans cette vidéo, et pourquoi
 npm run broll -- <slug> --plans        # les plans de coupe du montage, un par un
+npm run broll -- <slug> --lisibilite   # les plans dont le fond avalerait les sous-titres
+npm run broll -- <slug> --efface-plans # détruit la piste image, garde les sous-titres
+npm run monte -- <slug> --refais-plans # écarte les plans déjà employés, pour en avoir d'autres
 npm run broll -- <slug> --remplace=3   # en échange un contre un autre candidat
 npm run studio -- <slug>     # aperçu, pour contrôler avant de rendre
+npm run initialise           # l'identité de la chaîne : nom, formats, palette
+npm run initialise -- --etat # ce qu'elle porte déjà
 npm run atelier              # l'atelier : du dépôt de l'audio au master
 npm run cles                 # le trousseau : lister, ajouter, retirer, dégeler
+npm run cles -- --donne-a=<dossier>   # copie CE trousseau dans une autre chaîne
 npm run cles -- --quotas     # les quotas réels, clé par clé
 npm run choix-voix -- --catalogue     # les voix ElevenLabs accessibles
 npm run choix-voix -- --partagees --ton=? # les tons de voix disponibles
@@ -408,8 +607,13 @@ npm run choix-voix -- <slug> --voix=<id>   # la voix retenue pour CETTE vidéo
 npm run choix-voix -- <slug> --essai --voix=<id>   # 10 s convertis, pour écouter
 npm run choix-voix -- <slug> --essai --voix=<id> --stabilite=0.2  # et son intonation
 npm run choix-voix -- --defaut --voix=<id>         # le défaut de la chaîne
+npm run choix-voix -- --defaut --fish --voix=<id>  # la voix FISH par défaut (celle qui LIT)
 npm run choix-voix -- --defaut --local --modele=<id> --transpose=12
                                                   # le modèle local ET sa transposition
+npm run choix-voix -- --favoris                   # les voix gardées — elles sont à la CHAÎNE
+npm run choix-voix -- --favori --voix=<id> --nom="…"        # en garder une
+npm run choix-voix -- --favori --voix=<id> --fish           # côté Fish
+npm run choix-voix -- --oublie-favori --voix=<id>           # la retirer
 npm run importe-cles         # récupère les clés d'un ancien projet
 npm run nouvelle-chaine -- <dossier>  # copie le template pour une nouvelle chaîne
 npm run maj-chaine -- <dossier>   # remet le CODE d'une autre chaîne à jour
@@ -447,17 +651,54 @@ ponctuation et les silences ; les ancres sont découpées dans le texte réel, d
 toujours. Le modèle ne remplit que deux champs — `requete` et `intention` — et ne peut pas casser
 la structure. Un garde-fou vérifie que les blocs, mis bout à bout, redisent exactement la prise.
 
+**ET SI CLAUDE N'EST PAS JOIGNABLE, FAL FAIT LE MÊME TRAVAIL.** Le seul appel de langage du
+pipeline dépendait d'une clé `sk-ant-api…`, et par elle seule : sans elle, la déduction s'arrêtait
+sur un 401 alors que le transcript était là, les 38 blocs découpés, et qu'il ne manquait que
+quatre mots d'anglais par bloc. C'est la question qu'on a posée à raison — « le texte, tu l'as
+dans les sous-titres ».
+
+`cerveau.mjs` essaie donc Claude, puis retombe sur `fal-ai/any-llm` — la même famille de modèles,
+derrière une clé qu'on a déjà pour les plans générés. L'ordre compte : Claude rend de meilleures
+requêtes, et sa clé, quand elle est là, est déjà payée. Vérifié le 7 septembre 2026 sur une prise
+réelle : 38 blocs, 907 mots, requêtes filmables — « Man in suit looking sad in office ».
+
+Deux pièges à ne pas défaire : la branche fal doit rendre `{ texte, jetons }` comme celle de
+Claude, sinon `demandeJson` casse au destructurage ; et `jetons` reste `null`, parce que fal n'en
+rend pas le compte et qu'un chiffre inventé ferait mentir le coût affiché.
+
+**`cerveauDisponible()` compte fal**, sans quoi l'écran annonçait « pas de cerveau » sur une chaîne
+parfaitement capable de répondre.
+
 **Ça demande une vraie clé API Anthropic** (`sk-ant-api…`, console.anthropic.com), pas le jeton
 OAuth de Claude Code (`sk-ant-oat…`) qui, lui, est refusé en 401 par l'API. Compter moins d'un
 centime par vidéo. Sans clé, le script se déduit en conversation — c'est ce que fait cette
 commande, en moins de mots.
 
-### Deux modes de fabrication, et un avatar qui appartient à la chaîne
+### Trois modes de fabrication, et un avatar qui appartient à la chaîne
 
-L'atelier propose, après le choix du format, **comment fabriquer l'image** :
+**LE MODE SE CHOISIT À L'ÉTAPE 6, EN TÊTE DES PLANS.** Il vivait à l'étape 1, juste sous le
+format, au motif qu'il « n'a de sens qu'une fois qu'on sait ce qu'on fabrique ». C'est vrai et ça
+ne suffisait pas : le mode ne décide de RIEN avant l'étape 6 — ni le dépôt, ni la transcription,
+ni la voix n'en dépendent. On le choisissait donc cinq écrans avant qu'il ne serve, pour ne plus
+s'en souvenir en arrivant devant le bouton qu'il commande, et devant la dépense qu'il engage.
 
-**Création simple** — le mode d'origine, inchangé. Tu déposes ta prise, le montage l'habille de
-plans de coupe.
+Deux conséquences, et la seconde est la vraie :
+
+1. l'étape 1 ne demande plus que le format, donc elle **enchaîne** de nouveau vers l'étape 2 ;
+   l'enchaînement n'avait été coupé que pour laisser voir le mode ;
+2. **« Création assistée » EST le réglage du comblage, ce n'est plus une case qu'elle pré-coche.**
+   Elle cochait « Combler les trous par IA » deux écrans plus loin, et la recochait à chaque
+   redessin de l'étape 1 : la même décision s'écrivait à deux endroits, dont l'un écrasait l'autre
+   sans le dire. Les deux étant maintenant côte à côte, la case a disparu. On coupe le comblage en
+   repassant en création simple, et ça se lit sur la carte retenue.
+
+**Création simple** — la banque d'images seule, rien n'est payant. Tu déposes ta prise, le montage
+l'habille de plans de coupe.
+
+**Création assistée** — le script est lu en entier avant qu'un centime soit dépensé, et la
+génération va aux passages qu'une banque d'images ne peut pas servir ; ce qui reste du budget
+comble les trous, comme avant. Voir « Placer les plans générés » au §10. C'est le seul mode où
+l'étape 6 montre un modèle vidéo, un budget et un prix.
 
 **Copie IA** — tu donnes le lien d'une vidéo. Elle est rapatriée, découpée en tronçons de dix
 secondes, et chaque tronçon sert de **référence de mouvement** à `hailuo-03/reference-to-video` :
@@ -733,6 +974,42 @@ Trois modes de voix, et ils vivent au même endroit — `monte.mjs` :
 | `local` | modèle entraîné de `marque/voix/` | rien : la carte du poste |
 | `brute` | aucune conversion | rien |
 
+**ON ESSAIE UNE VOIX FISH SUR SES PROPRES MOTS, PAS SUR UNE PHRASE DE DÉMONSTRATION.** La
+question qu'on se pose devant une voix est « comment sonnerait MA prise avec elle ». Fish ne peut
+pas convertir l'enregistrement — voir ci-dessous —, mais il peut dire **ce qu'on a dit** : mêmes
+mots, même longueur, même sujet. Sur une phrase de démonstration on juge le texte autant que la
+voix, et la comparaison ne vaut rien.
+
+Le champ d'essai se remplit donc du **transcript de la prise**, coupé aux instants pour couvrir
+exactement les secondes demandées ; à défaut, du script ; à défaut de tout, on le dit plutôt que
+d'inventer une phrase. `npm run parle -- --mots-de-la-prise=<slug> --secondes=20` rend ce texte
+sans rien synthétiser. Vérifié le 7 septembre 2026 : 21,1 s de voix Fish sur les mots réels d'une
+prise.
+
+Le plafond de l'essai passe de 400 à 1200 caractères — 400 couvraient les dix secondes d'origine,
+et auraient tronqué les vingt d'aujourd'hui **en silence**. C'était le quatrième plafond du même
+réglage.
+
+**FISH N'EST PAS DANS CE TABLEAU, ET IL N'Y SERA JAMAIS.** C'est la confusion la plus coûteuse de
+tout le §8, et elle est structurelle : Fish **lit un texte**, il ne transforme pas un
+enregistrement. Son API n'expose que de la synthèse (`/v1/tts`) ; il n'existe aucun point d'entrée
+voix-à-voix. Une prise déjà enregistrée ne se convertit donc que par `sts` ou par `local` — et
+`local` est le meilleur des deux pour l'intonation, puisque RVC transporte TON contour de hauteur
+au lieu d'en réinventer un.
+
+Fish entre en amont, à la place du tournage : `npm run parle` fabrique la prise à partir du texte
+(§3). Les deux se chaînent — `--modele-local=` fait lire Fish, puis plaque le timbre entraîné —
+mais le point de départ reste le TEXTE.
+
+**Et l'atelier ne réclame un identifiant ElevenLabs qu'en mode `sts`.** L'étape « Voix » ne se
+validait qu'avec un timbre du catalogue, quel que soit le mode de la chaîne : en `local`, `tts`
+ou `avatar`, elle restait « absent » et barrait l'étape « Audio complet » d'un « Retiens d'abord
+une voix » qui renvoyait vers un catalogue payant dont on n'allait rien faire. Le verdict
+`voixChoisie` de `etat.mjs` énumère maintenant le seul mode concerné — `sts` — plutôt que ses
+contraires : une liste de ce qu'on exclut se re-périme au mode suivant. Le défaut se cachait sur
+une chaîne où traîne un `elevenlabs_voice_id` de défaut, et mordait de plein fouet sur une chaîne
+neuve.
+
 La cascade du modèle est celle de la voix (§8) : `--modele=`, puis
 `03-audio/voix-choisie.json`, puis `config/chaine.json` → `voix.modele_local`, puis — s'il
 n'y en a qu'un — le seul entraîné.
@@ -754,6 +1031,273 @@ Windows : sur un chemin accentué — et ce dossier s'appelle « Usine à vidéo
 échoue, Applio avale l'erreur, et la conversion se termine « avec succès » **sans index**. On
 perd la fidélité de prononciation sur une ligne noyée dans le journal. Les fichiers passent
 donc par le cache partagé, dont le chemin est sans accent, et la sortie est rapatriée après.
+
+### Deux moteurs vivent sous le mot « voix », et l'écran n'en montrait qu'un
+
+L'étape 3 s'appelle « Voix » et ne présentait que le catalogue **ElevenLabs**. Or deux moteurs se
+partagent ce mot, et ils ne font pas le même métier :
+
+| | ce qu'il fait | d'où part le son |
+|---|---|---|
+| **Fish** | LIT un texte | rien — la prise se fabrique |
+| **ElevenLabs / modèle entraîné** | CONVERTIT un enregistrement | ta prise |
+
+On cherchait donc les voix Fish à l'étape qui porte leur nom, et elles n'y étaient pas. Pire :
+**aucun chemin n'existait pour en retenir une durablement**, ni à l'écran ni au terminal.
+`choix-voix --defaut` posait un timbre ElevenLabs, `--defaut --local` un modèle entraîné ;
+`voix.fish_voice_id` ne se posait qu'en éditant `config/chaine.json` à la main, ce que le §5
+interdit. On pouvait choisir une voix Fish pour UNE génération, jamais pour la chaîne.
+
+`npm run choix-voix -- --defaut --fish --voix=<id>` comble le trou, et l'étape 3 porte maintenant
+la liste complète — voix du compte et bibliothèque publique — avec écoute sur une phrase avant de
+retenir. **Une voix ne se juge pas sur son nom**, c'était déjà la règle du catalogue ElevenLabs.
+
+**Deux défauts se cachaient derrière ce bouton**, et aucun ne se voyait :
+
+1. **Le nom de l'essai ne portait pas la voix.** `essai-s2.1-pro-t1.wav` — deux voix essayées à la
+   suite écrivaient le même fichier, la seconde écrasant la première. On ne pouvait donc pas
+   comparer, c'est-à-dire pas choisir, ce pour quoi l'essai existe. Le nom porte maintenant les
+   huit premiers caractères de l'identifiant.
+2. **`parle.mjs` ne rendait rien en `--json` sur un essai, et l'atelier ne lui passait pas
+   `--json`.** Le wav arrivait bien sur le disque, payé, et l'écran annonçait « l'essai n'a rien
+   rendu ». Un bouton qui marche dont le résultat est introuvable.
+
+**La bibliothèque Fish se parcourt, elle ne se télécharge pas.** On en chargeait quarante et on
+filtrait dedans : taper un nom qui existe à la trois-centième position ne rendait rien, et on en
+concluait que la voix n'existait pas. La recherche part maintenant au **serveur** (`--cherche=`),
+la langue se choisit (`--langue=`), et les pages se chargent à la demande (`--page=`) — cent par
+cent, ce que Fish autorise au maximum. Vérifié : 100 puis 201 voix à l'écran, « macron » toutes
+langues rend les trois Macron de la bibliothèque.
+
+**« Aucune voix » et « aucune clé » n'appellent pas le même geste.** L'écran annonçait « aucune
+voix Fish disponible » à une chaîne qui n'avait simplement pas de `config/keys.json` — recréée
+sans ses clés. On cherche alors une voix qui manquerait chez Fish, alors qu'il manque une clé chez
+soi. Deux défauts se cumulaient : l'échec était **mis en cache** (`appli.voixFish = {}`), donc le
+premier affichage disait la vraie cause et tous les suivants la remplaçaient par le message
+générique.
+
+**Une chaîne sans trousseau n'avait aucun moyen d'en recevoir un.** `nouvelle-chaine --avec-cles`
+copie les clés à la CRÉATION ; après, plus rien — ni commande, ni écran. Sans elles la chaîne
+démarre, monte et transcrit, mais rate en silence tout ce qui parle au réseau. Le manque s'écrit
+maintenant sur sa ligne dans le menu des chaînes, avec le bouton qui le comble :
+`npm run cles -- --donne-a=<dossier>`. Le trousseau existant n'est **jamais écrasé** — il peut
+porter des clés que celui-ci n'a pas. Aucune clé ne traverse le serveur : une commande fille copie
+un fichier d'un dossier à l'autre.
+
+**Un essai dure VINGT secondes, pas huit.** Huit suffisaient à répondre par oui ou par non sur la
+transposition ; elles ne suffisent pas à juger une VOIX — il faut une phrase entière, une
+respiration, une fin de phrase qui descend. On rejugeait donc en conversion complète, ce que
+l'essai est censé éviter. Le plafond passe à 60 s, **et les trois bornes s'alignent** : l'écran, la
+route de l'atelier et la commande. Elles valaient 60, 30 et 30 — demander quarante-cinq secondes
+en aurait rendu trente sans le dire, et on aurait jugé un extrait qui n'est pas celui qu'on a
+réglé.
+
+**Un essai se lance tout seul, depuis un lecteur qui était hors du champ.** Les étapes 3 et 4 font
+deux hauteurs d'écran : on entendait une voix sans voir d'où elle venait, et on cherchait la pause
+en faisant défiler pendant que ça parlait. La commande existait — `<audio controls>` — elle n'était
+pas là où l'on regarde. Le lecteur vient maintenant se placer au centre de l'écran quand il
+s'ouvre.
+
+**Et quand l'attente est irréductible, elle se DIT.** Deux boutons passaient pour cassés, et
+c'était la même cause — le premier mot n'arrivait qu'APRÈS la plus longue partie de l'attente :
+
+| bouton | ce qu'il attend | ce qu'il montrait |
+|---|---|---|
+| « Charger 100 voix de plus » | 1,9 s — Fish met 0,8 s à rendre cent voix | rien : bouton intact et cliquable |
+| « Ouvrir » une chaîne | plusieurs secondes — le serveur essaie la chaîne visée À BLANC, puis se relance, puis le navigateur sonde le port mort | rien jusqu'à la réponse du serveur |
+
+On recliquait, ce qui lançait une seconde requête, ce qui allongeait l'attente.
+
+Les deux annoncent maintenant avant d'attendre, et se figent le temps du travail — deux bascules
+simultanées feraient partir deux serveurs sur le même port, et le second mourrait sur
+`EADDRINUSE`.
+
+**MAIS ANNONCER UNE ATTENTE NE LA REND PAS IRRÉDUCTIBLE, ET CELLE-CI NE L'ÉTAIT PAS.** Mesuré le
+8 septembre 2026, clic « Ouvrir » sur une chaîne : **5,03 s**, dont 4,89 s à attendre
+`cles.mjs --quotas`. La bascule n'attendait pas la chaîne visée — elle attendait la lecture des
+soldes que l'écran venait de lancer tout seul. Quatre causes, quatre corrections :
+
+| ce qui coûtait | avant | après |
+|---|---|---|
+| `cles.mjs --quotas` — quatre `await` à la file | 4,65 s | **2,13 s** (`Promise.all`) |
+| relu à CHAQUE retour dans la fenêtre | à chaque fois | une fois par minute |
+| `serveur.close()` attendait les connexions keep-alive | jusqu'à 3 s | ~0 (`closeAllConnections`) |
+| granularité des sondes — 300 ms côté serveur, 500 ms avant le premier essai côté navigateur | ~800 ms | 40 ms / 100 ms |
+
+**Total mesuré : 5,03 s → 0,65 à 1,05 s**, soit deux démarrages d'atelier (240 à 490 ms chacun) et
+rien d'autre. L'écart entre les deux chaînes est le nombre de vidéos à recenser au démarrage.
+
+**L'essai à blanc reste**, et c'est délibéré : il coûte un démarrage, il évite de tuer le serveur
+courant pour une chaîne qui ne démarrera pas. Deux incidents l'ont motivé, et la panne qu'il
+prévient est la pire possible — plus de serveur du tout, donc plus rien à l'écran, pas même un
+message.
+
+**Le garde « travail en cours », lui, n'a pas bougé.** Il attend toujours cinq secondes avant de
+refuser. C'est le déclencheur qui était de trop, pas le garde : rien ne doit tourner en
+permanence dans le dos de l'écran.
+
+**Ce qui pouvait être supprimé l'a été.** Paginer la bibliothèque Fish redemandait aussi les voix
+du compte et le solde, qui n'ont pas bougé : 0,34 s + 0,24 s payés pour redécouvrir ce qu'on savait
+déjà. `--bibliotheque-seule` les saute et l'écran empile la page sur ce qu'il a — mesuré 1,89 s →
+1,09 s. Les 0,8 s de Fish, eux, ne se négocient pas.
+
+### Un clic doit rendre un résultat, pas une animation
+
+Mesure du 7 septembre 2026, chemin complet d'un clic : le JavaScript rend en **2 à 19 ms**. Tout
+le reste était de l'animation.
+
+| ce qui s'animait | avant | après |
+|---|---|---|
+| le panneau modal | 280 ms, ressort qui dépasse et revient | 90 ms, droit |
+| l'étape qui entre | 280 ms depuis `opacity: 0` — écran vide au premier dixième de seconde | 90 ms depuis `.35` |
+| les lignes d'une liste | 25 ms de décalage par ligne, plafonné à 120 ms, **puis** 200 ms de fondu | 90 ms, sans décalage |
+
+Ouvrir le menu des chaînes coûtait donc **six cents millisecondes de mouvement après que l'écran
+soit prêt**. C'est ce qu'on lit comme « ce n'est pas instantané » : rien ne rame, tout attend.
+
+Le décalage par ligne était la plus grosse prise. Il valait « pour donner un sens de lecture » —
+raisonnement qui tient sur une liste de cinq et pas sur les cent voix de la bibliothèque Fish, où
+la sixième ligne et toutes les suivantes attendaient 120 ms avant de commencer leur fondu. L'œil
+commence par le haut, décalage ou pas.
+
+Le mouvement reste — il dit le sens, il situe — mais **sous le seuil où on le voit** : au-delà
+d'environ 150 ms on regarde l'animation, en dessous on regarde le résultat. `backdrop-filter` passe
+de 4 à 2 pixels : c'est la seule ligne du fichier qui coûte du GPU à chaque trame.
+
+### Un écran qui choisit un moteur doit le PASSER à la commande
+
+`monte.mjs` lit `const modeVoix = options.voix || chaine?.voix?.mode || 'sts'`. Sans `--voix=`, il
+retombe donc sur le mode de la chaîne — et l'atelier ne le passait que pour `local` et `brute`.
+Choisir « ElevenLabs » à l'étape 4 lançait la commande **sans moteur** : sur une chaîne réglée en
+`local`, le journal répondait « voix (mode local) » puis « Aucun modèle entraîné », un message
+sans aucun rapport avec ce qu'on avait demandé — et il arrivait après la coupe et la
+transcription. L'écran disait une chose, la commande en faisait une autre.
+
+**Et les deux culs-de-sac de cette étape se constatent AVANT de travailler.** Ils échouaient en
+fin de course, quand tout le coûteux était déjà fait :
+
+| moteur | ce qui manquait | quand on l'apprenait |
+|---|---|---|
+| `sts` | aucun timbre ElevenLabs dans les quatre niveaux de la cascade | à la conversion, après le devis accepté |
+| `local` | aucun modèle entraîné dans `marque/voix/` | à la conversion, après la transcription |
+
+Les deux se lisent sans rien lancer, et le refus renvoie à l'étape 3 — où le timbre se choisit et
+où la récolte a son écran. La commande, elle, garde son message de terminal : « va à l'étape 3 »
+ne veut rien dire dans un terminal.
+
+### Ce qui est RETENU n'est pas ce qui a SERVI
+
+`03-audio/voix-choisie.json` porte une INTENTION : un timbre ElevenLabs mis de côté, qui n'a
+peut-être jamais servi — la chaîne peut être en mode `local`, et le mode a pu changer depuis. Un
+mois plus tard, devant un audio qu'on ne refait pas, la seule question est « avec quoi celui-ci
+a-t-il été fabriqué », et la réponse n'était nulle part : l'étape 3 montrait le timbre en réserve,
+l'étape 4 le défaut de la CHAÎNE, et aucun des deux ne décrivait le fichier qu'on écoute. On lisait
+trois choses de trois endroits, et on en concluait que « tout est remis à zéro ».
+
+`03-audio/voix-employee.json` est écrit **par la conversion elle-même**, à la fin de `monte.mjs` :
+mode, timbre, réglages, modèle local, transposition, musique posée, date. C'est la seule source qui
+ne peut pas mentir — elle est produite par le geste qu'elle décrit. Les deux étapes l'affichent, et
+le sélecteur de moteur de l'étape 4 en repart : **ce que CET audio a employé, puis le défaut de la
+chaîne, puis le premier de la liste.**
+
+`null` veut dire « on ne sait pas » — l'audio est antérieur à ce fichier —, jamais « rien n'a
+servi ». L'écran le dit ainsi ; deviner à partir du mode actuel serait pire que se taire, puisque
+c'est justement ce qui a pu changer.
+
+### Les voix favorites appartiennent à la CHAÎNE
+
+La bibliothèque ElevenLabs se compte en milliers, celle de Fish en centaines. On en écoute vingt,
+on en trouve trois bonnes, on en retient une — et les deux autres étaient perdues. La vidéo
+suivante recommençait la même recherche, avec les mêmes filtres tapés de mémoire. C'est le travail
+qu'on refaisait, et il n'avait aucun endroit où se déposer.
+
+Une favorite est une paire **(moteur, identifiant)** — Fish et ElevenLabs ont chacun les leurs — et
+vit dans `config/chaine.json → voix.favoris`, comme les avatars et la direction artistique :
+elle sert sur la dixième vidéo comme sur la première. `nouvelle-chaine` la vide, en liste vide et
+jamais à `null` : ce sont des timbres jugés à l'oreille contre l'avatar d'une autre marque.
+
+**Elle ne DÉCIDE rien** — ni le défaut de la chaîne, ni la voix d'une vidéo. C'est une liste courte
+de ce qu'on a déjà jugé, posée en tête de l'étape 3, et qui porte les mêmes actions que les cartes
+du dessous. Les deux gestes de sélection restent où ils étaient.
+
+```bash
+npm run choix-voix -- --favoris                              # ce qui est gardé
+npm run choix-voix -- --favori --voix=<id> --nom="…"         # en garder une
+npm run choix-voix -- --favori --voix=<id> --fish            # côté Fish
+npm run choix-voix -- --oublie-favori --voix=<id>            # la retirer
+```
+
+L'étoile de l'écran fait la même chose, et **peint avant de demander au serveur** : un aller-retour
+visible sur une bascule se lit comme une hésitation. En cas d'échec elle revient, et on le dit.
+
+### Corriger un sous-titre ne recharge plus l'écran
+
+Six défauts se cumulaient sur le même geste. Trois faisaient bouger l'écran tout seul, deux
+perdaient des données, et le dernier ne disait pas ce qui était enregistré.
+
+**L'ÉCRITURE PART TOUTE SEULE, APRÈS CHAQUE CHANGEMENT.** C'est le reproche principal, et il était
+fondé : rien ne s'enregistrait tant que le focus ne QUITTAIT pas la colonne. Passer à la ligne
+suivante avec Entrée, cliquer sur une autre ligne, corriger dix lignes d'affilée — rien ne partait.
+On changeait d'étape ou de vidéo, et tout était perdu sans un mot. Chaque frappe programme
+maintenant l'écriture ; le bouton « Enregistrer » n'est plus qu'un filet.
+
+**ET ÇA SE VOIT.** Le pied de colonne affichait « 2 lignes récrites » puis se vidait : rien ne
+distinguait *pas encore parti*, *en train de partir* et *c'est écrit* — la seule question qu'on se
+pose avant de fermer l'onglet. Trois états explicites, et « ✓ Enregistré » reste affiché. Un
+enregistrement automatique qu'on ne voit pas ne rassure personne : on continue de chercher le
+bouton.
+
+**L'ÉTAPE REJOUAIT SON ANIMATION D'ENTRÉE TOUTE SEULE.** `montre()` se rappelle sur la MÊME étape
+dès que l'état a bougé sur le disque — donc après chaque correction, puisque le plan est retouché.
+`data-sens` repassait alors à « avant », le nom de l'animation CSS changeait, et l'écran rejouait
+son glissement de six pixels. En venant de l'étape 6, donc en « arrière », c'était systématique.
+On ne touche plus à `data-sens` quand on ne se déplace pas.
+
+**ET L'APERÇU SE RELANÇAIT AVEC.** Le même redessin rappelait `chargeLeStudio()`, qui relançait la
+boucle : le son se coupait et reprenait, un hoquet à chaque enregistrement — pendant qu'on écoute
+précisément pour juger le calage. `apercu.raf` dit si l'on est parti ; non nul, on ne touche à rien.
+
+**CHANGER DE VIDÉO AVEC UNE CORRECTION EN ATTENTE ÉTAIT LE PIRE DES CAS.** Une correction désigne
+la ligne d'UNE vidéo ; la garder en mémoire après un changement de slug l'aurait envoyée à la
+suivante, sur des lignes sans rapport. On écrit avant de partir, et on attend — la seule attente
+justifiée de cet écran, parce que ce qui suit détruit le contexte dont ces corrections ont besoin.
+Un `beforeunload` couvre le dernier trou : fermer l'onglet pendant le demi-battement.
+
+Les trois défauts d'origine, qui restent :
+
+1. **`rechargeLeStudio()` après chaque correction.** Il vidait `appli.st`, masquait le panneau,
+   refaisait deux requêtes, remettait les curseurs et relançait l'aperçu **au premier sous-titre**.
+   Sur un geste de correction, c'est un rechargement de page — et c'est ce qu'on voyait. On relit
+   désormais les MOTS et rien d'autre (`relisLesMots`), sans masquer quoi que ce soit.
+2. **L'aperçu et la liste repartaient de zéro.** Corriger une ligne à 2:16 ramenait l'image au
+   début et la colonne de texte en haut : la page qu'on venait de corriger disparaissait de
+   l'écran, d'où « le sous-titre ne se modifie pas » — il s'était modifié, on ne le regardait plus.
+   `relanceLApercu({ gardeLaPosition: true })` garde l'instant, l'état de lecture et la position du
+   son ; `dessineLeTexte` garde le défilement, le champ visé et la sélection dedans. Même règle en
+   traînant « mots par ligne », qui rejouait l'aperçu depuis le début à chaque pixel.
+3. **UNE CORRECTION TAPÉE PENDANT QU'UNE AUTRE S'ÉCRIVAIT ÉTAIT PERDUE, EN SILENCE.** Deux lignes
+   l'expliquaient : `if (enregistrementEnCours) return` abandonnait la seconde, et
+   `corrections.clear()` effaçait ensuite tout — y compris ce qui n'était jamais parti. On ne vide
+   plus que ce qui a été envoyé, et une demande arrivée pendant le vol relance un tour.
+
+**LA CLÉ D'UNE CORRECTION EN ATTENTE EST L'INSTANT, PLUS L'INDEX.** Elle valait `de`, l'index du
+premier mot de la ligne — or une correction qui change le nombre de mots décale tous les index
+suivants : la correction en attente vingt lignes plus bas ne désignait plus rien. `debutMs` ne
+bouge pas, `pipeline/texte.mjs` conservant explicitement les bornes de chaque plage récrite. Ce qui
+peut encore bouger est le DÉCOUPAGE en pages ; une correction dont la ligne a disparu est alors
+**abandonnée et annoncée**, jamais reposée sur la ligne d'à côté.
+
+**L'écriture attend un demi-battement** (450 ms). Elle partait au `focusout`, c'est-à-dire à
+l'instant précis où l'on clique ailleurs — sur la flèche de lecture, sur la ligne suivante : deux
+corrections rapprochées faisaient deux allers-retours qui se croisaient. Dix lignes corrigées à la
+file font maintenant une seule requête. Le bouton « Enregistrer » reste immédiat : on clique dessus
+précisément pour ne pas attendre.
+
+Vérifié le 8 septembre 2026 sur une prise de 67 sous-titres. Deux corrections à 60 ms d'écart : les
+deux sur le disque et dans le plan. Une frappe **sans jamais quitter le champ** : écrite d'elle-même,
+« ✓ Enregistré » affiché. Et sur le même geste, en venant de l'étape 6 : `data-sens` inchangé,
+aucune animation rejouée, panneau jamais masqué, aperçu resté à 0:34, colonne restée à 700 px, focus
+et position du curseur rendus.
 
 ### La stabilité se règle par vidéo, et le montage l'emploie
 
@@ -888,12 +1432,297 @@ d'ambiance rend des décors. Le plan d'ouverture mérite qu'on écrive sa requê
 génération par IA, l'ouverture demande explicitement un gros plan de visage avec l'émotion lisible
 dans les yeux — les plans suivants, non : trente portraits d'affilée sont un diaporama.
 
+### Le hors-sujet ne se mesure pas. La LISIBILITÉ, si.
+
+C'est la seule chose qu'on sache dire d'un plan avec un chiffre. « Est-ce que cette image parle du
+bon sujet » n'a aucun signal — la banque rend cinq candidats pour une requête absurde. « Du texte
+blanc va-t-il se lire là-dessus » en a un seul, et il suffit : **la clarté du fond à l'endroit
+exact où le texte se pose.**
+
+**On mesure la BANDE, pas l'image.** Une image globalement sombre peut avoir un bas surexposé — un
+plafond de bureau, un ciel, une table blanche. La moyenne de l'image dirait « sombre » et le
+sous-titre disparaîtrait quand même. On découpe donc la hauteur où le texte atterrit, d'après le
+`positionBas` du THÈME DU PLAN — pas des réglages : les deux peuvent diverger, et mesurer la
+mauvaise bande ne dirait rien de la vidéo qu'on va produire.
+
+Relevé sur les 86 plans d'un montage réel, le 7 septembre 2026 :
+
+| | luminance de la bande |
+|---|---|
+| plan le plus sombre | 30 |
+| médiane | 120 |
+| quartile haut | 149 |
+| décile haut | **167** |
+| plan le plus clair | 207 |
+
+**Le seuil est à 170** — le décile haut. Il signale environ un plan sur dix, ceux qui sont vraiment
+clairs, sans noyer l'alerte dans la moitié du montage. Sur ce montage il en a trouvé cinq, et les
+requêtes disent pourquoi : « Calendar with dates highlighted », « Person signing insurance
+document », « Wedding rings on registry document ». Du papier blanc.
+
+`npm run broll -- <slug> --lisibilite` mesure et **écrit le relevé dans le plan** : quatre-vingts
+clips prennent deux à trois minutes, le refaire à chaque ouverture d'écran serait insupportable.
+`bandeY: null` veut dire « pas encore mesuré », **jamais** « bon » — confondre les deux ferait
+passer un montage non vérifié pour un montage validé.
+
+Trois réponses à un plan trop clair, et l'écran les propose toutes : l'échanger, le générer, ou
+épaissir le contour à l'étape 5.
+
+**Un plan généré se dit sur la vignette, ET par quel modèle.** Rien ne le distinguait d'un plan de
+banque : on relançait une génération en croyant que rien n'avait changé, alors que l'ouverture
+venait d'être refaite. Et sans le modèle, on ne peut pas juger si le prix payé valait ce qu'on
+regarde — le rapport va de un à soixante. `_modele` est écrit à la génération, dans les deux
+chemins : le comblage du montage et l'échange à la main.
+
+**Une remontage EFFACE les mesures de lisibilité**, et c'est normal : le plan est reconstruit,
+`_bandeY` avec. Il faut donc remesurer après. L'écran ne dit rien plutôt que d'afficher un ancien
+relevé qui ne décrit plus les plans à l'image.
+
+### La revue des plans : elle existait, on ne la trouvait pas
+
+L'étape 6 sait depuis longtemps rejouer un plan **avec sa voix off et ses sous-titres calés**, et
+l'ouvrir en grand. Trois choses le cachaient, et la troisième était un bug :
+
+1. **Le bouton disait « Un autre ».** Il n'échangeait rien : il ouvrait le plan en grand, d'où
+   l'échange devient possible. On cherchait donc ailleurs de quoi agrandir un plan, et on ne
+   cliquait pas sur celui qui le faisait. Il dit maintenant « Agrandir ».
+2. **On ne pouvait pas enchaîner.** Revoir une piste image, c'est regarder trente plans à la file ;
+   il fallait fermer, retrouver la vignette suivante dans la grille, la rouvrir. Trois gestes entre
+   deux plans, donc on n'en regardait jamais que deux ou trois. Le panneau a `‹` et `›`, et les
+   flèches du clavier font la même chose.
+3. **`dessinePlan` sortait AVANT de redessiner la revue** quand le plan était absent. Deux
+   conséquences opposées et aussi trompeuses l'une que l'autre : sur une vidéo neuve, l'étape 6
+   n'affichait qu'un bouton et rien ne disait que c'est ici qu'on regarde les plans une fois
+   générés ; et en passant d'une vidéo montée à une vidéo qui ne l'est pas, l'écran continuait
+   d'afficher **les trente-quatre plans de l'autre vidéo**, avec leur voix off et le bouton qui
+   aurait échangé un plan chez la voisine. L'absence se dit maintenant en toutes lettres.
+
+**Un plan généré porte sa RAISON**, au survol : le script l'a désigné (marqué d'une étoile), ou la
+banque n'avait rien. C'est la seule chose qu'on puisse corriger au montage suivant — si le script a
+choisi un passage qui n'en valait pas la peine, ça se voit ici et nulle part ailleurs.
+
+### Effacer la piste image, et rien d'autre
+
+« Reprendre des plans différents » écarte les anciens ; **« Effacer tous les plans » les
+détruit**. Les deux ne servent pas au même moment : l'un pour varier, l'autre pour repartir propre.
+
+**Ce qui part** : `plan.json`, `attributions.json`, et les clips de `public/broll/`. Ce sont des
+dérivés — le plan se reconstruit depuis le script et le transcript, les clips se retéléchargent.
+Rien là-dedans n'est du travail humain. Sur un montage réel : 86 plans, 173 fichiers, **550 Mo**.
+
+**Ce qui reste, et c'est le cœur de la fonction** : `soustitres.json`. Il vit dans le MÊME dossier
+que le plan, et c'est une décision — réglée à l'œil devant l'aperçu, validée. L'emporter en
+effaçant la piste image serait le pire des échanges. Restent aussi `coupe.json`,
+`public/image.mp4` et `public/voix.wav` : la coupe et la voix convertie ne dépendent pas des plans
+de coupe, et les refaire coûterait une conversion payante pour rien.
+
+**On détruit vraiment, on n'archive pas.** Le §6 protège les rushes et les rendus ; une piste
+image n'est ni l'un ni l'autre. Cinq cents mégaoctets de clips de banque « mis de côté » sont cinq
+cents mégaoctets qu'on ne rouvrira jamais.
+
+### Un remontage redonnait les MÊMES plans
+
+`plansEmployesRecemment` exclut le slug courant — à raison : remonter pour changer une taille de
+sous-titres ne doit pas faire valser toute la piste image. Mais du coup « Régénérer les plans »
+redonnait exactement les mêmes : la banque rend ses candidats dans le même ordre, et rien ne les
+écartait. On ne pouvait pas refuser une piste entière.
+
+`--refais-plans` (« Reprendre des plans différents ») lit les `_mediaId` du plan AVANT de le
+réécrire — après, ils n'existent plus — et les ajoute aux exclusions.
+
+### Placer les plans générés — le script décide, pas le hasard
+
+`--plans-ia=<n>` (« Création assistée » dans l'atelier) fixe un **budget** de plans générés pour
+ce montage, et le dépense là où la génération sert le plus. `--comble=ia` reste ce qu'il était :
+il ne fait que boucher les trous.
+
+**LA BONNE QUESTION N'EST PAS « CE PLAN EST-IL HORS SUJET ».** Celle-là n'a aucun signal, et
+c'est mesuré : le 7 septembre 2026, la requête absurde `zzqxwv nonexistent kkjhgf` a rendu cinq
+candidats Pexels, dont un visage occupant 25,8 % du cadre, et le plan a été résolu normalement.
+Un plan regardé seul ne dira jamais s'il parle du bon sujet.
+
+**LA QUESTION QUI A UNE RÉPONSE EST « QU'EST-CE QU'UNE BANQUE NE PEUT PAS SERVIR ».** Elle se
+pose sur le script ENTIER, pas sur un plan, et elle se lit dans le texte :
+
+- un mécanisme abstrait que le texte explique — un calcul, une règle, un enchaînement de causes ;
+- un objet, un chiffre ou une situation précise que le texte nomme et que personne n'a filmée ;
+- une émotion nommée à un instant nommé, quand c'est le visage qui porte le propos ;
+- une image que le texte fabrique lui-même : une métaphore, une comparaison, une scène imaginée.
+
+Et symétriquement : une rue, un bureau, des mains sur un clavier, quelqu'un qui marche — la
+banque sert ça très bien, et ça ne doit rien coûter.
+
+`pipeline/lib/choix-ia.mjs` pose cette question au cerveau (Claude, puis fal — §8), avec le texte
+complet, ce qui est **dit pendant** chaque plan, et la requête de banque prévue. Il rend le sujet
+de la vidéo, les plans retenus, la raison de chacun, et une requête réécrite en anglais — parce
+qu'une requête de banque est faite de quatre mots-clés et qu'un modèle vidéo veut une scène.
+Mesuré sur une prise réelle : 34 plans, 3,6 s, moins d'un centime, et des choix qu'on peut
+défendre — l'ouverture, la notification sans réponse, l'expression ambiguë, les rouages de
+l'incertitude.
+
+**Trois garde-fous, et chacun a coûté quelque chose.**
+
+1. **L'OUVERTURE EST NOMMÉE DANS LA CONSIGNE.** `promptDePlan` ajoute au premier plan de coupe
+   « gros plan de visage, l'émotion lisible dans les yeux » (§10). Sans le dire au modèle, il
+   proposait des rouages pour ce plan-là, et la requête finale demandait des rouages ET un
+   visage : on paie alors un plan qui n'est ni l'un ni l'autre. Constaté à la première génération
+   d'essai.
+2. **UN NUMÉRO INVENTÉ EST JETÉ, jamais rattrapé.** Un `n` hors bornes, un doublon ou une requête
+   vide coûteraient une génération posée au mauvais endroit — donc payée et fausse.
+3. **LE BUDGET DES PLANS CHOISIS EST RÉSERVÉ.** Ils sont répartis sur toute la durée ; les trous
+   tombent où ils tombent. Sans réservation, trois trous dans les vingt premières secondes
+   épuisaient le budget et le plan explicitement demandé à la centième seconde passait à la
+   trappe.
+
+**Un plan choisi n'interroge PAS la banque.** Dix requêtes et cinq téléchargements pour un fichier
+qu'on jette, ce serait déjà du gaspillage ; le vrai coût est ailleurs — le candidat rapatrié
+entrerait dans la fenêtre de réemploi des dix montages suivants, où il écarterait un plan qu'on
+n'a jamais montré.
+
+**Sans cerveau joignable, on retombe sur le comblage**, et on le dit. Sans clé Pexels non plus, la
+génération reste possible : la sortie était sèche — tous les plans retirés, budget intact, et rien
+qui explique pourquoi une « création assistée » n'avait rien produit.
+
+**Le comblage, lui, n'a pas changé, et son déclencheur reste le VIDE.** C'est le seul que l'on
+sache mesurer sur un plan isolé : après la déduplication interne, la fenêtre de réemploi des dix
+derniers montages et les téléchargements ratés, il ne reste aucun candidat. Le trou ne resterait
+pas vide — le plan précédent s'étire pour le couvrir, c'est-à-dire le temps mort que le §10
+interdit en premier.
+
+Ce qui se mesure, c'est qu'il ne reste **aucun** candidat après la déduplication interne, la
+fenêtre de réemploi des dix derniers montages et les téléchargements ratés. C'est rare sur une
+chaîne jeune, et de plus en plus fréquent à mesure que la fenêtre se remplit — sur le même essai,
+67 plans étaient déjà écartés pour cause de réemploi.
+
+**LE BUDGET SE RÈGLE, IL NE SE SUBIT PLUS.** Il valait trois, en dur, dans le serveur ET dans
+l'écran. Trois est une bonne valeur sur une vidéo de deux minutes et une valeur absurde sur une de
+dix. C'est un curseur à l'étape 6, et son **maximum est le nombre de plans de coupe que ce montage
+aura** — `npm run broll -- <slug> --estime` le compte sans rien appeler, dans le plan de montage
+quand il existe, dans le script sinon. Offrir un budget de trente sur une vidéo qui compte douze
+plans serait un chiffre qui ne veut rien dire, et le prix affiché à côté serait faux d'autant.
+
+**Le budget est un PLAFOND, pas une cible**, et l'écran le dit : le script décide combien de plans
+méritent vraiment une génération, et ce qui n'est pas employé n'est pas facturé. Rendre une liste
+vide est un bon résultat — dépenser cinq générations sur une vidéo que la banque couvre serait
+exactement le gaspillage qu'on cherche à éviter. Sans plafond, une vidéo dont la banque rate vingt
+requêtes coûterait vingt plans sans qu'on l'ait dit une seule fois.
+
+**ET CE PIRE CAS NE S'ÉCRIT NULLE PART EN DUR.** Le libellé de l'écran annonçait « jusqu'à
+0,54 $ », celui de l'ouverture « 0,18 $ », et `monte.mjs` multipliait par `0.18` dans son devis
+comme dans son journal. Ces trois nombres étaient le tarif d'un modèle qui n'est même plus au
+catalogue : le plan de cinq secondes va de 0,04 $ à 2,36 $ — un facteur soixante. On lisait donc
+« 0,54 $ » juste au-dessus du sélecteur qui le dément, ce qui est pire que ne rien afficher.
+
+Le prix est maintenant **calculé** à partir du modèle retenu, partout : dans le libellé de la case
+d'ouverture, dans la note du pire cas, dans le devis du serveur et dans les deux lignes de journal
+de `monte.mjs`. Un tarif ne se recopie pas — il se lit dans `MODELES_PLAN`.
+
+Une génération refusée par fal redevient un trou : le reste du montage ne s'arrête pas pour ça.
+
+### Le modèle vidéo se choisit à l'écran, et son prix décide
+
+Il était une constante dans le code, avec un prix — 0,18 $ — écrit à côté. Les deux étaient faux
+dès qu'on changeait de modèle, et ils ne se changeaient qu'en éditant le code. Tarifs fal relevés
+le 7 septembre 2026, pour un plan de **cinq secondes** :
+
+| modèle | prix / plan 5 s | facturation |
+|---|---|---|
+| `fal-ai/ltx-video-13b-distilled` | **0,04 $** | par vidéo |
+| `minimax/h3-max/text-to-video` | 0,10 $ | 0,02 $/s (tarif promotionnel) |
+| `alibaba/wan-3.0-prime/text-to-video` | 0,70 $ | 0,14 $/s en 720p |
+| `bytedance/seedance-2.5/text-to-video` | **2,36 $** | 0,473 $/s en 720p |
+
+**Un facteur soixante.** Le devis de l'étape 6 passe donc de 0,16 $ à 9,46 $ selon le choix — un
+prix figé aurait fait accepter cinquante fois la somme annoncée, ce que le §7 interdit. Le choix
+vit dans `identite_visuelle.modele_video`, se règle dans « Identité », et le prix s'affiche dans
+la liste : choisir sans voir ce que ça coûte, c'est choisir à l'aveugle une dépense qui se répète
+à chaque trou comblé.
+
+**Le modèle se choisit AUSSI à l'étape 6**, là où la dépense se décide — celui de la chaîne reste
+le défaut, et `--modele-video=` ne vaut que pour ce montage. Refaire une ouverture avec un modèle
+plus cher ne doit pas obliger à basculer toute la chaîne. Le total s'affiche **avant** le clic :
+« au pire 4 plans avec Wan 3.0 Prime — 2,80 $ ». Le devis arrive après le clic, quand on a déjà
+décidé ; le chiffre qui compte est celui qu'on lit avant.
+
+**LE MODÈLE CHOISI N'ÉTAIT PAS CELUI QUI GÉNÉRAIT.** `--modele-video=` existe pour essayer un
+modèle sur UNE vidéo sans basculer la chaîne : `monte.mjs` le pose dans sa carte `chaine` **en
+mémoire**, et annonce le bon prix. Mais `medias.mjs` et `plan-broll.mjs` appelaient
+`modeleDePlan(litChaine())` — ils **relisaient `config/chaine.json` sur le disque**, qui n'avait pas
+bougé. Choisir Seedance à l'étape 6 affichait donc 2,36 $ le plan, envoyait l'option, la voyait
+passer dans le journal — et générait avec LTX à 0,04 $.
+
+Relevé le 8 septembre 2026 sur une VSL réelle : `modele_video` de la chaîne à `null`, et les cinq
+plans générés portent tous `fal-ai/ltx-video-13b-distilled` dans leur `_modele`. Le devis annonçait
+onze dollars, la facture en valait vingt centimes, et l'image n'était pas celle qu'on avait
+demandée. **Un modèle relu sur le disque ignore par construction tout ce qui se décide pour un seul
+montage** : il arrive maintenant par l'appelant, avec repli sur la chaîne pour les chemins qui n'ont
+rien à passer (`broll --remplace`). C'est `_modele`, écrit dans le plan, qui permet de le vérifier
+après coup — sans lui, ce défaut serait resté invisible.
+
+**Un plan remplacé change de PROVENANCE, et l'oubli ne se voyait nulle part.** Un plan d'abord
+généré puis échangé contre un plan de banque gardait `source: 'fal'` : le fichier venait de Pexels,
+le plan disait l'inverse. Une licence CC-BY exige l'attribution de son auteur — un plan de banque
+catalogué « fal » est un crédit qu'on ne rend pas.
+
+**TROIS CHOSES VARIENT D'UN MODÈLE À L'AUTRE, et les ignorer casse en silence.**
+
+1. **La forme du corps.** LTX veut `num_frames` ; Seedance, MiniMax et Wan veulent `duration` en
+   secondes. Envoyer l'un à l'autre ne lève pas : le champ inconnu est ignoré, et on paie une
+   vidéo de la durée par DÉFAUT du modèle. On le découvre au montage, sur un plan qui ne tient pas
+   dans son trou.
+2. **Le prompt négatif.** Seedance 2.5, MiniMax H3 Max et Wan 3.0 n'en ont PAS. La consigne
+   « aucun texte à l'image » passe alors par le prompt POSITIF — c'est exactement à quoi sert
+   `AUCUN_TEXTE_A_L_ECRAN`, et `promptDePlan` l'y met déjà pour tous.
+3. **L'audio.** Seedance en génère par défaut. Sur un plan de coupe, la bande son est la voix
+   off : un plan qui apporte la sienne se superpose à elle, et rien en aval ne la retire.
+   `generate_audio: false`, explicitement.
+
+Le catalogue — identifiant, prix, forme du corps — vit dans `MODELES_PLAN` de
+`pipeline/lib/fal.mjs`, et l'écran le reçoit du serveur. Une liste recopiée dans l'interface
+divergerait au premier tarif qui bouge, et l'écran annoncerait un prix que le devis ne pratique
+plus. Le garde de solde suit aussi : 0,20 $ suffisait pour LTX, pas pour un plan Seedance à 2,36 $.
+
+**Le prompt d'un plan généré vit dans `pipeline/lib/fal.mjs`, et nulle part ailleurs.** Il était
+dans `plan-broll.mjs` ; le comblage en avait besoin du même, et deux copies auraient divergé à la
+première correction de l'émotion — on corrige d'un côté, l'autre continue de rendre des plans
+froids, et rien ne dit lequel a servi. `medias.mjs` ne peut pas importer `plan-broll.mjs`, qui
+l'importe déjà : d'où ce troisième module, que les deux voient.
+
 **L'ouverture peut être générée d'emblée**, sans passer par la banque : `--ouverture=ia` au
-terminal, une case dans l'atelier, et le devis de 0,18 $ avant de partir. Le détecteur trouve un
+terminal, une case en « création assistée » dans l'atelier, et le prix du modèle retenu écrit sur
+la case avant de partir. Le détecteur trouve un
 visage, pas ce qu'il porte ; la génération, elle, reçoit l'intention du bloc. Les trente plans
 suivants restent en banque.
 
 Les sous-titres sont **calés mot à mot** sur l'audio, jamais approximés. Le détail des styles vit dans `marque/identite-visuelle.md` et les skills de montage.
+
+### L'échelle des sous-titres se prend sur le PETIT CÔTÉ
+
+`taille` est un corps de police exprimé pour la composition de référence — **1080 × 1920**, la
+verticale, où le petit côté est la largeur. Le rendu mettait donc à l'échelle par `largeur / 1080`,
+ce qui est juste tant qu'on ne monte que du vertical et **faux d'un facteur 1,78 en horizontal** :
+sur une composition 1920 × 1080, le 94 px réglé dans l'atelier sortait à 167 px. Relevé le
+8 septembre 2026 sur une VSL 16:9 — la même page passait de deux lignes à l'écran de réglage à
+**quatre** au rendu, et rien nulle part ne l'annonçait.
+
+L'échelle se prend maintenant sur `min(largeur, hauteur)`. Elle vaut 1 dans les deux orientations,
+donc **aucun rendu vertical déjà fait ne bouge**, et l'indépendance à la définition est gardée : la
+même vidéo rendue en 2160 × 3840 double son corps de police. Même correction dans `Evenements.tsx`,
+qui grossissait pareil chaque mot-clé, chaque chiffre et chaque carte d'insert.
+
+**L'INTERLIGNE EST ÉCRIT DES DEUX CÔTÉS.** Sans valeur explicite, chaque police impose la sienne —
+Roboto 1,17, Montserrat 1,22, Anton 1,50 — et l'aperçu, lui, héritait le 1,6 du corps de la page :
+1,94 corps entre deux lignes contre 1,51 au rendu. Il vaut **1,15** dans `SousTitres.tsx` comme dans
+`atelier/app.js`, la séparation des lignes étant déjà payée par la gouttière de 0,22.
+
+**La vignette de plan de l'étape 6 divisait aussi par 1080**, donc annonçait un corps 78 % trop gros
+sur un montage horizontal. Elle divise par la largeur du format. Elle reste une approximation
+déclarée sur le reste — graisse et gouttière —, mais plus sur la taille.
+
+Vérifié au pixel le 8 septembre 2026 sur un rendu 1920 × 1080 : lignes espacées de 142 px pour 140
+attendus, bloc à 264 px du bas pour 248 attendus — l'écart est l'ombre portée de 10 px de flou, que
+le seuil de mesure attrape. L'aperçu et le rendu calculent désormais avec les mêmes nombres : 94 px
+de corps sur 1 920 de large, 20,7 de gouttière, 19,5 de contour, 1 651 de largeur utile.
 
 ## 11. Skills
 

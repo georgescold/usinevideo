@@ -18,11 +18,21 @@
 <body>
 
 <header class="entete">
+  <!-- ON CHANGE DE CHAÎNE EN CLIQUANT SUR LA CHAÎNE, PAS SUR LE TITRE.
+       Le bouton portait le mot « Atelier » — le nom du LOGICIEL —, et le nom de
+       la chaîne était juste en dessous, en gris, inerte. Pour en changer il
+       fallait donc cliquer sur ce qui ne la désignait pas, et laisser de côté ce
+       qui la désignait. Une fois entré dans une chaîne, plus rien ne disait
+       qu'on pouvait en sortir : le menu ne s'ouvre tout seul qu'à l'arrivée.
+       Le titre redevient un titre, le nom de la chaîne devient le bouton, et il
+       porte un chevron pour dire qu'il en cache d'autres. -->
   <div class="identite">
-    <h1>
-      <button type="button" class="lien-chaines" id="btnChaines" title="Changer de chaîne">Atelier</button>
-    </h1>
-    <p class="chapo" id="nomChaine"></p>
+    <h1>Atelier</h1>
+    <button type="button" class="lien-chaines" id="btnChaines"
+            title="Changer de chaîne" aria-haspopup="dialog">
+      <span id="nomChaine"></span>
+      <span class="chevron" aria-hidden="true">▾</span>
+    </button>
   </div>
   <!-- LE BUDGET, SOUS LES YEUX PLUTOT QUE DANS UNE COMMANDE.
        fal se paie a la generation, ElevenLabs a la minute convertie. Leur
@@ -39,6 +49,15 @@
 </header>
 
 <p class="bandeau" id="bandeau" role="status" aria-live="polite" hidden></p>
+
+<!-- CE QUI MANQUE SE DIT DEDANS, PAS SUR LE PAS DE LA PORTE.
+     Une chaîne neuve n'est pas initialisée, et l'atelier lui refusait l'entrée
+     — donc à toute chaîne qu'il venait lui-même de créer. Il l'ouvre, et écrit
+     ici ce qui manque : `/init-chaine` est un entretien, il se mène en
+     conversation (CLAUDE.md §2), et aucun bouton ne le remplacera. Ce mot reste
+     tant que la chaîne n'a pas de carte d'identité — il n'a rien d'une alerte
+     qui passe. -->
+<p class="rappel-init" id="rappelInit" hidden></p>
 
 <!-- DEUX ONGLETS, ET ILS NE FONT PAS LE MÊME MÉTIER.
      « Production » fabrique une vidéo, étape par étape, et tout y est lié au
@@ -80,6 +99,141 @@
   </div>
 </div>
 
+<!-- L'IDENTITÉ DE LA CHAÎNE ------------------------------------------------
+     `/init-chaine` était le seul chemin vers un nom, un format actif et une
+     palette — et il sort du logiciel. Ce panneau DÉCLARE ce qu'on sait déjà :
+     il n'invente pas d'avatar, ne fait pas de veille, n'écrit pas de hook bank.
+     L'entretien reste meilleur pour le socle marketing ; il n'est simplement
+     plus obligatoire pour démarrer. -->
+<div class="voile" id="voileIdentite" hidden>
+  <div class="panneau panneau-menu">
+    <div class="tete-panneau">
+      <h2>Identité de la chaîne</h2>
+      <button type="button" class="bouton minuscule discret" id="btnFermeIdentite">Fermer</button>
+    </div>
+
+    <p class="note">Ce qui est laissé vide reste vide, et se remplit plus tard.
+       Seul le <b>nom</b> décide qu'une chaîne est initialisée.</p>
+
+    <div class="formulaire-identite">
+      <label class="etiquette" for="idNom">Nom de la chaîne</label>
+      <input type="text" id="idNom" maxlength="200" placeholder="Sommeil Profond">
+
+      <label class="etiquette" for="idPromesse">Sa promesse, en une phrase</label>
+      <input type="text" id="idPromesse" maxlength="800"
+             placeholder="Tu n'as pas besoin d'espoir. Tu as besoin d'une explication.">
+
+      <h3>Le produit</h3>
+      <div class="filtres">
+        <label>Nom <input type="text" id="idProduit" maxlength="200"></label>
+        <label>Type <input type="text" id="idProduitType" maxlength="200" placeholder="infoproduit, SaaS…"></label>
+        <label>Prix <input type="text" id="idProduitPrix" maxlength="200" placeholder="49 €"></label>
+        <label>Adresse <input type="text" id="idProduitUrl" maxlength="200" spellcheck="false"></label>
+      </div>
+
+      <h3>À qui la chaîne parle</h3>
+      <div class="filtres">
+        <label>Avatar <input type="text" id="idAvatar" maxlength="200" placeholder="Le Désabusé"></label>
+        <label>Segment <input type="text" id="idSegment" maxlength="200"></label>
+      </div>
+
+      <h3>Qui parle</h3>
+      <div class="filtres">
+        <label>Marketeur <input type="text" id="idMarketeur" maxlength="200"></label>
+        <label>Posture <input type="text" id="idPosture" maxlength="800" placeholder="le vulgarisateur rigoureux"></label>
+      </div>
+      <label class="etiquette" for="idRegistre">Registre de jeu des avatars</label>
+      <input type="text" id="idRegistre" maxlength="800"
+             placeholder="ultra dynamique, excentrique et solaire">
+      <p class="note">Le tempérament commun à tous les avatars de la chaîne. Il part
+         dans chaque prompt de génération — laissé vide, aucun registre n'est imposé.</p>
+
+      <h3>Les formats</h3>
+      <div class="cases-formats" id="idFormats"></div>
+      <div class="filtres">
+        <label>Longs par semaine <input type="number" id="idLongs" min="0" max="21" step="1" value="0"></label>
+        <label>Shorts par semaine <input type="number" id="idShorts" min="0" max="21" step="1" value="0"></label>
+      </div>
+
+      <h3>Direction artistique</h3>
+      <p class="note">Laissée vide, le montage tourne quand même : la cascade des
+         sous-titres et les polices embarquées donnent des réglages complets.
+         Ce qu'on pose ici, c'est ce qui rend la chaîne reconnaissable.</p>
+      <div class="filtres">
+        <label>Accent <input type="color" id="idAccent" value="#c9315e"></label>
+        <label>Fond <input type="color" id="idFond" value="#0e1718"></label>
+        <label>Police des titres <select id="idPoliceTitres"></select></label>
+        <label>Police des sous-titres <select id="idPoliceSous"></select></label>
+      </div>
+      <label class="etiquette" for="idModeleVideo">Modèle vidéo — quand un plan se génère</label>
+      <select id="idModeleVideo" class="large"></select>
+      <p class="note" id="noteModeleVideo"></p>
+
+      <label class="etiquette" for="idDirection">Direction des plans</label>
+      <input type="text" id="idDirection" maxlength="200" spellcheck="false"
+             placeholder="low key lighting, dark, night, intimate, cinematic">
+      <p class="note">Ajoutée à CHAQUE requête de banque d'images, en anglais.
+         C'est elle qui empêche une chaîne douce de recevoir des plans durs.</p>
+    </div>
+
+    <p class="note erreur" id="idErreur" hidden></p>
+    <p class="note" id="idEtat" hidden></p>
+    <div class="actions">
+      <button type="button" class="bouton discret" id="idNon">Annuler</button>
+      <button type="button" class="bouton primaire" id="idOui">Enregistrer</button>
+    </div>
+    <p class="note">Le socle marketing — fiche produit, avatars, hook bank, marketeur —
+       s'écrit en conversation avec <code>/init-chaine</code>. Ce panneau pose une
+       carte d'identité, pas une stratégie.</p>
+  </div>
+</div>
+
+<!-- LE TROUSSEAU -----------------------------------------------------------
+     Ajouter une clé était le dernier geste qui obligeait le terminal : le
+     message d'échec renvoyait vers « config/keys.json », un fichier à éditer à
+     la main, alors qu'une clé morte bloque net la déduction de script.
+     La valeur saisie part sur l'entrée standard de la commande qui
+     l'enregistre : elle n'apparaît ni dans le journal, ni dans les arguments,
+     ni dans la liste des processus. -->
+<div class="voile" id="voileCles" hidden>
+  <div class="panneau panneau-menu">
+    <div class="tete-panneau">
+      <h2>Clés d'API</h2>
+      <button type="button" class="bouton minuscule discret" id="btnFermeCles">Fermer</button>
+    </div>
+
+    <p class="note">Une clé n'est jamais affichée en entier. Elle se désigne par
+       son étiquette. Une clé « au frigo » a échoué au moins une fois : elle est
+       écartée jusqu'à ce qu'on la dégèle.</p>
+
+    <div class="liste-cles" id="listeCles"></div>
+
+    <h3>Ajouter une clé</h3>
+    <div class="filtres">
+      <label>Service
+        <select id="cleService"></select>
+      </label>
+      <label>Étiquette
+        <input type="text" id="cleLabel" maxlength="40" placeholder="auto" spellcheck="false">
+      </label>
+      <label>Palier
+        <select id="cleTier">
+          <option value="paid">payant — prioritaire</option>
+          <option value="free">gratuit — en dernier</option>
+        </select>
+      </label>
+    </div>
+    <label class="etiquette" for="cleValeur">La clé</label>
+    <input type="password" id="cleValeur" class="large" maxlength="400" spellcheck="false"
+           autocomplete="off" placeholder="collée depuis la console du service">
+    <p class="note" id="noteCles"></p>
+    <div class="actions">
+      <button type="button" class="bouton discret" id="btnDegele">Tout dégeler</button>
+      <button type="button" class="bouton primaire" id="btnAjouteCle">Ajouter</button>
+    </div>
+  </div>
+</div>
+
 <!-- Le menu des vidéos : la seconde marche de l'entrée, l'historique de la
      chaîne, et de quoi en retirer une. Une vidéo retirée part dans
      `videos/.corbeille/` — un rendu se refait en huit minutes, un tournage
@@ -116,14 +270,27 @@
   <div class="panneau panneau-plan">
     <div class="tete-panneau">
       <h2 id="titrePlan">Plan</h2>
-      <button type="button" class="bouton discret" id="btnFermePlan">Fermer</button>
+      <!-- ON PASSE AU PLAN SUIVANT SANS REFERMER.
+           Revoir une piste image, c'est regarder trente plans à la file. Il
+           fallait fermer, retrouver la vignette suivante dans la grille, la
+           rouvrir — trois gestes entre deux plans, donc on n'en regardait que
+           deux ou trois. Les flèches du clavier font la même chose. -->
+      <div class="tete-actions">
+        <button type="button" class="bouton discret" id="btnPlanPrecedent"
+                title="Plan précédent (flèche gauche)" aria-label="Plan précédent">‹</button>
+        <button type="button" class="bouton discret" id="btnPlanSuivant"
+                title="Plan suivant (flèche droite)" aria-label="Plan suivant">›</button>
+        <button type="button" class="bouton discret" id="btnFermePlan">Fermer</button>
+      </div>
     </div>
     <div class="plan-grand" id="planGrand"></div>
     <p class="plan-dit" id="planDit"></p>
     <p class="note" id="planMeta"></p>
     <div class="tete-actions">
       <button type="button" class="bouton" id="btnAutrePexels">Un autre — banque d images</button>
-      <button type="button" class="bouton discret" id="btnAutreIa">Générer par IA — 0,18 $</button>
+      <!-- Le prix vient du modèle retenu : il est écrit ici au moment où le panneau
+           s'ouvre. En dur, il annonçait 0,18 $ pour un plan Seedance à 2,36 $. -->
+      <button type="button" class="bouton discret" id="btnAutreIa">Générer par IA</button>
     </div>
   </div>
 </div>
@@ -154,58 +321,6 @@
       </div>
 
       <p class="note" id="noteDestination"></p>
-
-      <!-- LE MODE VIENT APRÈS LE FORMAT, ET PAS AVANT.
-           Le format décide des dimensions, donc de tout le reste. Le mode ne
-           décide que de la façon dont l'image sera fabriquée — il n'a de sens
-           qu'une fois qu'on sait ce qu'on fabrique. -->
-      <div class="modes" id="zoneModes" hidden>
-        <h3>Comment fabriquer l'image ?</h3>
-        <div class="cartes" id="cartesMode">
-          <button type="button" class="carte" data-mode="simple">
-            <span class="carte-titre">Création simple</span>
-            <span class="carte-note">Tu déposes ta prise, le montage l'habille de plans de coupe.</span>
-          </button>
-          <button type="button" class="carte" data-mode="copie">
-            <span class="carte-titre">Copie IA</span>
-            <span class="carte-note">Tu donnes le lien d'une vidéo, elle est rejouée avec un avatar de la chaîne.</span>
-          </button>
-        </div>
-
-        <!-- LE PANNEAU DE COPIE NE S'OUVRE QUE SI ON A CHOISI CE MODE.
-             Montrer un champ de lien à quelqu'un qui va déposer un rush, c'est
-             lui proposer une porte qui ne mène nulle part. -->
-        <div class="copie" id="panneauCopie" hidden>
-          <div class="filtres">
-            <label>Lien de la vidéo de référence
-              <input type="url" id="copieLien" class="large" spellcheck="false"
-                     placeholder="https://www.tiktok.com/@…">
-            </label>
-            <label>Avatar
-              <select id="copieAvatar"></select>
-            </label>
-            <!-- LA CRÉATION D'UN AVATAR SE FAIT D'ICI, PAS D'UNE PHRASE.
-                 Le menu ne proposait que ce qui existe déjà, et l'absence
-                 renvoyait vers « l'onglet Avatars » — une consigne à lire au
-                 lieu d'un geste à faire. C'est exactement le défaut de la
-                 première interface (§2), remis à l'envers : une marche sans
-                 bouton là où rien ne s'argumente. -->
-            <button type="button" class="bouton" id="btnNouvelAvatar">Nouvel avatar</button>
-            <label>Plans
-              <input type="number" id="copiePlans" min="1" max="12" value="3">
-            </label>
-          </div>
-          <p class="note">La vidéo est rapatriée, découpée en tronçons de dix secondes,
-             et chaque tronçon sert de référence de mouvement. Le modèle en tire le cadrage
-             et l'énergie, et les rejoue avec les photos de l'avatar — il s'inspire, il ne
-             décalque pas.</p>
-          <p class="note" id="copieDevis"></p>
-          <button type="button" class="bouton primaire grand" id="btnCopie">
-            Générer les plans
-          </button>
-          <video class="master" id="lecteurCopie" controls preload="metadata" hidden></video>
-        </div>
-      </div>
     </section>
 
     <!-- ÉTAPE 2 ------------------------------------------------------------ -->
@@ -318,6 +433,91 @@
       <div class="blocage" hidden></div>
 
       <div class="fiche" id="ficheVoix" hidden></div>
+
+      <!-- LES FAVORITES, EN TÊTE — PARCE QU'ON ÉCOUTE UNE FOIS ET QU'ON CHOISIT
+           DIX FOIS.
+           La bibliothèque ElevenLabs se compte en milliers et celle de Fish en
+           centaines : sans endroit où poser ce qu'on vient de juger bon, chaque
+           vidéo recommençait la même écoute. Rien ne survivait d'une séance à
+           l'autre, pas même la voix qu'on venait de trouver et qu'on ne voulait
+           pas encore retenir.
+           Elles appartiennent à la CHAÎNE, comme les avatars : ce qu'on garde
+           ici resservira sur la dixième vidéo comme sur la première. Le bloc
+           disparaît tant qu'il est vide — un cadre vide en tête d'écran occupe
+           la place de ce qu'on est venu faire. -->
+      <div class="bloc-favoris" id="blocVoixFavorites" hidden>
+        <h3>★ Tes voix favorites</h3>
+        <p class="note">Gardées pour toute la chaîne. L'étoile de chaque voix,
+           plus bas, les ajoute et les retire.</p>
+        <div class="liste-voix" id="listeVoixFavorites"></div>
+      </div>
+
+      <!-- DEUX MOTEURS VIVENT SOUS LE MOT « VOIX », ET ILS NE FONT PAS LE MÊME
+           MÉTIER. Fish LIT un texte : c'est lui qui parle quand la prise se
+           fabrique au lieu de s'enregistrer (§3). ElevenLabs et les modèles
+           entraînés CONVERTISSENT un enregistrement : ils plaquent un timbre
+           sur une prise existante.
+           Cette étape ne montrait que le second, et s'appelait « Voix ». On y
+           cherchait donc les voix Fish, qui n'y étaient pas — et le chemin pour
+           en fixer une par défaut n'existait nulle part, ni ici ni au terminal. -->
+      <div class="bloc-fish">
+        <h3>La voix qui LIT — Fish</h3>
+        <p class="note">Employée quand tu fabriques la prise à partir du texte
+           (étape 2). Elle ne convertit pas un enregistrement : ça, c'est le
+           moteur de l'étape 4.</p>
+
+        <!-- UNE VOIX NE SE JUGE PAS SUR SON NOM.
+             C'est la règle déjà appliquée au catalogue ElevenLabs, et elle vaut
+             ici : « Clémence » ne dit rien de ce qu'on va entendre. On écoute
+             une phrase, avec SA voix, avant de la retenir pour la chaîne. -->
+        <div class="filtres">
+          <label>Chercher
+            <input type="text" id="fishRecherche" placeholder="nom…" maxlength="40" spellcheck="false">
+          </label>
+          <label>Langue
+            <select id="fishLangue">
+              <option value="fr">français</option>
+              <option value="toutes">toutes</option>
+              <option value="en">anglais</option>
+              <option value="es">espagnol</option>
+              <option value="de">allemand</option>
+              <option value="it">italien</option>
+              <option value="ja">japonais</option>
+            </select>
+          </label>
+          <button type="button" class="bouton discret" id="btnChercheFish">Chercher</button>
+          <label class="pousse">Phrase d'essai
+            <input type="text" id="fishPhrase" class="large" maxlength="600"
+                   value="Ce que personne ne t'a expliqué, c'est que le problème n'était pas toi.">
+          </label>
+          <button type="button" class="bouton discret" id="btnMesMots">Mes mots</button>
+        </div>
+        <!-- FISH NE TOUCHE PAS A TON AUDIO, MAIS IL PEUT DIRE TES MOTS.
+             La vraie question — « comment sonnerait ma prise avec cette voix » —
+             ne se repond pas sur une phrase de demonstration : on jugerait le
+             texte autant que la voix. On remplit donc le champ avec ce que TU as
+             dit, repris du transcript de la prise. -->
+        <p class="note" id="noteMesMots"></p>
+        <p class="note">L'essai écrit dans <code>03-audio/essais/</code> et ne
+           touche pas au tournage. Quelques centimes de millier de caractères —
+           une phrase coûte une fraction de centime.</p>
+
+        <div class="liste-voix" id="listeVoixFish">
+          <p class="vide">Chargement des voix du compte…</p>
+        </div>
+
+        <button type="button" class="bouton discret pleine" id="btnPlusFish" hidden>
+          Charger 100 voix de plus
+        </button>
+
+        <div class="ecoute" id="ecouteFish" hidden>
+          <p class="note" id="nomEssaiFish"></p>
+          <audio id="audioFish" controls preload="metadata"></audio>
+        </div>
+        <p class="note" id="noteFish"></p>
+      </div>
+
+      <h3>Le timbre qui CONVERTIT — catalogue ElevenLabs</h3>
 
       <!-- « Où chercher » VIENT EN PREMIER, ET CE N'EST PAS COSMÉTIQUE.
            Placé en cinquième position, il se lisait comme un filtre de plus,
@@ -436,7 +636,7 @@
 
       <div class="reglage-essai">
         <label>Durée
-          <input type="number" id="essaiSecondes" min="2" max="30" step="1" value="10"> s
+          <input type="number" id="essaiSecondes" min="2" max="60" step="1" value="20"> s
         </label>
         <label>Départ
           <input type="number" id="essaiDepuis" min="0" step="1" value="0"> s
@@ -608,9 +808,15 @@
            complète et la transcription qui suit. Le départ se règle parce que
            les premières secondes d'une prise sont les moins représentatives —
            on s'y installe. -->
+      <!-- VINGT SECONDES, PAS HUIT.
+           Huit secondes suffisent a entendre si la transposition est juste —
+           c'est-a-dire a repondre par oui ou par non. Elles ne suffisent pas a
+           juger une VOIX : il faut une phrase entiere, une respiration, une fin
+           de phrase qui descend. On rejugeait donc en conversion complete, ce
+           que l'essai etait cense eviter. -->
       <div class="filtres local-seul" hidden>
         <label>Essai
-          <input type="number" id="essaiLocalDuree" min="2" max="30" step="1" value="8">
+          <input type="number" id="essaiLocalDuree" min="2" max="60" step="1" value="20">
         </label>
         <label>secondes, à partir de
           <input type="number" id="essaiLocalDepart" min="0" step="5" value="0">
@@ -835,6 +1041,78 @@
       <h2>6. Plans</h2>
       <div class="blocage" hidden></div>
 
+      <!-- LE MODE DE FABRICATION SE CHOISIT ICI, ET PAS À L'ÉTAPE 1.
+           Il y était posé juste sous le format, au motif qu'il « n'a de sens
+           qu'une fois qu'on sait ce qu'on fabrique ». C'est vrai, et ça ne
+           suffisait pas : le mode ne décide de RIEN avant cette étape-ci — ni
+           le dépôt, ni la transcription, ni la voix n'en dépendent. On le
+           choisissait donc cinq écrans avant qu'il ne serve, et on ne s'en
+           souvenait plus en arrivant là où il se paie. Il vit maintenant
+           au-dessus du bouton qu'il commande. -->
+      <div class="modes tete" id="zoneModes" hidden>
+        <h3>Comment fabriquer l'image ?</h3>
+        <div class="cartes" id="cartesMode">
+          <button type="button" class="carte" data-mode="simple">
+            <span class="carte-titre">Création simple</span>
+            <span class="carte-note">La banque d'images seule. Rien n'est payant.</span>
+          </button>
+          <!-- « ASSISTÉE » N'EST PLUS UNE CASE À COCHER DÉGUISÉE EN MODE.
+               Elle pré-cochait « Combler les trous par IA », deux écrans plus
+               loin, et la recochait à chaque redessin : la même décision
+               s'écrivait à deux endroits, et il fallait deviner lequel gagnait.
+               Les deux étant maintenant côte à côte, le mode EST le réglage.
+
+               ET ELLE NE SE CONTENTE PLUS DE RÉAGIR AU VIDE. Le script est lu
+               en entier avant de dépenser : la génération va aux passages
+               qu'une banque d'images ne peut pas servir — un mécanisme
+               abstrait, un chiffre précis, une émotion nommée — et ce qui reste
+               du budget comble les trous, comme avant. -->
+          <button type="button" class="carte" data-mode="mixte">
+            <span class="carte-titre">Création assistée</span>
+            <span class="carte-note">Le script est lu en entier. L'IA va aux passages qu'une banque d'images ne peut pas servir, et comble les trous avec ce qui reste.</span>
+          </button>
+          <button type="button" class="carte" data-mode="copie">
+            <span class="carte-titre">Copie IA</span>
+            <span class="carte-note">Tu donnes le lien d'une vidéo, elle est rejouée avec un avatar de la chaîne.</span>
+          </button>
+        </div>
+
+        <!-- LE PANNEAU DE COPIE NE S'OUVRE QUE SI ON A CHOISI CE MODE.
+             Montrer un champ de lien à quelqu'un qui va déposer un rush, c'est
+             lui proposer une porte qui ne mène nulle part. -->
+        <div class="copie" id="panneauCopie" hidden>
+          <div class="filtres">
+            <label>Lien de la vidéo de référence
+              <input type="url" id="copieLien" class="large" spellcheck="false"
+                     placeholder="https://www.tiktok.com/@…">
+            </label>
+            <label>Avatar
+              <select id="copieAvatar"></select>
+            </label>
+            <!-- LA CRÉATION D'UN AVATAR SE FAIT D'ICI, PAS D'UNE PHRASE.
+                 Le menu ne proposait que ce qui existe déjà, et l'absence
+                 renvoyait vers « l'onglet Avatars » — une consigne à lire au
+                 lieu d'un geste à faire. C'est exactement le défaut de la
+                 première interface (§2), remis à l'envers : une marche sans
+                 bouton là où rien ne s'argumente. -->
+            <button type="button" class="bouton" id="btnNouvelAvatar">Nouvel avatar</button>
+            <label>Plans
+              <input type="number" id="copiePlans" min="1" max="12" value="3">
+            </label>
+          </div>
+          <p class="note">La vidéo est rapatriée, découpée en tronçons de dix secondes,
+             et chaque tronçon sert de référence de mouvement. Le modèle en tire le cadrage
+             et l'énergie, et les rejoue avec les photos de l'avatar — il s'inspire, il ne
+             décalque pas.</p>
+          <p class="note" id="copieDevis"></p>
+          <button type="button" class="bouton primaire grand" id="btnCopie">
+            Générer les plans
+          </button>
+          <video class="master" id="lecteurCopie" controls preload="metadata" hidden></video>
+        </div>
+      </div>
+
+
 
       <div class="fiche" id="fichePlan" hidden></div>
 
@@ -889,15 +1167,86 @@
            le cherche sous le nom de ce qu on est venu faire ici : generer les
            plans. Un bouton qu on ne reconnait pas est un bouton qui n existe
            pas, et celui-ci a ete cherche trois fois. -->
-      <!-- L OUVERTURE PAR IA SE COCHE, ELLE NE SE DEVINE PAS : elle se paie. -->
-      <label class="case" for="estOuvertureIa">
-        <input type="checkbox" id="estOuvertureIa">
-        <span>Ouverture générée par IA — 0,18 $
-          <small>un gros plan de visage avec l'émotion du passage, au lieu d'un plan de banque</small>
+      <!-- REFAIRE LA PISTE IMAGE, POUR DE VRAI.
+           Un remontage redonnait exactement les mêmes plans : la banque rend
+           ses candidats dans le même ordre, et la vidéo courante est exclue de
+           la fenêtre de réemploi — à raison, sinon changer une taille de
+           sous-titres ferait valser toute la piste. Cette case dit qu'on veut
+           bien la faire valser. -->
+      <label class="case" for="estRefaisPlans">
+        <input type="checkbox" id="estRefaisPlans">
+        <span>Reprendre des plans différents
+          <small>écarte ceux que cette vidéo emploie déjà — sinon on retombe sur les mêmes</small>
         </span>
       </label>
+
+      <!-- CE QUI SE PAIE N'EXISTE QU'EN « CRÉATION ASSISTÉE ».
+           En création simple rien n'est généré : montrer un modèle vidéo et son
+           tarif ferait croire qu'un montage en banque se facture. Le comblage
+           n'a plus de case — il EST le mode, et se coupe en repassant en
+           création simple. -->
+      <div class="assistee" id="zoneAssistee" hidden>
+        <!-- LE MODÈLE SE CHOISIT ICI, PARCE QUE C'EST ICI QU'ON PAIE.
+             Celui de la chaîne est le défaut ; refaire une ouverture avec un
+             modèle plus cher ne doit pas obliger à basculer toute la chaîne. Les
+             prix vont de 0,04 $ à 2,36 $ le plan de cinq secondes : le choix est
+             une décision de dépense, pas un réglage esthétique. -->
+        <div class="filtres" id="zoneModeleVideo">
+          <label class="pousse">Modèle vidéo
+            <select id="planModeleVideo" class="large"></select>
+          </label>
+        </div>
+
+        <!-- LE NOMBRE DE PLANS GÉNÉRÉS SE RÈGLE, IL NE SE SUBIT PAS.
+             Il valait trois, en dur, dans le code du serveur ET dans celui de
+             l'écran. Trois est une bonne valeur sur une vidéo de deux minutes et
+             une valeur absurde sur une de dix. Le maximum du curseur est le
+             nombre de plans de coupe que ce montage aura — le proposer plus
+             haut serait offrir un budget qui n'a nulle part où aller. -->
+        <div class="budget-ia">
+          <label class="etiquette" for="planBudgetIa">Plans générés par IA</label>
+          <div class="curseur">
+            <input type="range" id="planBudgetIa" min="0" max="10" step="1" value="3">
+            <output id="planBudgetIaValeur" for="planBudgetIa">3</output>
+          </div>
+        </div>
+
+        <!-- PLUS AUCUN PRIX N'EST ÉCRIT DANS CETTE PAGE.
+             Les libellés annonçaient « 0,18 $ » et « jusqu'à 0,54 $ » : deux
+             nombres vrais pour un seul modèle et faux pour les trois autres, où
+             le plan de cinq secondes va de 0,04 $ à 2,36 $. On les lisait
+             au-dessus du sélecteur qui les dément. Ils se calculent maintenant
+             depuis le modèle retenu, et se refont à chaque changement. -->
+        <label class="case" for="estOuvertureIa">
+          <input type="checkbox" id="estOuvertureIa">
+          <span>Ouverture générée par IA<b id="prixOuvertureIa"></b>
+            <small>un gros plan de visage avec l'émotion du passage, au lieu d'un plan de banque</small>
+          </span>
+        </label>
+        <p class="note" id="notePlanModele"></p>
+        <!-- CE QUE LE BUDGET NE PROMET PAS.
+             Un curseur sur 5 se lit « cinq plans générés ». C'est un PLAFOND :
+             le script décide combien méritent vraiment une génération, et un
+             budget non employé n'est pas facturé. Ne pas le dire ferait passer
+             pour une panne ce qui est le bon résultat. -->
+        <p class="note" id="notePlanChoix"></p>
+      </div>
       <button type="button" class="bouton primaire grand" id="btnPlans">
         Générer les plans
+      </button>
+      <!-- LA LISIBILITÉ SE MESURE, contrairement au hors-sujet : c'est la clarté
+           du fond à l'endroit exact où le texte se pose. Deux à trois minutes
+           pour un montage entier, donc à la demande. -->
+      <button type="button" class="bouton discret" id="btnLisibilite">
+        Vérifier la lisibilité des sous-titres
+      </button>
+      <!-- REPARTIR DE ZÉRO SUR LA PISTE IMAGE.
+           « Reprendre des plans différents » écarte les anciens ; ceci les
+           efface. Les deux ne servent pas au même moment : l'un pour varier,
+           l'autre pour repartir propre. Les sous-titres, eux, restent — ils
+           vivent dans le même dossier mais ce sont des décisions. -->
+      <button type="button" class="bouton discret" id="btnEffacePlans">
+        Effacer tous les plans
       </button>
     </section>
 
@@ -1037,10 +1386,18 @@
     <p>Un dossier voisin de celui-ci. Le code est copié, le contenu part vierge.</p>
     <label class="etiquette" for="nchNom">Nom</label>
     <input type="text" id="nchNom" maxlength="60" spellcheck="false" placeholder="Sommeil Profond">
+    <!-- COCHÉE PAR DÉFAUT : SANS CLÉS, UNE CHAÎNE NEUVE NE FAIT RIEN.
+         Elle ne peut ni chercher un plan de coupe, ni fabriquer une voix, ni
+         scraper la niche. Décocher reste possible — on ouvre une chaîne sur un
+         autre compte —, mais c'est le cas rare, et c'était le défaut. -->
     <label class="case">
-      <input type="checkbox" id="nchCles">
+      <input type="checkbox" id="nchCles" checked>
       <span>Copier les clés d'API (mêmes comptes, mêmes quotas)</span>
     </label>
+    <!-- LA CRÉATION SE RACONTE PENDANT QU'ELLE SE FAIT.
+         `npm install` met plusieurs minutes : sans un mot, l'écran a l'air
+         figé et on reclique. -->
+    <p class="note" id="nchEtat" hidden></p>
     <p class="note erreur" id="nchErreur" hidden></p>
     <div class="actions">
       <button type="button" class="bouton discret" id="nchNon">Annuler</button>

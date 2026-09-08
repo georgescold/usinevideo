@@ -167,6 +167,43 @@ const nettoie = (t: string) => t.replace(/[.,;:…]+$/g, '')
 const EPAISSEUR_CONTOUR = 0.23
 const OMBRE_PORTEE = '0 3px 10px rgba(0,0,0,0.55)'
 
+/**
+ * L'INTERLIGNE EST ÉCRIT, IL N'EST PLUS `normal`.
+ *
+ * Sans valeur explicite, chaque police impose la sienne : Roboto retombe sur
+ * 1,17, Montserrat sur 1,22, Anton sur 1,50. Deux pages de deux lignes n'ont
+ * alors pas le même écart selon la police choisie — et l'aperçu de l'atelier,
+ * qui héritait le 1,6 du corps de page, n'avait celui d'AUCUNE d'entre elles :
+ * 1,94 fois le corps entre deux lignes contre 1,51 au rendu, gouttière
+ * comprise. Un écran de réglage qui montre un écart de moitié en trop sur la
+ * seule chose qu'on vient y régler.
+ *
+ * 1,15 parce que la séparation des lignes est déjà payée par la gouttière de
+ * 0,22 : pas de trou au milieu d'une page de deux lignes, et un accent
+ * capital — Ô, É — passe encore sous le jambage de la ligne du dessus.
+ *
+ * COMME `EPAISSEUR_CONTOUR`, LA VALEUR EST DOUBLE : atelier/app.js porte la
+ * même. Si l'une bouge, l'autre bouge dans le même geste.
+ */
+const INTERLIGNE = 1.15
+
+/**
+ * L'ÉCHELLE SE PREND SUR LE PETIT CÔTÉ, ET C'ÉTAIT LA LARGEUR.
+ *
+ * `taille` est un corps de police exprimé pour une composition de référence de
+ * 1080 — la verticale 1080 × 1920, où le petit côté EST la largeur. En prenant
+ * la largeur, un format horizontal 1920 × 1080 recevait donc une échelle de
+ * 1,78 : le 94 px réglé dans l'atelier sortait à 167 px au rendu, la page
+ * passait de deux lignes à quatre, et rien à l'écran ne l'annonçait — l'aperçu,
+ * lui, dessine bien 94 px sur un plateau de 1920. Mesuré sur la VSL d'Héritage
+ * le 8 septembre 2026.
+ *
+ * Le petit côté rend 1 dans les deux orientations, donc ne change RIEN aux
+ * rendus verticaux déjà faits, et garde l'indépendance à la définition : la
+ * même vidéo rendue en 2160 × 3840 double son corps de police.
+ */
+const echelleDe = (largeur: number, hauteur: number) => Math.min(largeur, hauteur) / 1080
+
 // LE MÊME CALCUL EXISTE DANS L'APERÇU DE L'ATELIER (atelier/app.js).
 //
 // L'aperçu ne rend pas la vidéo : il maquette la même scène en HTML/CSS pour
@@ -260,7 +297,7 @@ function apparitionDe(
 const UnePage: React.FC<{
   page: Page
   theme: Theme
-  largeur: number
+  echelle: number
   /**
    * Les instants des zooms d'appui, en millisecondes.
    *
@@ -272,7 +309,7 @@ const UnePage: React.FC<{
    * et elle est entièrement automatique, dérivée des ancres du script.
    */
   punchs?: { debutMs: number }[]
-}> = ({ page, theme, largeur, punchs }) => {
+}> = ({ page, theme, echelle, punchs }) => {
   // `image` est locale à la séquence de la page : la petite animation
   // d'apparition rejoue donc à chaque page, et non une seule fois au début.
   const image = useCurrentFrame()
@@ -280,9 +317,6 @@ const UnePage: React.FC<{
   const msCourant = page.debutMs + imagesVersMs(image, fps)
   const st = theme.sousTitres
 
-  // Le texte est dimensionné pour une composition de 1080 de large ; on met à
-  // l'échelle pour que le même thème marche en 1920 comme en 1080.
-  const echelle = largeur / 1080
   const taille = st.taille * echelle
 
   // La police, les couleurs et le trait, résolus une fois : chaque branche de
@@ -314,6 +348,7 @@ const UnePage: React.FC<{
         justifyContent: 'center',
         alignItems: 'center',
         gap: `${0.22 * taille}px`,
+        lineHeight: INTERLIGNE,
         maxWidth: '86%',
         transform: `scale(${entree.echelle})`,
         opacity: entree.opacite,
@@ -499,7 +534,12 @@ export const SousTitres: React.FC<{
                 paddingBottom: (theme.sousTitres.positionBas / 100) * height,
               }}
             >
-              <UnePage page={page} theme={theme} largeur={width} punchs={punchs} />
+              <UnePage
+                page={page}
+                theme={theme}
+                echelle={echelleDe(width, height)}
+                punchs={punchs}
+              />
             </AbsoluteFill>
           </Sequence>
         )

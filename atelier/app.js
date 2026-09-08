@@ -30,6 +30,27 @@ const chrono = (ms) => {
 }
 
 /**
+ * Dévoile un lecteur ET l'amène sous les yeux.
+ *
+ * LE SON PARTAIT TOUT SEUL, DEPUIS UN LECTEUR HORS DU CHAMP.
+ *
+ * Les essais s'ouvrent en bas de leur étape et se lancent d'eux-mêmes. Sur un
+ * écran déroulé — le cas courant, l'étape 3 fait deux hauteurs d'écran — on
+ * entend une voix sans voir d'où elle vient, et on cherche le bouton de pause
+ * en faisant défiler pendant que ça parle. La commande existait, elle n'était
+ * simplement pas là où l'on regardait.
+ *
+ * `block: 'center'` plutôt que `'nearest'` : le lecteur mesure quarante pixels,
+ * amené au ras du bord il reste à moitié caché par l'en-tête collant.
+ */
+function montreLeLecteur(zoneId) {
+  const zone = $(zoneId)
+  if (!zone) return
+  zone.hidden = false
+  zone.scrollIntoView({ behavior: 'smooth', block: 'center' })
+}
+
+/**
  * Un chemin rendu par une commande (`videos/<slug>/03-audio/…`) vers l'URL qui
  * le sert. Les commandes rendent leurs chemins en antislashs sous Windows :
  * les laisser passer donnerait un 404 incompréhensible.
@@ -155,6 +176,22 @@ function annonce(texte, genre = '') {
   b.textContent = texte
   b.className = `bandeau${genre ? ' ' + genre : ''}`
   b.hidden = !texte
+
+  // UN ÉCHEC DE CLÉ MÈNE AU TROUSSEAU, IL NE DÉCRIT PAS UN FICHIER.
+  //
+  // Les commandes disent « Ajoute ou réactive une clé dans config/keys.json » —
+  // c'est juste au terminal, où il n'y a rien d'autre à proposer. À l'écran,
+  // c'est un fichier à éditer à la main pour un geste qui a maintenant son
+  // panneau. On ne réécrit pas le message de la commande : on lui accroche la
+  // porte qui va avec.
+  if (texte && /aucune clé|clé .* refusée|keys\.json|401/i.test(texte)) {
+    const aller = creer('button', 'bouton minuscule')
+    aller.type = 'button'
+    aller.textContent = `Ouvrir le trousseau`
+    aller.style.marginLeft = '12px'
+    aller.addEventListener('click', ouvreLeTrousseau)
+    b.append(aller)
+  }
   if (texte && genre === 'ok') {
     minuteurBandeau = setTimeout(() => {
       // On ne l'efface que s'il dit toujours la même chose : un message arrivé
@@ -432,7 +469,7 @@ $('coutNon').addEventListener('click', () => fermeAccord(false))
 // bouton qui l'a ouvert ; sans restitution, la tabulation repart du début du
 // document à chaque fermeture.
 
-const VOILES = ['voileCout', 'voileConfirme', 'voileNouvelle', 'voileNouvChaine', 'voilePlan', 'voileChaines', 'voileVideos']
+const VOILES = ['voileCout', 'voileConfirme', 'voileNouvelle', 'voileNouvChaine', 'voilePlan', 'voileChaines', 'voileVideos', 'voileIdentite', 'voileCles']
 const focusAvantVoile = new Map()
 
 function ouvreVoile(id, aFocaliser = null) {
@@ -606,7 +643,8 @@ function lisLeSequencement() {
       ? null
       : et.audio?.verdict === 'absent'
         ? vers(`Génère d'abord l'audio.`, 'audio')
-        : { texte: `L'audio est là, mais pas encore transcrit.`, copie: `npm run transcris -- ${e.slug}` },
+        // RIEN A DECIDER, DONC UN BOUTON — pas une commande a recopier.
+        : { texte: `L'audio est là, mais pas encore transcrit.`, action: 'transcris' },
 
     // LA PRISE EST LÀ : IL N'Y A PLUS RIEN À DÉCIDER, DONC RIEN À TAPER.
     //
@@ -732,9 +770,29 @@ function montre(cle, { relis = true } = {}) {
   // Sept écrans se remplaçaient d'un coup, sans qu'on sache si l'on avançait
   // dans la séquence ou si l'on revenait en arrière. Douze pixels dans le bon
   // sens suffisent à le dire, et c'est tout ce qu'on lui demande.
+  //
+  // ON NE REJOUE RIEN QUAND ON NE SE DÉPLACE PAS, ET C'ÉTAIT « L'ÉCRAN QUI
+  // BOUGE TOUT SEUL ».
+  //
+  // Cette fonction se rappelle elle-même sur la MÊME étape dès que l'état a
+  // bougé sur le disque — ce qui arrive après chaque correction de sous-titre,
+  // puisque le plan est retouché. `data-sens` repassait alors à « avant », le
+  // nom de l'animation CSS changeait, et l'étape rejouait son entrée : un
+  // glissement de six pixels et un fondu, sans que rien n'ait été demandé. En
+  // venant de l'étape 6, donc en « arrière », c'était systématique.
+  const surPlace = cle === appli.etapeCourante
   const avant = ETAPES.findIndex((x) => x.cle === appli.etapeCourante)
   const apres = ETAPES.findIndex((x) => x.cle === cle)
-  $('scene').dataset.sens = avant >= 0 && apres < avant ? 'arriere' : 'avant'
+  if (!surPlace) $('scene').dataset.sens = avant >= 0 && apres < avant ? 'arriere' : 'avant'
+
+  // ON N'ABANDONNE PAS UNE CORRECTION EN QUITTANT L'ÉCRAN.
+  //
+  // Les corrections en attente vivaient en mémoire jusqu'au prochain
+  // `focusout` hors de la colonne. Changer d'étape ne comptait pas : on
+  // corrigeait cinq lignes, on passait aux plans, et rien n'était parti.
+  if (!surPlace && corrections.size) {
+    enregistreLesCorrections().catch(() => { /* `mene` a déjà annoncé */ })
+  }
 
   // L'APERÇU NE S'ARRÊTAIT JAMAIS.
   //
@@ -766,6 +824,20 @@ function montre(cle, { relis = true } = {}) {
       b.type = 'button'
       b.textContent = `Aller à l'étape ${ETAPES.findIndex((x) => x.cle === etape.blocage.vers) + 1}`
       b.addEventListener('click', () => montre(etape.blocage.vers))
+      blocage.append(b)
+    } else if (etape.blocage.action === 'transcris') {
+      const b = creer('button', 'bouton minuscule primaire')
+      b.type = 'button'
+      b.textContent = `Transcrire la voix`
+      b.title = `whisper, en local : gratuit, hors ligne. Compte une à deux minutes par minute d'audio.`
+      b.addEventListener('click', (ev) =>
+        pendant(ev.currentTarget, 'Transcription…', async () => {
+          const vue = await mene(() =>
+            api(`/api/videos/${encodeURIComponent(appli.slug)}/transcris`, { methode: 'POST' })
+          )
+          if (vue?.etat === 'fini') annonce(`Transcrit — les sous-titres peuvent se régler.`, 'ok')
+        })
+      )
       blocage.append(b)
     } else if (etape.blocage.action === 'script') {
       const b = creer('button', 'bouton minuscule primaire')
@@ -932,6 +1004,17 @@ async function rafraichitEtat() {
 }
 
 $('selVideo').addEventListener('change', async () => {
+  // CHANGER DE VIDÉO AVEC UNE CORRECTION EN ATTENTE ÉTAIT LE PIRE DES CAS.
+  //
+  // Les corrections sont désignées par la ligne d'UNE vidéo. Les laisser en
+  // mémoire après un changement de slug les aurait envoyées à la SUIVANTE, sur
+  // des lignes qui n'ont rien à voir. On écrit donc avant de partir, et on
+  // attend : c'est la seule fois où l'attente est justifiée, parce que ce qui
+  // suit détruit le contexte dont ces corrections ont besoin.
+  if (corrections.size) {
+    await enregistreLesCorrections().catch(() => { /* `mene` a déjà annoncé */ })
+    corrections.clear()
+  }
   appli.slug = $('selVideo').value
   appli.st = null
   appli.catalogue = null
@@ -957,6 +1040,15 @@ window.addEventListener('focus', () => {
   rafraichitEtat().catch(() => { /* le serveur dira le reste */ })
   // Le budget a pu bouger pendant qu on etait ailleurs — une conversion lancee
   // au terminal, une generation dans une autre fenetre.
+  //
+  // MAIS PAS À CHAQUE FOIS, ET LE PRIX ÉTAIT AILLEURS QUE DANS L'EN-TÊTE.
+  //
+  // Lire les quatre soldes prend deux secondes, et le garde « travail en cours »
+  // de `/api/chaines/ouvre` attend la fin de tout travail avant de basculer.
+  // Revenir du terminal, cliquer sur la chaîne, cliquer « Ouvrir » : les trois
+  // gestes tiennent dans ces deux secondes, et la bascule les attendait. Un
+  // solde vieux d'une minute n'a jamais fait prendre une mauvaise décision ;
+  // deux secondes d'attente sur un clic, si.
   majLeBudget().catch(() => {})
 })
 
@@ -1066,9 +1158,6 @@ $('nouvOui').addEventListener('click', async () => {
     $('nouvErreur').hidden = false
   }
 })
-
-// ---------------------------------------------------------------------------
-//  Étape 1 — la destination
 // ---------------------------------------------------------------------------
 
 /**
@@ -1093,6 +1182,13 @@ const retiensDestination = (slug, valeur) => {
 // Il ne décide de rien sur le disque tant qu'on n'a rien lancé — c'est une
 // intention, pas un état. L'écrire dans le dossier de la vidéo avant d'avoir
 // produit quoi que ce soit ferait mentir `npm run etat`.
+//
+// IL SE CHOISIT À L'ÉTAPE 6, LÀ OÙ IL SERT ET OÙ IL SE PAIE.
+//
+// Il vivait à l'étape 1, sous le format. Rien ne l'y obligeait : le dépôt, la
+// transcription et la voix l'ignorent complètement, et on le choisissait donc
+// cinq écrans avant qu'il ne change quoi que ce soit — pour ne plus s'en
+// souvenir en arrivant devant le bouton qu'il commande.
 const cleMode = (slug) => `atelier.mode.${slug}`
 const modeRetenu = (slug) => {
   try { return localStorage.getItem(cleMode(slug)) } catch { return null }
@@ -1103,18 +1199,28 @@ const retiensMode = (slug, valeur) => {
 
 function dessineLesModes() {
   const zone = $('zoneModes')
-  const destination = appli.etat?.destination ?? destinationRetenue(appli.slug)
-  // Pas de format choisi, pas de mode : on ne sait pas encore ce qu'on fabrique.
-  zone.hidden = !appli.slug || !destination
+  zone.hidden = !appli.slug
   if (zone.hidden) return
 
-  const mode = modeRetenu(appli.slug) ?? 'simple'
+  const mode = modeDeLaVideo()
   for (const carte of document.querySelectorAll('#cartesMode .carte')) {
     carte.classList.toggle('retenue', carte.dataset.mode === mode)
   }
   $('panneauCopie').hidden = mode !== 'copie'
   if (mode === 'copie') remplitLesAvatars()
+  // LE MODE EST LE RÉGLAGE, IL NE PRÉ-COCHE PLUS UNE CASE.
+  //
+  // « Création assistée » cochait « Combler les trous par IA » deux écrans plus
+  // loin, et la recochait à chaque redessin de l'étape 1 : la même décision
+  // s'écrivait à deux endroits, dont l'un écrasait l'autre sans le dire. La case
+  // a disparu ; ce qui se paie apparaît avec le mode, et se coupe en repassant
+  // en création simple.
+  $('zoneAssistee').hidden = mode !== 'mixte'
+  majLeModeleVideo().catch(() => {})
 }
+
+/** Le mode de fabrication retenu pour cette vidéo — « simple » par défaut. */
+const modeDeLaVideo = () => modeRetenu(appli.slug) ?? 'simple'
 
 /** Le sélecteur d'avatars, alimenté par la bibliothèque de la chaîne. */
 async function remplitLesAvatars() {
@@ -1204,6 +1310,9 @@ for (const carte of document.querySelectorAll('#cartesMode .carte')) {
     dessineLesModes()
   })
 }
+
+// ---------------------------------------------------------------------------
+//  Étape 1 — la destination
 
 // ---------------------------------------------------------------------------
 //  Fabriquer la voix — l'étape 2, quand personne n'a enregistré
@@ -1487,7 +1596,6 @@ function dessineDestination() {
   $('noteDestination').textContent = fige
     ? `Format figé : ${appli.etat.vertical ? '1080 × 1920' : '1920 × 1080'}. Se change avec /script.`
     : ''
-  dessineLesModes()
 }
 
 for (const carte of document.querySelectorAll('#cartesDestination .carte')) {
@@ -1507,9 +1615,12 @@ for (const carte of document.querySelectorAll('#cartesDestination .carte')) {
     // Sauf si le format est déjà FIGÉ par un rush déposé : on est alors revenu
     // ici pour relire, pas pour choisir, et repartir de force serait un
     // enlèvement.
-    // ON N'ENCHAÎNE PLUS TOUT DE SUITE : le mode se choisit juste en dessous, et
-    // partir à l'étape 2 sans l'avoir montré revenait à décider pour la personne.
-    // Le mode « Création simple » mène à l'étape 2, l'autre reste ici.
+    //
+    // L'enchaînement avait été coupé le temps que le mode de fabrication vive
+    // ici : partir à l'étape 2 sans l'avoir montré revenait à décider pour la
+    // personne. Le mode est parti à l'étape 6, l'étape 1 ne demande plus rien
+    // d'autre, et elle enchaîne de nouveau.
+    if (!appli.etat?.destination) avanceApres('destination')
   })
 }
 
@@ -1540,10 +1651,47 @@ function dessineRush() {
     const dd = creer('dd'); dd.textContent = v
     dl.append(dt, dd)
   }
-  ligne('Fichier', (rush.fichiers ?? [rush.chemin]).join(' · '))
   ligne('Durée', rush.dureeS ? `${chrono(rush.dureeS * 1000)} (${rush.dureeS} s)` : null)
   ligne('Format', appli.etat.format)
   fiche.append(titre, dl)
+
+  // CHAQUE PRISE A SA LIGNE, ET SON BOUTON.
+  //
+  // Elles etaient jointes par des points — « prise-01.mp3 · prise-02.mp3 » — et
+  // le seul geste possible etait de TOUT retirer. Or deposer deux fois EMPILE :
+  // le montage colle les prises bout a bout, et on se retrouve avec quinze
+  // minutes la ou on en voulait cinq. Le doublon se voyait dans la duree, jamais
+  // dans une action.
+  const prises = (rush.fichiers ?? []).map((f) => String(f).split('/').pop())
+  if (prises.length) {
+    const liste = creer('div', 'liste-prises')
+    for (const f of prises) {
+      const l = creer('div', 'prise-ligne')
+      const nom = creer('span', 'prise-nom')
+      nom.textContent = f
+      l.append(nom)
+      // Une prise seule ne se retire pas ligne par ligne : « Retirer la prise »
+      // en dessous fait deja exactement ca, et deux boutons pour un seul geste
+      // font hesiter sur ce qui les distingue.
+      if (prises.length > 1) {
+        const jette = creer('button', 'bouton minuscule discret')
+        jette.type = 'button'
+        jette.textContent = 'Retirer'
+        jette.title = `Met cette prise de côté. Les autres restent — mais la piste change, donc la voix, le transcript et le montage repartent avec.`
+        jette.addEventListener('click', () => retireUnePrise(f, jette))
+        l.append(jette)
+      }
+      liste.append(l)
+    }
+    if (prises.length > 1) {
+      const avis = creer('p', 'note')
+      avis.textContent =
+        `${prises.length} prises : le montage les colle bout à bout, dans cet ordre. ` +
+        `Si tu as déposé deux fois le même fichier, retire les copies ici.`
+      fiche.append(avis)
+    }
+    fiche.append(liste)
+  }
 
   if (rush.divergence) {
     const d = creer('p', 'divergence')
@@ -1629,6 +1777,36 @@ async function depose(fichier) {
 // qu'on n'entend plus — le défaut que CLAUDE.md §9 interdit nommément. La
 // commande les met de côté avec elle, horodatés : rien n'est détruit.
 
+/**
+ * Retire UNE prise, en gardant les autres.
+ *
+ * CE QUI DECOULE PART AVEC, ET IL FAUT LE DIRE AVANT. La piste est la
+ * concatenation des prises : en enlever une la raccourcit, et tout ce qui etait
+ * cale dessus devient faux. Garder le transcript donnerait des sous-titres qui
+ * suivent une voix qui n'existe plus — ce que le §9 interdit nommement.
+ */
+async function retireUnePrise(fichier, bouton) {
+  const ok = await demandeConfirmation({
+    titre: `Retirer « ${fichier} » ?`,
+    quoi:
+      `Les autres prises restent. Mais la piste change de longueur, donc la voix ` +
+      `générée, le transcript et le montage repartent de côté avec elle — ils ne ` +
+      `correspondraient plus. Rien n'est détruit : tout va dans .prises-precedentes/.`,
+    action: 'Retirer',
+  })
+  if (!ok) return
+  await pendant(bouton, 'Retrait…', async () => {
+    const vue = await mene(() =>
+      api(
+        `/api/videos/${encodeURIComponent(appli.slug)}/audio?fichier=${encodeURIComponent(fichier)}`,
+        { methode: 'DELETE' }
+      )
+    )
+    if (!vue) return
+    annonce(`« ${fichier} » est de côté. Il en reste ${(vue.etat?.etapes?.rush?.fichiers ?? []).length}.`, 'ok')
+  })
+}
+
 $('btnRetirePrise').addEventListener('click', async (e) => {
   // `e.currentTarget` est remis à `null` dès le premier `await` : on le capture
   // avant la boîte de dialogue, pas après.
@@ -1659,9 +1837,295 @@ $('btnRetirePrise').addEventListener('click', async (e) => {
 //  Étape 3 — la voix
 // ---------------------------------------------------------------------------
 
+// ---------------------------------------------------------------------------
+//  Les voix Fish — celles qui LISENT
+// ---------------------------------------------------------------------------
+//
+// DEUX MOTEURS VIVENT SOUS LE MOT « VOIX », ET ILS NE FONT PAS LE MÊME MÉTIER.
+//
+// Fish LIT un texte : c'est lui qui parle quand la prise se fabrique au lieu de
+// s'enregistrer (§3). ElevenLabs et les modèles entraînés CONVERTISSENT un
+// enregistrement : ils plaquent un timbre sur une prise existante.
+//
+// Cette étape ne montrait que le second, et s'appelait « Voix ». On y cherchait
+// donc les voix Fish, qui n'y étaient pas — et le chemin pour en retenir une
+// pour la CHAÎNE n'existait nulle part, ni ici ni au terminal. On pouvait en
+// choisir une pour UNE génération, jamais durablement.
+//
+// UNE VOIX NE SE JUGE PAS SUR SON NOM. C'est la règle déjà appliquée au
+// catalogue ElevenLabs, et elle vaut ici : « Clémence » ne dit rien de ce qu'on
+// va entendre. On écoute une phrase, dite par elle, avant de la retenir.
+
+async function chargeLesVoixFish({ page = 1, ajoute = false } = {}) {
+  const liste = $('listeVoixFish')
+  const q = new URLSearchParams()
+  const cherche = ($('fishRecherche')?.value ?? '').trim()
+  if (cherche) q.set('cherche', cherche)
+  q.set('langue', $('fishLangue')?.value ?? 'fr')
+  if (page > 1) q.set('page', String(page))
+
+  try {
+    const r = await api(`/api/voix-fish?${q}`)
+    const d = r.resultat ?? {}
+    appli.voixFishErreur = null
+    appli.voixFishPage = page
+    if (ajoute && appli.voixFish) {
+      // On EMPILE, on ne remplace pas : « charger 100 de plus » qui repartirait
+      // de zero ferait defiler jusqu'en bas pour retrouver ou on en etait.
+      const vus = new Set((appli.voixFish.bibliotheque ?? []).map((v) => v.id))
+      appli.voixFish.bibliotheque = [
+        ...(appli.voixFish.bibliotheque ?? []),
+        ...(d.bibliotheque ?? []).filter((v) => !vus.has(v.id)),
+      ]
+    } else {
+      appli.voixFish = d
+    }
+    appli.voixFishFin = (d.bibliotheque ?? []).length < 100
+  } catch (e) {
+    // ON NE MET PAS L'ECHEC EN CACHE.
+    //
+    // Il l'etait : `appli.voixFish = {}`. Le premier affichage disait la vraie
+    // cause, tous les suivants lisaient un objet vide et concluaient « aucune
+    // voix Fish disponible » — un diagnostic faux, sur une chaine a qui il
+    // manquait seulement sa cle. On garde donc le message, et la prochaine
+    // ouverture reessaie.
+    appli.voixFish = undefined
+    appli.voixFishErreur = e.message
+  }
+  dessineLesVoixFish()
+  if (liste && !ajoute) liste.scrollTop = 0
+}
+
+function dessineLesVoixFish() {
+  const liste = $('listeVoixFish')
+  if (!liste) return
+
+  // Premier passage : on va chercher, et on le dit au lieu de laisser un vide.
+  if (appli.voixFish === undefined && !appli.voixFishErreur) {
+    liste.replaceChildren()
+    const p = creer('p', 'vide')
+    p.textContent = `Chargement des voix du compte…`
+    liste.append(p)
+    chargeLesVoixFish()
+    // Les mots de la prise arrivent en meme temps que les voix : c'est le meme
+    // ecran, et les demander au clic ferait attendre une seconde de plus juste
+    // avant de payer une generation.
+    reprendsMesMots({ remplace: false })
+    return
+  }
+
+  const d = appli.voixFish ?? {}
+  const retenue = appli.chaine?.voix?.fish_voice_id ?? null
+  liste.replaceChildren()
+
+  // « AUCUNE VOIX » ET « AUCUNE CLE » N'APPELLENT PAS LE MEME GESTE.
+  //
+  // L'ecran disait « Aucune voix Fish disponible » a une chaine qui n'avait
+  // simplement pas de `config/keys.json` — recreee sans ses cles. On cherche
+  // alors une voix qui manquerait chez Fish, alors qu'il manque une cle chez
+  // soi. Le message dit lequel des deux.
+  if (appli.voixFishErreur) {
+    const p = creer('p', 'vide')
+    p.textContent = /cl\u00e9 fish|keys\.json/i.test(appli.voixFishErreur)
+      ? `Cette chaîne n'a pas de clé Fish — ce n'est pas la bibliothèque qui est vide.`
+      : `Voix Fish injoignables.`
+    liste.append(p)
+    const detail = creer('p', 'note')
+    detail.textContent = appli.voixFishErreur
+    liste.append(detail)
+    $('btnPlusFish').hidden = true
+    return
+  }
+
+  const rangees = [
+    ...(d.fish ?? []).map((v) => ({ ...v, groupe: 'Mes voix' })),
+    ...(d.bibliotheque ?? []).map((v) => ({ ...v, groupe: 'Bibliothèque publique Fish' })),
+  ]
+
+  if (!rangees.length) {
+    const p = creer('p', 'vide')
+    p.textContent = `Aucune voix ne correspond. Élargis la langue, ou vide la recherche.`
+    liste.append(p)
+    $('btnPlusFish').hidden = true
+    return
+  }
+
+  let groupeCourant = null
+  for (const v of rangees) {
+    if (v.groupe !== groupeCourant) {
+      groupeCourant = v.groupe
+      const t = creer('p', 'groupe-voix')
+      t.textContent = v.groupe
+      liste.append(t)
+    }
+    // La meme classe que les voix ElevenLabs : ce sont deux moteurs, mais une
+    // seule question — « quelle voix je veux entendre ». Deux dessins de ligne
+    // pour la meme question feraient croire a deux natures d'objet.
+    const ligne = creer('div', 'voix')
+    if (v.id === retenue) ligne.classList.add('retenue')
+
+    const texte = creer('div', 'voix-texte')
+    const nom = creer('span', 'voix-nom')
+    nom.textContent = v.nom ?? v.id
+    const meta = creer('span', 'voix-meta')
+    meta.textContent = [
+      v.id === retenue ? 'voix de la chaîne' : null,
+      v.langues?.length ? v.langues.join(', ') : null,
+      v.usages ? `${(v.usages / 1000).toFixed(0)}k usages` : null,
+    ].filter(Boolean).join(' · ')
+    texte.append(nom, meta)
+
+    const actions = creer('div', 'voix-actions')
+    const ecoute = creer('button', 'bouton minuscule')
+    ecoute.type = 'button'
+    ecoute.textContent = 'Écouter'
+    ecoute.addEventListener('click', () => ecouteUneVoixFish(v, ecoute))
+    const prend = creer('button', 'bouton minuscule')
+    prend.type = 'button'
+    prend.textContent = v.id === retenue ? 'Retenue' : 'Choisir'
+    prend.disabled = v.id === retenue
+    prend.addEventListener('click', () => retiensLaVoixFish(v, prend))
+    actions.append(ecoute, prend, etoileFavorite('fish', v))
+
+    ligne.append(texte, actions)
+    liste.append(ligne)
+  }
+
+  // Le bouton disparait quand la derniere page est incomplete : c'est le seul
+  // signal que Fish donne pour dire qu'il n'y a plus rien derriere.
+  $('btnPlusFish').hidden = Boolean(appli.voixFishFin)
+}
+
+/**
+ * Dix secondes, dites par cette voix-la.
+ *
+ * L'ESSAI A BESOIN D'UNE VIDEO, ET CE N'EST PAS UN CAPRICE : `parle --essai`
+ * ecrit dans `videos/<slug>/03-audio/essais/`, ou le fichier se garde et se
+ * recompare. Sans video ouverte, on le dit plutot que d'echouer sur un chemin.
+ */
+async function ecouteUneVoixFish(v, bouton) {
+  if (!appli.slug) {
+    $('noteFish').textContent = `Ouvre ou crée une vidéo : l'essai s'écrit dans son dossier.`
+    return
+  }
+  const phrase = ($('fishPhrase')?.value ?? '').trim()
+  if (!phrase) {
+    $('noteFish').textContent = `Donne une phrase à faire lire.`
+    return
+  }
+  await pendant(bouton, '…', async () => {
+    try {
+      const t = await api(`/api/videos/${encodeURIComponent(appli.slug)}/parle`, {
+        methode: 'POST',
+        corps: { texte: phrase, voix: v.id, essai: true },
+      })
+      const vue = await suisLeTravail(t.travail)
+      const fichier = vue?.resultat?.fichier
+      if (!fichier) {
+        $('noteFish').textContent = `L'essai n'a rien rendu — le journal dit pourquoi.`
+        return
+      }
+      $('nomEssaiFish').textContent = `${v.nom ?? v.id} — « ${phrase.slice(0, 80)} »`
+      // Deux essais de la meme voix ecrivent le meme fichier : sans la date, on
+      // reecoute le precedent en croyant juger le nouveau.
+      $('audioFish').src = `${urlMedia(appli.slug, fichier)}?v=${Date.now()}`
+      montreLeLecteur('ecouteFish')
+      $('audioFish').play().catch(() => { /* la lecture automatique peut etre refusee */ })
+      $('noteFish').textContent = ''
+    } catch (e) {
+      $('noteFish').textContent = e.message
+    }
+  })
+}
+
+/** Retient cette voix pour la CHAINE — pas pour cette video seulement. */
+async function retiensLaVoixFish(v, bouton) {
+  await pendant(bouton, '…', async () => {
+    try {
+      await api('/api/chaine/voix/defaut-fish', { methode: 'POST', corps: { voiceId: v.id } })
+      // La carte d'identite en memoire porte l'ancienne valeur : sans ca, la
+      // ligne resterait marquee « Choisir » alors que le disque dit l'inverse.
+      appli.chaine = appli.chaine ?? {}
+      appli.chaine.voix = { ...(appli.chaine.voix ?? {}), fish_voice_id: v.id }
+      dessineLesVoixFish()
+      // Le bloc des favorites marque la voix retenue : sans ça, la même voix
+      // s'affichait « Choisir » en haut et « Retenue » en bas.
+      dessineLesVoixFavorites()
+      annonce(`« ${v.nom ?? v.id} » est la voix Fish de la chaîne.`, 'ok')
+    } catch (e) {
+      $('noteFish').textContent = e.message
+    }
+  })
+}
+
+/**
+ * Remplit la phrase d'essai avec TES mots, ceux de la prise deposee.
+ *
+ * `remplace` distingue les deux appels : au premier affichage on ne touche au
+ * champ que s'il porte encore la phrase de demonstration — ecraser un texte
+ * qu'on vient de taper serait insupportable. Sur le bouton, on remplace.
+ */
+async function reprendsMesMots({ remplace = true } = {}) {
+  const champ = $('fishPhrase')
+  const note = $('noteMesMots')
+  if (!appli.slug) {
+    if (remplace) note.textContent = `Ouvre une vidéo : ce sont SES mots qu'on reprend.`
+    return
+  }
+  const secondes = Math.max(2, Number($('essaiSecondes')?.value) || 20)
+  try {
+    const r = await api(
+      `/api/videos/${encodeURIComponent(appli.slug)}/mots-essai?secondes=${secondes}`
+    )
+    const d = r.resultat ?? {}
+    if (!d.texte) {
+      note.textContent = remplace
+        ? `Rien à reprendre : « ${appli.slug} » n'a ni transcript ni script. Transcris la prise à l'étape 4, ou tape ta phrase.`
+        : ''
+      return
+    }
+    if (!remplace && champ.value.trim() && champ.value !== champ.defaultValue) return
+    champ.value = d.texte
+    // « Repris de le transcript » : on compose une phrase avec un fragment qui
+    // porte deja son article. On juxtapose plutot que de bricoler la grammaire.
+    const source = d.origine.charAt(0).toUpperCase() + d.origine.slice(1)
+    note.textContent = `${source} — ${d.secondes} s de ta prise, mot pour mot. Tu peux le corriger.`
+  } catch (e) {
+    if (remplace) note.textContent = e.message
+  }
+}
+
+$('btnMesMots').addEventListener('click', (ev) =>
+  pendant(ev.currentTarget, '…', () => reprendsMesMots({ remplace: true }))
+)
+
+$('btnChercheFish').addEventListener('click', (ev) =>
+  pendant(ev.currentTarget, 'Recherche…', () => chargeLesVoixFish())
+)
+$('fishLangue').addEventListener('change', () => chargeLesVoixFish())
+$('fishRecherche').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') { e.preventDefault(); chargeLesVoixFish() }
+})
+// UN BOUTON QUI NE BOUGE PAS PENDANT DEUX SECONDES EST UN BOUTON CASSE.
+//
+// Charger la page suivante coute une seconde et demie — Fish met 0,8 s a rendre
+// cent voix, et rien ne va plus vite. Ce qui etait insupportable n'etait pas le
+// delai, c'etait le SILENCE : le bouton restait intact, cliquable, identique.
+// On recliquait, ce qui lancait une deuxieme requete, ce qui allongeait
+// l'attente. `pendant` desactive, affiche l'etat, et rend la main a la fin.
+$('btnPlusFish').addEventListener('click', (ev) =>
+  pendant(ev.currentTarget, 'Chargement…', () =>
+    chargeLesVoixFish({ page: (appli.voixFishPage ?? 1) + 1, ajoute: true })
+  )
+)
+
 function dessineVoix() {
   const choisie = appli.etat?.etapes?.voixChoisie
   const fiche = $('ficheVoix')
+  dessineLesVoixFish()
+  // Les favorites appartiennent à la CHAÎNE : une seule lecture par ouverture
+  // d'atelier suffit, et le reste du temps on redessine ce qu'on a déjà.
+  if (appli.favoris === undefined) chargeLesFavorites().catch(() => {})
 
   // LES CURSEURS REPARTENT DE CE QUI EST DÉJÀ RETENU.
   //
@@ -1710,9 +2174,187 @@ function dessineVoix() {
       q.textContent = choisie.origine
     }
     fiche.append(p, q)
+    // CE QUI EST RETENU N'EST PAS CE QUI A SERVI, ET LES DEUX SE LISENT ICI.
+    //
+    // « Voix retenue » décrit une intention ; l'audio du dossier, lui, a été
+    // fabriqué un jour donné avec un moteur donné. Tant que les deux ne
+    // s'affichaient pas côte à côte, on croyait que changer le premier changeait
+    // le second — alors qu'il faut refaire la voix à l'étape 4.
+    if (appli.etat?.etapes?.audio?.verdict !== 'absent') {
+      fiche.append(ligneVoixEmployee(appli.etat?.etapes?.audio?.voix))
+    }
     fiche.hidden = false
   }
   if (appli.catalogue) dessineLeCatalogue()
+  dessineLesVoixFavorites()
+}
+
+// ---------------------------------------------------------------------------
+//  Les voix favorites — l'écoute ne se refait pas à chaque vidéo
+// ---------------------------------------------------------------------------
+//
+// LE TRAVAIL QU'ON REFAISAIT.
+//
+// La bibliothèque ElevenLabs se compte en milliers, celle de Fish en centaines.
+// On en écoute vingt, on en trouve trois bonnes, on en retient une — et les
+// deux autres sont perdues : rien ne les gardait. La vidéo suivante
+// recommençait la même recherche, avec les mêmes filtres tapés de mémoire.
+//
+// Une favorite ne DÉCIDE rien : ni le défaut de la chaîne, ni la voix d'une
+// vidéo. C'est une liste courte de ce qu'on a déjà jugé, posée en tête d'écran.
+// Les deux gestes de sélection — « Retenir » et « Choisir » — restent exactement
+// où ils étaient, et se retrouvent aussi sur les cartes de la liste favorite :
+// une favorite qu'il faudrait aller rechercher plus bas pour l'employer ne
+// servirait à rien.
+
+const cleFavori = (moteur, id) => `${moteur}:${id}`
+
+/** Les favorites de la chaîne, indexées, ou une carte vide tant qu'on ne sait pas. */
+function indexFavoris() {
+  const index = new Map()
+  for (const f of appli.favoris ?? []) index.set(cleFavori(f.moteur, f.id), f)
+  return index
+}
+
+async function chargeLesFavorites({ redessine = true } = {}) {
+  try {
+    const r = await api('/api/voix/favoris')
+    appli.favoris = r.resultat?.favoris ?? []
+  } catch {
+    // Une chaîne sans `config/chaine.json` n'a pas de favorites, et ce n'est pas
+    // une panne : on part sur une liste vide plutôt que d'afficher une erreur
+    // au-dessus d'un écran qui marche.
+    appli.favoris = []
+  }
+  if (redessine) dessineLesVoixFavorites()
+}
+
+/**
+ * L'étoile, la même sur toutes les cartes de voix des deux moteurs.
+ *
+ * ELLE BASCULE, ET L'ÉCRAN SUIT AVANT LE SERVEUR. Attendre la réponse pour
+ * changer l'étoile ferait un aller-retour visible sur un geste qui doit être
+ * instantané ; en cas d'échec on la remet et on le dit.
+ */
+function etoileFavorite(moteur, v) {
+  const b = creer('button', 'etoile')
+  b.type = 'button'
+  const peint = () => {
+    const active = indexFavoris().has(cleFavori(moteur, v.id))
+    b.classList.toggle('active', active)
+    b.textContent = active ? '★' : '☆'
+    b.title = active ? 'Retirer des favorites' : 'Garder dans les favorites'
+    b.setAttribute('aria-pressed', String(active))
+  }
+  peint()
+  b.addEventListener('click', async (ev) => {
+    ev.stopPropagation()
+    const cle = cleFavori(moteur, v.id)
+    const etait = indexFavoris().has(cle)
+    // On peint tout de suite, dans les deux listes.
+    appli.favoris = etait
+      ? (appli.favoris ?? []).filter((f) => cleFavori(f.moteur, f.id) !== cle)
+      : [
+          ...(appli.favoris ?? []),
+          { moteur, id: v.id, nom: v.nom ?? null, proprietaire: v.proprietaire ?? null, apercu: v.apercu ?? null },
+        ]
+    peint()
+    dessineLesVoixFavorites()
+    try {
+      await api('/api/voix/favoris', {
+        methode: 'POST',
+        corps: {
+          moteur,
+          id: v.id,
+          nom: v.nom ?? null,
+          proprietaire: v.proprietaire ?? null,
+          apercu: moteur === 'elevenlabs' ? v.apercu ?? null : null,
+          retire: etait,
+        },
+      })
+    } catch (e) {
+      await chargeLesFavorites()
+      peint()
+      annonce(e.message, 'erreur')
+    }
+  })
+  return b
+}
+
+/**
+ * Le bloc en tête de l'étape 3.
+ *
+ * Il porte les mêmes actions que les cartes du dessous, moteur par moteur :
+ * une favorite ElevenLabs s'essaie sur la prise et se retient, une favorite
+ * Fish s'écoute et se choisit. Rien de nouveau à apprendre — c'est la même
+ * carte, dans une liste plus courte.
+ */
+function dessineLesVoixFavorites() {
+  const bloc = $('blocVoixFavorites')
+  const liste = $('listeVoixFavorites')
+  if (!bloc || !liste) return
+  const favorites = appli.favoris ?? []
+  // Un cadre vide en tête d'écran occupe la place de ce qu'on est venu faire.
+  bloc.hidden = favorites.length === 0
+  if (!favorites.length) return
+
+  liste.replaceChildren()
+  const retenueEleven = appli.etat?.etapes?.voixChoisie?.voiceId ?? null
+  const retenueFish = appli.chaine?.voix?.fish_voice_id ?? null
+
+  for (const f of favorites) {
+    const carte = creer('div', 'voix')
+    const estRetenue = f.moteur === 'fish' ? f.id === retenueFish : f.id === retenueEleven
+    if (estRetenue) carte.classList.add('retenue')
+
+    const texte = creer('div', 'voix-texte')
+    const nom = creer('span', 'voix-nom')
+    nom.textContent = f.nom ?? f.id
+    const meta = creer('span', 'voix-meta')
+    meta.textContent = [
+      f.moteur === 'fish' ? 'Fish — elle LIT' : 'ElevenLabs — elle CONVERTIT',
+      estRetenue ? 'retenue' : null,
+      f.note,
+    ].filter(Boolean).join(' · ')
+    meta.title = f.id
+    texte.append(nom, meta)
+
+    const actions = creer('div', 'voix-actions')
+    if (f.moteur === 'fish') {
+      const ecoute = creer('button', 'bouton minuscule')
+      ecoute.type = 'button'
+      ecoute.textContent = 'Écouter'
+      ecoute.addEventListener('click', () => ecouteUneVoixFish(f, ecoute))
+      const prend = creer('button', 'bouton minuscule primaire')
+      prend.type = 'button'
+      prend.textContent = estRetenue ? 'Retenue' : 'Choisir'
+      prend.disabled = estRetenue
+      prend.addEventListener('click', () => retiensLaVoixFish(f, prend))
+      actions.append(ecoute, prend)
+    } else {
+      if (f.apercu) {
+        const ecoute = creer('button', 'bouton minuscule')
+        ecoute.type = 'button'
+        ecoute.textContent = '▶ Écouter'
+        ecoute.addEventListener('click', () => ecouteLExtrait(f, f.apercu))
+        actions.append(ecoute)
+      }
+      const essai = creer('button', 'bouton minuscule')
+      essai.type = 'button'
+      essai.textContent = 'Essai sur ma prise'
+      essai.addEventListener('click', () => pendant(essai, 'Conversion…', () => lanceUnEssai(f)))
+      const retiens = creer('button', 'bouton minuscule primaire')
+      retiens.type = 'button'
+      retiens.textContent = estRetenue ? 'Retenue' : 'Retenir'
+      retiens.disabled = estRetenue
+      retiens.addEventListener('click', () => pendant(retiens, 'Ajout…', () => retiensLaVoix(f)))
+      actions.append(essai, retiens)
+    }
+    actions.append(etoileFavorite(f.moteur, f))
+
+    carte.append(texte, actions)
+    liste.append(carte)
+  }
 }
 
 /**
@@ -1912,6 +2554,10 @@ function dessineLeCatalogue() {
     retiens.addEventListener('click', () => pendant(retiens, 'Ajout…', () => retiensLaVoix(v)))
     actions.append(retiens)
 
+    // L'étoile part avec l'adresse de l'extrait : sans elle, une favorite ne
+    // pourrait plus se réécouter sans refaire la recherche qui l'a trouvée.
+    actions.append(etoileFavorite('elevenlabs', { ...v, apercu: adresseApercu }))
+
     carte.append(gauche, actions)
     liste.append(carte)
   }
@@ -1974,7 +2620,7 @@ async function lanceUnEssai(v) {
   // Deux essais du même réglage écrivent le même fichier : sans la date, on
   // réécoute le précédent en croyant juger le nouveau.
   $('audioEssai').src = `${urlMedia(appli.slug, fichier)}?v=${Date.now()}`
-  $('ecouteEssai').hidden = false
+  montreLeLecteur('ecouteEssai')
   $('audioEssai').play().catch(() => { /* la lecture automatique peut être refusée */ })
   const r = reglagesEssai()
   annonce(`Essai prêt : ${v.nom ?? v.id} — stabilité ${r.stabilite.toFixed(2)}.`, 'ok')
@@ -2698,6 +3344,60 @@ $('repliEmpreintes').addEventListener('toggle', async (e) => {
 //  Étape 4 — l'audio complet
 // ---------------------------------------------------------------------------
 
+/** Les trois moteurs, tels qu'ils se disent à l'écran. */
+const NOM_MOTEUR = {
+  sts: 'ElevenLabs',
+  local: 'modèle local',
+  brute: 'aucune conversion',
+}
+
+/**
+ * « Fabriqué avec … » — une ligne, écrite par la conversion elle-même.
+ *
+ * `null` veut dire QU'ON NE SAIT PAS : l'audio est antérieur au fichier qui
+ * note l'emploi. On le dit ainsi. Deviner à partir du mode actuel de la chaîne
+ * serait pire que se taire — c'est justement ce qui a pu changer depuis.
+ */
+function ligneVoixEmployee(emploi) {
+  const ligne = creer('p', 'note voix-employee')
+  if (!emploi) {
+    ligne.textContent =
+      `Voix employée : inconnue — cet audio est antérieur au suivi. ` +
+      `La prochaine conversion l'inscrira.`
+    return ligne
+  }
+  const morceaux = [`Fabriqué avec ${NOM_MOTEUR[emploi.mode] ?? emploi.mode}`]
+  if (emploi.mode === 'sts') {
+    morceaux.push(emploi.nom ? `« ${emploi.nom} »` : emploi.voice_id)
+    if (emploi.stabilite !== null && emploi.stabilite !== undefined) {
+      morceaux.push(
+        `stabilité ${Number(emploi.stabilite).toFixed(2)} · similarité ${Number(emploi.similarite).toFixed(2)}`
+      )
+    }
+  } else if (emploi.mode === 'local') {
+    if (emploi.modele_local) morceaux.push(`« ${emploi.modele_local} »`)
+    if (emploi.transpose) {
+      morceaux.push(`transposition ${emploi.transpose > 0 ? '+' : ''}${emploi.transpose}`)
+    }
+  }
+  if (emploi.musique) morceaux.push(`musique ${emploi.musique}`)
+  if (emploi.fait_le) morceaux.push(dateCourte(emploi.fait_le))
+  ligne.textContent = morceaux.join(' · ')
+  // L'identifiant complet au survol : il ne mérite pas une ligne, et il est la
+  // seule chose qu'on recopie quand on veut retrouver la voix ailleurs.
+  if (emploi.voice_id) ligne.title = emploi.voice_id
+  return ligne
+}
+
+/** « 7 sept. à 20:18 » — assez pour situer, jamais sur deux lignes. */
+function dateCourte(iso) {
+  const d = new Date(iso)
+  if (Number.isNaN(d.getTime())) return ''
+  return d.toLocaleString('fr-FR', {
+    day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit',
+  })
+}
+
 function dessineAudio() {
   const audio = appli.etat?.etapes?.audio
   const fiche = $('ficheAudio')
@@ -2735,6 +3435,38 @@ function dessineAudio() {
   const note = creer('p', 'note')
   note.textContent = chrono((audio.dureeS ?? 0) * 1000)
   fiche.append(p, lecteur, note)
+
+  // AVEC QUOI CET AUDIO A-T-IL ÉTÉ FAIT.
+  //
+  // L'écran ne disait que « converti et à jour ». Un mois plus tard, devant une
+  // vidéo qu'on ne refait pas, la seule question est celle-là — et la réponse
+  // n'était nulle part : le sélecteur juste en dessous montre le défaut de la
+  // CHAÎNE, qui a pu changer depuis, et l'étape 3 montre un timbre ElevenLabs
+  // qui n'a peut-être jamais servi. On lisait donc trois choses différentes de
+  // trois endroits, dont aucune ne décrivait le fichier qu'on écoute.
+  fiche.append(ligneVoixEmployee(audio.voix))
+
+  // LE SYMPTOME EST ICI, LE REMEDE ETAIT DEUX ETAPES PLUS HAUT.
+  //
+  // C'est a cette etape qu'on decouvre la duree — « 15:22 » sur une prise de
+  // cinq minutes — parce que c'est la qu'on ecoute. Les prises, elles, se
+  // retirent a l'etape 2. On regardait donc le probleme sans voir ce qui le
+  // repare, et il n'y avait rien pour faire le lien.
+  const prises = appli.etat?.etapes?.rush?.fichiers ?? []
+  if (prises.length > 1) {
+    const avis = creer('p', 'note')
+    avis.textContent =
+      `Cette durée vient de ${prises.length} prises collées bout à bout. ` +
+      `Si tu as déposé deux fois le même fichier, retire les copies :`
+    const aller = creer('button', 'bouton minuscule')
+    aller.type = 'button'
+    aller.textContent = `Aller aux prises`
+    aller.addEventListener('click', () => montre('rush'))
+    const ligne = creer('p', 'ligne-action')
+    ligne.append(aller)
+    fiche.append(avis, ligne)
+  }
+
   fiche.hidden = false
 }
 
@@ -2760,17 +3492,36 @@ function dessineAudio() {
  * On ne le fait qu'une fois par vidéo : sinon un aller-retour entre deux étapes
  * effacerait le choix qu'on vient de faire à la main.
  */
+/**
+ * CE QUI A SERVI PASSE AVANT LE DÉFAUT DE LA CHAÎNE.
+ *
+ * L'écran repartait toujours du défaut de `config/chaine.json`. Sur une vidéo
+ * dont l'audio existe déjà, il proposait donc autre chose que ce qu'on entend
+ * — c'est ce qu'on lit comme « tout est remis à zéro quand je reviens ». Pire,
+ * un clic sur « Refaire la voix » aurait alors changé de moteur sans qu'on l'ait
+ * demandé.
+ *
+ * L'ordre est celui du §8 appliqué à l'écran : ce que CET audio a employé, puis
+ * le défaut de la chaîne, puis le premier de la liste.
+ */
 function poseLeMoteurParDefaut() {
   if (appli.moteurPose === appli.slug) return
   appli.moteurPose = appli.slug
 
   const v = appli.chaine?.voix ?? {}
+  const emploi = appli.etat?.etapes?.audio?.voix ?? null
   const moteur = $('moteurVoix')
-  if (v.mode && [...moteur.options].some((o) => o.value === v.mode)) moteur.value = v.mode
+  const voulu = emploi?.mode ?? v.mode
+  if (voulu && [...moteur.options].some((o) => o.value === voulu)) moteur.value = voulu
 
   const transpose = $('transposeVoix')
-  const demiTons = String(v.transpose ?? 0)
+  const demiTons = String(emploi?.transpose ?? v.transpose ?? 0)
   if ([...transpose.options].some((o) => o.value === demiTons)) transpose.value = demiTons
+
+  // Le modèle est posé ici mais choisi plus tard : la liste vient du disque et
+  // n'est peuplée qu'après `chargeLesModeles()`. On note l'intention, et
+  // `majLeMoteur` l'applique dès qu'il a de quoi.
+  appli.modeleVoulu = emploi?.modele_local ?? v.modele_local ?? null
 }
 
 async function majLeMoteur() {
@@ -2794,7 +3545,10 @@ async function majLeMoteur() {
       o.textContent = `${m.id} — ${m.epoques} époques sur ${chrono((m.corpusS ?? 0) * 1000)}`
       sel.append(o)
     }
-    if (retenu) sel.value = retenu
+    // L'ordre : ce qui était déjà sélectionné à l'écran (on ne défait pas un
+    // geste en cours), puis ce que cet audio a employé, puis le défaut.
+    const voulu = retenu || appli.modeleVoulu
+    if (voulu && [...sel.options].some((o) => o.value === voulu)) sel.value = voulu
   }
 
   const note = $('noteMoteur')
@@ -2919,7 +3673,7 @@ $('btnEssaiLocal').addEventListener('click', (ev) =>
       // suite sur la même adresse rejouent le premier, et on croit que le
       // réglage n'a rien changé.
       lecteur.src = `${urlMedia(appli.slug, r.fichier)}?t=${Date.now()}`
-      $('ecouteEssaiLocal').hidden = false
+      montreLeLecteur('ecouteEssaiLocal')
       lecteur.play().catch(() => {})
     } catch (e) {
       annonce(e.message, 'erreur')
@@ -2966,7 +3720,162 @@ $('btnAudio').addEventListener('click', async () => {
 //  Étape 6 — les plans
 // ---------------------------------------------------------------------------
 
+/**
+ * Le modèle vidéo de l'étape 6, et ce qu'il va coûter.
+ *
+ * IL N'EXISTE QU'EN « CRÉATION ASSISTÉE ».
+ *
+ * Sur un montage entièrement en banque d'images, il n'y a rien à payer et rien
+ * à choisir : un sélecteur visible en permanence laisserait croire qu'on paie
+ * à chaque montage. C'est le mode qui l'ouvre, et qui le referme.
+ *
+ * TOUS LES PRIX DE CETTE ÉTAPE SONT CALCULÉS ICI, AUCUN N'EST ÉCRIT AILLEURS.
+ *
+ * Les libellés annonçaient « 0,18 $ » pour l'ouverture et « jusqu'à 0,54 $ »
+ * pour le comblage. Les deux étaient vrais pour LTX et faux pour les trois
+ * autres modèles — le plan de cinq secondes va de 0,04 $ à 2,36 $, un facteur
+ * soixante — et on les lisait juste au-dessus du sélecteur qui les dément.
+ */
+/**
+ * COMBIEN DE PLANS DE COUPE CE MONTAGE VA POSER.
+ *
+ * Le curseur du budget en a besoin comme borne : proposer trente générations à
+ * une vidéo qui compte douze plans est un chiffre qui ne veut rien dire, et le
+ * coût affiché à côté serait faux d'autant. La commande ne dépense rien — elle
+ * compte les visuels du script, et du plan de montage quand il existe.
+ *
+ * Zéro veut dire « pas encore de script » et non « pas de plans » : on ouvre
+ * alors le curseur sur une plage raisonnable au lieu de le bloquer.
+ */
+const BUDGET_SANS_ESTIMATION = 10
+
+async function estimeLesPlans() {
+  if (appli.estimation?.slug === appli.slug) return appli.estimation
+  try {
+    const r = await api(`/api/videos/${encodeURIComponent(appli.slug)}/estimation`)
+    appli.estimation = { slug: appli.slug, plans: Number(r.resultat?.plans) || 0 }
+  } catch {
+    appli.estimation = { slug: appli.slug, plans: 0 }
+  }
+  return appli.estimation
+}
+
+// LE BUDGET SE RETIENT PAR VIDÉO, comme la destination et le mode.
+//
+// C'est une décision de dépense, et elle se prend une fois : la reperdre à
+// chaque rafraîchissement de l'état ferait remonter le curseur à trois sans
+// qu'on l'ait touché — et on paierait trois générations qu'on avait refusées.
+const cleBudgetIa = (slug) => `atelier.plansIa.${slug}`
+const budgetIaRetenu = (slug) => {
+  try {
+    // `Number(null)` vaut ZÉRO, et zéro est un budget valide.
+    //
+    // Sans ce test, une vidéo dont on n'avait jamais touché le curseur passait
+    // pour une vidéo où l'on avait refusé toute génération : le curseur
+    // s'ouvrait sur 0, et « création assistée » ne générait rien.
+    const brut = localStorage.getItem(cleBudgetIa(slug))
+    if (brut === null || brut === '') return null
+    const v = Number(brut)
+    return Number.isFinite(v) && v >= 0 ? v : null
+  } catch { return null }
+}
+const retiensBudgetIa = (slug, v) => {
+  try { localStorage.setItem(cleBudgetIa(slug), String(v)) } catch { /* mode privé */ }
+}
+
+/** Le budget affiché par le curseur, borné par ce que le montage peut employer. */
+const budgetIa = () => Math.max(0, Number($('planBudgetIa').value) || 0)
+
+async function majLeModeleVideo() {
+  const note = $('notePlanModele')
+  const prixOuverture = $('prixOuvertureIa')
+  if (modeDeLaVideo() !== 'mixte') return
+
+  // Le curseur d'abord : son maximum vient de la vidéo, sa valeur de la
+  // dernière décision prise dessus.
+  const curseur = $('planBudgetIa')
+  const { plans: attendus } = await estimeLesPlans()
+  const plafond = attendus > 0 ? attendus : BUDGET_SANS_ESTIMATION
+  curseur.max = String(plafond)
+  const retenu = budgetIaRetenu(appli.slug)
+  const valeur = Math.min(plafond, retenu ?? Math.min(3, plafond))
+  curseur.value = String(valeur)
+  $('planBudgetIaValeur').textContent = String(valeur)
+  $('notePlanChoix').textContent = attendus > 0
+    ? `${attendus} plan(s) de coupe dans ce montage. Le curseur est un PLAFOND : ` +
+      `le script décide lesquels méritent une génération, et ce qui n'est pas employé ` +
+      `n'est pas facturé.`
+    : `Le nombre de plans de coupe sera connu quand le script sera déduit. ` +
+      `Le curseur reste un plafond : rien n'est facturé tant que rien n'est généré.`
+
+  if (appli.modelesVideo === undefined) {
+    try {
+      appli.modelesVideo = await api('/api/modeles-video')
+    } catch {
+      appli.modelesVideo = null
+    }
+  }
+  const d = appli.modelesVideo
+  if (!d) {
+    // Sans catalogue, on n'invente pas de chiffre : on dit qu'on ne l'a pas.
+    note.textContent = `Tarifs indisponibles — le devis les redonnera avant de lancer.`
+    prixOuverture.textContent = ''
+    return
+  }
+
+  const sel = $('planModeleVideo')
+  if (!sel.childElementCount) {
+    for (const m of d.modeles) {
+      const o = creer('option')
+      o.value = m.format
+      o.textContent = `${m.nom} — ${m.usd5s.toFixed(2)} $ / plan de 5 s — ${m.resume}`
+      sel.append(o)
+    }
+    // On part sur le modèle de la CHAÎNE : c'est le défaut, et le changer ici
+    // ne vaut que pour ce montage.
+    sel.value = d.retenu ?? d.defaut
+  }
+
+  // LE TOTAL SE CALCULE DEVANT, PAS DANS LA FENÊTRE DE DEVIS.
+  //
+  // Le devis arrive après le clic ; à ce moment-là on a déjà décidé. Le chiffre
+  // doit être lisible AVANT — c'est ce qui rend le choix du modèle un choix.
+  const m = d.modeles.find((x) => x.format === sel.value)
+  const unPlan = m?.usd5s ?? 0
+  // Le libellé de la case porte le prix du modèle retenu, pas un nombre gravé.
+  prixOuverture.textContent = ` — ${unPlan.toFixed(2)} $`
+  const plans = ($('estOuvertureIa').checked ? 1 : 0) + valeur
+  note.textContent = plans === 0
+    ? `Aucune génération : ce montage sera entièrement pris en banque d'images, ` +
+      `et ne coûtera rien.`
+    : `Au pire ${plans} plan(s) générés avec ${m?.nom ?? '?'} — ` +
+      `${(unPlan * plans).toFixed(2)} $ au total.`
+}
+
+$('planModeleVideo').addEventListener('change', () => majLeModeleVideo())
+$('estOuvertureIa').addEventListener('change', () => majLeModeleVideo())
+$('planBudgetIa').addEventListener('input', () => {
+  // La valeur s'affiche à la trame, le prix se refait avec : un curseur dont le
+  // chiffre arrive après le doigt ne se règle pas, il se devine.
+  $('planBudgetIaValeur').textContent = $('planBudgetIa').value
+  retiensBudgetIa(appli.slug, budgetIa())
+  majLeModeleVideo().catch(() => {})
+})
+
 function dessinePlan() {
+  // Le mode de fabrication ouvre l'étape : c'est lui qui décide de ce que le
+  // bouton va faire, et de ce qui se paie. `dessineLesModes` rafraîchit le
+  // sélecteur de modèle dans la foulée.
+  dessineLesModes()
+  // LA REVUE SE REDESSINE DANS TOUS LES CAS, Y COMPRIS QUAND IL N'Y A PAS DE PLAN.
+  //
+  // Elle était appelée en toute fin de fonction, après un `return` qui se
+  // déclenche dès que le plan est absent. Conséquence : en passant d'une vidéo
+  // montée à une vidéo qui ne l'est pas, l'étape 6 continuait d'afficher les
+  // trente-quatre plans de l'AUTRE vidéo — avec leur voix off, leurs
+  // sous-titres, et le bouton « Un autre » qui aurait échangé un plan chez la
+  // voisine. On croyait sa piste image déjà faite.
+  dessineLaRevueDesPlans()
   const plan = appli.etat?.etapes?.plan
   const fiche = $('fichePlan')
   // Même raison qu'au-dessus : le libellé survivait au changement de vidéo.
@@ -2996,7 +3905,6 @@ function dessinePlan() {
     fiche.append(c)
   }
   fiche.hidden = false
-  dessineLaRevueDesPlans()
 }
 
 // ---------------------------------------------------------------------------
@@ -3076,7 +3984,15 @@ function poseLesSousTitres(cadre, mots, style) {
 
   // La taille est celle du rendu, ramenée à la largeur du cadre : 86 px sur
   // 1080 font 8 % de la largeur, quelle que soit la taille de l'aperçu.
-  couche.style.setProperty('--st-taille', `${((Number(st.taille) || 86) / 1080) * 100}`)
+  //
+  // LA DIVISION SE FAIT PAR LA LARGEUR DU FORMAT, PAS PAR 1080. Le rendu pose
+  // `taille × min(L, H) / 1080` pixels sur un cadre de L de large (voir
+  // `echelleDe` dans SousTitres.tsx) : sur un montage horizontal, diviser par
+  // 1080 annonçait un corps 78 % trop gros sur chaque vignette de plan.
+  const L = Number(st.largeur) || 1080
+  const H = Number(st.hauteur) || 1920
+  const corps = ((Number(st.taille) || 86) * Math.min(L, H)) / 1080
+  couche.style.setProperty('--st-taille', `${(corps / L) * 100}`)
   couche.style.setProperty('--st-texte', st.couleurTexte)
   couche.style.setProperty('--st-surligne', st.couleurSurligne)
   couche.style.setProperty('--st-contour', st.couleurContour)
@@ -3171,14 +4087,31 @@ async function dessineLaRevueDesPlans() {
     // un autre.
     appli.styleSousTitres = r.resultat?.soustitres ?? null
   } catch {
-    return // pas de plan : l'étape le dit déjà au-dessus
+    plans = []
   }
-  if (!plans.length) return
+  appli.plansRevue = plans
+  // L'ABSENCE SE DIT, ELLE NE SE DEVINE PAS.
+  //
+  // La zone se refermait sans un mot tant qu'aucun plan n'existait : l'étape 6
+  // n'affichait alors que des cases et un bouton, et rien ne disait que c'est
+  // ICI qu'on regarde les plans une fois générés. On croyait la revue absente
+  // du logiciel, et on la cherchait ailleurs.
+  if (!plans.length) {
+    const rien = creer('p', 'note')
+    rien.textContent =
+      `Aucun plan de coupe pour l'instant. Une fois le montage construit, ils ` +
+      `s'affichent ici un par un : la flèche joue le passage avec sa voix et ses ` +
+      `sous-titres, et « Agrandir » l'ouvre en grand pour le juger.`
+    zone.append(rien)
+    zone.hidden = false
+    return
+  }
 
   const tete = creer('p', 'note')
   tete.textContent =
     `${plans.length} plans de coupe. La flèche joue le passage avec sa voix et ` +
-    `ses sous-titres ; l'image l'ouvre en grand, où « Un autre » l'échange. ` +
+    `ses sous-titres ; « Agrandir » l'ouvre en grand — les flèches ‹ › du clavier ` +
+    `passent au plan suivant sans refermer, et c'est là qu'on l'échange. ` +
     `Le premier plan est celui qui décide si les autres seront vus : ce qui arrête ` +
     `le mieux, c'est un visage qui porte une émotion.`
   zone.append(tete)
@@ -3269,6 +4202,45 @@ async function dessineLaRevueDesPlans() {
       refus.textContent = `${p.essais} refus`
       texte.append(refus)
     }
+    // UN FOND TROP CLAIR SE DIT SUR LA VIGNETTE.
+    //
+    // C'est la seule chose qu'on sache mesurer d'un plan : du texte blanc sur un
+    // fond clair disparaît, et ça ne se voit qu'au rendu. `clair === null` veut
+    // dire « pas encore mesuré » — on ne dit alors rien, plutôt que de laisser
+    // croire que le plan est validé.
+    // UN PLAN GÉNÉRÉ SE DIT, ET IL DIT PAR QUOI.
+    //
+    // Rien ne distinguait un plan généré d'un plan de banque sur la vignette :
+    // on relançait une génération en croyant que rien n'avait changé, alors que
+    // l'ouverture venait d'être refaite. Et sans le modèle, on ne peut pas
+    // juger si le prix payé valait ce qu'on regarde.
+    if (p.source === 'fal') {
+      const g = creer('span', 'plan-genere')
+      g.textContent = p.modele ? `généré · ${p.modele.split('/').pop()}` : `généré par IA`
+      // POURQUOI CE PLAN-LÀ A COÛTÉ DE L'ARGENT.
+      //
+      // « généré » dit qu'il est différent, pas si le choix était juste. Or
+      // c'est la seule chose qu'on puisse corriger au montage suivant : si le
+      // script a désigné un passage qui n'en valait pas la peine, on le voit
+      // ici et pas ailleurs.
+      g.title = [
+        p.modele ? `Modèle : ${p.modele}` : `Le modèle n'a pas été enregistré.`,
+        p.iaPourquoi
+          ? `${p.iaChoisi ? 'Choisi d’après le script' : 'Comblage'} : ${p.iaPourquoi}`
+          : null,
+      ].filter(Boolean).join('\n')
+      if (p.iaChoisi) g.classList.add('choisi')
+      texte.append(g)
+    }
+    if (p.clair === true) {
+      const alerte = creer('span', 'plan-clair')
+      alerte.textContent = `fond clair (${p.bandeY}) — texte blanc peu lisible`
+      alerte.title =
+        `Luminance moyenne de la bande des sous-titres : ${p.bandeY} sur 255.\n` +
+        `Au-delà de 170, un texte blanc ne se détache plus, même avec son contour.\n` +
+        `Échange le plan, génère-le, ou épaissis le contour à l'étape 5.`
+      texte.append(alerte)
+    }
     if (p.ouverture) {
       // AUCUNE NOTE SUR LA VIGNETTE, ET C'EST DÉLIBÉRÉ.
       //
@@ -3308,9 +4280,17 @@ async function dessineLaRevueDesPlans() {
     // voix et son texte : on juge d abord, on choisit ensuite.
     media.style.cursor = 'zoom-in'
     cadre.addEventListener('click', (ev) => { ev.preventDefault(); arreteLaRevue(); ouvreLePlan(p) })
+    // LE BOUTON DIT CE QU'IL FAIT, PAS CE QU'IL PERMET ENSUITE.
+    //
+    // Il disait « Un autre » et n'échangeait rien : il ouvrait le plan en grand,
+    // d'où l'échange devient possible. On cherchait donc ailleurs le moyen
+    // d'agrandir un plan, et on ne cliquait pas sur celui qui le faisait.
     const autre = creer('button', 'bouton minuscule discret')
     autre.type = 'button'
-    autre.textContent = p.requete ? 'Un autre' : 'Voir en grand'
+    autre.textContent = 'Agrandir'
+    autre.title = p.requete
+      ? `Voir le plan en grand, avec sa voix — et l'échanger si besoin`
+      : `Voir le plan en grand, avec sa voix`
     autre.addEventListener('click', () => ouvreLePlan(p))
     carte.append(autre)
 
@@ -3368,7 +4348,26 @@ async function remplaceUnPlanDeCoupe(numero, source = 'pexels') {
 let planOuvert = null
 let arretePlanOuvert = () => {}
 
+/** Écrit le prix du modèle retenu sur le bouton de génération. */
+async function ecrisLePrixDeGeneration() {
+  const b = $('btnAutreIa')
+  if (!b) return
+  if (appli.modelesVideo === undefined) {
+    try { appli.modelesVideo = await api('/api/modeles-video') } catch { appli.modelesVideo = null }
+  }
+  const cat = appli.modelesVideo
+  const m = cat?.modeles?.find((x) => x.format === cat.retenu) ?? null
+  b.textContent = m ? `Générer par IA — ${m.usd5s.toFixed(2)} $` : `Générer par IA`
+  b.title = m ? `${m.nom}. Le modèle se change dans « Identité ».` : ''
+}
+
 function ouvreLePlan(p) {
+  // LE PRIX S'ÉCRIT SUR LE BOUTON, AU MOMENT OÙ ON L'OUVRE.
+  //
+  // Il était dans le HTML — « Générer par IA — 0,18 $ » — donc faux dès qu'on
+  // change de modèle, et faux de treize fois sur Seedance. On le remplit ici,
+  // depuis le catalogue servi par le serveur.
+  ecrisLePrixDeGeneration()
   arretePlanOuvert()
   planOuvert = p
   $('titrePlan').textContent = `Plan ${p.numero} · ${chrono(p.debutMs)} → ${p.finMs != null ? chrono(p.finMs) : '?'}`
@@ -3478,8 +4477,49 @@ function ouvreLePlan(p) {
   $('btnAutrePexels').hidden = !p.requete
   $('btnAutreIa').hidden = !p.requete
 
+  // ON PASSE AU SUIVANT SANS REFERMER.
+  //
+  // Revoir une piste image, c'est regarder trente plans à la file. Il fallait
+  // fermer, retrouver la bonne vignette dans la grille, la rouvrir : trois
+  // gestes entre deux plans, donc on n'en regardait jamais que deux ou trois —
+  // et la revue ne servait à rien.
+  const liste = appli.plansRevue ?? []
+  const ici = liste.findIndex((x) => x.numero === p.numero)
+  $('btnPlanPrecedent').disabled = ici <= 0
+  $('btnPlanSuivant').disabled = ici < 0 || ici >= liste.length - 1
+
   ouvreVoile('voilePlan', 'btnFermePlan')
 }
+
+/** Le plan d'à côté, quand il existe. */
+function voisinDuPlan(pas) {
+  const liste = appli.plansRevue ?? []
+  const ici = liste.findIndex((x) => x.numero === planOuvert?.numero)
+  return ici < 0 ? null : (liste[ici + pas] ?? null)
+}
+
+function vaAuPlan(pas) {
+  const v = voisinDuPlan(pas)
+  if (v) ouvreLePlan(v)
+}
+
+$('btnPlanPrecedent').addEventListener('click', () => vaAuPlan(-1))
+$('btnPlanSuivant').addEventListener('click', () => vaAuPlan(1))
+
+// LES FLÈCHES DU CLAVIER FONT LE MÊME TRAVAIL.
+//
+// C'est le geste de qui regarde une série d'images, et il ne s'apprend pas : on
+// l'essaie. Ne rien faire aurait laissé croire que le panneau ne sait pas
+// enchaîner. On ne le prend que quand le panneau est ouvert et qu'on ne tape pas
+// dans un champ.
+document.addEventListener('keydown', (ev) => {
+  if ($('voilePlan').hidden) return
+  if (ev.key !== 'ArrowLeft' && ev.key !== 'ArrowRight') return
+  const cible = ev.target
+  if (cible && /^(INPUT|TEXTAREA|SELECT)$/.test(cible.tagName)) return
+  ev.preventDefault()
+  vaAuPlan(ev.key === 'ArrowRight' ? 1 : -1)
+})
 
 $('btnFermePlan').addEventListener('click', () => fermeVoile('voilePlan'))
 
@@ -3497,10 +4537,23 @@ $('btnAutreIa').addEventListener('click', async (ev) => {
   const p = planOuvert
   if (!p) return
   // UN APPEL PAYANT S'ANNONCE AVANT DE PARTIR — §2 du CLAUDE.md.
+  // LE PRIX VIENT DU MODELE RETENU, il n'est plus ecrit en dur.
+  //
+  // Il disait 0,18 $ quel que soit le modele. Les tarifs vont de 0,04 $ a
+  // 2,36 $ le plan de cinq secondes : sur Seedance, on aurait fait accepter
+  // treize fois la somme annoncee.
+  if (appli.modelesVideo === undefined) {
+    try { appli.modelesVideo = await api('/api/modeles-video') } catch { appli.modelesVideo = null }
+  }
+  const cat = appli.modelesVideo
+  const mv = cat?.modeles?.find((x) => x.format === cat.retenu) ?? null
   const ok = await demandeConfirmation({
     titre: `Générer ce plan par IA ?`,
     quoi:
-      `Environ 0,18 $ sur ton solde fal, et une à trois minutes d'attente.\n\n` +
+      (mv
+        ? `${mv.nom} — environ ${mv.usd5s.toFixed(2)} $ sur ton solde fal, `
+        : `Un plan payant sur ton solde fal, `) +
+      `et une à trois minutes d'attente.\n\n` +
       `Prompt : « ${p.requete} »\n\n` +
       `La banque d'images est gratuite et instantanée — l'IA sert quand aucune ` +
       `banque ne tient la scène.`,
@@ -3510,6 +4563,50 @@ $('btnAutreIa').addEventListener('click', async (ev) => {
   fermeVoile('voilePlan')
   await pendant(bouton, 'Génération…', () => remplaceUnPlanDeCoupe(p.numero, 'ia'))
 })
+
+$('btnEffacePlans').addEventListener('click', async (ev) => {
+  const bouton = ev.currentTarget
+  const ok = await demandeConfirmation({
+    titre: `Effacer tous les plans de coupe ?`,
+    quoi:
+      `Le plan de montage et les clips téléchargés sont SUPPRIMÉS — pas mis de côté.
+
+` +
+      `Gardés : tes réglages de sous-titres, la coupe, et la voix convertie. ` +
+      `Rien de payant n'est à refaire.
+
+` +
+      `Tu repars à l'étape 6 sur une piste image vide.`,
+    action: 'Effacer',
+  })
+  if (!ok) return
+  await pendant(bouton, 'Effacement…', async () => {
+    const vue = await mene(() =>
+      api(`/api/videos/${encodeURIComponent(appli.slug)}/plans`, { methode: 'DELETE' })
+    )
+    if (!vue) return
+    const r = vue.resultat ?? {}
+    await rafraichitEtat()
+    annonce(`${r.plans ?? 0} plans effacés — ${r.mo ?? 0} Mo libérés. Les sous-titres sont gardés.`, 'ok')
+  })
+})
+
+$('btnLisibilite').addEventListener('click', (ev) =>
+  pendant(ev.currentTarget, 'Mesure…', async () => {
+    const vue = await mene(() =>
+      api(`/api/videos/${encodeURIComponent(appli.slug)}/lisibilite`, { methode: 'POST' })
+    )
+    if (vue?.etat !== 'fini') return
+    const r = vue.resultat ?? {}
+    await rafraichitEtat()
+    annonce(
+      r.clairs?.length
+        ? `${r.clairs.length} plan(s) trop clairs pour un texte blanc — ils sont marqués ci-dessous.`
+        : `${r.mesures ?? 0} plans mesurés : le texte se détachera partout.`,
+      r.clairs?.length ? 'erreur' : 'ok'
+    )
+  })
+)
 
 $('btnPlans').addEventListener('click', async () => {
   $('btnPlans').disabled = true
@@ -3524,7 +4621,16 @@ $('btnPlans').addEventListener('click', async () => {
     // Le bouton ne pouvait pas aboutir.
     const vue = await mene(
       () => apiPayante(`/api/videos/${encodeURIComponent(appli.slug)}/plans`, {
-        ouvertureIa: $('estOuvertureIa').checked,
+        ouvertureIa: modeDeLaVideo() === 'mixte' && $('estOuvertureIa').checked,
+        // LE BUDGET EST LE RÉGLAGE, ET IL VAUT ZÉRO HORS CRÉATION ASSISTÉE.
+        //
+        // « Création assistée » veut dire : le script est lu, la génération va
+        // aux passages qu'une banque d'images ne peut pas servir, et ce qui
+        // reste du budget comble les trous. Le couper, c'est repasser en
+        // création simple — et ça se lit sur la carte retenue.
+        plansIa: modeDeLaVideo() === 'mixte' ? budgetIa() : 0,
+        modeleVideo: $('planModeleVideo').value || undefined,
+        refaisPlans: $('estRefaisPlans').checked,
       }),
       { refus: `Montage annulé — rien n'a été facturé.` }
     )
@@ -3616,7 +4722,30 @@ async function majLeDrive() {
         ? `Jeton expiré (7 jours en mode Test) — npm run drive -- --connecte`
         : !d.connecte
           ? `Ce poste n'est pas autorisé — npm run drive -- --connecte`
-          : `Pas de dossier pour cette chaîne — npm run drive -- --dossier`
+          : `Pas de dossier Drive pour cette chaîne.`
+
+    // CREER LE DOSSIER EST UN GESTE, PAS UNE DECISION — donc un bouton.
+    //
+    // La portee `drive.file` ne permet pas d'ecrire dans un dossier cree a la
+    // main dont on collerait l'identifiant : c'est la commande qui doit le
+    // creer, une fois. Rien a juger, rien a nommer. La CONNEXION reste au
+    // terminal, elle : elle ouvre un ecran de consentement Google, et un
+    // navigateur qu'on pilote depuis un bouton n'est pas un consentement.
+    if (d.connecte && !d.jeton_perime && !d.dossier) {
+      const b = creer('button', 'bouton minuscule primaire')
+      b.type = 'button'
+      b.textContent = `Créer le dossier`
+      b.addEventListener('click', (ev) =>
+        pendant(ev.currentTarget, 'Création…', async () => {
+          const vue = await mene(() => api('/api/drive/dossier', { methode: 'POST' }))
+          if (vue?.etat === 'fini') {
+            annonce(`Dossier Drive créé pour cette chaîne.`, 'ok')
+            majLeDrive().catch(() => {})
+          }
+        })
+      )
+      note.append(' ', b)
+    }
   } catch {
     // Le Drive est facultatif : son absence ne doit rien casser ici.
   }
@@ -3794,6 +4923,17 @@ const EPAISSEUR_CONTOUR = 0.23
 const OMBRE_PORTEE = '0 3px 10px rgba(0,0,0,0.55)'
 
 /**
+ * L'INTERLIGNE, ÉCRIT DES DEUX CÔTÉS — VALEUR JUMELLE DE `SousTitres.tsx`.
+ *
+ * Le bloc n'en déclarait aucun : il héritait le 1,6 du corps de la page, quand
+ * le rendu laissait la police décider (1,17 pour Roboto). Sur une page de deux
+ * lignes, l'aperçu écartait donc les lignes de 1,94 corps contre 1,51 au
+ * rendu — gouttière comprise. Le seul écran dont le métier est de montrer le
+ * formatage se trompait de moitié dessus.
+ */
+const INTERLIGNE = 1.15
+
+/**
  * `theme.rayon` du plan n'est pas exposé par l'API des réglages : la pastille de
  * l'aperçu utilise donc la valeur par défaut de la chaîne. Un écart de deux ou
  * trois pixels sur un arrondi ne change aucune décision de style.
@@ -3870,7 +5010,20 @@ async function chargeLeStudio() {
   const versionAudio = appli.etat?.etapes?.audio?.modifie_le ?? null
   if (appli.st?.slug === appli.slug && appli.st.mots?.length && appli.st.versionAudio === versionAudio) {
     studio.hidden = false
-    relanceLApercu()
+    // SI LA BOUCLE TOURNE DÉJÀ, ON NE TOUCHE À RIEN.
+    //
+    // Cette fonction est rappelée à chaque redessin de l'étape — et l'étape se
+    // redessine toute seule dès que l'état bouge sur le disque, donc après
+    // chaque correction de sous-titre. Relancer l'aperçu coupait alors le son
+    // pour le reprendre aussitôt : un hoquet à chaque enregistrement, pendant
+    // qu'on écoute précisément pour juger le calage.
+    //
+    // `apercu.raf` dit tout : il est mis à `null` par `arreteLApercu()`, que
+    // `montre()` appelle en quittant l'étape. Non nul = on n'est jamais parti.
+    if (apercu.raf) return
+    // On revient sur une etape deja chargee : la lecture reprend ou elle en
+    // etait, pas au premier sous-titre.
+    relanceLApercu({ gardeLaPosition: true })
     return
   }
   if (appli.st?.slug === appli.slug) appli.st = null
@@ -4092,7 +5245,10 @@ for (const [id, champ, lis] of CONTROLES) {
     //
     // L'aperçu, lui, suit chaque pixel : c'est lui qu'on regarde en traînant.
     // La liste se refait au relâchement, où l'attente ne se voit pas.
-    if (['motsParPage', 'ponctuation'].includes(champ)) relanceLApercu({ sansTexte: true })
+    // ET SANS BOUGER DE PLACE. Regler la pagination a 2:16 ramenait l apercu au
+    // tout premier sous-titre, a chaque pixel du curseur : on reglait en
+    // regardant le debut de la video, pas le passage qu on etait venu corriger.
+    if (['motsParPage', 'ponctuation'].includes(champ)) relanceLApercu({ sansTexte: true, gardeLaPosition: true })
     // L'animation ne joue qu'à l'apparition d'une page : sans ce rejeu, choisir
     // « rebond » ne montre rien avant la page suivante — jusqu'à deux secondes
     // d'attente, qui se lisent comme un réglage qui ne marche pas.
@@ -4272,7 +5428,7 @@ async function rendLeChamp(champ) {
     // les réglages effectifs, sinon l'écran montre autre chose que le disque.
     versLesControles()
     poseLesRetours()
-    relanceLApercu()
+    relanceLApercu({ gardeLaPosition: true })
     annonce('')
   } catch (e) {
     annonce(e.message, 'erreur')
@@ -4345,7 +5501,7 @@ async function appliqueLeModele(cle) {
   appli.st.modeleRetenu = cle
   versLesControles()
   marqueLeModele()
-  relanceLApercu()
+  relanceLApercu({ gardeLaPosition: true })
   // Un seul argument part : `--modele=` applique le modèle entier côté commande.
   // Envoyer aussi les treize champs ferait deux vérités pour un même geste.
   enregistre({ modele: cle })
@@ -4446,7 +5602,21 @@ $('audioApercu').addEventListener('ended', () => {
   $('audioApercu').play().catch(() => {})
 })
 
-function relanceLApercu({ sansTexte = false } = {}) {
+/**
+ * Reconstruit l'aperçu depuis les mots et les réglages courants.
+ *
+ * `gardeLaPosition` EXISTE POUR LA CORRECTION DE TEXTE, ET C'EST TOUT LE SUJET.
+ *
+ * Corriger une ligne à 2:16 rejouait l'aperçu depuis le premier sous-titre :
+ * la page qu'on venait de corriger disparaissait de l'écran, et on en concluait
+ * que la correction n'avait pas pris. C'est exactement l'inverse — elle avait
+ * pris, on ne la regardait plus. Le seul remède est de ne pas bouger : même
+ * instant, même état de lecture, avant et après.
+ */
+function relanceLApercu({ sansTexte = false, gardeLaPosition = false } = {}) {
+  const horlogeAvant = apercu.horlogeMs
+  const sonAvant = $('audioApercu')
+  const jouaitAvant = Boolean(sonAvant.src) && !sonAvant.paused && !sonAvant.ended
   arreteLApercu()
   if (!appli.st) return
 
@@ -4469,10 +5639,19 @@ function relanceLApercu({ sansTexte = false } = {}) {
   // couleur et une graisse se jugent sur une image FIXE : il fallait lancer la
   // lecture pour voir ce qu'on etait venu regler, et la relancer apres chaque
   // changement de curseur.
-  apercu.horlogeMs = apercu.fenetres[0]?.debutMs ?? 0
+  apercu.horlogeMs = gardeLaPosition ? horlogeAvant : (apercu.fenetres[0]?.debutMs ?? 0)
   apercu.derniereImage = null
 
   brancheLeSon()
+  // LA LECTURE REPREND OÙ ELLE ÉTAIT, PARCE QUE `arreteLApercu` L'A COUPÉE.
+  //
+  // Sans ça, corriger une ligne pendant que l'aperçu tourne le laissait en
+  // pause silencieuse : l'image continuait sur son compteur interne, le son
+  // non, et on cherchait pourquoi « le son s'est arrêté tout seul ».
+  if (gardeLaPosition && sonAvant.src) {
+    try { sonAvant.currentTime = Math.max(0, horlogeAvant) / 1000 } catch { /* pas encore chargé */ }
+    if (jouaitAvant) sonAvant.play().catch(() => { /* refusée : l'image suffit */ })
+  }
   poseLeCadre()
   appliqueLeStyle()
   // Deux nombres, pas une phrase : c'est tout ce qu'on vient vérifier ici.
@@ -4516,6 +5695,7 @@ function appliqueLeStyle() {
   bloc.style.fontSize = `${taille}px`
   bloc.style.letterSpacing = r.style === 'bloc-2-lignes' ? 'normal' : '-0.02em'
   bloc.style.gap = `${0.22 * r.taille}px`
+  bloc.style.lineHeight = String(INTERLIGNE)
 
   // Le trait suit `taille` — la taille pleine — même pour le bloc, dont le corps
   // est réduit à 0,82 : c'est ce que fait le rendu, et s'en écarter ferait
@@ -4787,8 +5967,33 @@ function sauteDansLApercu(ms) {
 // fichier, portage littéral de `SousTitres.tsx`. On corrige donc les
 // sous-titres tels qu'ils s'afficheront, pas une approximation.
 
-/** Les lignes récrites, par index de première ligne : `de` → texte. */
+/**
+ * Les lignes récrites, en attente d'écriture.
+ *
+ * LA CLÉ EST L'INSTANT, PLUS L'INDEX — ET C'EST CE QUI PERDAIT DES CORRECTIONS.
+ *
+ * Elle valait `de`, l'index du premier mot de la ligne. Or une correction qui
+ * change le NOMBRE de mots décale tous les index qui suivent : après
+ * l'enregistrement de la ligne 10, la correction en attente sur la ligne 20 ne
+ * désignait plus rien — dans le meilleur des cas elle disparaissait sans un
+ * mot, dans le pire elle serait allée s'appliquer ailleurs.
+ *
+ * `debutMs` ne bouge pas. `pipeline/texte.mjs` conserve explicitement les
+ * bornes de chaque plage récrite, donc le premier mot garde son instant, et les
+ * lignes voisines ne sont pas touchées. Ce qui peut encore changer, c'est le
+ * DÉCOUPAGE en pages : une ligne de six mots au lieu de cinq déplace les
+ * frontières suivantes. Une correction dont la ligne a disparu est alors
+ * abandonnée — et on le DIT, plutôt que de la poser sur la ligne d'à côté.
+ *
+ * `origine` sert exactement à ça : on ne réapplique une correction en attente
+ * que sur une ligne dont le texte de départ est encore le même.
+ *
+ * clé = `debutMs` de la ligne · valeur = `{ origine, texte }`
+ */
 const corrections = new Map()
+
+/** Vrai le temps de RENDRE le focus après un redessin — voir `dessineLeTexte`. */
+let focusRendu = false
 
 /** Au dixième de seconde : sur deux cents lignes, deux voisines tombent souvent
  *  dans la même seconde, et `chrono` ne les distinguerait pas. */
@@ -4818,8 +6023,28 @@ function lignesDuTexte() {
 
 function dessineLeTexte() {
   const zone = $('listeSt')
+
+  // ON REDESSINE UNE COLONNE, ON NE REMET PAS L'ÉCRAN À ZÉRO.
+  //
+  // Cette fonction est appelée après chaque enregistrement de correction, et
+  // après un changement de « mots par ligne » : à chaque fois, la liste
+  // repartait en haut. Sur deux cents lignes, corriger la cent-trentième
+  // renvoyait donc au début — et le champ qu'on venait de quitter perdait le
+  // curseur. On lisait ça comme un rechargement de page, à raison : c'en était
+  // un, à l'échelle de la colonne.
+  const defilement = zone.scrollTop
+  const actif = document.activeElement
+  const reprendre =
+    actif?.classList?.contains('texte-st') && zone.contains(actif)
+      ? { de: actif.dataset.de, debut: actif.selectionStart, fin: actif.selectionEnd }
+      : null
+
   zone.replaceChildren()
   if (!appli.st?.mots?.length) return
+
+  // Les corrections en attente qu'on aura effectivement retrouvées. Ce qui
+  // reste en dehors a perdu sa ligne — voir la purge en fin de fonction.
+  const vues = new Set()
 
   for (const [numero, l] of lignesDuTexte().entries()) {
     const ligne = creer('div', 'page-st')
@@ -4836,20 +6061,30 @@ function dessineLeTexte() {
     champ.spellcheck = false
     champ.dataset.de = String(l.de)
     champ.dataset.a = String(l.a)
+    champ.dataset.cle = String(l.debutMs)
     champ.dataset.origine = l.texte
-    champ.value = corrections.has(l.de) ? corrections.get(l.de) : l.texte
+    // Une correction en attente ne se repose que si la ligne n'a pas bougé
+    // sous elle : même instant ET même texte de départ.
+    const attente = corrections.get(l.debutMs)
+    const reprise = attente && attente.origine === l.texte ? attente : null
+    if (attente) vues.add(l.debutMs)
+    champ.value = reprise ? reprise.texte : l.texte
     // Whisper marque lui-même ses hésitations : les signaler dit où relire en
     // premier, ce qui vaut mieux que de tout relire.
     if (l.doute) champ.classList.add('doute')
-    if (corrections.has(l.de)) champ.classList.add('modifie')
+    if (reprise) champ.classList.add('modifie')
 
-    champ.addEventListener('focus', () => sauteDansLApercu(l.debutMs))
+    champ.addEventListener('focus', () => { if (!focusRendu) sauteDansLApercu(l.debutMs) })
     champ.addEventListener('input', () => {
       hauteurAuContenu(champ)
-      if (champ.value === champ.dataset.origine) corrections.delete(l.de)
-      else corrections.set(l.de, champ.value)
-      champ.classList.toggle('modifie', corrections.has(l.de))
+      if (champ.value === champ.dataset.origine) corrections.delete(l.debutMs)
+      else corrections.set(l.debutMs, { origine: champ.dataset.origine, texte: champ.value })
+      champ.classList.toggle('modifie', corrections.has(l.debutMs))
       majPiedDeTexte()
+      // La frappe repousse l'écriture : dix lignes corrigées à la file font une
+      // seule requête, et une correction tapée pendant qu'une autre part n'a
+      // plus l'occasion d'arriver à contretemps.
+      programmeLEnregistrement()
     })
     // Entrée valide la ligne et passe à la suivante : un sous-titre n'a jamais
     // de retour à la ligne, et le champ ne doit pas en accepter un.
@@ -4865,10 +6100,44 @@ function dessineLeTexte() {
     zone.append(ligne)
   }
 
+  // UNE CORRECTION ORPHELINE SE JETTE, ET ÇA SE DIT.
+  //
+  // Elle n'a plus de ligne : le découpage a bougé sous elle pendant qu'une
+  // autre correction s'écrivait. La garder en mémoire laisserait « 1 ligne
+  // récrite » affiché pour toujours au-dessus d'un bouton qui n'aurait plus
+  // rien à envoyer — un bouton actif qui ne fait rien, deux fois pire qu'un
+  // avertissement.
+  const perdues = [...corrections.keys()].filter((k) => !vues.has(k))
+  for (const k of perdues) corrections.delete(k)
+  if (perdues.length) {
+    annonce(
+      `${perdues.length} correction(s) abandonnée(s) : leur ligne a été redécoupée ` +
+        `entre-temps. Récris-les, elles sont visibles telles qu'elles étaient.`,
+      'attention'
+    )
+  }
+
   // La hauteur se règle après insertion : `scrollHeight` vaut zéro hors du DOM.
   for (const c of zone.querySelectorAll('.texte-st')) hauteurAuContenu(c)
   filtreLeTexte()
   majPiedDeTexte()
+
+  // On rend la place exacte où l'on était. Le champ peut avoir disparu — une
+  // ligne récrite en deux mots au lieu de trois déplace les frontières —, et
+  // dans ce cas on garde au moins le défilement plutôt que de sauter en haut.
+  if (reprendre) {
+    const champ = zone.querySelector(`.texte-st[data-de="${reprendre.de}"]`)
+    if (champ) {
+      // RENDRE LE FOCUS N'EST PAS LE PRENDRE. Le champ saute dans l'aperçu
+      // quand on le vise ; le lui faire faire ici déplacerait la lecture à
+      // chaque enregistrement, c'est-à-dire exactement ce qu'on répare.
+      focusRendu = true
+      champ.focus({ preventScroll: true })
+      focusRendu = false
+      try { champ.setSelectionRange(reprendre.debut, reprendre.fin) } catch { /* champ plus court */ }
+    }
+  }
+  zone.scrollTop = defilement
 }
 
 /** Un `textarea` ne grandit pas tout seul : on le remet à la hauteur du texte. */
@@ -4889,10 +6158,34 @@ function filtreLeTexte() {
   }
 }
 
+/**
+ * L'ÉTAT DE L'ÉCRITURE SE VOIT, SINON ON NE PEUT PAS LUI FAIRE CONFIANCE.
+ *
+ * Le pied de colonne disait « 2 lignes récrites », puis se vidait. Rien ne
+ * distinguait « pas encore parti », « en train de partir » et « c'est écrit » —
+ * or c'est exactement la question qu'on se pose avant de fermer l'onglet ou de
+ * changer de vidéo. Un enregistrement automatique qu'on ne voit pas ne rassure
+ * personne : on continue de chercher le bouton.
+ *
+ * `enregistre` reste affiché : il n'a pas de raison de s'effacer, et une note
+ * qui disparaît toute seule laisse à nouveau devant un écran muet.
+ */
+let etatEcriture = 'repos'
+
 function majPiedDeTexte() {
   const n = corrections.size
   $('btnCorrige').disabled = n === 0
-  $('noteCorrections').textContent = n ? `${n} ligne${n > 1 ? 's' : ''} récrite${n > 1 ? 's' : ''}` : ''
+  const note = $('noteCorrections')
+  note.classList.toggle('ecrit', etatEcriture === 'enregistre' && n === 0)
+  if (n && etatEcriture === 'envoi') {
+    note.textContent = `${n} ligne${n > 1 ? 's' : ''} — enregistrement…`
+  } else if (n) {
+    note.textContent = `${n} ligne${n > 1 ? 's' : ''} récrite${n > 1 ? 's' : ''} — enregistrement dans un instant`
+  } else if (etatEcriture === 'enregistre') {
+    note.textContent = `✓ Enregistré`
+  } else {
+    note.textContent = ''
+  }
 }
 
 /** Suit la lecture : la ligne en cours se surligne et se garde à l'écran. */
@@ -4968,18 +6261,94 @@ $('btnChiffres').addEventListener('click', (ev) =>
  * Enregistre les corrections en attente. Appelé par le bouton, ET à la sortie
  * du champ — voir plus bas pourquoi.
  */
+/**
+ * UNE CORRECTION FAITE PENDANT L'ENREGISTREMENT ÉTAIT PERDUE, EN SILENCE.
+ *
+ * Deux lignes suffisaient à l'expliquer, et c'est le « parfois le sous-titre ne
+ * se modifie pas » : le garde `if (enregistrementEnCours) return` abandonnait la
+ * seconde correction, et `corrections.clear()` effaçait ensuite TOUT — y compris
+ * ce qui n'était jamais parti. Rien à l'écran ne le disait ; la ligne redessinée
+ * revenait simplement à sa version d'avant.
+ *
+ * Deux corrections, donc : on ne vide que ce qui a été envoyé, et une demande
+ * arrivée pendant le vol relance un tour au lieu d'être jetée.
+ */
+/**
+ * L'ÉCRITURE ATTEND QUE LA FRAPPE S'ARRÊTE.
+ *
+ * Elle partait au `focusout`, c'est-à-dire au moment exact où l'on va cliquer
+ * ailleurs — sur la flèche de lecture, sur la ligne suivante. Deux corrections
+ * rapprochées faisaient donc deux allers-retours qui se croisaient, et la
+ * seconde arrivait sur un découpage que la première venait de changer.
+ *
+ * Un demi-battement suffit à les regrouper : dix lignes corrigées à la file
+ * font une seule requête. Le bouton « Enregistrer », lui, reste immédiat — on
+ * clique dessus précisément pour ne pas attendre.
+ */
+const DELAI_ECRITURE_MS = 450
+let minuterieEcriture = null
+
+function programmeLEnregistrement() {
+  clearTimeout(minuterieEcriture)
+  // Une nouvelle frappe efface le « ✓ Enregistré » de la précédente : le laisser
+  // au-dessus d'une ligne qu'on est en train de récrire serait un mensonge.
+  if (etatEcriture === 'enregistre') { etatEcriture = 'repos'; majPiedDeTexte() }
+  minuterieEcriture = setTimeout(() => {
+    minuterieEcriture = null
+    enregistreLesCorrections().catch(() => { /* `mene` a déjà annoncé */ })
+  }, DELAI_ECRITURE_MS)
+}
+
 let enregistrementEnCours = false
+let redemande = false
 async function enregistreLesCorrections() {
-  if (!corrections.size || enregistrementEnCours) return
+  clearTimeout(minuterieEcriture)
+  minuterieEcriture = null
+  return enregistreMaintenant()
+}
+
+async function enregistreMaintenant() {
+  if (!corrections.size) return
+  if (enregistrementEnCours) { redemande = true; return }
   enregistrementEnCours = true
+  etatEcriture = 'envoi'
+  majPiedDeTexte()
   try {
     await pendant($('btnCorrige'), 'Enregistrement…', corrigeVraiment)
+    etatEcriture = 'enregistre'
+  } catch (e) {
+    etatEcriture = 'repos'
+    throw e
   } finally {
     enregistrementEnCours = false
+    // `pendant` réactive le bouton dans son `finally`, quoi qu'il arrive. Sans
+    // ce rappel, « Enregistrer » redevenait cliquable alors qu'il ne restait
+    // rien à enregistrer — un bouton actif qui ne fait rien se lit comme un
+    // bouton cassé.
+    majPiedDeTexte()
+  }
+  if (redemande) {
+    redemande = false
+    if (corrections.size) await enregistreMaintenant()
   }
 }
 
 $('btnCorrige').addEventListener('click', enregistreLesCorrections)
+
+// LE DERNIER FILET : FERMER L'ONGLET PENDANT LE DEMI-BATTEMENT.
+//
+// L'écriture part 450 ms après la dernière frappe. Fermer, recharger ou quitter
+// dans cet intervalle emporterait la correction sans un mot. Le navigateur pose
+// alors sa propre confirmation — la seule chose qu'une page ait le droit de
+// faire à ce moment-là — et uniquement s'il reste vraiment quelque chose.
+window.addEventListener('beforeunload', (ev) => {
+  if (!corrections.size) return
+  ev.preventDefault()
+  // Chrome ignore le texte depuis longtemps ; la valeur de retour reste ce qui
+  // déclenche la boîte.
+  ev.returnValue = ''
+  return ''
+})
 
 // UNE CORRECTION SE SAUVE QUAND ON QUITTE LE CHAMP, PAS QUAND ON Y PENSE.
 //
@@ -4991,31 +6360,62 @@ $('btnCorrige').addEventListener('click', enregistreLesCorrections)
 // enregistre. Passer au champ SUIVANT n'enregistre pas : corriger dix lignes
 // d'affilée avec Entrée doit rester fluide, et une seule écriture à la fin
 // suffit. `relatedTarget` dit où part le focus ; c'est tout ce qu'il faut.
+//
+// IL PASSE PAR LA MINUTERIE, LUI AUSSI. Quitter le champ pour cliquer sur la
+// flèche déclenchait l'écriture À L'INSTANT du clic : la requête partait pendant
+// que la lecture démarrait, et une seconde frappe juste après tombait au pire
+// moment. Le demi-battement les regroupe et ne se sent pas — l'écriture arrive
+// toujours bien avant qu'on ait fini de regarder le résultat.
 $('listeSt').addEventListener('focusout', (ev) => {
   if (!ev.target.classList?.contains('texte-st')) return
   if (ev.relatedTarget?.classList?.contains('texte-st')) return
   if (!corrections.size) return
-  enregistreLesCorrections().catch(() => { /* `mene` a déjà annoncé */ })
+  programmeLEnregistrement()
 })
 
 async function corrigeVraiment() {
   if (!corrections.size) return
   const zone = $('listeSt')
   const patch = []
+  const envoyees = []
   for (const champ of zone.querySelectorAll('.texte-st')) {
-    const de = Number(champ.dataset.de)
-    if (!corrections.has(de)) continue
-    patch.push({ de, a: Number(champ.dataset.a), texte: corrections.get(de) })
+    const cle = Number(champ.dataset.cle)
+    const enAttente = corrections.get(cle)
+    if (!enAttente) continue
+    patch.push({ de: Number(champ.dataset.de), a: Number(champ.dataset.a), texte: enAttente.texte })
+    // Le TEXTE EXACT qui part, pas seulement sa clé : si la frappe continue
+    // pendant l'aller-retour, la ligne a changé et ne doit pas être oubliée.
+    envoyees.push([cle, enAttente.texte])
   }
+  if (!patch.length) return
   const r = await mene(() =>
     api(`/api/videos/${encodeURIComponent(appli.slug)}/texte`, { methode: 'PUT', corps: { corrections: patch } })
   )
   if (!r) return
-  corrections.clear()
+  for (const [cle, texte] of envoyees) {
+    if (corrections.get(cle)?.texte === texte) corrections.delete(cle)
+  }
   // La transcription a changé de longueur : on la relit plutôt que de la
   // rafistoler côté navigateur. Une ligne récrite décale tous les index
   // suivants, et deviner ce décalage ici serait une deuxième vérité.
-  await rechargeLeStudio()
+  //
+  // MAIS ON NE RELIT QUE LES MOTS, PAS TOUT LE STUDIO. `rechargeLeStudio()`
+  // vidait `appli.st`, masquait le panneau, refaisait deux requêtes, remettait
+  // les curseurs, redessinait le catalogue de polices et relançait l'aperçu au
+  // premier sous-titre. Sur un geste de correction, c'est un rechargement de
+  // page — et c'est ce qu'on voyait.
+  await relisLesMots()
+  // L'état renvoyé par la route décrit le dossier APRÈS la correction : le plan
+  // vient d'être retouché, donc le rendu peut avoir vieilli. L'ignorer laissait
+  // les verdicts du rail décrire l'instant d'avant, jusqu'au prochain aller-
+  // retour entre deux étapes. On ne prend que `etapes` — c'est tout ce que le
+  // rail lit, et recopier l'objet entier risquerait d'écraser des champs que
+  // cette route ne connaît pas.
+  const apres = r.etat ?? r.resultat?.etat ?? null
+  if (apres?.etapes && appli.etat) {
+    appli.etat.etapes = apres.etapes
+    dessineLeRail()
+  }
 
   const repartis = (r.resultat?.changements ?? []).filter((c) => c.instantsRepartis).length
   annonce(
@@ -5024,6 +6424,30 @@ async function corrigeVraiment() {
       : `Corrections enregistrées.`,
     'ok'
   )
+}
+
+/**
+ * Relit les mots, et RIEN D'AUTRE.
+ *
+ * C'est la moitié de `chargeLeStudio()` qui dépend du transcript. Les réglages,
+ * les polices, les modèles et les bornes ne bougent pas quand un mot change :
+ * les refaire coûtait une requête de plus, un panneau masqué le temps du
+ * chargement, et la perte de tout ce qui était à l'écran.
+ */
+async function relisLesMots() {
+  if (!appli.st) return
+  let mots
+  try {
+    const t = await api(`/api/videos/${encodeURIComponent(appli.slug)}/transcript`, { brut: true })
+    mots = (t.mots ?? []).filter((m) => m && m.texte && Number.isFinite(m.debutMs))
+  } catch (e) {
+    annonce(e.message, 'erreur')
+    return
+  }
+  if (!mots.length) return
+  appli.st.mots = mots
+  relanceLApercu({ sansTexte: true, gardeLaPosition: true })
+  dessineLeTexte()
 }
 
 // ---------------------------------------------------------------------------
@@ -5504,6 +6928,21 @@ function marqueLEntree(etape) {
  */
 let apresLesChaines = null
 
+/**
+ * Ce qui manque à une chaîne s'écrit SOUS SON NOM, pas dans sa rangée de boutons.
+ *
+ * Il y vivait, et la rangée porte jusqu'à trois boutons : la colonne des actions
+ * gonflait, celle du texte se retrouvait à cent pixels, et « 0 vidéo » se
+ * coupait en « 0 » d'un côté et « vidéo » de l'autre, de part et d'autre des
+ * boutons. Un manque n'est pas une action — c'est un ÉTAT, il appartient à la
+ * ligne qui décrit la chaîne.
+ */
+function manque(mot) {
+  const e = creer('span', 'chaine-manque')
+  e.textContent = mot
+  return e
+}
+
 async function ouvreLeMenuDesChaines() {
   ouvreVoile('voileChaines', 'btnFermeChaines')
   const liste = $('listeChaines')
@@ -5557,42 +6996,82 @@ async function ouvreLeMenuDesChaines() {
       // deuxième ligne, ET par une mention collée au bouton. Trois signaux pour
       // un seul fait, dont le plus bruyant — le bouton plein — commandait
       // l'action la moins conséquente de l'écran. Reste la pastille et le mot.
+      // L'IDENTITÉ SE CORRIGE APRÈS COUP, DONC ELLE A UNE PORTE PERMANENTE.
+      //
+      // Le bandeau qui la propose disparaît dès que la chaîne a un nom — c'est
+      // son rôle. Sans ce bouton, changer une couleur ou activer un format six
+      // mois plus tard renverrait au terminal, et on aurait déplacé le problème
+      // au lieu de le régler.
+      const identite = creer('button', 'bouton minuscule')
+      identite.type = 'button'
+      identite.textContent = 'Identité'
+      identite.title = `Nom, promesse, produit, formats, cadence, palette`
+      identite.addEventListener('click', () => {
+        // ALLER À L'IDENTITÉ N'EST PAS AVOIR CHOISI SA VIDÉO.
+        //
+        // Refermer le menu des chaînes déclenche la seconde marche de l'entrée —
+        // le menu des vidéos — et celui-ci venait se poser PAR-DESSUS le
+        // panneau d'identité qu'on venait d'ouvrir. On consomme donc la suite
+        // avant de fermer : la question « quelle vidéo » se reposera en sortant
+        // d'ici, à sa place.
+        apresLesChaines = null
+        fermeVoile('voileChaines')
+        ouvreLIdentite()
+      })
       const entre = creer('button', 'bouton minuscule primaire')
       entre.type = 'button'
       entre.textContent = 'Continuer'
       entre.addEventListener('click', () => fermeVoile('voileChaines'))
-      actions.append(entre)
+      actions.append(identite, entre)
     } else if (c.lisible === false) {
       // Un `config/chaine.json` illisible : rien à proposer, la chaîne ne
       // démarrerait nulle part. On dit où regarder.
       carte.classList.add('bloquee')
-      const p = creer('span', 'chaine-manque')
-      p.textContent = `config/chaine.json illisible — à réparer à la main`
-      actions.append(p)
+      texte.append(manque(`config/chaine.json illisible — à réparer à la main`))
     } else if (c.atelier === false) {
       // Le dossier date d'avant l'atelier. C'est le seul cas qui se répare
       // depuis ici, et il se répare en une commande.
-      const p = creer('span', 'chaine-manque')
-      p.textContent = `son code date d'avant l'atelier`
+      texte.append(manque(`son code date d'avant l'atelier`))
       const maj = creer('button', 'bouton minuscule primaire')
       maj.type = 'button'
       maj.textContent = 'Mettre à jour'
       maj.title = `Remplace pipeline, outils, atelier et skills. Ne touche ni au socle marque, ni à la veille, ni aux vidéos, ni aux clés.`
       maj.addEventListener('click', () => metAJourLaChaine(c, maj))
-      actions.append(p, maj)
-    } else if (!c.initialise) {
-      // L'INITIALISATION NE PEUT PAS SE FAIRE ICI, ET CE N'EST PAS UN OUBLI.
+      actions.append(maj)
+    } else if (c.dependances === false) {
+      // SANS `node_modules`, LA CHAÎNE NE DÉMARRE PAS — ET CE N'EST PAS RARE.
       //
-      // `/init-chaine` est un entretien : produit, avatar, marketeur, direction
-      // artistique. Ce sont des décisions qui se discutent, pas un formulaire à
-      // remplir — CLAUDE.md §2. On donne donc le chemin à copier, et on s'arrête
-      // là.
-      carte.classList.add('bloquee')
-      const p = creer('span', 'chaine-manque')
-      p.textContent = `pas encore initialisée`
-      const copie = creer('button', 'bouton minuscule')
+      // `nouvelle-chaine` ne le copie pas (trois cents mégaoctets), et §4 pose
+      // qu'un dossier de chaîne se déplace d'un poste à l'autre : le second n'a
+      // rien d'installé. Avant, la ligne proposait « Ouvrir », l'essai à blanc
+      // échouait sur un `ERR_MODULE_NOT_FOUND` illisible, et on restait ici sans
+      // savoir quoi faire. Le manque a une réponse, elle est ici.
+      texte.append(manque(`ses dépendances ne sont pas installées`))
+      const pose = creer('button', 'bouton minuscule primaire')
+      pose.type = 'button'
+      pose.textContent = 'Installer'
+      pose.title = `npm install dans ce dossier — plusieurs minutes, et il faut le réseau`
+      pose.addEventListener('click', () => installeLesDependances(c, pose))
+      actions.append(pose)
+    } else if (!c.initialise) {
+      // UNE CHAÎNE NEUVE S'OUVRE, ELLE AUSSI — 7 septembre 2026.
+      //
+      // Elle était marquée « bloquée » et n'offrait qu'un chemin à copier. Or
+      // toute chaîne fraîchement créée passe par cet état : le bouton
+      // « Nouvelle chaîne », deux lignes plus bas, ne pouvait donc mener qu'ici.
+      // On créait une chaîne pour se voir refuser l'entrée.
+      //
+      // `/init-chaine` reste en conversation — c'est un entretien, pas un
+      // formulaire (CLAUDE.md §2) —, et le chemin reste à portée de clic pour y
+      // ouvrir Claude Code. Mais le dépôt, la transcription, le carnet et les
+      // avatars n'attendent rien de l'initialisation, et l'écran les rend
+      // maintenant accessibles. Ce qui manque est écrit sur la ligne, puis
+      // rappelé en haut de la chaîne une fois dedans.
+      texte.append(manque(`pas encore initialisée`))
+      const copie = creer('button', 'bouton minuscule discret')
       copie.type = 'button'
       copie.textContent = 'Copier le chemin'
+      copie.title = `Pour y ouvrir Claude Code et lancer /init-chaine`
       copie.addEventListener('click', async () => {
         try {
           await navigator.clipboard.writeText(c.dossier)
@@ -5604,7 +7083,11 @@ async function ouvreLeMenuDesChaines() {
           $('noteChaines').textContent = c.dossier
         }
       })
-      actions.append(p, copie)
+      const ouvre = creer('button', 'bouton minuscule')
+      ouvre.type = 'button'
+      ouvre.textContent = 'Ouvrir'
+      ouvre.addEventListener('click', () => changeDeChaine(c))
+      actions.append(copie, ouvre)
     } else {
       // Une seule dalle pleine par liste : celle de la ligne où l'on est. Sinon
       // trois lignes crient d'égale force et le regard n'a plus de point
@@ -5614,6 +7097,23 @@ async function ouvreLeMenuDesChaines() {
       ouvre.textContent = 'Ouvrir'
       ouvre.addEventListener('click', () => changeDeChaine(c))
       actions.append(ouvre)
+    }
+
+    // LE TROUSSEAU MANQUANT SE DIT SUR LA LIGNE, ET SE COMBLE DEPUIS ELLE.
+    //
+    // Il ne bloque rien : la chaîne démarre, monte, transcrit. Il fait rater en
+    // silence tout ce qui parle au réseau — les voix Fish ressortent « aucune
+    // voix disponible », la banque d'images ne rend rien. On cherche alors la
+    // panne du côté du service. Ce n'est donc pas un blocage, c'est une mention,
+    // et elle vaut aussi pour une chaîne parfaitement ouvrable.
+    if (!c.courante && c.cles === false) {
+      texte.append(manque(`pas de clés d'API`))
+      const donne = creer('button', 'bouton minuscule')
+      donne.type = 'button'
+      donne.textContent = 'Copier les clés'
+      donne.title = `Copie le trousseau de la chaîne ouverte. Les deux partageront les mêmes comptes et les mêmes quotas.`
+      donne.addEventListener('click', () => donneLesCles(c, donne))
+      actions.append(donne)
     }
 
     // La chaîne ouverte n'a pas de bouton de suppression : on ne retire pas le
@@ -5650,16 +7150,38 @@ async function ouvreLeMenuDesChaines() {
  */
 async function changeDeChaine(c) {
   const note = $('noteChaines')
+
+  // ON PARLE AVANT D'ATTENDRE, PAS APRES.
+  //
+  // Changer de chaine n'est pas un appel court : le serveur essaie d'abord la
+  // chaine visee A BLANC — il demarre son atelier sur un port de passage et
+  // attend qu'il reponde — puis il se relance, et le navigateur sonde le port
+  // mort jusqu'a ce qu'il revive. Plusieurs secondes, dont aucune n'etait
+  // annoncee : le premier mot n'arrivait qu'APRES la reponse du serveur, donc
+  // apres la plus longue partie de l'attente. On cliquait sur une ligne, il ne
+  // se passait rien, et on recliquait.
+  note.textContent = `Vérification de « ${c.nom} »…`
+  // La liste entiere se fige : deux bascules lancees en meme temps feraient
+  // partir deux serveurs sur le meme port, et le second mourrait sur EADDRINUSE.
+  for (const b of $('listeChaines').querySelectorAll('button')) b.disabled = true
+
   try {
     await api('/api/chaines/ouvre', { methode: 'POST', corps: { dossier: c.dossier } })
   } catch (e) {
     note.textContent = e.message
+    for (const b of $('listeChaines').querySelectorAll('button')) b.disabled = false
     return
   }
 
   note.textContent = `Relance sur « ${c.nom} »…`
-  for (let essai = 0; essai < 40; essai++) {
-    await pause(500)
+  // ON SONDE TOUT DE SUITE, ET SERRÉ.
+  //
+  // La boucle attendait 500 ms AVANT le premier essai, puis 500 ms entre chaque.
+  // L'atelier cible répond en 240 ms : on lui offrait donc une demi-seconde
+  // d'attente pure sur un serveur déjà debout. Vingt secondes de patience au
+  // total, c'est la même chose en 200 tours de 100 ms.
+  for (let essai = 0; essai < 200; essai++) {
+    if (essai) await pause(100)
     try {
       const r = await fetch('/api/chaines', { cache: 'no-store' })
       if (r.ok) {
@@ -5742,8 +7264,11 @@ async function supprimeLaChaine(c, bouton) {
 
 $('btnNouvelleChaine').addEventListener('click', () => {
   $('nchNom').value = ''
-  $('nchCles').checked = false
+  // Cochée par défaut : sans clés, une chaîne neuve ne peut ni chercher un plan
+  // de coupe, ni fabriquer une voix, ni scraper la niche.
+  $('nchCles').checked = true
   $('nchErreur').hidden = true
+  $('nchEtat').hidden = true
   ouvreVoile('voileNouvChaine', 'nchNom')
   $('nchNom').focus()
 })
@@ -5763,16 +7288,11 @@ $('nchOui').addEventListener('click', async () => {
     return
   }
   $('nchErreur').hidden = true
-  await pendant($('nchOui'), 'Copie…', async () => {
+  await pendant($('nchOui'), 'Création…', async () => {
     try {
-      const r = await api('/api/chaines', {
-        methode: 'POST',
-        corps: { nom, avecCles: $('nchCles').checked },
-      })
-      fermeVoile('voileNouvChaine')
-      await ouvreLeMenuDesChaines()
-      proposeLInstallation(r.dossier, nom)
+      await creeLaChaineEtLOuvre(nom, $('nchCles').checked)
     } catch (e) {
+      $('nchEtat').hidden = true
       $('nchErreur').textContent = e.message
       $('nchErreur').hidden = false
     }
@@ -5780,33 +7300,104 @@ $('nchOui').addEventListener('click', async () => {
 })
 
 /**
- * Propose d'installer les dépendances de la chaîne qu'on vient de créer.
+ * Créer une chaîne, l'équiper, et entrer dedans. D'un seul geste.
  *
- * Sans elles, rien n'y tourne — ni le montage, ni le rendu, ni son atelier. Ça
- * prend plusieurs minutes et ça demande le réseau : c'est un choix, pas un
- * automatisme, et le journal montre où ça en est.
+ * TROIS ÉTAPES DONT DEUX ÉTAIENT À LA CHARGE DE L'UTILISATEUR.
+ *
+ * « Créer » ne faisait que copier le code. Il fallait ensuite cliquer
+ * « Installer ses dépendances » dans une note en bas du panneau, puis retrouver
+ * la ligne de la chaîne et cliquer « Ouvrir ». Trois gestes séparés par deux
+ * écrans, pour une suite qui n'a qu'un ordre possible et aucune décision : on ne
+ * crée pas une chaîne pour la laisser sans ses dépendances, et on ne l'installe
+ * pas pour ne pas y entrer.
+ *
+ * C'est du §2 mal appliqué : la règle sépare ce qui se JUGE de ce qui s'exécute,
+ * pas les étapes d'une même exécution. Copier, installer, ouvrir sont trois
+ * gestes mécaniques — ils s'enchaînent.
+ *
+ * CE QUI NE S'ENCHAÎNE PAS : `/init-chaine`. C'est un entretien — produit,
+ * avatar, marketeur, direction artistique —, il se mène en conversation, et la
+ * première interface de ce dossier est morte d'avoir voulu le mettre sur un
+ * bouton. La chaîne est utilisable sans lui : la cascade des sous-titres et les
+ * polices embarquées donnent des réglages complets. Ce qu'il apporte, c'est
+ * l'éditorial, pas la mécanique.
  */
-function proposeLInstallation(dossier, nom) {
-  const note = $('noteChaines')
-  note.replaceChildren()
-  note.append(document.createTextNode(`« ${nom} » est créée. `))
+async function creeLaChaineEtLOuvre(nom, avecCles) {
+  const etat = $('nchEtat')
+  const dis = (mot) => { etat.textContent = mot; etat.hidden = false }
 
-  const installe = creer('button', 'bouton minuscule primaire')
-  installe.type = 'button'
-  installe.textContent = 'Installer ses dépendances'
-  installe.addEventListener('click', async () => {
-    installe.disabled = true
-    try {
-      const t = await api('/api/chaines/installe', { methode: 'POST', corps: { dossier } })
-      await suisLeTravail(t.travail)
-      note.textContent = `« ${nom} » est prête côté code. Reste /init-chaine, en conversation.`
-      await ouvreLeMenuDesChaines()
-    } catch (e) {
-      note.textContent = e.message
-      installe.disabled = false
-    }
-  })
-  note.append(installe)
+  dis(`Copie du code…`)
+  const r = await api('/api/chaines', { methode: 'POST', corps: { nom, avecCles } })
+
+  // `npm install` prend plusieurs minutes et demande le réseau. Le journal
+  // s'ouvre : un écran muet pendant trois minutes se lit comme un plantage.
+  dis(`Installation des dépendances — plusieurs minutes. Le journal s'ouvre.`)
+  const t = await api('/api/chaines/installe', { methode: 'POST', corps: { dossier: r.dossier } })
+  const fini = await suisLeTravail(t.travail)
+  if (fini && fini.etat === 'echec') {
+    throw new Error(
+      `Les dépendances n'ont pas pu s'installer — « ${nom} » est créée mais vide de code exécutable. ` +
+        `Le journal dit pourquoi. Tu peux réessayer depuis sa ligne dans le menu des chaînes.`
+    )
+  }
+
+  dis(`Ouverture de « ${nom} »…`)
+  fermeVoile('voileNouvChaine')
+  await changeDeChaine({ nom, dossier: r.dossier })
+}
+
+/**
+ * Installe les dépendances d'une chaîne, depuis sa ligne.
+ *
+ * C'était une note en bas du panneau, écrite après une création. Elle ne servait
+ * donc qu'une fois, et jamais pour le cas le plus courant : une chaîne arrivée
+ * d'un autre poste, dont `node_modules` n'a pas voyagé (§4). Le manque appartient
+ * à la CHAÎNE, pas au moment où on l'a créée — il vit sur sa ligne.
+ */
+/**
+ * Donne le trousseau de la chaîne ouverte à une autre.
+ *
+ * ON LE DIT AVANT DE LE FAIRE : les deux chaînes partageront alors les mêmes
+ * comptes. Un crédit fal dépensé ici manque là-bas, et un quota Apify est un
+ * seul quota. C'est un choix légitime — ce sont les mêmes comptes que les tiens
+ * — mais il ne se devine pas en regardant deux dossiers.
+ */
+async function donneLesCles(c, bouton) {
+  const note = $('noteChaines')
+  // PAS DE CONFIRMATION : LE PARTAGE EST L'INTENTION, PAS UN RISQUE.
+  //
+  // Une fenêtre demandait d'accepter que les deux chaînes partagent les mêmes
+  // comptes. C'était traiter comme un danger ce qui est le fonctionnement
+  // voulu : ce sont les mêmes comptes, ils servent à toutes les chaînes, et
+  // `nouvelle-chaine` les copie déjà par défaut. Une question dont la réponse
+  // est toujours oui apprend à cliquer sans lire, et vide de son sens celle qui
+  // porte un vrai montant.
+  bouton.disabled = true
+  try {
+    await api('/api/chaines/cles', { methode: 'POST', corps: { dossier: c.dossier } })
+    await ouvreLeMenuDesChaines()
+    note.textContent = `« ${c.nom} » a maintenant les mêmes clés que cette chaîne-ci.`
+  } catch (e) {
+    note.textContent = e.message
+    bouton.disabled = false
+  }
+}
+
+async function installeLesDependances(c, bouton) {
+  const note = $('noteChaines')
+  bouton.disabled = true
+  try {
+    const t = await api('/api/chaines/installe', { methode: 'POST', corps: { dossier: c.dossier } })
+    const fini = await suisLeTravail(t.travail)
+    await ouvreLeMenuDesChaines()
+    note.textContent =
+      fini && fini.etat === 'echec'
+        ? `L'installation a échoué. Le journal dit pourquoi.`
+        : `« ${c.nom} » a ses dépendances.`
+  } catch (e) {
+    note.textContent = e.message
+    bouton.disabled = false
+  }
 }
 
 $('btnChaines').addEventListener('click', ouvreLeMenuDesChaines)
@@ -5902,15 +7493,204 @@ function suisLaHauteurDeLEntete() {
 // est un aller-retour réseau vers trois services. On relit à l'ouverture, au
 // retour dans la fenêtre, et après chaque travail qui a pu dépenser.
 
-async function majLeBudget() {
+// ---------------------------------------------------------------------------
+//  Le trousseau
+// ---------------------------------------------------------------------------
+//
+// AJOUTER UNE CLE ETAIT LE DERNIER GESTE QUI OBLIGEAIT LE TERMINAL.
+//
+// Le message d'echec disait « Ajoute ou reactive une cle dans config/keys.json »
+// — un fichier a editer a la main. Or une cle morte bloque net : la deduction de
+// script s'arrete sur un 401, et il n'y a rien a cliquer.
+//
+// LA VALEUR NE S'AFFICHE JAMAIS, ET NE SE JOURNALISE PAS. Le champ est un
+// `password`, la valeur part sur l'entree standard du processus qui l'enregistre
+// (voir la route), et l'ecran ne la relit nulle part : apres l'envoi, on le vide.
+
+async function ouvreLeTrousseau() {
+  ouvreVoile('voileCles', 'cleValeur')
+  $('noteCles').textContent = ''
+  await dessineLeTrousseau()
+}
+
+async function dessineLeTrousseau() {
+  const liste = $('listeCles')
+  liste.replaceChildren()
+  let d
+  try {
+    const r = await api('/api/cles')
+    d = r.resultat ?? {}
+  } catch (e) {
+    $('noteCles').textContent = e.message
+    return
+  }
+
+  const services = d.services ?? []
+  // Le selecteur vient du trousseau, pas d'une liste ecrite ici : une liste en
+  // dur divergerait au premier service ajoute, et l'ecran proposerait un service
+  // que la commande refuse.
+  const sel = $('cleService')
+  const avant = sel.value
+  sel.replaceChildren()
+  for (const x of services) {
+    const o = creer('option')
+    o.value = x.service
+    o.textContent = `${x.service} — ${x.role}`
+    sel.append(o)
+  }
+  if (avant) sel.value = avant
+
+  for (const x of services) {
+    const bloc = creer('div', 'service-cles')
+    const h = creer('h4')
+    h.textContent = `${x.service} — ${x.disponibles} disponible${x.disponibles > 1 ? 's' : ''} sur ${x.total}`
+    const role = creer('p', 'role')
+    role.textContent = x.role
+    bloc.append(h, role)
+
+    for (const c of x.cles ?? []) {
+      const l = creer('div', 'cle-ligne')
+      if (c.frigo) l.classList.add('frigo')
+      const g = creer('div')
+      const m = creer('span', 'cle-masque')
+      m.textContent = `${c.label}  ${c.masque}`
+      g.append(m)
+      const etat = creer('div', 'cle-etat')
+      etat.textContent = [
+        c.frigo ? 'au frigo — a échoué' : null,
+        !c.active ? 'désactivée' : null,
+        c.tier === 'free' ? 'palier gratuit' : null,
+      ].filter(Boolean).join(' · ')
+      g.append(etat)
+
+      const actions = creer('div', 'voix-actions')
+      if (c.frigo) {
+        const d = creer('button', 'bouton minuscule')
+        d.type = 'button'
+        d.textContent = 'Dégeler'
+        d.title = `La remet en service. Si elle échoue encore, elle repart au frigo.`
+        d.addEventListener('click', (ev) =>
+          pendant(ev.currentTarget, '…', async () => {
+            await api('/api/cles/degele', { methode: 'POST', corps: { service: x.service } })
+            await dessineLeTrousseau()
+          })
+        )
+        actions.append(d)
+      }
+      const jette = creer('button', 'bouton minuscule discret')
+      jette.type = 'button'
+      jette.textContent = 'Retirer'
+      jette.addEventListener('click', () => retireUneCle(x.service, c.label))
+      actions.append(jette)
+
+      l.append(g, actions)
+      bloc.append(l)
+    }
+    if (!(x.cles ?? []).length) {
+      const vide = creer('p', 'note')
+      vide.textContent = `Aucune clé.`
+      bloc.append(vide)
+    }
+    liste.append(bloc)
+  }
+}
+
+async function retireUneCle(service, label) {
+  const ok = await demandeConfirmation({
+    titre: `Retirer « ${label} » de ${service} ?`,
+    quoi: `La clé est effacée du trousseau. Elle n'est pas révoquée chez le service — ça, ça se fait dans leur console.`,
+    action: 'Retirer',
+  })
+  if (!ok) return
+  try {
+    await api('/api/cles', { methode: 'DELETE', corps: { service, label } })
+    await dessineLeTrousseau()
+    $('noteCles').textContent = `« ${label} » retirée.`
+  } catch (e) {
+    $('noteCles').textContent = e.message
+  }
+}
+
+$('btnAjouteCle').addEventListener('click', (ev) =>
+  pendant(ev.currentTarget, 'Vérification…', async () => {
+    const valeur = $('cleValeur').value.trim()
+    if (!valeur) {
+      $('noteCles').textContent = `Colle la clé dans le champ.`
+      return
+    }
+    try {
+      await api('/api/cles', {
+        methode: 'POST',
+        corps: {
+          service: $('cleService').value,
+          valeur,
+          label: $('cleLabel').value.trim() || undefined,
+          tier: $('cleTier').value,
+        },
+      })
+      // On vide le champ AVANT de redessiner : une clé qui reste affichée dans
+      // un formulaire est une clé qu'on oublie a l'ecran.
+      $('cleValeur').value = ''
+      $('cleLabel').value = ''
+      await dessineLeTrousseau()
+      // Une clé qu'on vient de poser change le solde : on le relit pour de bon.
+      majLeBudget({ force: true }).catch(() => {})
+      // ON NE DIT PAS « VÉRIFIÉE » : `cles.mjs --ajoute` NE VÉRIFIE PAS.
+      //
+      // Il refuse un doublon et le gabarit d'exemple, rien de plus — aucun appel
+      // au service. Annoncer une vérification qui n'a pas eu lieu ferait chercher
+      // ailleurs le jour où la clé est fausse : on croirait le trousseau bon et
+      // on suspecterait le réseau, le quota, la commande.
+      $('noteCles').textContent =
+        `Clé ajoutée. Elle sera essayée au premier appel — refusée, elle partira au frigo.`
+    } catch (e) {
+      $('noteCles').textContent = e.message
+    }
+  })
+)
+
+$('btnDegele').addEventListener('click', (ev) =>
+  pendant(ev.currentTarget, '…', async () => {
+    await api('/api/cles/degele', { methode: 'POST', corps: {} })
+    await dessineLeTrousseau()
+    $('noteCles').textContent = `Frigo vidé — les clés écartées repartent en service.`
+  })
+)
+
+$('btnFermeCles').addEventListener('click', () => fermeVoile('voileCles'))
+
+// LE BUDGET OUVRE LE TROUSSEAU : c'est le meme sujet, et c'est la qu'on regarde
+// quand un service ne repond plus.
+$('budget').addEventListener('click', ouvreLeTrousseau)
+$('budget').style.cursor = 'pointer'
+$('budget').setAttribute('role', 'button')
+$('budget').setAttribute('tabindex', '0')
+
+// Un solde relu il y a moins d'une minute est un solde à jour : les services
+// facturent à la génération, pas à la seconde. Les moments où l'on veut le
+// chiffre FRAIS — l'ouverture de l'atelier, une clé qu'on vient de poser — le
+// demandent explicitement.
+const SOLDES_FRAIS_MS = 60_000
+let soldesLusA = 0
+
+async function majLeBudget({ force = false } = {}) {
   const zone = $('budget')
+  if (!force && Date.now() - soldesLusA < SOLDES_FRAIS_MS) return
+  soldesLusA = Date.now()
   try {
     const r = await api('/api/quotas')
     const q = r.resultat?.quotas ?? {}
     const bouts = []
 
-    // fal en dollars, ElevenLabs en minutes : chaque service garde SON unité.
-    // Les ramener à une seule les rendrait tous faux.
+    // fal en dollars, ElevenLabs en minutes, Fish en dollars : chaque service
+    // garde SON unité. Les ramener à une seule les rendrait tous faux.
+    //
+    // LES DEUX SERVICES DE VOIX SE SUIVENT, ET CE N'EST PAS DE L'ORDRE ALPHA-
+    // BÉTIQUE. On choisit entre eux — ElevenLabs convertit une prise, Fish lit
+    // un texte —, et un arbitrage se lit mieux quand les deux chiffres sont
+    // côte à côte. Fish manquait : c'est pourtant le plus vite dépensé des
+    // trois, une voix off de dix minutes coûtant quinze centimes qu'on refait
+    // cinq fois avant d'être content.
     if (q.fal?.resume) bouts.push({ nom: 'fal', valeur: q.fal.resume, alerte: q.fal.alerte })
     if (q.elevenlabs?.resume) {
       bouts.push({
@@ -5919,6 +7699,7 @@ async function majLeBudget() {
         alerte: q.elevenlabs.alerte,
       })
     }
+    if (q.fish?.resume) bouts.push({ nom: 'Fish', valeur: q.fish.resume, alerte: q.fish.alerte })
     if (!bouts.length) { zone.hidden = true; return }
 
     zone.replaceChildren()
@@ -5942,6 +7723,215 @@ async function majLeBudget() {
   }
 }
 
+/**
+ * Le rappel d'initialisation, en tête d'écran, tant que la chaîne n'a pas de
+ * carte d'identité.
+ *
+ * L'ATELIER OUVRE UNE CHAÎNE NEUVE, ET DIT CE QU'IL LUI MANQUE.
+ *
+ * Avant, il la refusait — donc il refusait toute chaîne qu'il venait de créer.
+ * Il l'ouvre maintenant, et c'est ici que se paie l'ouverture : sans ce mot, on
+ * déposerait un rush et on découvrirait au montage que la chaîne n'a ni police,
+ * ni couleur, ni style de sous-titres, sans savoir pourquoi.
+ *
+ * Il ne propose aucun bouton pour y remédier, et c'est délibéré : `/init-chaine`
+ * est un entretien — produit, avatar, marketeur, direction artistique — et ces
+ * décisions se discutent (CLAUDE.md §2). Ce qu'on donne est ce qui manque
+ * vraiment : le dossier où ouvrir Claude Code.
+ */
+function montreLeRappelDInit(chaine, racine) {
+  const zone = $('rappelInit')
+  if (!zone) return
+  if (chaine?.initialise === true) {
+    zone.hidden = true
+    return
+  }
+  zone.replaceChildren()
+  zone.append(
+    `Cette chaîne produit déjà : la cascade des sous-titres et les polices
+embarquées donnent des réglages complets, et le montage tourne avec. Ce qu'elle
+n'a pas encore, c'est un socle — produit, avatar, marketeur — et une direction
+artistique qui soit la SIENNE plutôt qu'un défaut neutre.
+
+Ouvre Claude Code dans `
+  )
+  if (racine) {
+    const ou = creer('code')
+    ou.textContent = racine
+    zone.append(ou, ' et lance ')
+  } else {
+    zone.append('le dossier de la chaîne et lance ')
+  }
+  const cmd = creer('code')
+  cmd.textContent = '/init-chaine'
+  zone.append(cmd, ` — c'est un entretien, et il reste le meilleur outil pour ça.`)
+
+  // MAIS L'ENTRETIEN N'EST PLUS LA SEULE PORTE.
+  //
+  // Ce bandeau ne faisait que constater, et renvoyait hors du logiciel pour la
+  // moindre couleur. Poser un nom, cocher deux formats et choisir une palette
+  // n'a jamais demandé une heure d'entretien : c'est de la déclaration, et ça se
+  // fait ici. Le bouton dit exactement ce qu'il fait — renseigner —, pas
+  // « initialiser », qui laisserait croire qu'il produit le socle marketing.
+  const suite = creer('p', 'ligne-action')
+  const bouton = creer('button', 'bouton primaire')
+  bouton.type = 'button'
+  bouton.textContent = `Renseigner l'identité ici`
+  bouton.addEventListener('click', ouvreLIdentite)
+  suite.append(bouton)
+  zone.append(suite)
+  zone.hidden = false
+}
+
+// ---------------------------------------------------------------------------
+//  L'identité de la chaîne
+// ---------------------------------------------------------------------------
+//
+// ELLE SE DÉCLARE, ELLE NE SE DEVINE PAS.
+//
+// Ce panneau écrit `config/chaine.json` par `pipeline/initialise.mjs`, qui
+// existe seule au terminal (§2, contrainte 1). Il ne remplace pas
+// `/init-chaine` : il ne fait ni veille, ni fiche produit, ni hook bank. Il
+// donne à une chaîne un nom, des formats, une cadence et une palette — les
+// quatre choses sans lesquelles elle reste le dossier vierge qu'on vient de
+// copier, et pour lesquelles il fallait jusqu'ici quitter le logiciel.
+
+const CHAMPS_IDENTITE = {
+  nom: 'idNom',
+  promesse: 'idPromesse',
+  produit: 'idProduit',
+  produit_type: 'idProduitType',
+  produit_prix: 'idProduitPrix',
+  produit_url: 'idProduitUrl',
+  avatar: 'idAvatar',
+  segment: 'idSegment',
+  marketeur: 'idMarketeur',
+  posture: 'idPosture',
+  registre: 'idRegistre',
+  direction_plans: 'idDirection',
+  modele_video: 'idModeleVideo',
+}
+
+async function ouvreLIdentite() {
+  ouvreVoile('voileIdentite', 'idNom')
+  $('idErreur').hidden = true
+  $('idEtat').hidden = true
+
+  let d
+  try {
+    const r = await api('/api/chaine/init')
+    d = r.resultat ?? {}
+  } catch (e) {
+    $('idErreur').textContent = e.message
+    $('idErreur').hidden = false
+    return
+  }
+
+  const v = d.valeurs ?? {}
+  for (const [champ, id] of Object.entries(CHAMPS_IDENTITE)) $(id).value = v[champ] ?? ''
+  // Une couleur absente ne laisse pas le sélecteur sur un noir arbitraire : il
+  // part sur une valeur lisible, et rien n'est écrit tant qu'on n'enregistre pas.
+  $('idAccent').value = v.couleur_accent ?? '#c9315e'
+  $('idFond').value = v.couleur_fond ?? '#0e1718'
+
+  for (const [id, retenue] of [['idPoliceTitres', v.police_titres], ['idPoliceSous', v.police_soustitres]]) {
+    const sel = $(id)
+    sel.replaceChildren()
+    const vide = creer('option')
+    vide.value = ''
+    vide.textContent = '— défaut du montage —'
+    sel.append(vide)
+    for (const famille of d.polices ?? []) {
+      const o = creer('option')
+      o.value = famille
+      o.textContent = famille
+      sel.append(o)
+    }
+    sel.value = retenue ?? ''
+  }
+
+  // LES FORMATS VIENNENT DE `chaine.json`, PAS D'UNE LISTE ÉCRITE ICI.
+  // Une liste en dur divergerait du fichier à la première addition, et l'écran
+  // proposerait un format que rien ne sait rendre.
+  const cases = $('idFormats')
+  cases.replaceChildren()
+  for (const f of d.formats ?? []) {
+    const l = creer('label')
+    const c = document.createElement('input')
+    c.type = 'checkbox'
+    c.value = f.format
+    c.checked = f.actif
+    const t = creer('span')
+    const bornes = f.duree_cible_s ? ` (${f.duree_cible_s[0]}–${f.duree_cible_s[1]} s)` : ''
+    t.textContent = f.format.replace(/_/g, ' ') + bornes
+    l.append(c, t)
+    cases.append(l)
+  }
+
+  // LE CATALOGUE VIENT DU SERVEUR, AVEC SES PRIX.
+  //
+  // Ils vont de 0,04 $ à 2,37 $ le plan de cinq secondes — un facteur soixante.
+  // Choisir un modèle sans voir ce qu'il coûte, c'est choisir à l'aveugle une
+  // dépense qui se répète à chaque trou comblé.
+  const selM = $('idModeleVideo')
+  selM.replaceChildren()
+  for (const m of d.modelesVideo ?? []) {
+    const o = creer('option')
+    o.value = m.format
+    o.textContent = `${m.nom} — ${m.usd5s.toFixed(2)} $ / plan de 5 s — ${m.resume}`
+    selM.append(o)
+  }
+  selM.value = v.modele_video ?? d.modeleVideoDefaut ?? ''
+  const disModele = () => {
+    const m = (d.modelesVideo ?? []).find((x) => x.format === selM.value)
+    $('noteModeleVideo').textContent = m
+      ? `${m.format} · ${m.usd5s.toFixed(2)} $ pour un plan de 5 s. ` +
+        `Le devis de l'étape 6 suit ce choix.`
+      : ''
+  }
+  disModele()
+  selM.onchange = disModele
+
+  $('idLongs').value = d.cadence?.long_par_semaine ?? 0
+  $('idShorts').value = d.cadence?.short_par_semaine ?? 0
+}
+
+$('btnFermeIdentite').addEventListener('click', () => fermeVoile('voileIdentite'))
+$('idNon').addEventListener('click', () => fermeVoile('voileIdentite'))
+
+$('idOui').addEventListener('click', async () => {
+  const corps = {}
+  for (const [champ, id] of Object.entries(CHAMPS_IDENTITE)) corps[champ] = $(id).value.trim() || null
+  corps.couleur_accent = $('idAccent').value
+  corps.couleur_fond = $('idFond').value
+  corps.police_titres = $('idPoliceTitres').value || null
+  corps.police_soustitres = $('idPoliceSous').value || null
+  corps.formats = [...$('idFormats').querySelectorAll('input:checked')].map((c) => c.value)
+  corps.cadence = {
+    long_par_semaine: Number($('idLongs').value) || 0,
+    short_par_semaine: Number($('idShorts').value) || 0,
+  }
+
+  $('idErreur').hidden = true
+  await pendant($('idOui'), 'Écriture…', async () => {
+    try {
+      await api('/api/chaine/init', { methode: 'POST', corps })
+      // ON RECHARGE, ET CE N'EST PAS DE LA PARESSE.
+      //
+      // Le nom de la chaîne est dans l'en-tête, le bandeau dépend de
+      // `initialise`, les formats décident du squelette de script, la palette du
+      // rendu. Recoudre tout ça à la main laisserait forcément un morceau en
+      // arrière — et c'est le genre d'écart qu'on découvre trois écrans plus loin.
+      $('idEtat').textContent = `Écrit. L'écran se recharge…`
+      $('idEtat').hidden = false
+      setTimeout(() => window.location.reload(), 600)
+    } catch (e) {
+      $('idErreur').textContent = e.message
+      $('idErreur').hidden = false
+    }
+  })
+})
+
 async function demarre() {
   suisLaHauteurDeLEntete()
   try {
@@ -5949,8 +7939,26 @@ async function demarre() {
     appli.chaine = c.chaine
     appli.polices = c.polices ?? []
     declareLesPolices(c.fichiersPolices ?? [])
+    // LE SÉLECTEUR DE CHAÎNE DOIT TOUJOURS PORTER UN MOT.
+    //
+    // `identite.nom` est vide tant que `/init-chaine` n'a pas eu lieu — donc sur
+    // toute chaîne neuve. Le bouton se réduisait alors à son chevron, trois
+    // pixels de large : on ne pouvait plus ni le voir, ni le viser, et on se
+    // retrouvait enfermé dans la chaîne qu'on venait d'ouvrir. Le dossier, lui,
+    // a toujours un nom, et c'est celui qu'on a tapé en la créant.
+    const dossier =
+      String(c.racine ?? '')
+        // Le chemin vient de Windows : ses séparateurs sont des
+        // antislashs. On les ramène au slash avant de découper, plutôt que
+        // d'écrire une classe de caractères que la moindre relecture casse.
+        .split(String.fromCharCode(92))
+        .join('/')
+        .split('/')
+        .filter(Boolean)
+        .pop() ?? 'chaîne'
     const nom = c.chaine?.identite?.nom ?? null
-    $('nomChaine').textContent = nom ?? ''
+    $('nomChaine').textContent = nom ?? dossier
+    montreLeRappelDInit(c.chaine, c.racine ?? null)
   } catch (e) {
     annonce(e.message, 'erreur')
     return
@@ -5961,8 +7969,8 @@ async function demarre() {
   // `rafraichitEtat` retombe alors sur la première de la liste.
   appli.slug = videoRetenue()
   await rafraichitEtat()
-  // Sans attendre : trois appels reseau ne doivent pas retarder l ouverture.
-  majLeBudget().catch(() => {})
+  // Sans attendre : les appels reseau ne doivent pas retarder l ouverture.
+  majLeBudget({ force: true }).catch(() => {})
 
   if (!appli.videos.length) {
     annonce(`Aucune vidéo dans videos/. Crée-en une pour commencer.`)

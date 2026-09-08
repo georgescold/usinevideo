@@ -16,13 +16,17 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import crypto from 'node:crypto'
-import { CHEMINS, assureDossier, litJson, ecritJson } from './chemins.mjs'
+import { CHEMINS, assureDossier, litJson, ecritJson, litChaine } from './chemins.mjs'
 import { journal } from './journal.mjs'
 import { getJson, telecharge } from './http.mjs'
 import { avecCle, pool, clefGrillee } from './trousseau.mjs'
 import { sonde, mesureLAccroche, accrocheFaible } from './ffmpeg.mjs'
 import { attribue as attribuePerso, DOSSIER as DOSSIER_PERSO } from './broll-perso.mjs'
 import { chercheDesVisages } from './visages.mjs'
+// Le prompt d'un plan généré, son modèle, son prix et sa durée : tout vient de
+// `fal.mjs`, qui est le seul endroit où ces choix sont écrits. Voir le commentaire
+// qui y accompagne `promptDePlan` — deux doctrines de prompt divergeraient.
+import { promptDePlan, coutDUnPlan, modeleDePlan, dureeDePlan } from './fal.mjs'
 
 const CACHE = path.join(CHEMINS.cachePartage, 'medias')
 const CACHE_MS = 24 * 60 * 60 * 1000
@@ -333,7 +337,36 @@ const OUVERTURE_CANDIDATS = 5
  * renseigne leur `src`. Les événements non résolus sont retirés plutôt que de
  * laisser un trou noir dans la vidéo.
  */
-export async function resoudBroll(evenements, { largeur, hauteur, dossier, direction = null }) {
+export async function resoudBroll(
+  evenements,
+  {
+    largeur,
+    hauteur,
+    dossier,
+    direction = null,
+    comble = null,
+    combleMax = 0,
+    aGenerer = new Map(),
+    blocs = [],
+    exclus = [],
+    // LE MODÈLE ARRIVE PAR L'APPELANT, IL NE SE RELIT PLUS SUR LE DISQUE.
+    //
+    // `modeleDePlan(litChaine())` relisait `config/chaine.json` à chaque plan
+    // généré. Or `--modele-video=` — l'option qui existe précisément pour
+    // essayer un modèle sur UNE vidéo sans basculer la chaîne — est posée par
+    // `monte.mjs` dans sa carte EN MÉMOIRE. Le disque, lui, n'avait pas bougé.
+    //
+    // Conséquence exacte : choisir Seedance à l'étape 6 affichait le prix de
+    // Seedance, envoyait `--modele-video=…seedance…`, le journal de `monte.mjs`
+    // l'annonçait — et la génération partait quand même sur le modèle du
+    // fichier, LTX par défaut. On payait le bon prix affiché pour le mauvais
+    // modèle, sans qu'aucune ligne ne le contredise.
+    //
+    // Le repli reste la chaîne du disque : `broll --remplace` et les appels
+    // directs n'ont pas d'option à passer.
+    modele = null,
+  }
+) {
   // TES PROPRES PLANS SE POSENT EN INSERT, PAS EN PLEIN ÉCRAN.
   //
   // Pexels ne connaîtra jamais ton produit, ton visage, ni la capture d'écran de
@@ -388,16 +421,110 @@ export async function resoudBroll(evenements, { largeur, hauteur, dossier, direc
     .filter((e) => e.type === 'broll')
     .reduce((a, e) => (a === null || (e.debutMs ?? 0) < (a.debutMs ?? 0) ? e : a), null)
 
+  // SANS BANQUE, IL RESTE LA GÉNÉRATION — quand elle est autorisée.
+  //
+  // La sortie était sèche : tous les plans retirés, budget IA intact, et rien
+  // qui dise pourquoi une « création assistée » n'avait produit aucun plan. Sur
+  // une chaîne qui a une clé fal et pas de clé Pexels, c'est un cul-de-sac
+  // silencieux. La boucle sait déjà faire : `chercheVideos` rend une liste vide,
+  // et le comblage prend le relais dans la limite du budget.
   if (!brollDisponible()) {
+    if (comble !== 'ia') {
+      journal.attention(
+        `${aResoudre.length} plan(s) de coupe demandés, mais aucune clé Pexels dans le trousseau. ` +
+          `Ils sont ignorés — ajoute une clé dans config/keys.json, ou filme-les toi-même.`
+      )
+      for (const e of aResoudre) e._aRetirer = true
+      return { resolus, abandonnes: aResoudre.length, attributions }
+    }
     journal.attention(
-      `${aResoudre.length} plan(s) de coupe demandés, mais aucune clé Pexels dans le trousseau. ` +
-        `Ils sont ignorés — ajoute une clé dans config/keys.json, ou filme-les toi-même.`
+      `Aucune clé Pexels : les ${aResoudre.length} plan(s) de coupe ne peuvent venir que de la ` +
+        `génération, dans la limite du budget. Ajoute une clé Pexels pour la banque d'images.`
     )
-    for (const e of aResoudre) e._aRetirer = true
-    return { resolus, abandonnes: aResoudre.length, attributions }
   }
 
   let abandonnes = 0
+  // Ce qu'on a fabriqué faute de banque. Compté à part de `resolus` : la
+  // différence est ce que ça a coûté, et elle doit se lire dans le rapport.
+  let combles = 0
+
+  // DEUX RAISONS DE GÉNÉRER, UN SEUL BUDGET, ET IL FAUT LE RÉSERVER.
+  //
+  // `aGenerer` porte les plans que la lecture du script a désignés comme ceux
+  // où la banque ne peut rien (voir `choix-ia.mjs`). Ils sont répartis sur toute
+  // la durée ; les trous, eux, tombent où ils tombent. Sans réservation, trois
+  // trous au début épuisaient le budget et le plan choisi de la centième seconde
+  // — le seul qu'on avait explicitement demandé — passait à la trappe.
+  //
+  // On compte donc ce qui reste À VENIR de choisi, et un trou ne se comble que
+  // s'il reste de la place APRÈS ça.
+  let choisisAVenir = aResoudre.filter((e) => aGenerer.has(e)).length
+
+  /**
+   * Fabrique le plan `e`. Rend `true` s'il est en place.
+   *
+   * UN SEUL CHEMIN VERS FAL, POUR LES DEUX RAISONS DE GÉNÉRER. Deux copies
+   * auraient divergé à la première correction du prompt ou du nom de fichier, et
+   * rien à l'écran n'aurait dit laquelle avait servi.
+   */
+  const genereLePlan = async (e, i, { requete = null, pourquoi = null }) => {
+    const ton = (blocs ?? []).find((b) => e.ancre && String(b.texte ?? '').includes(e.ancre))
+    const prompt = promptDePlan({
+      // LA REQUÊTE RÉÉCRITE PREND LE PAS, quand il y en a une.
+      //
+      // Celle du script vise une banque d'images : quatre mots-clés en anglais.
+      // Un modèle vidéo veut une scène — un sujet, une action, un cadre, une
+      // lumière. Envoyer les quatre mots-clés rendrait un plan générique, c'est-
+      // à-dire exactement ce qu'on paie pour éviter.
+      requete: requete ?? e.requete,
+      intention: ton?.intention ?? null,
+      direction,
+      ouverture: e === ouverture,
+    })
+    const nom = `broll-${String(i + 1).padStart(2, '0')}-ia.mp4`
+    const secondesPlan = dureeDePlan(e.dureeMs)
+    const modeleEmploye = modele ?? modeleDePlan(litChaine())
+    journal.info(
+      `Plan ${i + 1} généré avec ${modeleEmploye} ` +
+        `(${coutDUnPlan(modeleEmploye, secondesPlan).toFixed(2)} $, 1 à 3 min)` +
+        `${pourquoi ? ` — ${pourquoi}` : ''}.`
+    )
+    journal.detail(`prompt : ${prompt}`)
+    try {
+      const { genereVideo } = await import('../../outils/fal-video.mjs')
+      await genereVideo(prompt, {
+        modele: modeleEmploye,
+        dureeS: secondesPlan,
+        format: hauteur > largeur ? '9:16' : '16:9',
+        sortie: path.join(dossier, nom),
+        surEtape: (m) => journal.detail(`fal · ${m}`),
+      })
+      e.src = `broll/${nom}`
+      e.ken = false
+      e.source = 'fal'
+      // QUEL MODÈLE A FAIT CE PLAN. Sans ça, on regarde une vignette générée
+      // sans pouvoir dire si elle vient de LTX à 0,04 $ ou de Seedance à
+      // 2,36 $ — donc sans pouvoir juger si le prix valait le résultat.
+      e._modele = modeleEmploye
+      e._mediaId = `fal:${nom}`
+      e._auteur = null
+      // POURQUOI CE PLAN-LÀ A ÉTÉ PAYÉ. Sans la raison, la revue montre un plan
+      // généré au milieu de trente plans de banque sans qu'on puisse dire si le
+      // choix était juste — donc sans pouvoir le corriger au montage suivant.
+      if (pourquoi) e._iaPourquoi = pourquoi
+      if (requete) e._iaRequete = requete
+      combles++
+      resolus++
+      journal.ok(`Plan ${i + 1} en place.`)
+      return true
+    } catch (err) {
+      // UNE GÉNÉRATION RATÉE REDEVIENT UN TROU, elle ne bloque pas le montage.
+      // Le reste de la vidéo n'a pas à s'arrêter parce que fal a refusé une
+      // demande — et le trou, lui, se voit et se dit.
+      journal.attention(`Génération refusée pour « ${requete ?? e.requete} » : ${err.message}`)
+      return false
+    }
+  }
 
   // Ce qui a déjà été pris dans cette vidéo. Un même plan qui revient se lit comme
   // une redite, y compris quand deux recherches différentes tombent dessus.
@@ -408,6 +535,15 @@ export async function resoudBroll(evenements, { largeur, hauteur, dossier, direc
   // événements : on le lit sur le premier plan à résoudre.
   const slugCourant = path.basename(path.resolve(dossier, '..', '..', '..'))
   const recents = plansEmployesRecemment(slugCourant)
+  // CE QUE CETTE VIDÉO A DÉJÀ EMPLOYÉ, quand on demande expressément d'autres
+  // plans.
+  //
+  // `plansEmployesRecemment` exclut le slug COURANT — à raison : un remontage
+  // pour changer une taille de sous-titres ne doit pas faire valser toute la
+  // piste image. Mais du coup, « régénérer les plans » redonnait exactement les
+  // mêmes : la banque rend ses candidats dans le même ordre, et rien ne les
+  // écartait. On ne pouvait pas refuser une piste entière.
+  for (const id of exclus) recents.ids.add(cleDeMedia(id))
   if (recents.ids.size) {
     journal.detail(
       `${recents.ids.size} plan(s) écarté(s) : déjà employés dans ${recents.videos.length} vidéo(s) récente(s).`
@@ -429,6 +565,25 @@ export async function resoudBroll(evenements, { largeur, hauteur, dossier, direc
   const PAR_AUTEUR_MAX = 2
 
   for (const [i, e] of aResoudre.entries()) {
+    // LE PLAN CHOISI SE GÉNÈRE AVANT D'INTERROGER LA BANQUE.
+    //
+    // La lecture du script a dit que la banque ne pouvait rien pour celui-ci.
+    // L'interroger quand même coûterait dix requêtes et cinq téléchargements
+    // pour un fichier qu'on jetterait — et, pire, le candidat rapatrié
+    // entrerait dans la fenêtre de réemploi des dix montages suivants, où il
+    // écarterait un plan qu'on n'a jamais montré.
+    const choisi = aGenerer.get(e)
+    if (choisi) {
+      choisisAVenir--
+      if (combles < combleMax) {
+        e._iaChoisi = true
+        if (await genereLePlan(e, i, choisi)) continue
+        // Refusée par fal : le plan retombe sur la banque plutôt que de
+        // disparaître. Un trou coûte plus cher à l'image qu'un plan générique.
+        journal.detail(`On repasse par la banque pour le plan ${i + 1}.`)
+      }
+    }
+
     // `variante` vient du découpage sur les fins de phrase : plusieurs morceaux
     // partagent la même recherche et doivent recevoir des plans DIFFÉRENTS.
     // Assez de candidats pour que la deduplication ait de la marge. Une meme
@@ -579,8 +734,38 @@ export async function resoudBroll(evenements, { largeur, hauteur, dossier, direc
       }
       attributions.push(noteAttribution(pris.media, path.join(dossier, pris.nom)))
       resolus++
+    } else if (comble === 'ia' && combles + choisisAVenir < combleMax) {
+      // ON COMBLE LE VIDE, ET C'EST LE SEUL DÉCLENCHEUR MESURABLE.
+      //
+      // « Aucun plan ne correspond à la scène » ne se mesure pas : la banque
+      // rend presque toujours QUELQUE CHOSE, et rien ICI ne sait dire si cette
+      // chose parle du bon sujet — c'est le script entier qui le sait, et c'est
+      // pourquoi ce jugement-là est remonté dans `choix-ia.mjs`, avant la
+      // boucle.
+      //
+      // Ce qui se mesure d'un plan seul, c'est le VIDE : après la déduplication
+      // interne, après la fenêtre de réemploi des dix derniers montages, après
+      // les téléchargements ratés, il ne reste aucun candidat. Sans ça le plan
+      // est retiré et le précédent s'étire pour couvrir le trou — le temps mort
+      // que le §10 interdit en premier.
+      //
+      // `choisisAVenir` réserve le budget des plans que le script a désignés :
+      // trois trous au début ne doivent pas manger la génération demandée à la
+      // centième seconde.
+      journal.detail(`Rien en banque pour « ${e.requete} ».`)
+      if (!(await genereLePlan(e, i, { pourquoi: 'la banque n’a rien rendu' }))) {
+        e._aRetirer = true
+        abandonnes++
+      }
     } else {
-      journal.detail(`Rien trouvé pour « ${e.requete} » — plan de coupe retiré.`)
+      if (comble === 'ia' && combles + choisisAVenir >= combleMax) {
+        journal.attention(
+          `Rien en banque pour « ${e.requete} », et le budget de ${combleMax} génération(s) ` +
+            `est engagé — plan retiré. Relève-le avec --plans-ia= si tu veux en payer plus.`
+        )
+      } else {
+        journal.detail(`Rien trouvé pour « ${e.requete} » — plan de coupe retiré.`)
+      }
       e._aRetirer = true
       abandonnes++
     }
@@ -597,5 +782,5 @@ export async function resoudBroll(evenements, { largeur, hauteur, dossier, direc
     }
   }
 
-  return { resolus, abandonnes, attributions }
+  return { resolus, abandonnes, attributions, combles }
 }

@@ -49,8 +49,11 @@ npm run depose -- <slug> <fichier> [options]
 
   --coupe                 range le fichier comme plan de coupe (coupe-NN)
                           au lieu d'une prise (prise-NN)
-  --retire                met de côté la prise en place ET tout ce qui en
+  --retire                met de côté TOUTES les prises ET tout ce qui en
                           découle, pour pouvoir en déposer une autre
+  --retire=<prise>        n'en retire qu'UNE : « prise-02.mp3 », « prise-02 »
+                          ou « 2 ». Les autres restent, et ce qui découlait de
+                          la piste entière part aussi — elle a changé
   --destination=<où>      youtube | tiktok-insta — ne sert qu'à écrire le
                           squelette de script quand il n'y en a pas encore
   --json                  sortie machine, pour l'atelier
@@ -251,13 +254,44 @@ function squelette(slug, { destination, mode }) {
  * la vidéo, pas une propriété de la prise : le refaire choisir à chaque
  * remplacement serait une corvée sans raison.
  */
-function retireLaPrise(slug) {
+function retireLaPrise(slug, cible = null) {
   const v = dossierVideo(slug)
   if (!fs.existsSync(v.base)) throw new Error(`Aucune vidéo « ${slug} » dans videos/.`)
 
-  const rushes = fs.existsSync(v.tournage)
+  const toutes = fs.existsSync(v.tournage)
     ? fs.readdirSync(v.tournage).filter((f) => EXTENSIONS_LUES.test(f))
     : []
+
+  // RETIRER UNE PRISE PARMI PLUSIEURS.
+  //
+  // Deposer trois fois le meme fichier ne remplace pas : ca EMPILE, et le
+  // montage colle les prises bout a bout dans l'ordre alphabetique. On se
+  // retrouve avec quinze minutes la ou on en voulait cinq, et le seul recours
+  // etait de tout retirer pour tout redeposer.
+  //
+  // On accepte trois ecritures de la meme chose — « prise-02.mp3 », « prise-02 »
+  // et « 2 » — parce qu'on designe ce qu'on lit a l'ecran, et que ce qu'on y lit
+  // n'est pas toujours le nom complet.
+  let rushes = toutes
+  if (cible !== null) {
+    const voulu = String(cible).trim()
+    const parNumero = /^\d{1,3}$/.test(voulu)
+      ? new RegExp(`-0*${Number(voulu)}\\.[a-z0-9]+$`, 'i')
+      : null
+    const trouve = toutes.find(
+      (f) =>
+        f.toLowerCase() === voulu.toLowerCase() ||
+        f.replace(/\.[^.]+$/, '').toLowerCase() === voulu.toLowerCase() ||
+        (parNumero && parNumero.test(f))
+    )
+    if (!trouve) {
+      throw new Error(
+        `Aucune prise « ${voulu} » dans ${slug}.\n` +
+          `  Présentes : ${toutes.join(', ') || '(aucune)'}`
+      )
+    }
+    rushes = [trouve]
+  }
 
   const marque = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-')
   const asile = path.join(v.base, '.prises-precedentes', marque)
@@ -281,6 +315,12 @@ function retireLaPrise(slug) {
   for (const f of rushes) {
     if (deplace(path.join(v.tournage, f), f)) misDeCote.push(`02-tournage/${f}`)
   }
+  // CE QUI DECOULE PART AUSSI, MEME QU'ON N'EN RETIRE QU'UNE.
+  //
+  // La piste est la concatenation des prises : en retirer une la raccourcit, et
+  // tout ce qui etait cale dessus devient faux. Garder le transcript serait le
+  // pire cas — des sous-titres qui suivent une voix qui n'existe plus, ce que le
+  // §9 interdit nommement.
   for (const [source, nom] of [
     [path.join(v.audio, 'voix-finale.wav'), 'voix-finale.wav'],
     [path.join(v.audio, 'voix-coupee.wav'), 'voix-coupee.wav'],
@@ -298,10 +338,12 @@ function retireLaPrise(slug) {
 await principal(async () => {
   const enJson = drapeau(options, 'json')
 
-  if (drapeau(options, 'retire')) {
+  if (options.retire !== undefined) {
     const slugRetire = positionnels[0]
     if (!slugRetire) throw new Error(`Donne le slug : npm run depose -- <slug> --retire`)
-    const r = retireLaPrise(String(slugRetire))
+    // `--retire` seul vide tout ; `--retire=<prise>` n'en enlève qu'une.
+    const cible = options.retire === true ? null : String(options.retire)
+    const r = retireLaPrise(String(slugRetire), cible)
     if (enJson) return void console.log(JSON.stringify({ ok: true, ...r }, null, 2))
     if (!r.misDeCote.length) {
       journal.info(`Rien à retirer : aucune prise déposée pour « ${r.slug} ».`)

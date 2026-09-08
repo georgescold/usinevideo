@@ -114,7 +114,9 @@
     "modele_local": "myriam",
     "transpose": 12,
     "_modele_local": "Le modele entraine employe quand la video n en choisit pas. npm run entraine -- --liste",
-    "_transpose": "Demi-tons ajoutes a TA hauteur avant la conversion. Mesure : ta prise 125 Hz, myriam 216 Hz, soit +9,5 au calcul et +12 a l oreille. Sans lui, le timbre feminin se plaque une octave trop bas et sonne robotique."
+    "_transpose": "Demi-tons ajoutes a TA hauteur avant la conversion. Mesure : ta prise 125 Hz, myriam 216 Hz, soit +9,5 au calcul et +12 a l oreille. Sans lui, le timbre feminin se plaque une octave trop bas et sonne robotique.",
+    "fish_voice_nom": "Valérie",
+    "favoris": []
   },
   "identite_visuelle": {
     "fiche": "marque/identite-visuelle.md",
@@ -151,7 +153,8 @@
       "animation": "pop",
       "ponctuation": false
     },
-    "_soustitres": "Direction artistique validee a l ecran le 28 aout 2026. Ce bloc prime sur les couleurs eparses ci-dessus. Se regle par video avec: npm run soustitres -- <slug>"
+    "_soustitres": "Direction artistique validee a l ecran le 28 aout 2026. Ce bloc prime sur les couleurs eparses ci-dessus. Se regle par video avec: npm run soustitres -- <slug>",
+    "modele_video": null
   },
   "seo": {
     "mot_cle_pilier": "pourquoi mes relations ne durent pas",

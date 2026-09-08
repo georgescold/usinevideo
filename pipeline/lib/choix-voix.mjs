@@ -21,7 +21,8 @@
  */
 
 import fs from 'node:fs'
-import { dossierVideo, litJson, ecritJson, assureDossier, litChaine, env } from './chemins.mjs'
+import path from 'node:path'
+import { CHEMINS, dossierVideo, litJson, ecritJson, assureDossier, litChaine, env } from './chemins.mjs'
 
 /** Le choix enregistré pour une vidéo, ou `null` s'il n'y en a pas. */
 export function choixDe(slug) {
@@ -84,6 +85,154 @@ export function reglagesDeVoix(choisie) {
     stabilite: nombre(choisie?.stabilite, REGLAGES_PAR_DEFAUT.stabilite),
     similarite: nombre(choisie?.similarite, REGLAGES_PAR_DEFAUT.similarite),
   }
+}
+
+// ---------------------------------------------------------------------------
+//  CE QUI A SERVI, PAS CE QUI ÉTAIT PRÉVU
+// ---------------------------------------------------------------------------
+//
+// `voix-choisie.json` est une INTENTION : un timbre ElevenLabs mis de côté,
+// éventuellement jamais employé — la chaîne peut être en mode local, ou la
+// conversion avoir été faite avec un autre moteur ce jour-là. Revenir un mois
+// plus tard sur une vidéo montée et lire « voix retenue : David » ne dit donc
+// rien de ce qu'on entend dans le fichier.
+//
+// Ce second fichier est écrit par la CONVERSION, à la fin, avec ce qu'elle a
+// réellement fait. C'est la seule source qui ne peut pas mentir : elle est
+// produite par le geste qu'elle décrit.
+
+/** Ce que la conversion a réellement employé, ou `null` si on ne sait pas. */
+export function emploiDe(slug) {
+  const v = dossierVideo(slug)
+  if (!fs.existsSync(v.voixEmployee)) return null
+  return litJson(v.voixEmployee, null)
+}
+
+/**
+ * Note ce qui vient de servir. Appelé par `monte.mjs`, après la conversion.
+ *
+ * Les champs absents sont écrits à `null` plutôt qu'omis : lire `{ mode:
+ * 'local' }` sans clé `voice_id` laisserait croire à un fichier d'une ancienne
+ * version, alors que c'est simplement une conversion qui n'en avait pas.
+ */
+export function enregistreEmploi(slug, infos = {}) {
+  const v = dossierVideo(slug)
+  assureDossier(v.audio)
+  const emploi = {
+    mode: infos.mode ?? null,
+    voice_id: infos.voice_id ?? null,
+    nom: infos.nom ?? null,
+    stabilite: infos.stabilite ?? null,
+    similarite: infos.similarite ?? null,
+    modele_local: infos.modele_local ?? null,
+    transpose: infos.transpose ?? null,
+    origine: infos.origine ?? null,
+    musique: infos.musique ?? null,
+    fait_le: new Date().toISOString(),
+  }
+  ecritJson(v.voixEmployee, emploi)
+  return emploi
+}
+
+// ---------------------------------------------------------------------------
+//  Les favorites
+// ---------------------------------------------------------------------------
+//
+// UNE FAVORITE APPARTIENT À LA CHAÎNE, PAS À UNE VIDÉO.
+//
+// C'est la même règle que les avatars et la direction artistique (§1) : on
+// écoute quarante timbres une fois, on en garde cinq, et ces cinq-là servent
+// sur la dixième vidéo comme sur la première. Les ranger par vidéo obligerait à
+// refaire l'écoute à chaque fois, ce qui est exactement le travail qu'on essaie
+// de ne plus refaire.
+//
+// Elles vivent donc dans `config/chaine.json`, et `nouvelle-chaine` les vide :
+// un timbre est une décision de marque.
+//
+// LE MOTEUR FAIT PARTIE DE L'IDENTITÉ. Fish et ElevenLabs ont chacun leurs
+// identifiants, et rien n'interdit qu'ils se ressemblent. Une favorite est
+// donc une paire (moteur, identifiant), jamais un identifiant seul.
+
+const MOTEURS_FAVORIS = ['elevenlabs', 'fish']
+
+const cheminChaine = () => path.join(CHEMINS.config, 'chaine.json')
+
+/** Les voix mises de côté, toutes moteurs confondus. */
+export function favoris() {
+  const chaine = litChaine()
+  const liste = chaine?.voix?.favoris
+  if (!Array.isArray(liste)) return []
+  return liste
+    .filter((f) => f && f.id && MOTEURS_FAVORIS.includes(f.moteur))
+    .map((f) => ({
+      moteur: f.moteur,
+      id: String(f.id),
+      nom: f.nom ?? null,
+      proprietaire: f.proprietaire ?? null,
+      // L'adresse de l'extrait de catalogue, quand on l'avait sous la main au
+      // moment de la mise de côté. Sans elle, réécouter une favorite obligerait
+      // à la retrouver dans la bibliothèque — c'est-à-dire à refaire la
+      // recherche qu'elle existe pour éviter.
+      apercu: f.apercu ?? null,
+      note: f.note ?? null,
+      ajoute_le: f.ajoute_le ?? null,
+    }))
+}
+
+export const estFavorite = (moteur, id) =>
+  favoris().some((f) => f.moteur === moteur && f.id === String(id))
+
+/** Ajoute, ou met à jour ce qu'on sait d'une favorite déjà là. */
+export function ajouteFavori({ moteur, id, nom = null, proprietaire = null, apercu = null, note = null }) {
+  if (!MOTEURS_FAVORIS.includes(moteur)) {
+    throw new Error(`Moteur inconnu « ${moteur} ». Attendu : ${MOTEURS_FAVORIS.join(' ou ')}.`)
+  }
+  if (!id) throw new Error(`Donne l'identifiant de la voix à mettre en favori.`)
+  const chemin = cheminChaine()
+  const chaine = litJson(chemin, {})
+  const liste = favoris()
+  const dejaLa = liste.find((f) => f.moteur === moteur && f.id === String(id))
+  // On ne remplace un nom connu par rien : une deuxième mise en favori depuis
+  // un écran qui n'a pas le nom sous la main effacerait celui d'avant.
+  const suite = dejaLa
+    ? liste.map((f) =>
+        f === dejaLa
+          ? {
+              ...f,
+              nom: nom ?? f.nom,
+              proprietaire: proprietaire ?? f.proprietaire,
+              apercu: apercu ?? f.apercu,
+              note: note ?? f.note,
+            }
+          : f
+      )
+    : [
+        ...liste,
+        {
+          moteur,
+          id: String(id),
+          nom,
+          proprietaire,
+          apercu,
+          note,
+          ajoute_le: new Date().toISOString(),
+        },
+      ]
+  chaine.voix = { ...(chaine.voix ?? {}), favoris: suite }
+  ecritJson(chemin, chaine)
+  return { favoris: suite, ajoute: !dejaLa }
+}
+
+/** Retire une favorite. Rend `false` si elle n'y était pas. */
+export function retireFavori({ moteur, id }) {
+  const chemin = cheminChaine()
+  const chaine = litJson(chemin, {})
+  const liste = favoris()
+  const suite = liste.filter((f) => !(f.moteur === moteur && f.id === String(id)))
+  if (suite.length === liste.length) return { favoris: liste, retire: false }
+  chaine.voix = { ...(chaine.voix ?? {}), favoris: suite }
+  ecritJson(chemin, chaine)
+  return { favoris: suite, retire: true }
 }
 
 /** Oublie le choix : la vidéo repart sur le défaut de la chaîne. */

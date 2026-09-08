@@ -142,6 +142,27 @@ b { font-weight: 700; }
 .bandeau.erreur { border-color: #5c2a33; background: #241419; color: #ffc9cf; }
 .bandeau.ok { border-color: #235340; background: #10231c; color: #b9f0d5; }
 
+/* Le rappel d'initialisation. Il ressemble au bandeau et n'en est pas un : le
+   bandeau annonce ce qui vient de se passer et s'efface, celui-ci décrit un
+   ÉTAT de la chaîne et reste tant qu'il dure. Le confondre avec une alerte
+   fugace ferait rater la seule chose à faire. */
+.rappel-init {
+  margin: 18px 32px 0;
+  padding: 14px 18px;
+  border-radius: var(--r);
+  font-size: 15px;
+  line-height: 1.5;
+  border: 1px solid #5c4a22;
+  background: #221c10;
+  color: #f2dfae;
+  white-space: pre-wrap;
+}
+.rappel-init code {
+  background: rgba(0, 0, 0, 0.35);
+  padding: 1px 6px;
+  border-radius: 5px;
+}
+
 /* ------------------------------------------------------------------ grille - */
 
 .atelier {
@@ -629,6 +650,10 @@ input[type="text"].hexa {
 
 .textes-pied { display: flex; flex-direction: column; gap: 8px; }
 .textes-pied .bouton { width: 100%; }
+/* « ✓ Enregistré » n'est pas une note de plus : c'est la réponse à la seule
+   question qu'on se pose avant de fermer l'onglet. Il se distingue du gris des
+   notes, sans crier — ce n'est pas non plus un événement. */
+#noteCorrections.ecrit { color: var(--ok); }
 
 /* ------------------------------------------------------- l'aperçu direct --- */
 
@@ -734,7 +759,12 @@ body:has(.journal:not([hidden])) .atelier { padding-bottom: 160px; }
  * immédiate. */
 .voile {
   position: fixed; inset: 0; z-index: 40;
-  background: rgba(5, 7, 11, .78); backdrop-filter: blur(4px);
+  /* LE FLOU SE PAIE A CHAQUE IMAGE, SUR TOUT L'ECRAN.
+     `backdrop-filter` recalcule le fond a chaque trame tant que le panneau
+     bouge : c'est la seule ligne de ce fichier qui coute du GPU en continu.
+     Deux pixels separent le panneau du fond aussi bien que quatre, pour la
+     moitie du travail. */
+  background: rgba(5, 7, 11, .82); backdrop-filter: blur(2px);
   display: flex; align-items: flex-start; justify-content: center;
   padding: 8vh 20px 20px; overflow-y: auto;
 }
@@ -849,11 +879,22 @@ dl.cout dd { margin: 0; font-size: 17px; font-weight: 700; font-variant-numeric:
  * une interface à une seule chaîne. Le trait discret est donc permanent, et
  * l'accent ne sert plus qu'à confirmer le survol.
  */
+/* Le sélecteur de chaîne : il porte le NOM de la chaîne, sous le titre. Il se
+   lit comme du texte tant qu'on ne le cherche pas, et son chevron dit qu'il
+   ouvre quelque chose. */
 .lien-chaines {
-  font: inherit; color: inherit; background: none; border: 0; padding: 0;
-  cursor: pointer; border-bottom: 2px solid var(--bord);
+  display: inline-flex; align-items: center; gap: 6px;
+  font: inherit; font-size: 14px; color: var(--doux);
+  background: none; border: 0; padding: 2px 0 0;
+  cursor: pointer; max-width: 100%;
 }
-.lien-chaines:hover { border-bottom-color: var(--accent); }
+.lien-chaines #nomChaine {
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  border-bottom: 2px solid var(--bord);
+}
+.lien-chaines .chevron { font-size: 11px; opacity: .8; }
+.lien-chaines:hover { color: var(--texte); }
+.lien-chaines:hover #nomChaine { border-bottom-color: var(--accent); }
 
 .panneau {
   width: min(680px, 100%);
@@ -863,11 +904,19 @@ dl.cout dd { margin: 0; font-size: 17px; font-weight: 700; font-variant-numeric:
 .tete-panneau { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .tete-panneau h2 { margin: 0; }
 /* Fermer n est pas une action du panneau, c est sa sortie. Sans bordure, il
-   cesse de disputer le titre. */
-.tete-panneau > .bouton.discret { border-color: transparent; color: var(--doux); }
-.tete-panneau > .bouton.discret:hover:not(:disabled) {
+   cesse de disputer le titre. Le selecteur ne pouvait plus etre un enfant
+   DIRECT : les fleches de navigation ont mis « Fermer » dans un groupe, et
+   « Fermer » avait repris sa bordure sans que rien ne l ait demande. */
+.tete-panneau .bouton.discret { border-color: transparent; color: var(--doux); }
+.tete-panneau .bouton.discret:hover:not(:disabled) {
   border-color: var(--bord-vif); color: var(--texte); background: none;
 }
+/* Les deux fleches sont des chevrons, pas des mots : elles gardent une largeur
+   fixe pour ne pas faire danser le titre quand l une se desactive. */
+#btnPlanPrecedent, #btnPlanSuivant {
+  min-width: 2.4em; font-size: 20px; line-height: 1; padding: 6px 0;
+}
+#btnPlanPrecedent:disabled, #btnPlanSuivant:disabled { opacity: 0.3; }
 
 /* LES DEUX MENUS D ENTREE SONT PLUS ETROITS QUE LES PANNEAUX DE TRAVAIL.
 
@@ -907,8 +956,29 @@ dl.cout dd { margin: 0; font-size: 17px; font-weight: 700; font-variant-numeric:
 .chaine.courante { border-color: var(--bord-vif); background: var(--panneau-3); }
 .chaine.bloquee { opacity: .72; }
 .chaine-texte { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-.chaine-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+/* LA RANGÉE DE BOUTONS NE SE COUPE PAS, LE TEXTE NON PLUS.
+   `flex-wrap` laissait les boutons passer à la ligne dès que la colonne se
+   resserrait, et la colonne se resserrait parce que les boutons prenaient toute
+   la largeur : les deux se poussaient l'un l'autre. Ils tiennent sur une ligne,
+   et c'est le NOM de la chaîne qui cède s'il faut céder — il a une ellipse pour
+   ça. */
+.chaine-actions {
+  display: flex; align-items: center; gap: 10px;
+  flex-wrap: nowrap; justify-content: flex-end; white-space: nowrap;
+}
+/* Ce qui manque à la chaîne : une ligne à elle, sous le nom et la mesure. */
 .chaine-manque { font-size: 14px; color: var(--attention); }
+.chaine-texte .chaine-manque { margin-top: 1px; }
+.chaine-nom, .chaine-meta {
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* Sous 560 px, la ligne se plie en deux étages plutôt que d'écraser l'un des
+   deux : les boutons passent sous le texte, alignés à gauche comme lui. */
+@media (max-width: 560px) {
+  .chaine { grid-template-columns: minmax(0, 1fr); }
+  .chaine-actions { justify-content: flex-start; flex-wrap: wrap; }
+}
 
 /* TU ES ICI SE MONTRE, IL NE S ECRIT PAS TROIS FOIS.
 
@@ -994,6 +1064,26 @@ dl.cout dd { margin: 0; font-size: 17px; font-weight: 700; font-variant-numeric:
 
 .modes { margin-top: 26px; border-top: 1px solid var(--bord); padding-top: 22px; }
 .modes h3 { margin: 0 0 14px; font-size: 17px; }
+/* EN TÊTE DE L ETAPE 6, LE TRAIT DE SEPARATION NE SEPARE RIEN.
+   Le bloc suivait le format à l étape 1, et le trait disait  autre question .
+   Il ouvre maintenant l étape : il n a plus rien au-dessus de lui. */
+.modes.tete { margin-top: 0; border-top: 0; padding-top: 0; }
+
+/* Ce qui se paie, groupé : n existe qu en création assistée. */
+.assistee { display: flex; flex-direction: column; gap: 14px; }
+.assistee .note { margin: 0; }
+
+/* LE BUDGET DE GENERATION : un curseur, son chiffre, et le prix juste dessous.
+   Le chiffre est en chasse fixe et reserve sa place — sans ca la ligne sautait
+   d un pixel a chaque cran, et on croyait que le curseur accrochait. */
+.budget-ia { display: flex; flex-direction: column; gap: 2px; }
+.budget-ia .curseur { display: flex; align-items: center; gap: 14px; }
+.budget-ia input[type="range"] { flex: 1 1 auto; max-width: 22em; margin: 0; }
+.budget-ia output {
+  min-width: 2.2em; text-align: right;
+  font-size: 19px; font-weight: 700; font-variant-numeric: tabular-nums;
+  color: var(--texte);
+}
 /* Les cartes de mode portent une phrase, pas une dimension : elles respirent
    plus que celles du format. */
 #cartesMode .carte { align-items: flex-start; text-align: left; min-height: 0; padding: 16px 18px; }
@@ -1085,10 +1175,22 @@ dl.cout dd { margin: 0; font-size: 17px; font-weight: 700; font-variant-numeric:
  * et l'interface paraît alors plus lente qu'avant l'animation.
  */
 
+/* LE BUDGET D'ANIMATION EST UN BUDGET DE LATENCE — 7 septembre 2026.
+ *
+ * Mesure du chemin complet d'un clic : le JavaScript rend en 2 a 19 ms, tout le
+ * reste est de l'animation. Ouvrir le menu des chaines coutait 280 ms de
+ * panneau, puis jusqu'a 320 ms de lignes qui arrivent en decale — six cents
+ * millisecondes de mouvement APRES que l'ecran soit deja pret. C'est ce qu'on
+ * lit comme « ce n'est pas instantane » : rien ne rame, tout attend.
+ *
+ * Les durees sont donc ramenees sous le seuil ou une transition cesse d'etre
+ * une attente. Au-dela d'environ 150 ms, on voit l'animation ; en dessous, on
+ * voit le resultat. On garde le mouvement — il dit le sens, il situe — mais il
+ * ne se regarde plus. */
 :root {
-  --t-court: 140ms;
-  --t-moyen: 200ms;
-  --t-long: 280ms;
+  --t-court: 90ms;
+  --t-moyen: 130ms;
+  --t-long: 170ms;
   /* Entrer vite puis ralentir : c'est ce qui donne l'impression que l'objet
      arrive de lui-même. Sortir fait l'inverse — on s'en va, on n'insiste pas. */
   --entree: cubic-bezier(0, 0, .2, 1);
@@ -1124,7 +1226,8 @@ dl.cout dd { margin: 0; font-size: 17px; font-weight: 700; font-variant-numeric:
 .carte:active,
 .marche:active { transform: translateY(1px) scale(.985); }
 .favori:active { transform: scale(.96); }
-.lien-chaines { transition: border-bottom-color var(--t-moyen) var(--duo); }
+.lien-chaines { transition: color var(--t-moyen) var(--duo); }
+.lien-chaines #nomChaine { transition: border-bottom-color var(--t-moyen) var(--duo); }
 
 /* --------------------------------------------- une commande qui travaille -- */
 /*
@@ -1159,14 +1262,21 @@ dl.cout dd { margin: 0; font-size: 17px; font-weight: 700; font-variant-numeric:
  * l'on revenait. Le sens du déplacement est la seule information que cette
  * animation transporte, et elle suffit à situer où l'on est dans la séquence.
  */
-.etape { animation: etapeEntre var(--t-long) var(--entree) both; }
+/* L'ETAPE PART DE .35 D'OPACITE, PAS DE ZERO.
+ *
+ * Elle partait de zero, sur 280 ms : pendant le premier dixieme de seconde,
+ * l'ecran etait VIDE apres le clic. Le sens du deplacement — la seule chose que
+ * cette animation transporte — se lit aussi bien sur six pixels que sur douze,
+ * et il se lit sur un contenu deja visible. On voit maintenant l'etape arriver,
+ * on ne l'attend plus. */
+.etape { animation: etapeEntre var(--t-court) var(--entree) both; }
 @keyframes etapeEntre {
-  from { opacity: 0; transform: translate3d(0, 12px, 0); }
+  from { opacity: .35; transform: translate3d(0, 6px, 0); }
   to { opacity: 1; transform: none; }
 }
 .scene[data-sens="arriere"] .etape { animation-name: etapeEntreArriere; }
 @keyframes etapeEntreArriere {
-  from { opacity: 0; transform: translate3d(0, -12px, 0); }
+  from { opacity: .35; transform: translate3d(0, -6px, 0); }
   to { opacity: 1; transform: none; }
 }
 
@@ -1184,9 +1294,17 @@ dl.cout dd { margin: 0; font-size: 17px; font-weight: 700; font-variant-numeric:
 /* ------------------------------------------------- panneaux et dialogues -- */
 .voile { animation: voileEntre var(--t-moyen) var(--entree) both; }
 @keyframes voileEntre { from { opacity: 0; } to { opacity: 1; } }
-.panneau, .dialogue { animation: panneauEntre var(--t-long) var(--ressort) both; }
+/* LE RESSORT ETAIT LE PLUS COUTEUX DES TROIS.
+ *
+ * `--ressort` depasse sa cible puis revient : sur 280 ms, le panneau se voit
+ * OSCILLER avant de se poser, et on ne peut pas cliquer dedans pendant qu'il
+ * bouge sans viser une cible mouvante. Un panneau modal n'a rien a raconter en
+ * arrivant — il doit etre la. Il se pose maintenant droit, en 90 ms, sans
+ * changement d'echelle : agrandir un panneau plein ecran fait travailler le
+ * compositeur sur toute sa surface pour un effet que personne ne demande. */
+.panneau, .dialogue { animation: panneauEntre var(--t-court) var(--duo) both; }
 @keyframes panneauEntre {
-  from { opacity: 0; transform: translate3d(0, -14px, 0) scale(.97); }
+  from { opacity: 0; transform: translate3d(0, -8px, 0); }
   to { opacity: 1; transform: none; }
 }
 
@@ -1197,19 +1315,25 @@ dl.cout dd { margin: 0; font-size: 17px; font-weight: 700; font-variant-numeric:
  * lecture. Au-delà de la dixième, plus de décalage — sinon la dernière ligne
  * d'une liste de deux cents arriverait cinq secondes après la première.
  */
+/* LE DECALAGE PAR LIGNE EST RETIRE, ET C'EST LA PLUS GROSSE PRISE.
+ *
+ * Il valait vingt-cinq millisecondes par ligne « pour donner un sens de
+ * lecture ». Le raisonnement tenait sur une liste de cinq ; il ne tient pas sur
+ * les cent voix de la bibliotheque Fish, ou la sixieme ligne et toutes les
+ * suivantes attendaient 120 ms AVANT de commencer leur fondu de 200 ms. Soit
+ * un tiers de seconde entre le clic et une liste lisible — sur une liste qui
+ * etait deja entierement construite en memoire.
+ *
+ * Et l'oeil n'avait pas besoin de ce sens : il commence par le haut, decalage
+ * ou pas. On garde un fondu unique et court, qui dit « ceci vient de changer »
+ * sans faire attendre. */
 .liste-voix > *, .liste-chaines > *, .liste-videos > *, .liste-broll > * {
-  animation: ligneEntre var(--t-moyen) var(--entree) both;
+  animation: ligneEntre var(--t-court) var(--entree) both;
 }
 @keyframes ligneEntre {
-  from { opacity: 0; transform: translate3d(0, 6px, 0); }
+  from { opacity: 0; transform: translate3d(0, 4px, 0); }
   to { opacity: 1; transform: none; }
 }
-.liste-voix > *:nth-child(1), .liste-chaines > *:nth-child(1), .liste-videos > *:nth-child(1), .liste-broll > *:nth-child(1) { animation-delay: 0ms; }
-.liste-voix > *:nth-child(2), .liste-chaines > *:nth-child(2), .liste-videos > *:nth-child(2), .liste-broll > *:nth-child(2) { animation-delay: 25ms; }
-.liste-voix > *:nth-child(3), .liste-chaines > *:nth-child(3), .liste-videos > *:nth-child(3), .liste-broll > *:nth-child(3) { animation-delay: 50ms; }
-.liste-voix > *:nth-child(4), .liste-chaines > *:nth-child(4), .liste-videos > *:nth-child(4), .liste-broll > *:nth-child(4) { animation-delay: 75ms; }
-.liste-voix > *:nth-child(5), .liste-chaines > *:nth-child(5), .liste-videos > *:nth-child(5), .liste-broll > *:nth-child(5) { animation-delay: 100ms; }
-.liste-voix > *:nth-child(n+6), .liste-chaines > *:nth-child(n+6), .liste-videos > *:nth-child(n+6), .liste-broll > *:nth-child(n+6) { animation-delay: 120ms; }
 
 /* -------------------------------------------------------- l'envoi d'un rush */
 /*
@@ -1705,3 +1829,122 @@ dl.cout dd { margin: 0; font-size: 17px; font-weight: 700; font-variant-numeric:
   margin: 0 0 6px; font-size: 16px; line-height: 1.5;
   color: var(--texte); overflow-wrap: anywhere;
 }
+
+
+/* ---------------------------------------------- l'identité de la chaîne --- */
+/* Un formulaire long dans un panneau modal : il défile, ses sections se
+   distinguent, et les actions restent atteignables sans chercher. */
+.formulaire-identite { max-height: 52vh; overflow-y: auto; padding-right: 6px; margin: 14px 0; }
+.formulaire-identite h3 {
+  font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--doux); margin: 22px 0 8px; padding-top: 14px;
+  border-top: 1px solid var(--bord);
+}
+.formulaire-identite h3:first-child { border-top: 0; padding-top: 0; margin-top: 0; }
+.formulaire-identite > input[type="text"] { width: 100%; }
+.formulaire-identite input[type="color"] {
+  width: 54px; height: 32px; padding: 2px; cursor: pointer;
+  background: var(--panneau-2); border: 1px solid var(--bord); border-radius: 6px;
+}
+.cases-formats { display: flex; flex-wrap: wrap; gap: 10px 20px; margin-bottom: 12px; }
+.cases-formats label { display: flex; align-items: center; gap: 7px; font-size: 14.5px; }
+
+/* La ligne d'action du bandeau d'initialisation : le bandeau constate, ce
+   bouton agit. Il se détache du texte sans le couper en deux. */
+.ligne-action { margin: 14px 0 0; }
+.rappel-init .ligne-action .bouton { font-size: 15px; }
+
+/* Le bloc Fish de l'étape 3 : une autre provenance, donc un bloc à part. Le
+   mélanger aux filtres du catalogue ElevenLabs laisserait croire à un filtre de
+   plus, alors que ce sont deux moteurs qui ne font pas le même métier. */
+.bloc-fish, .bloc-favoris {
+  border: 1px solid var(--bord); border-radius: var(--r);
+  background: var(--panneau-2); padding: 14px 16px; margin: 4px 0 20px;
+}
+.bloc-fish h3, .bloc-favoris h3 { margin: 0 0 6px; font-size: 15px; }
+
+/* LES FAVORITES SE VOIENT SANS SE CRIER DESSUS.
+   Le bloc est en tête d'écran et n'y reste que s'il porte quelque chose : une
+   bordure ambrée le distingue des deux catalogues sans en faire une alerte. */
+.bloc-favoris { border-color: #6b5a2a; background: #1b1710; }
+.bloc-favoris h3 { color: #f2dfae; }
+.bloc-favoris .liste-voix { max-height: 300px; }
+
+/* L'étoile : un bouton, pas une décoration. Elle a la surface d'un doigt et
+   n'emprunte rien au style des autres boutons — c'est une bascule, pas une
+   action qui part faire quelque chose. */
+.etoile {
+  border: 0; background: none; cursor: pointer; padding: 2px 4px;
+  font-size: 19px; line-height: 1; color: var(--doux);
+  transition: color var(--t-court) var(--duo), transform var(--t-court) var(--duo);
+}
+.etoile:hover { color: #f2c14e; transform: scale(1.12); }
+.etoile.active { color: #f2c14e; }
+.etoile:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.bloc-fish .filtres { margin-top: 10px; align-items: end; }
+
+/* Le titre de groupe dans la liste des voix Fish : « Mes voix » d'un côté, la
+   bibliothèque publique de l'autre. Deux provenances, pas deux natures. */
+.groupe-voix {
+  font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--doux); margin: 12px 0 2px;
+}
+.groupe-voix:first-child { margin-top: 0; }
+.voix-texte { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.voix-actions { display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+/* Le champ de phrase prend la place qui reste : c'est ce qu'on relit avant de
+   lancer, pas une case de plus. */
+.filtres .pousse { flex: 1 1 340px; }
+
+/* Les prises d'une meme video, une par ligne. Jointes par des points elles
+   ressemblaient a un seul fichier au nom long ; empilees, on voit qu'il y en a
+   trois — et on voit ce qu'on peut en faire. */
+.liste-prises { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+.prise-ligne {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  border: 1px solid var(--bord); border-radius: var(--r);
+  background: var(--panneau-2); padding: 8px 12px;
+}
+.prise-nom { font-family: var(--mono, ui-monospace, monospace); font-size: 14.5px; }
+
+/* Le trousseau : un service par bloc, ses cles en lignes. Une cle au frigo se
+   voit — c'est la seule information qui change un geste. */
+.liste-cles { display: flex; flex-direction: column; gap: 14px; margin: 16px 0 22px; max-height: 44vh; overflow-y: auto; padding-right: 6px; }
+.service-cles h4 { margin: 0 0 6px; font-size: 15px; }
+.service-cles .role { font-size: 13.5px; color: var(--doux); margin: 0 0 8px; }
+.cle-ligne {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  border: 1px solid var(--bord); border-radius: var(--r);
+  background: var(--panneau-2); padding: 7px 12px; margin-bottom: 6px;
+}
+.cle-ligne.frigo { border-color: #5c4a22; background: #221c10; }
+.cle-masque { font-family: ui-monospace, monospace; font-size: 14px; }
+.cle-etat { font-size: 13px; color: var(--doux); }
+.cle-ligne.frigo .cle-etat { color: var(--attention); }
+
+/* Le champ de la cle prend toute la largeur du panneau : une cle fait
+   soixante caracteres, un champ de deux cents pixels en montre huit et on ne
+   peut pas relire ce qu'on vient de coller. */
+#voileCles #cleValeur { width: 100%; display: block; margin-bottom: 4px; }
+#voileCles h3 { font-size: 15px; margin: 18px 0 8px; }
+
+/* Un plan dont le fond avalerait les sous-titres. La seule chose qu'on sache
+   mesurer d'un plan — le hors-sujet, lui, n'a aucun signal. */
+.plan-clair {
+  display: block; font-size: 13px; color: var(--attention);
+  margin-top: 3px; line-height: 1.35;
+}
+
+/* Un plan généré : on doit pouvoir le distinguer d'un plan de banque sans
+   ouvrir le fichier — et savoir par quel modèle, puisque le prix va de un à
+   soixante. */
+.plan-genere {
+  display: block; font-size: 13px; color: var(--accent-clair);
+  margin-top: 3px;
+}
+/* DEUX FACONS D AVOIR ETE GENERE, ET ELLES NE VALENT PAS PAREIL.
+   Le script a designe ce plan-la, ou la banque n avait rien. Le premier est une
+   decision qu on peut juger et corriger ; le second est un accident. Le survol
+   donne la raison. */
+.plan-genere.choisi { color: var(--accent-clair); font-weight: 700; }
+.plan-genere.choisi::before { content: '★ '; }

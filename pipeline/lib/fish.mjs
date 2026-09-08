@@ -119,9 +119,21 @@ export async function voix() {
  * la voix de quelqu'un qui n'a rien demandé est une autre chose que choisir un
  * timbre. L'écran affiche la liste, il ne trie pas à ta place.
  */
-export async function voixPubliques({ langue = 'fr', combien = 40, recherche = null } = {}) {
+export async function voixPubliques({ langue = 'fr', combien = 100, recherche = null, page = 1 } = {}) {
+  // LA BIBLIOTHÈQUE NE SE CHARGE PAS D'UN COUP, ET « TOUTES » N'EXISTE PAS.
+  //
+  // Fish plafonne une page à cent entrées. On en demandait quarante — c'était
+  // arbitraire, et ça laissait croire que la bibliothèque en contenait
+  // quarante. On prend donc le maximum, et on expose la PAGE : l'écran charge
+  // la suite quand on la demande, comme il le fait déjà pour ElevenLabs.
+  //
+  // La RECHERCHE part au serveur plutôt que de filtrer ce qui est déjà chargé.
+  // Filtrer en local ne cherche que dans les cent premières : taper un nom qui
+  // existe à la trois-centième position ne rendait rien, et on en concluait
+  // que la voix n'existait pas.
   const q = new URLSearchParams({
-    page_size: String(Math.min(100, combien)),
+    page_size: String(Math.max(1, Math.min(100, combien))),
+    page_number: String(Math.max(1, page)),
     sort_by: 'task_count',
   })
   if (langue) q.set('language', langue)

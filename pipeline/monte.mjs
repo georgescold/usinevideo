@@ -36,7 +36,7 @@ import { resoudBroll } from './lib/medias.mjs'
 import { remplaceUnPlan } from './lib/plan-broll.mjs'
 import { sonde } from './lib/ffmpeg.mjs'
 import { transcris, corrigeParLeScript } from './lib/whisper.mjs'
-import { voixPour, reglagesDeVoix } from './lib/choix-voix.mjs'
+import { voixPour, reglagesDeVoix, enregistreEmploi } from './lib/choix-voix.mjs'
 
 const { options, positionnels } = litArgs()
 
@@ -63,6 +63,22 @@ npm run monte -- <slug> [options]
                           (défaut : config de la chaîne)
   --modele=<id>           raccourci : on reconnaît si c'est un modèle de
                           voix entraîné ou un modèle whisper, et on le dit
+  --ouverture=ia          le PREMIER plan généré par IA, les autres en banque
+  --comble=ia             génère un plan là où la banque n'a RIEN rendu, au lieu
+                          de laisser un trou — le prix dépend du modèle
+                          (0,04 $ à 2,36 $ le plan de 5 s), et il est annoncé
+  --comble-max=3          plafond de plans comblés — au-delà, le trou reste
+  --plans-ia=5            budget de plans générés pour CE montage, placés là où
+                          ils servent le plus : le script est lu en entier, et
+                          la génération va aux passages qu'une banque d'images
+                          ne peut pas servir. Ce qui reste du budget comble les
+                          trous. Implique --comble=ia
+  --modele-video=<id>     quel modèle génère les plans, pour CE montage
+                          (défaut : celui de la chaîne — voir « Identité »)
+  --refais-plans          écarte les plans que CETTE vidéo emploie déjà, pour
+                          en obtenir d'autres. Sans lui, un remontage redonne
+                          les mêmes : la banque rend ses candidats dans le
+                          même ordre
   --oui                   passe les seuils de confirmation
 
 Sortie : videos/<slug>/05-montage/plan.json
@@ -302,6 +318,15 @@ await principal(async () => {
     // par defaut depuis le 28 aout 2026 — voir l'etape 2.
     const propre = audioCoupe
 
+    // CE QUI SERT VRAIMENT SE NOTE PENDANT QU'ON LE FAIT.
+    //
+    // Reconstituer après coup « avec quoi cet audio a-t-il été converti » est
+    // impossible : le mode de la chaîne a pu changer depuis, et le timbre
+    // ElevenLabs mis de côté peut n'avoir jamais servi. Chaque branche remplit
+    // donc ce qu'elle sait, et le tout est écrit à la fin — voir
+    // `enregistreEmploi` dans lib/choix-voix.mjs.
+    const emploi = { mode: modeVoix }
+
     if (modeVoix === 'sts') {
       const { changeDeVoix } = await import('./lib/elevenlabs.mjs')
       const minutes = coupe.dureeMs / 60000
@@ -340,6 +365,12 @@ await principal(async () => {
       // monde a leur cible, et le faire ici ne ferait qu'ecraser la dynamique
       // deux fois.
       await changeDeVoix(propre, audioFinal, { voiceId: choisie.voice_id, ...reglages })
+      Object.assign(emploi, {
+        voice_id: choisie.voice_id,
+        nom: choisie.nom ?? null,
+        origine: choisie.origine ?? null,
+        ...reglages,
+      })
     } else if (modeVoix === 'local') {
       // LE MÊME GESTE QU'EN `sts`, MAIS SANS RIEN QUI SE PAIE.
       //
@@ -360,6 +391,11 @@ await principal(async () => {
       )
       const transpose = nombre(options, 'transpose', chaine?.voix?.transpose ?? 0)
       if (transpose) journal.detail(`Transposition : ${transpose > 0 ? '+' : ''}${transpose} demi-tons`)
+      Object.assign(emploi, {
+        modele_local: modele.id,
+        origine: modele.origine ?? null,
+        transpose,
+      })
 
       await convertitAvecModele(propre, audioFinal, modele, {
         transpose,
@@ -400,10 +436,13 @@ await principal(async () => {
         gainDb: chaine?.audio?.musique_gain_db ?? -16,
       })
       fs.renameSync(avecMusique, audioFinal)
+      emploi.musique = path.basename(musique)
       journal.ok(`Musique posée sous la voix (${path.basename(musique)}), en atténuation automatique.`)
     } else if (chaine?.audio?.musique) {
       journal.attention(`Musique déclarée mais introuvable : ${chaine.audio.musique}`)
     }
+
+    enregistreEmploi(slug, emploi)
   } else {
     journal.etape(3, 6, `voix finale déjà là (--depuis=voix pour la refaire)`)
   }
@@ -553,12 +592,123 @@ await principal(async () => {
   // ils doivent être sur le disque avant que Remotion ne les lise.
   const pubBroll = path.join(v.montage, 'public', 'broll')
   const { largeur: L, hauteur: H } = M.dimensionsDe(script.format)
+  // COMBLER LES TROUS PAR L'IA — ET LE PLAFOND EST LE VRAI SUJET.
+  //
+  // Le nombre de trous n'est connu qu'APRÈS avoir interrogé la banque, plan par
+  // plan : on ne peut donc pas chiffrer le devis avant de partir. Ce qu'on peut
+  // borner, c'est le pire cas — et c'est ce qu'on approuve. Sans plafond, une
+  // vidéo dont la banque rate vingt requêtes coûterait 3,60 $ sans qu'on l'ait
+  // dit une seule fois, ce que le §7 interdit.
+  // LE MODÈLE SE CHOISIT AU MOMENT DE GÉNÉRER, PAS SEULEMENT DANS L'IDENTITÉ.
+  //
+  // Celui de la chaîne est un défaut ; l'essai, lui, se fait sur UNE vidéo. On
+  // veut pouvoir refaire un plan d'ouverture avec un modèle plus cher sans
+  // basculer toute la chaîne dessus — et voir le prix avant, puisqu'il va de
+  // 0,04 $ à 2,36 $ le plan.
+  if (options['modele-video'] && options['modele-video'] !== true) {
+    const { MODELES_PLAN } = await import('./lib/fal.mjs')
+    const id = String(options['modele-video'])
+    if (!MODELES_PLAN[id]) {
+      throw new Error(
+        `Modèle vidéo inconnu : « ${id} ».
+  Connus : ${Object.keys(MODELES_PLAN).join(', ')}`
+      )
+    }
+    // On le pose dans la carte lue par le reste du montage : `modeleDePlan()`
+    // regarde `identite_visuelle.modele_video`, et c'est le seul chemin.
+    chaine.identite_visuelle = { ...(chaine.identite_visuelle ?? {}), modele_video: id }
+    journal.detail(`modèle vidéo pour ce montage : ${id}`)
+  }
+
+  // UN BUDGET, DEUX FAÇONS DE LE DÉPENSER.
+  //
+  // `--comble=ia` RÉAGIT : il ne se déclenche que sur le vide laissé par la
+  // banque. `--plans-ia=<n>` CHOISIT : le script est lu en entier, et le budget
+  // va d'abord aux passages qu'une banque d'images ne peut pas servir — un
+  // mécanisme abstrait, un chiffre précis, une émotion nommée. Ce qui reste
+  // comble les trous, comme avant.
+  //
+  // Les deux partagent le même plafond, parce que c'est le même argent : deux
+  // budgets séparés auraient fait approuver un devis et en payer un autre.
+  const plansIa = Math.max(0, Math.min(30, nombre(options, 'plans-ia', 0)))
+  const comble = options.comble === 'ia' || plansIa > 0 ? 'ia' : null
+  const combleMax = plansIa > 0
+    ? plansIa
+    : comble ? Math.max(0, Math.min(30, nombre(options, 'comble-max', 3))) : 0
+  // LE PRIX D'UN PLAN GÉNÉRÉ N'EST PAS UN NOMBRE, C'EST UNE FONCTION DU MODÈLE.
+  //
+  // Il était écrit 0,18 $ en dur, ici et vingt lignes plus bas. C'était le tarif
+  // d'un modèle qui n'est plus au catalogue, et il est faux des quatre qui y
+  // sont : le plan de cinq secondes va de 0,04 $ (LTX) à 2,36 $ (Seedance 2.5).
+  // Un devis figé annonce donc jusqu'à soixante fois trop peu, ce que le §7
+  // interdit. L'option --modele-video est déjà appliquée à `chaine` au-dessus.
+  const { modeleDePlan, coutDUnPlan, MODELES_PLAN: CATALOGUE } = await import('./lib/fal.mjs')
+  const modelePlan = modeleDePlan(chaine)
+  const prixDUnPlan = coutDUnPlan(modelePlan, 5)
+  if (comble) {
+    journal.attention(
+      `Plans générés : jusqu'à ${combleMax}, soit ${(combleMax * prixDUnPlan).toFixed(2)} $ au ` +
+        `maximum avec ${CATALOGUE[modelePlan]?.nom ?? modelePlan}. ` +
+        (plansIa > 0
+          ? `Ils iront là où le script dit que la banque ne peut rien.`
+          : `Ils ne serviront que là où la banque ne rend rien.`) +
+        ` Le journal dira combien ont servi.`
+    )
+  }
+  // LES PLANS DÉJÀ EMPLOYÉS, quand on demande à en changer.
+  //
+  // Ils se lisent AVANT que le plan soit réécrit : après, ils n'existent plus.
+  const dejaEmployes = drapeau(options, 'refais-plans')
+    ? (litJson(v.plan, null)?.evenements ?? [])
+        .filter((e) => e.type === 'broll' && e._mediaId)
+        .map((e) => e._mediaId)
+    : []
+  if (dejaEmployes.length) {
+    journal.info(`${dejaEmployes.length} plan(s) déjà employés par cette vidéo seront écartés.`)
+  }
+
+  // OÙ LA GÉNÉRATION SERT LE PLUS — LU DANS LE SCRIPT, AVANT DE DÉPENSER.
+  //
+  // Un plan seul ne dit pas s'il est hors sujet ; le script entier dit quels
+  // passages une banque d'images ne peut pas servir. La lecture coûte moins
+  // d'un centime et ne génère rien : elle rend une liste de plans et une
+  // requête réécrite pour chacun. Sans cerveau joignable, on retombe sur le
+  // comblage — et on le dit.
+  let choixIa = new Map()
+  if (plansIa > 0) {
+    journal.info(`Lecture du script pour placer les ${plansIa} plan(s) générés…`)
+    const { choisitLesPlansAGenerer } = await import('./lib/choix-ia.mjs')
+    const r = await choisitLesPlansAGenerer(evenements, {
+      budget: plansIa,
+      script,
+      mots: transcript.mots,
+    })
+    choixIa = r.choix
+  }
+
   const broll = await resoudBroll(evenements, {
     largeur: L,
     hauteur: H,
     dossier: pubBroll,
     direction: chaine?.identite_visuelle?.direction_plans ?? null,
+    comble,
+    combleMax,
+    aGenerer: choixIa,
+    blocs: script?.blocs ?? [],
+    exclus: dejaEmployes,
+    // CELUI QU'ON VIENT D'ANNONCER, PAS CELUI DU FICHIER. `--modele-video=` est
+    // posé dans `chaine` en mémoire vingt lignes plus haut ; sans ce passage,
+    // la génération relisait `config/chaine.json` et employait le modèle de la
+    // chaîne — on payait le prix affiché pour un autre modèle.
+    modele: modelePlan,
   })
+  if (broll.combles) {
+    journal.ok(
+      `${broll.combles} plan(s) générés sur ${combleMax} autorisé(s) — ` +
+        `${(broll.combles * prixDUnPlan).toFixed(2)} $ dépensés. ` +
+        `Le budget non employé n'est pas facturé.`
+    )
+  }
   // UN PLAN DE COUPE SANS FICHIER N'ENTRE PAS DANS LE PLAN.
   //
   // La resolution ne traite que les evenements qui portent une requete. Un
@@ -654,15 +804,20 @@ await principal(async () => {
   // La banque rate souvent l'émotion précise qu'un premier plan réclame (§10) :
   // le détecteur trouve un visage, pas ce qu'il porte. La génération, elle,
   // reçoit l'intention du bloc et demande un gros plan de visage avec l'émotion
-  // lisible. Ça se paie — dix-huit centimes — donc ça se demande : `--ouverture=ia`
-  // au terminal, une case dans l'atelier, et le devis avant de partir. Les
-  // trente plans suivants restent en banque : trente portraits générés
-  // d'affilée sont un diaporama, et trente fois dix-huit centimes une facture.
+  // lisible. Ça se paie — un plan, au tarif du modèle retenu — donc ça se
+  // demande : `--ouverture=ia` au terminal, une case dans l'atelier, et le prix
+  // avant de partir. Les trente plans suivants restent en banque : trente
+  // portraits générés d'affilée sont un diaporama, et trente plans une facture.
   if (options.ouverture === 'ia') {
-    journal.info(`Ouverture générée par IA…`)
+    journal.info(
+      `Ouverture générée par IA — ${prixDUnPlan.toFixed(2)} $ avec ` +
+        `${CATALOGUE[modelePlan]?.nom ?? modelePlan}…`
+    )
     const r = await remplaceUnPlan(slug, 1, {
       source: 'ia',
       direction: chaine?.identite_visuelle?.direction_plans ?? null,
+      // Celui qu'on vient d'annoncer sur la ligne du dessus.
+      modele: modelePlan,
     })
     journal.ok(`Plan d'ouverture : ${r.apres}`)
   }

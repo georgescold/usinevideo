@@ -154,6 +154,58 @@ export async function mesureLAccroche(fichier, { parSeconde = 4, largeur = 160 }
   }
 }
 
+/**
+ * La luminance de la BANDE où se posent les sous-titres.
+ *
+ * LE HORS-SUJET NE SE MESURE PAS. LA LISIBILITÉ, SI.
+ *
+ * C'est la différence avec le choix d'un plan : « est-ce que cette image parle
+ * du bon sujet » n'a aucun signal, mais « du texte blanc va-t-il se lire
+ * là-dessus » en a un, et un seul — la clarté du fond, à l'endroit précis où le
+ * texte se pose. Un plan sur fond blanc avale des sous-titres blancs, et ça ne
+ * se voit qu'au rendu, huit minutes plus tard.
+ *
+ * ON MESURE LA BANDE, PAS L'IMAGE. Une image globalement sombre peut avoir un
+ * bas surexposé — un plafond de bureau, un ciel, une table blanche. La moyenne
+ * de l'image entière dirait « sombre » et le sous-titre disparaîtrait quand
+ * même. On découpe donc exactement la hauteur où le texte atterrit, d'après le
+ * `positionBas` du thème.
+ *
+ * Relevé sur 86 plans d'un montage réel, le 7 septembre 2026 : médiane 120,
+ * quartile haut 149, décile haut 167, maximum 207.
+ */
+export async function luminanceDeLaBande(
+  fichier,
+  { positionBas = 22, hauteurPct = 18, parSeconde = 2 } = {}
+) {
+  if (!fs.existsSync(fichier)) return null
+  const haut = `ih*(100-${positionBas}-${hauteurPct / 2})/100`
+  const filtre =
+    `fps=${parSeconde},crop=iw:ih*${hauteurPct}/100:0:${haut},signalstats,metadata=print:file=-`
+  let r
+  try {
+    r = await lance(FFMPEG, ['-hide_banner', '-v', 'error', '-i', fichier, '-vf', filtre, '-f', 'null', '-'])
+  } catch {
+    return null
+  }
+  if (r.code !== 0) return null
+  const ys = [...r.stdout.matchAll(/signalstats\.YAVG=([\d.]+)/g)]
+    .map((m) => Number(m[1]))
+    .filter(Number.isFinite)
+  if (!ys.length) return null
+  const moyenne = ys.reduce((a, b) => a + b, 0) / ys.length
+  return { moyenne: Math.round(moyenne), pic: Math.round(Math.max(...ys)), vues: ys.length }
+}
+
+/**
+ * Au-delà, un texte blanc ne tient plus — même avec son contour noir.
+ *
+ * 170 est le décile haut du relevé : le seuil signale environ un plan sur dix,
+ * ceux qui sont vraiment clairs, sans noyer l'alerte dans la moitié du montage.
+ * En dessous, le contour d'un pixel suffit à détacher les lettres.
+ */
+export const BANDE_CLAIRE = 170
+
 /** Le tiers bas de chaque signal, relevé sur un montage réel. Voir ci-dessus. */
 export const ACCROCHE_BASSE = { mouvement: 2, contraste: 35, couleur: 4 }
 

@@ -33,7 +33,7 @@ import { journal, duree } from './lib/journal.mjs'
 import { litArgs, aide, drapeau, principal } from './lib/args.mjs'
 import { estVertical, prendsLesRushes, estPlanDeCoupe, ECART_MAX_MS, QUEUE_S } from './lib/montage.mjs'
 import { reglagesDe } from './lib/soustitres.mjs'
-import { voixPour } from './lib/choix-voix.mjs'
+import { voixPour, emploiDe } from './lib/choix-voix.mjs'
 
 // ---------------------------------------------------------------------------
 //  Les dates de modification, et la raison de ne pas leur faire aveuglément
@@ -411,12 +411,42 @@ export function etatDe(slug) {
   // -- voix ------------------------------------------------------------------
   let voix = { voice_id: null, nom: null, origine: null }
   let voixSansObjet = false
+  let modeVoix = null
   try {
     const chaine = litChaine()
-    // En mode `brute` la prise part telle quelle : aucune voix ElevenLabs n'est
-    // attendue, et réclamer un choix bloquerait l'étape suivante pour rien.
-    voixSansObjet = (chaine?.voix?.mode ?? 'sts') === 'brute'
+    // UN IDENTIFIANT ELEVENLABS N'EST RÉCLAMÉ QUE PAR ELEVENLABS.
+    //
+    // La règle ne valait que pour `brute`, et c'était trop étroit d'un mode :
+    // `local` convertit avec un modèle RVC entraîné de `marque/voix/`, `tts`
+    // fait lire Fish, `avatar` passe par HeyGen. Aucun des trois ne consulte le
+    // catalogue ElevenLabs, et pourtant l'étape « Voix » restait « absent »
+    // chez eux — donc l'étape « Audio complet » restait bloquée derrière un
+    // « Retiens d'abord une voix » qui renvoyait vers ce catalogue.
+    //
+    // Le défaut mordait dans le cas le plus courant de cette chaîne, dont le
+    // mode est justement `local` : on déposait une prise, on voulait la
+    // convertir gratuitement avec son propre modèle, et l'atelier exigeait
+    // d'abord de retenir un timbre payant dont il n'allait rien faire. C'est ce
+    // qu'on a lu comme « je ne peux pas utiliser ma voix ».
+    //
+    // On énumère donc le seul mode concerné plutôt que ses contraires : une
+    // liste de ce qu'on exclut se re-périme au mode suivant.
+    modeVoix = chaine?.voix?.mode ?? 'sts'
+    voixSansObjet = modeVoix !== 'sts'
     voix = voixPour(slug)
+  } catch {
+    // Pas de config/chaine.json : la chaîne n'est pas initialisée. L'état reste
+    // lisible, il dit simplement qu'aucune voix n'est retenue.
+  }
+
+  // CE QUI A SERVI, À CÔTÉ DE CE QUI EST PRÉVU — et ce ne sont pas les mêmes.
+  //
+  // Écrit par la conversion (`monte.mjs`), donc absent sur tout audio fabriqué
+  // avant que ce fichier existe. `null` veut dire « on ne sait pas », jamais
+  // « rien n'a servi » : l'écran doit le dire ainsi plutôt que d'inventer.
+  let voixEmployee = null
+  try {
+    voixEmployee = emploiDe(slug)
   } catch {
     // Pas de config/chaine.json : la chaîne n'est pas initialisée. L'état reste
     // lisible, il dit simplement qu'aucune voix n'est retenue.
@@ -472,16 +502,27 @@ export function etatDe(slug) {
       verdict: voix.voice_id || voixSansObjet ? 'fait' : 'absent',
       voiceId: voix.voice_id,
       nom: voix.nom,
-      origine: voixSansObjet && !voix.voice_id ? 'sans objet (voix brute)' : voix.origine,
+      // « Sans objet » se dit AVEC SON MOTIF : « voix brute » recouvrait les
+      // quatre modes et laissait croire à une prise non convertie là où un
+      // modèle local allait travailler.
+      origine:
+        voixSansObjet && !voix.voice_id
+          ? `sans objet (mode ${modeVoix})`
+          : voix.origine,
       // Les réglages de conversion sont rendus BRUTS, `null` compris : c'est
       // ainsi que l'écran distingue « réglé à zéro » — un choix très expressif,
       // parfaitement légitime — de « pas encore réglé ». Les confondre ferait
       // repartir les curseurs sur un défaut alors qu'une valeur existe.
       stabilite: voix.stabilite ?? null,
       similarite: voix.similarite ?? null,
+      // Le moteur de la chaîne, pour que l'écran sache si l'identifiant
+      // ElevenLabs ci-dessus est le sujet ou une réserve.
+      mode: modeVoix,
     },
     audio: {
       verdict: vAudio,
+      // Ce que la conversion a réellement employé — voir plus haut.
+      voix: voixEmployee,
       chemin: dateDe(audioFinal) === null ? null : relatif(audioFinal),
       dureeS: dureeMediaS(audioFinal),
       // LA DATE DU FICHIER, PARCE QUE SON ADRESSE NE CHANGE JAMAIS.

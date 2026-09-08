@@ -24,6 +24,7 @@
  */
 
 import fs from 'node:fs'
+import path from 'node:path'
 import { CHEMINS, litJson, ecritJson } from '../pipeline/lib/chemins.mjs'
 import { journal, masque } from '../pipeline/lib/journal.mjs'
 import { litArgs, aide, drapeau, principal } from '../pipeline/lib/args.mjs'
@@ -50,6 +51,9 @@ node outils/cles.mjs [options]
   --active=<service> --label=<nom>      la remet en service
   --desactive=<service> --label=<nom>   la met de côté sans la supprimer
   --degele[=<service>]                  vide le frigo des clés écartées
+
+  --donne-a=<dossier>        copie CE trousseau dans une autre chaîne
+                             (mêmes comptes, mêmes quotas, un seul solde)
 
 Services connus : apify, elevenlabs, pexels, pixabay, heygen.
 Une clé n'est jamais affichée en entier, et se désigne par son étiquette.
@@ -151,10 +155,27 @@ function etat() {
   })
 }
 
-/** Les quotas réels : un appel réseau par service qui sait en rendre compte. */
+/**
+ * Les quotas réels : un appel réseau par service qui sait en rendre compte.
+ *
+ * LES QUATRE SERVICES SE LISENT EN MÊME TEMPS, PAS L'UN APRÈS L'AUTRE.
+ *
+ * Quatre `await` à la file mettaient 4,6 s — mesuré le 8 septembre 2026 — pour
+ * quatre lectures qui ne dépendent en rien les unes des autres. Et ce n'était
+ * pas seulement un en-tête un peu lent : l'atelier relit les soldes à chaque
+ * retour dans la fenêtre, et rouvrir le menu des chaînes EST un retour dans la
+ * fenêtre. Le garde « travail en cours » de `/api/chaines/ouvre` attendait donc
+ * la fin de CETTE lecture avant de basculer — 5,03 s mesurées sur le clic, dont
+ * 4,89 s de quotas. La latence à l'ouverture d'une chaîne était intégralement
+ * là, et elle n'avait rien à voir avec la chaîne visée.
+ *
+ * `Promise.all` ramène le total au plus lent des quatre. Chaque branche garde
+ * son propre `try` : un service qui tombe ne doit pas emporter les trois autres.
+ */
 async function quotas() {
   const sortie = {}
 
+  const apify = (async () => {
   try {
     const { etatPool } = await import('../pipeline/lib/apify.mjs')
     const p = await etatPool()
@@ -171,7 +192,9 @@ async function quotas() {
   } catch (e) {
     sortie.apify = { erreur: e.message.split('\n')[0] }
   }
+  })()
 
+  const elevenlabs = (async () => {
   try {
     const el = await import('../pipeline/lib/elevenlabs.mjs')
     const p = await el.etatPool()
@@ -196,11 +219,13 @@ async function quotas() {
   } catch (e) {
     sortie.elevenlabs = { erreur: e.message.split('\n')[0] }
   }
+  })()
 
   // FAL SE COMPTE EN DOLLARS, PAS EN CRÉDITS NI EN MINUTES.
   //
   // Chaque service a son unité, et les traduire en une seule les rendrait tous
   // faux. On rend donc ce que le service dit, avec son unité.
+  const fal = (async () => {
   try {
     const { soldeFal } = await import('./fal-video.mjs')
     const reste = await soldeFal()
@@ -216,7 +241,46 @@ async function quotas() {
   } catch (e) {
     sortie.fal = { erreur: e.message.split('\n')[0] }
   }
+  })()
 
+  // FISH SE COMPTE EN DOLLARS LUI AUSSI, ET C'EST UN AUTRE PORTE-MONNAIE.
+  //
+  // Il manquait, alors que c'est le service qui se depense le plus vite : une
+  // voix off de dix minutes coute quinze centimes, et on en refait cinq avant
+  // d'etre content. Son solde ne se lisait qu'en tapant
+  // `npm run parle -- --voix=?` — donc jamais, et c'est exactement le defaut que
+  // l'en-tete de l'atelier a ete fait pour corriger.
+  //
+  // « AUCUNE CLE » N'EST PAS « SOLDE INDISPONIBLE ». Le premier se repare en
+  // posant une cle, le second veut dire que Fish n'a pas repondu. `credit()`
+  // rend `null` dans les deux cas — il avale l'absence de cle avec le reste —
+  // donc on interroge le trousseau avant d'appeler.
+  const fish = (async () => {
+  try {
+    const { disponibles } = await import('../pipeline/lib/trousseau.mjs')
+    if (!disponibles('fish').length) {
+      sortie.fish = { erreur: `aucune cle fish` }
+    } else {
+      const { credit } = await import('../pipeline/lib/fish.mjs')
+      const reste = await credit()
+      sortie.fish =
+        reste === null
+          ? { erreur: `solde indisponible` }
+          : {
+              resume: `${reste.toFixed(2)} $`,
+              detail: `voix off — lecture du texte`,
+              // Une voix off de dix minutes coute environ 0,15 $ : sous un
+              // dollar, il reste moins de sept prises.
+              alerte: reste < 1,
+              cles: [],
+            }
+    }
+  } catch (e) {
+    sortie.fish = { erreur: e.message.split('\n')[0] }
+  }
+  })()
+
+  await Promise.all([apify, elevenlabs, fal, fish])
   return sortie
 }
 
@@ -337,7 +401,68 @@ function affiche(services) {
   }
 }
 
+/**
+ * Donne ce trousseau à une autre chaîne.
+ *
+ * POURQUOI CE CHEMIN EXISTE, ET POURQUOI IL N'EXISTAIT PAS.
+ *
+ * `nouvelle-chaine --avec-cles` copie le trousseau AU MOMENT de la création.
+ * Une chaîne créée sans la case cochée n'avait ensuite aucun moyen d'en
+ * recevoir un : ni commande, ni écran. On le découvrait plus tard, devant une
+ * liste de voix vide qui annonçait « aucune voix disponible » — alors qu'il
+ * manquait une clé, pas des voix.
+ *
+ * CE QUE ÇA VEUT DIRE, ET QUI DOIT LE SAVOIR. Les deux chaînes partagent alors
+ * les mêmes comptes : un quota Apify consommé ici manque là-bas, et le solde
+ * fal est un seul solde. C'est un choix légitime — c'est le mien de compte —
+ * mais il se dit, parce qu'on ne le devine pas en regardant deux dossiers.
+ *
+ * AUCUNE CLÉ NE PASSE PAR LA SORTIE : on copie un fichier d'un dossier à
+ * l'autre, on n'en lit pas le contenu et on n'en affiche rien.
+ */
+async function donneLeTrousseau(destination) {
+  const cible = path.resolve(destination)
+  if (cible === path.resolve(CHEMINS.racine)) {
+    throw new Error(`C'est la chaîne courante. Elle a déjà son trousseau.`)
+  }
+  if (!fs.existsSync(path.join(cible, 'config', 'chaine.json'))) {
+    throw new Error(`${cible} n'est pas une chaîne : pas de config/chaine.json. On ne touche à rien.`)
+  }
+  if (!fs.existsSync(CHEMINS.trousseau)) {
+    throw new Error(`Cette chaîne-ci n'a pas de config/keys.json : il n'y a rien à donner.`)
+  }
+  const vers = path.join(cible, 'config', 'keys.json')
+  // ON N'ÉCRASE PAS UN TROUSSEAU EXISTANT. Il peut porter des clés que celui-ci
+  // n'a pas — un autre compte, un palier payant posé là-bas seulement — et les
+  // remplacer en silence perdrait des secrets qu'on ne sait pas retrouver.
+  if (fs.existsSync(vers)) {
+    throw new Error(
+      `« ${path.basename(cible)} » a déjà un trousseau. Il n'est pas écrasé : ` +
+        `il peut porter des clés que celui-ci n'a pas.`
+    )
+  }
+  fs.mkdirSync(path.dirname(vers), { recursive: true })
+  fs.copyFileSync(CHEMINS.trousseau, vers)
+  return { dossier: cible, nom: path.basename(cible) }
+}
+
 await principal(async () => {
+  // Donner le trousseau se traite avant tout le reste : ça ne lit ni n'écrit
+  // le trousseau local, ça le copie.
+  if (options['donne-a'] && options['donne-a'] !== true) {
+    const r = await donneLeTrousseau(String(options['donne-a']))
+    if (drapeau(options, 'json')) {
+      console.log(JSON.stringify({ ok: true, ...r }, null, 2))
+      return
+    }
+    journal.ok(`Trousseau copié vers « ${r.nom} ».`)
+    journal.detail(
+      `Les deux chaînes emploient maintenant les mêmes comptes — c'est le but : ` +
+        `un trousseau sert toutes les chaînes.`
+    )
+    return
+  }
+
   const enJson = drapeau(options, 'json')
 
   // Une seule action par appel : deux écritures dans la même commande rendent

@@ -86,6 +86,22 @@ export function portrait(dossier) {
     // peut donc pas y basculer, et il vaut mieux le dire dans la liste que de
     // le découvrir au clic.
     atelier: fs.existsSync(path.join(dossier, 'outils', 'atelier.mjs')),
+    // `node_modules` NE VOYAGE PAS, et c'est le cas courant plutot que l'exception.
+    //
+    // Il pese trois cents megaoctets, `nouvelle-chaine` ne le copie pas, et le
+    // §4 pose qu'un dossier de chaine se depose sur un disque partage pour
+    // produire depuis deux postes — le second n'a donc rien d'installe. Une
+    // chaine sans dependances ne demarre pas : son atelier meurt sur un
+    // `ERR_MODULE_NOT_FOUND` que rien, de ce cote-ci, ne laisse deviner.
+    dependances: fs.existsSync(path.join(dossier, 'node_modules')),
+    // UN TROUSSEAU MANQUANT NE RESSEMBLE PAS A UN TROUSSEAU MANQUANT.
+    //
+    // `nouvelle-chaine` ne copie les cles que si on a coche la case. Sans
+    // elles, la chaine demarre, monte, transcrit — et rate silencieusement tout
+    // ce qui parle au reseau : les voix Fish ressortent en « aucune voix
+    // disponible », la banque d'images ne rend rien. On cherche alors la panne
+    // du cote du service, jamais du cote du dossier.
+    cles: fs.existsSync(path.join(dossier, 'config', 'keys.json')),
     videos: compte,
     modifie_le: derniere ? new Date(derniere).toISOString() : null,
     courante: path.resolve(dossier) === path.resolve(CHEMINS.racine),

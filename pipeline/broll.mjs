@@ -14,6 +14,7 @@
  *   npm run broll -- --mots-de=victoire.jpg --mots="victoire,visage,portrait"
  *   npm run broll -- --retire=victoire.jpg
  *   npm run broll -- <slug>                        où ils tomberaient, et pourquoi
+ *   npm run broll -- <slug> --estime               combien de plans de coupe aura ce montage
  *
  * Le placement se vérifie AVANT de monter : `npm run broll -- <slug>` dit quel
  * plan se poserait sur quel passage, et sur quel mot-clé. Un placement qu'on ne peut
@@ -23,7 +24,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
-import { CHEMINS, dossierVideo, litJson, assureDossier } from './lib/chemins.mjs'
+import { CHEMINS, dossierVideo, litJson, ecritJson, assureDossier } from './lib/chemins.mjs'
 import { journal } from './lib/journal.mjs'
 import { litArgs, aide, drapeau, principal } from './lib/args.mjs'
 import { DOSSIER, EXTENSIONS, bibliotheque, enregistre, attribue } from './lib/broll-perso.mjs'
@@ -94,7 +95,172 @@ Pexels ; il n'est jamais posé au hasard.
 `
   )
 
-  await principal(async () => {
+  /**
+ * Mesure, plan par plan, si les sous-titres vont se lire dessus.
+ *
+ * LE HORS-SUJET NE SE MESURE PAS ; LA LISIBILITÉ, SI — et c'est toute la
+ * différence. « Est-ce que cette image parle du bon sujet » n'a aucun signal.
+ * « Du texte blanc va-t-il se voir là-dessus » en a un seul, et il suffit : la
+ * clarté du fond à l'endroit exact où le texte se pose.
+ *
+ * ON ÉCRIT LE RELEVÉ DANS LE PLAN. Mesurer quatre-vingts clips prend deux à
+ * trois minutes : le refaire à chaque ouverture de l'écran serait insupportable.
+ * On le fait une fois, à la demande, et le résultat reste avec le montage.
+ */
+async function mesureLaLisibilite(slug) {
+  const { luminanceDeLaBande, BANDE_CLAIRE } = await import('./lib/ffmpeg.mjs')
+  const v = dossierVideo(slug)
+  const plan = litJson(v.plan, null)
+  if (!plan) throw new Error(`Aucun plan de montage pour « ${slug} ». Monte-la d'abord.`)
+
+  // La position vient du THÈME du plan, pas des réglages : c'est ce qui sera
+  // rendu. Les deux peuvent diverger, et mesurer la mauvaise bande ne dirait
+  // rien de la vidéo qu'on va produire.
+  const positionBas = plan.theme?.sousTitres?.positionBas ?? 22
+  const couleurTexte = String(plan.theme?.sousTitres?.couleurTexte ?? '#ffffff')
+  const pub = path.join(v.montage, 'public')
+
+  let mesures = 0
+  const clairs = []
+  for (const e of plan.evenements ?? []) {
+    if (e.type !== 'broll' || !e.src) continue
+    const fichier = path.join(pub, e.src)
+    const r = await luminanceDeLaBande(fichier, { positionBas })
+    if (!r) continue
+    e._bandeY = r.moyenne
+    mesures++
+    if (r.moyenne >= BANDE_CLAIRE) clairs.push({ src: e.src, y: r.moyenne, requete: e.requete })
+  }
+  ecritJson(v.plan, plan)
+  return { slug, mesures, clairs, seuil: BANDE_CLAIRE, positionBas, couleurTexte }
+}
+
+/**
+ * Efface la piste image d'un montage, et RIEN d'autre.
+ *
+ * CE QU'ON DÉTRUIT, ET CE QU'ON GARDE — la liste est le cœur de la fonction.
+ *
+ * Détruit : `plan.json`, `attributions.json`, et les clips de `public/broll/`.
+ * Ce sont des dérivés : le plan se reconstruit à partir du script et du
+ * transcript, les clips se retéléchargent depuis la banque. Rien là-dedans ne
+ * représente du travail humain.
+ *
+ * Gardé : `soustitres.json` — c'est une DÉCISION, réglée à l'œil devant
+ * l'aperçu, et elle vit dans le même dossier que le plan. La perdre en effaçant
+ * la piste image serait le pire des échanges. Gardés aussi `coupe.json`,
+ * `public/image.mp4` et `public/voix.wav` : la coupe et la voix convertie ne
+ * dépendent pas des plans de coupe, et les refaire coûterait une conversion
+ * payante pour rien.
+ *
+ * ON DÉTRUIT VRAIMENT. Le §6 protège les rushes et les rendus ; une piste image
+ * n'est ni l'un ni l'autre. Cinq cents mégaoctets de clips de banque mis « de
+ * côté » sont cinq cents mégaoctets qu'on ne rouvrira jamais.
+ */
+function effaceLesPlans(slug) {
+  const v = dossierVideo(slug)
+  const plan = litJson(v.plan, null)
+  const combien = (plan?.evenements ?? []).filter((e) => e.type === 'broll').length
+
+  const broll = path.join(v.montage, 'public', 'broll')
+  let fichiers = 0
+  let octets = 0
+  if (fs.existsSync(broll)) {
+    for (const f of fs.readdirSync(broll)) {
+      try {
+        octets += fs.statSync(path.join(broll, f)).size
+        fichiers++
+      } catch { /* un fichier qui disparaît entre le listage et le stat */ }
+    }
+    fs.rmSync(broll, { recursive: true, force: true })
+  }
+  for (const f of [v.plan, path.join(v.montage, 'attributions.json')]) {
+    fs.rmSync(f, { force: true })
+  }
+
+  const garde = ['soustitres.json', 'coupe.json']
+    .filter((f) => fs.existsSync(path.join(v.montage, f)))
+  return { slug, plans: combien, fichiers, mo: Math.round(octets / 1e6), garde }
+}
+
+await principal(async () => {
+  // COMBIEN DE PLANS DE COUPE AURA CE MONTAGE — AVANT DE MONTER.
+  //
+  // Le curseur « plans générés par IA » de l'atelier a besoin d'une borne : sur
+  // une vidéo de deux minutes, offrir un budget de trente plans quand il n'y en
+  // a que douze est un chiffre qui ne veut rien dire. La commande n'appelle
+  // rien : elle compte les visuels du SCRIPT, et le plan de montage quand il
+  // existe — celui-ci est plus juste, la découpe sur les fins de phrase pouvant
+  // multiplier un visuel en plusieurs plans.
+  if (drapeau(options, 'estime')) {
+    const slugVise = positionnels[0]
+    if (!slugVise) throw new Error(`Donne le slug : npm run broll -- <slug> --estime`)
+    const slug = String(slugVise)
+    const liste = plansDe(slug)
+    const duScript = evenementsDe(slug)
+    const r = liste?.length
+      ? { plans: liste.length, source: 'plan' }
+      : { plans: duScript?.length ?? 0, source: duScript ? 'script' : 'rien' }
+    if (drapeau(options, 'json')) {
+      console.log(JSON.stringify({ ok: true, slug, ...r }, null, 2))
+      return
+    }
+    journal.titre(`Plans de coupe attendus · ${slug}`)
+    if (r.source === 'rien') {
+      journal.attention(`Pas de script : rien à compter. Écris-le d'abord.`)
+      return
+    }
+    journal.ok(
+      `${r.plans} plan(s) de coupe — ` +
+        (r.source === 'plan'
+          ? `comptés dans le plan de montage.`
+          : `comptés dans le script ; le montage peut en découper davantage.`)
+    )
+    return
+  }
+
+  // Effacer la piste image : les dérivés partent, les décisions restent.
+  if (drapeau(options, 'efface-plans')) {
+    const slugVise = positionnels[0]
+    if (!slugVise) throw new Error(`Donne le slug : npm run broll -- <slug> --efface-plans`)
+    const r = effaceLesPlans(String(slugVise))
+    if (drapeau(options, 'json')) {
+      console.log(JSON.stringify({ ok: true, ...r }, null, 2))
+      return
+    }
+    journal.titre(`Piste image effacée · ${r.slug}`)
+    journal.ok(`${r.plans} plan(s) et ${r.fichiers} fichier(s) supprimés — ${r.mo} Mo libérés.`)
+    if (r.garde.length) journal.detail(`Gardés : ${r.garde.join(', ')} — ce sont des décisions.`)
+    journal.detail(`La voix et la coupe restent : rien de payant n'est à refaire.`)
+    journal.detail(`Relance le montage pour reconstruire : npm run monte -- ${r.slug} --depuis=cale`)
+    return
+  }
+
+  // La lisibilité se mesure sur demande : deux à trois minutes pour un montage
+  // complet, et le relevé reste dans le plan.
+  if (drapeau(options, 'lisibilite')) {
+    const slugVise = positionnels[0]
+    if (!slugVise) throw new Error(`Donne le slug : npm run broll -- <slug> --lisibilite`)
+    const r = await mesureLaLisibilite(String(slugVise))
+    if (drapeau(options, 'json')) {
+      console.log(JSON.stringify({ ok: true, ...r }, null, 2))
+      return
+    }
+    journal.titre(`Lisibilité des sous-titres · ${r.slug}`)
+    journal.info(
+      `${r.mesures} plan(s) mesurés — bande à ${r.positionBas} % du bas, texte ${r.couleurTexte}.`
+    )
+    if (!r.clairs.length) {
+      journal.ok(`Aucun plan au-dessus de ${r.seuil} : le texte se détachera partout.`)
+      return
+    }
+    journal.attention(
+      `${r.clairs.length} plan(s) trop clairs pour un texte blanc (seuil ${r.seuil}) :`
+    )
+    for (const c of r.clairs) journal.detail(`  Y ${c.y} · ${c.src} · « ${c.requete ?? '—'} »`)
+    journal.detail(`Échange-les, ou épaissis le contour à l'étape 5.`)
+    return
+  }
+
     // ------------------------------------------- les plans d'UN montage -----
     const slugVise = positionnels[0] ?? null
 

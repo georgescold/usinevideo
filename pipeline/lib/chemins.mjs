@@ -117,6 +117,14 @@ export function dossierVideo(slug) {
     // La voix retenue pour CETTE vidéo. Elle vit avec l'audio qu'elle produira,
     // pour que `--depuis=voix` la retrouve sans qu'on ait à la redonner.
     voixChoisie: path.join(base, '03-audio', 'voix-choisie.json'),
+    // CE QUI A ÉTÉ CHOISI N'EST PAS CE QUI A SERVI.
+    //
+    // `voix-choisie.json` porte un timbre ElevenLabs en réserve ; la conversion
+    // a pu passer par un modèle local, ou ne rien convertir du tout. Un mois
+    // plus tard, devant un audio qu'on n'a pas refait, la seule question est
+    // « avec quoi celui-ci a-t-il été fabriqué ». Ce fichier y répond, et il
+    // est écrit par la conversion elle-même, jamais par un écran.
+    voixEmployee: path.join(base, '03-audio', 'voix-employee.json'),
     transcript: path.join(base, '04-transcript.json'),
     montage: path.join(base, '05-montage'),
     plan: path.join(base, '05-montage', 'plan.json'),

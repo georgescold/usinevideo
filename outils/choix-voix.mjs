@@ -36,7 +36,16 @@ import {
   TONS,
   USAGES,
 } from '../pipeline/lib/elevenlabs.mjs'
-import { choixDe, enregistreChoix, oublieChoix, voixPour, reglagesDeVoix } from '../pipeline/lib/choix-voix.mjs'
+import {
+  choixDe,
+  enregistreChoix,
+  oublieChoix,
+  voixPour,
+  reglagesDeVoix,
+  favoris,
+  ajouteFavori,
+  retireFavori,
+} from '../pipeline/lib/choix-voix.mjs'
 import { decoupe, sonde } from '../pipeline/lib/ffmpeg.mjs'
 
 const { options, positionnels } = litArgs()
@@ -68,7 +77,9 @@ node outils/choix-voix.mjs [slug] [options]
                           montage — sans eux : 0.5 et 0.8
     --proprietaire=<id>   pour une voix de la bibliothèque : elle est d'abord
                           ajoutée au compte, sans quoi la conversion la refuse
-  --defaut              enregistre --voix comme défaut de la CHAÎNE
+  --defaut              enregistre --voix comme défaut de la CHAÎNE (ElevenLabs)
+  --defaut --fish --voix=<id>   la voix FISH par défaut — celle qui LIT le texte
+                        quand la prise se fabrique au lieu de s'enregistrer
   --defaut --local --modele=<id> --transpose=12
                         enregistre le MODÈLE LOCAL et sa transposition comme
                         défaut de la chaîne. Gratuit, hors ligne, sans quota :
@@ -81,6 +92,13 @@ node outils/choix-voix.mjs [slug] [options]
     --proprietaire=<id>   pour une voix de la bibliothèque : elle est empruntée
                           au compte le temps de l'essai, puis rendue
   --oublie              efface le choix : la vidéo repart sur le défaut
+
+  --favoris             les voix mises de côté — elles appartiennent à la CHAÎNE
+  --favori --voix=<id>  en met une de côté (--fish pour une voix Fish)
+    --nom="…"             son nom, pour ne pas relire un identifiant six mois
+                          plus tard ; --note="…" pour dire à quoi elle sert
+  --oublie-favori --voix=<id>   la retire (--fish idem)
+
   --json                sortie machine, pour l'interface
 
 Sans option, affiche la voix retenue pour la vidéo et d'où elle vient.
@@ -225,6 +243,82 @@ await principal(async () => {
     return
   }
 
+  // ------------------------------------------------------- les favorites ----
+  //
+  // ON ÉCOUTE QUARANTE TIMBRES UNE FOIS, ON EN GARDE CINQ.
+  //
+  // Sans endroit où les poser, chaque vidéo recommençait la même écoute : la
+  // bibliothèque ElevenLabs se compte en milliers, et rien ne survivait d'une
+  // séance à l'autre — pas même la voix qu'on venait de trouver bonne mais
+  // qu'on ne voulait pas encore retenir. C'est le travail qu'on refaisait.
+  //
+  // La favorite appartient à la CHAÎNE, comme les avatars et la direction
+  // artistique : elle sert sur la dixième vidéo comme sur la première.
+  //
+  // ELLE NE DÉCIDE RIEN. Ni le défaut de la chaîne, ni le choix d'une vidéo :
+  // c'est une liste courte où retrouver ce qu'on a déjà jugé, et les deux
+  // gestes de sélection restent exactement là où ils étaient.
+
+  const moteurFavori = () => (drapeau(options, 'fish') ? 'fish' : 'elevenlabs')
+
+  if (drapeau(options, 'favoris')) {
+    const liste = favoris()
+    if (enJson) { console.log(JSON.stringify({ favoris: liste }, null, 2)); return }
+    if (!liste.length) {
+      journal.info(`Aucune voix en favori.`)
+      journal.detail(`Ajoute : npm run choix-voix -- --favori --voix=<id> --nom="…"`)
+      return
+    }
+    journal.titre(`Voix favorites — ${liste.length}`)
+    for (const f of liste) {
+      journal.info(`${f.moteur === 'fish' ? 'fish       ' : 'elevenlabs '} ${f.nom ?? '(sans nom)'}`)
+      journal.detail(`  ${f.id}${f.note ? ` · ${f.note}` : ''}`)
+    }
+    return
+  }
+
+  if (drapeau(options, 'favori')) {
+    if (!options.voix || options.voix === true) {
+      throw new Error(`Donne la voix à mettre de côté : --favori --voix=<identifiant>`)
+    }
+    const moteur = moteurFavori()
+    const { ajoute } = ajouteFavori({
+      moteur,
+      id: String(options.voix),
+      nom: options.nom && options.nom !== true ? String(options.nom) : null,
+      proprietaire:
+        options.proprietaire && options.proprietaire !== true ? String(options.proprietaire) : null,
+      // L'extrait n'est accepté que s'il vient bien d'ElevenLabs : cette adresse
+      // arrive de l'écran, elle sera reposée dans un lecteur, et le relais du
+      // serveur la revalide de son côté. Deux contrôles valent mieux qu'un pour
+      // une adresse qui se range dans un fichier de configuration.
+      apercu:
+        options.apercu && options.apercu !== true && /^https:\/\/[^\s"']+$/.test(String(options.apercu))
+          ? String(options.apercu)
+          : null,
+      note: options.note && options.note !== true ? String(options.note) : null,
+    })
+    if (enJson) { console.log(JSON.stringify({ ok: true, favoris: favoris() }, null, 2)); return }
+    journal.ok(
+      ajoute
+        ? `Mise en favori (${moteur}) : ${options.nom && options.nom !== true ? `« ${options.nom} »` : options.voix}.`
+        : `Déjà en favori — sa fiche a été mise à jour.`
+    )
+    return
+  }
+
+  if (drapeau(options, 'oublie-favori')) {
+    if (!options.voix || options.voix === true) {
+      throw new Error(`Donne la voix à retirer : --oublie-favori --voix=<identifiant>`)
+    }
+    const moteur = moteurFavori()
+    const { retire } = retireFavori({ moteur, id: String(options.voix) })
+    if (enJson) { console.log(JSON.stringify({ ok: true, retire, favoris: favoris() }, null, 2)); return }
+    if (retire) journal.ok(`Retirée des favorites.`)
+    else journal.info(`Elle n'y était pas.`)
+    return
+  }
+
   // ------------------------------------------------ défaut de la chaîne ----
   // Fixer un défaut n'annule pas le choix par vidéo : il le précède. Les quatre
   // niveaux de §8 restent dans leur ordre, ceci ne touche que le troisième.
@@ -270,6 +364,53 @@ await principal(async () => {
         `${demiTons > 0 ? '+' : ''}${demiTons} demi-tons.`
     )
     journal.detail(`Gratuit et hors ligne. Les prochaines vidéos partiront dessus.`)
+    return
+  }
+
+  // LA VOIX FISH A SON DÉFAUT AUSSI, ET IL MANQUAIT.
+  //
+  // `--defaut` posait un timbre ElevenLabs, `--defaut --local` un modèle
+  // entraîné. La voix FISH — celle qui LIT le texte quand la prise se fabrique
+  // au lieu de s'enregistrer (§3) — n'avait aucun chemin : ni ici, ni dans
+  // l'atelier. `config/chaine.json → voix.fish_voice_id` ne se posait donc qu'à
+  // la main, dans un fichier que le §5 interdit d'éditer sans prévenir.
+  //
+  // C'est le trou qu'on a lu comme « je ne peux pas sélectionner les voix
+  // Fish » : on pouvait en choisir une pour UNE génération, jamais pour la
+  // chaîne.
+  if (drapeau(options, 'defaut') && drapeau(options, 'fish')) {
+    if (!options.voix || options.voix === true) {
+      throw new Error(`Donne la voix à retenir : --defaut --fish --voix=<identifiant>`)
+    }
+    const id = String(options.voix)
+    const { voix: voixDuCompte, voixPubliques } = await import('../pipeline/lib/fish.mjs')
+    const miennes = await voixDuCompte().catch(() => [])
+    let connue = miennes.find((v) => v.id === id) ?? null
+    if (!connue) {
+      const publiques = await voixPubliques({ combien: 100 }).catch(() => [])
+      connue = publiques.find((v) => v.id === id) ?? null
+    }
+    if (!connue && !drapeau(options, 'force')) {
+      throw new Error(
+        `Aucune voix Fish « ${id} » sur ce compte ni dans la bibliothèque.
+` +
+          `  npm run parle -- --voix=?   pour voir, --force pour passer outre.`
+      )
+    }
+    const cheminChaine = path.join(CHEMINS.config, 'chaine.json')
+    const chaine = litJson(cheminChaine, {})
+    chaine.voix = {
+      ...(chaine.voix ?? {}),
+      fish_voice_id: id,
+      fish_voice_nom: connue?.nom ?? null,
+    }
+    ecritJson(cheminChaine, chaine)
+    if (enJson) { console.log(JSON.stringify({ ok: true, defaut: chaine.voix }, null, 2)); return }
+    journal.ok(`Voix Fish par défaut : ${connue?.nom ? `« ${connue.nom} »` : id}.`)
+    journal.detail(
+      `Elle LIT le texte quand la prise se fabrique (npm run parle). Elle ne convertit ` +
+        `pas un enregistrement — ça, c'est le moteur de l'étape 4.`
+    )
     return
   }
 
@@ -324,7 +465,9 @@ await principal(async () => {
       throw new Error(`Donne la voix à essayer : --essai --voix=<identifiant>`)
     }
     const id = String(options.voix)
-    const secondes = Math.min(30, Math.max(2, Number(options.secondes ?? 5)))
+    // Même borne que l'écran et que le serveur : 60 s. Trois plafonds
+    // différents sur le même réglage, c'est une troncature silencieuse garantie.
+    const secondes = Math.min(60, Math.max(2, Number(options.secondes ?? 20)))
     const depuis = Math.max(0, Number(options.depuis ?? 0))
     // L'ESSAI PART DU RÉGLAGE DÉJÀ RETENU, PAS D'UN DÉFAUT.
     //

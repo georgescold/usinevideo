@@ -86,8 +86,23 @@ const A_CREER = [
  */
 const A_RETIRER_APRES_COPIE = ['.claude/settings.local.json']
 
-/** Les gabarits du socle marque : la structure, pas le contenu. */
-const GABARITS_MARQUE = ['LISEZ-MOI.md', 'identite-visuelle.md', 'ligne-editoriale.md']
+/**
+ * Les gabarits du socle marque : la structure, pas le contenu.
+ *
+ * IL N'Y EN A QU'UN, ET C'EST LA CORRECTION DU 7 SEPTEMBRE 2026.
+ *
+ * `identite-visuelle.md` et `ligne-editoriale.md` étaient de la partie. Or ce
+ * ne sont pas des gabarits : `marque/LISEZ-MOI.md` dit noir sur blanc qu'ils
+ * sont écrits par `/init-chaine`, APRÈS la veille. Dans une chaîne qui produit,
+ * ce sont donc deux documents pleins — une palette dérivée d'un logo, une
+ * promesse, des piliers, ce qu'on ne dit jamais. Les copier posait la marque
+ * d'une chaîne dans une autre, et une chaîne nommée « Héritage » démarrait avec
+ * l'identité visuelle et la ligne éditoriale de « Conseils Relationnels ».
+ *
+ * Le §6 l'interdit, et le §1 dit pourquoi : deux produits, deux dossiers,
+ * jamais de mélange.
+ */
+const GABARITS_MARQUE = ['LISEZ-MOI.md']
 
 await principal(async () => {
   const brut = positionnels[0]
@@ -171,10 +186,48 @@ await principal(async () => {
     // et le premier montage sonnait faux sans qu'on sache pourquoi.
     //
     // `mode` survit : c'est un defaut de fabrication, pas une identite.
+    //
+    // Les FAVORITES partent avec le reste, et pour la meme raison : ce sont des
+    // timbres retenus a l'oreille contre l'avatar d'une autre marque. Elles
+    // repartent en liste vide, jamais a `null` — une liste absente et une liste
+    // vide se lisent pareil ici, mais `null` traverse ensuite tout l'ecran.
     for (const cle of Object.keys(vierge.voix ?? {})) {
       if (cle.startsWith('_') || cle === 'mode') continue
-      vierge.voix[cle] = cle === 'transpose' ? 0 : null
+      vierge.voix[cle] = cle === 'transpose' ? 0 : cle === 'favoris' ? [] : null
     }
+    // LA DIRECTION ARTISTIQUE NON PLUS — ET ELLE SE VOYAIT SUR CHAQUE IMAGE.
+    //
+    // Le bloc passait entier : polices, palette, style de sous-titres, ambiance,
+    // et jusqu'à `direction_plans`, cette phrase ajoutée à CHAQUE requête de
+    // banque d'images (« low key lighting, dark, night, intimate »). Une chaîne
+    // neuve héritait donc de l'esthétique de la précédente sans que rien ne le
+    // dise, et `derivee_de` pointait un logo qui n'existe pas chez elle.
+    //
+    // Elle repart à la forme du modèle : `/init-chaine` l'écrit après la veille,
+    // parce que choisir sa direction artistique avant d'avoir vu la niche, c'est
+    // choisir au hasard.
+    vierge.identite_visuelle = {
+      fiche: 'marque/identite-visuelle.md',
+      police_titres: null,
+      police_soustitres: null,
+      couleur_accent: null,
+      couleur_fond: null,
+      lut: null,
+      logo: null,
+      style_soustitres: null,
+    }
+    // Les comptes de la chaîne précédente : un handle recopié enverrait le
+    // maillage interne et la publication vers la mauvaise chaîne.
+    for (const plateforme of Object.values(vierge.plateformes ?? {})) {
+      if (!plateforme || typeof plateforme !== 'object') continue
+      for (const cle of Object.keys(plateforme)) {
+        if (cle === 'actif' || cle.startsWith('_')) continue
+        plateforme[cle] = null
+      }
+    }
+    // La musique de fond est un fichier de `assets/musique/`, et `assets/` ne
+    // suit pas : le chemin pointerait dans le vide.
+    if (vierge.audio) vierge.audio.musique = null
     vierge.seo = { mot_cle_pilier: null, piliers: [], playlists: [] }
     vierge.cadence = { long_par_semaine: 0, short_par_semaine: 0 }
     // LE DOSSIER DRIVE NE SE COPIE PAS, ET C'EST LA MEME REGLE QUE LE RESTE.

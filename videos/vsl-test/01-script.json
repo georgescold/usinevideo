@@ -1,0 +1,9 @@
+{
+  "_lecture": "Squelette pose par `npm run depose` : il n'a AUCUN bloc, donc il ne se monte pas. Le script reel s'ecrit en conversation avec /script — c'est un travail editorial, pas un formulaire. Ce fichier n'existe que pour que le montage sache quel format viser (dimensions, duree cible, verticalite) des le depot du rush.",
+  "slug": "vsl-test",
+  "format": "long_faceless",
+  "destination": "youtube",
+  "duree_cible_s": 840,
+  "niveau_conscience": 2,
+  "blocs": []
+}

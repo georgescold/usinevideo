@@ -83,8 +83,10 @@ Tout ce qu'il propose s'obtient aussi au terminal :
   npm run monte -- <slug> --depuis=voix
   npm run rends -- <slug>
 
-Aucune clé d'API ne traverse ce serveur : les commandes filles lisent le
-trousseau dans leur propre processus.
+Aucune clé d'API n'est écrite dans le journal, ni passée en argument : les
+commandes filles lisent le trousseau dans leur propre processus. La seule qui
+traverse la mémoire de ce serveur est celle qu'on SAISIT à l'écran, et elle part
+aussitôt sur l'entrée standard du processus qui l'enregistre.
 `
 )
 
@@ -1065,6 +1067,71 @@ async function routeApi(req, res, url, segments) {
   //
   // AUCUNE CLÉ NE TRAVERSE CETTE ROUTE : la commande fille interroge les
   // services dans son propre processus et ne rend que des soldes.
+  // ------------------------------------------------------------ le trousseau --
+  //
+  // AJOUTER UNE CLE ETAIT LE DERNIER GESTE QUI OBLIGEAIT LE TERMINAL.
+  //
+  // Le message d'echec disait « Ajoute ou reactive une cle dans
+  // config/keys.json » — un fichier a editer a la main, alors qu'une cle morte
+  // bloque net la deduction de script. C'est exactement ce que la regle du §2
+  // interdit desormais.
+  //
+  // LA VALEUR PASSE PAR L'ENTREE STANDARD, JAMAIS PAR LES ARGUMENTS. Une ligne
+  // de commande se lit dans la liste des processus, et elle finit dans
+  // `t.commande`, donc dans le journal affiche a l'ecran. `cles.mjs --valeur=-`
+  // existe pour ca : le commentaire qui l'accompagne dit meme que c'est par la
+  // que l'interface transmet les cles. Elle traverse donc la memoire de ce
+  // serveur — local, sur 127.0.0.1 — et rien d'autre : ni journal, ni argument,
+  // ni disque hors du trousseau.
+  if (est('GET', 'api', 'cles')) {
+    const t = await lanceEtAttends([scriptOutil('cles.mjs'), '--json'], { msMax: 15_000 })
+    return repondJson(res, 200, travailFini(t))
+  }
+
+  if (est('POST', 'api', 'cles')) {
+    const corps = await litCorpsJson(req)
+    const service = String(corps?.service ?? '')
+    if (!/^[a-z]{2,20}$/.test(service)) throw new ErreurHttp(400, `Service invalide.`)
+    const valeur = String(corps?.valeur ?? '').trim()
+    if (valeur.length < 8 || valeur.length > 400) throw new ErreurHttp(400, `Clé invalide.`)
+    const args = [scriptOutil('cles.mjs'), `--ajoute=${service}`, '--valeur=-', '--json']
+    if (corps?.label) {
+      const l = String(corps.label)
+      if (!/^[A-Za-z0-9._-]{1,40}$/.test(l)) throw new ErreurHttp(400, `Étiquette refusée.`)
+      args.push(`--label=${l}`)
+    }
+    if (corps?.tier === 'free' || corps?.tier === 'paid') args.push(`--tier=${corps.tier}`)
+    // `entree` : la valeur part sur stdin du processus fils. Elle n'apparaît
+    // donc ni dans `t.commande`, ni dans le journal, ni dans la liste des
+    // processus du système.
+    const t = await lanceEtAttends(args, { msMax: 60_000, entree: valeur })
+    return repondJson(res, 200, travailFini(t))
+  }
+
+  if (est('DELETE', 'api', 'cles')) {
+    const corps = await litCorpsJson(req)
+    const service = String(corps?.service ?? '')
+    const label = String(corps?.label ?? '')
+    if (!/^[a-z]{2,20}$/.test(service)) throw new ErreurHttp(400, `Service invalide.`)
+    if (!/^[A-Za-z0-9._-]{1,40}$/.test(label)) throw new ErreurHttp(400, `Étiquette refusée.`)
+    const t = await lanceEtAttends(
+      [scriptOutil('cles.mjs'), `--retire=${service}`, `--label=${label}`, '--json'],
+      { msMax: 15_000 }
+    )
+    return repondJson(res, 200, travailFini(t))
+  }
+
+  // DEGELER : une clé au frigo a échoué une fois. Elle peut avoir été rechargée,
+  // ou l'échec peut avoir été passager. On la remet en service sans la ressaisir.
+  if (est('POST', 'api', 'cles', 'degele')) {
+    const corps = await litCorpsJson(req).catch(() => ({}))
+    const service = String(corps?.service ?? '')
+    const args = [scriptOutil('cles.mjs'), '--json']
+    args.push(service && /^[a-z]{2,20}$/.test(service) ? `--degele=${service}` : '--degele')
+    const t = await lanceEtAttends(args, { msMax: 15_000 })
+    return repondJson(res, 200, travailFini(t))
+  }
+
   if (est('GET', 'api', 'quotas')) {
     const t = await lanceEtAttends([scriptOutil('cles.mjs'), '--quotas', '--json'], {
       msMax: 30_000,
@@ -1086,9 +1153,68 @@ async function routeApi(req, res, url, segments) {
     // pour dessiner avec la VRAIE police plutôt qu'avec un substitut.
     return repondJson(res, 200, {
       chaine: sansSecret,
+      // Le dossier de la chaîne ouverte. L'écran en a besoin pour une seule
+      // chose : dire OÙ ouvrir Claude Code quand la chaîne n'est pas encore
+      // initialisée. « Lance /init-chaine » sans le dossier envoie chercher.
+      racine: CHEMINS.racine,
       polices: policesDisponibles(),
       fichiersPolices: fichiersDePolice(),
     })
+  }
+
+  // L'IDENTITÉ DE LA CHAÎNE, DEPUIS L'ÉCRAN.
+  //
+  // `/init-chaine` était le seul chemin, et il sort du logiciel : il faut
+  // fermer l'atelier, ouvrir Claude Code, et mener un entretien d'une heure
+  // pour poser un nom et deux couleurs. Une chaîne neuve restait donc sans
+  // identité, sans format actif et sans palette, et l'écran ne pouvait que le
+  // constater.
+  //
+  // Ces deux routes appellent `pipeline/initialise.mjs`, qui existe seule au
+  // terminal : §2, contrainte 1 — aucune logique métier ici. Elle DÉCLARE ce
+  // qu'on lui donne, elle n'invente rien, et elle n'écrase aucune fiche
+  // existante de `marque/`. L'entretien reste disponible et reste meilleur pour
+  // le socle marketing ; il n'est simplement plus obligatoire pour démarrer.
+  // LE CATALOGUE DES MODÈLES VIDÉO, POUR L'ÉTAPE 6.
+  //
+  // L'écran d'identité le recevait déjà par `--etat` ; l'étape 6 en a besoin
+  // aussi, et elle ne va pas relire toute la carte d'identité pour ça. Une
+  // seule source — `MODELES_PLAN` — servie par deux routes.
+  if (est('GET', 'api', 'modeles-video')) {
+    const { MODELES_PLAN, MODELE_PLAN_DEFAUT, coutDUnPlan, modeleDePlan } =
+      await import('../pipeline/lib/fal.mjs')
+    return repondJson(res, 200, {
+      modeles: Object.entries(MODELES_PLAN).map(([format, m]) => ({
+        format,
+        nom: m.nom,
+        resume: m.resume,
+        usd5s: coutDUnPlan(format, 5),
+      })),
+      defaut: MODELE_PLAN_DEFAUT,
+      retenu: modeleDePlan(litChaine()),
+    })
+  }
+
+  if (est('GET', 'api', 'chaine', 'init')) {
+    const t = await lanceEtAttends([scriptPipeline('initialise.mjs'), '--etat', '--json'], {
+      msMax: 20_000,
+    })
+    return repondJson(res, 200, travailFini(t))
+  }
+
+  if (est('POST', 'api', 'chaine', 'init')) {
+    const corps = await litCorpsJson(req)
+    if (!corps || typeof corps !== 'object') throw new ErreurHttp(400, `Corps attendu : un objet.`)
+    // Le formulaire voyage par l'ENTRÉE STANDARD, pas par la ligne de commande.
+    // Une promesse de chaîne porte des accents, des apostrophes et des
+    // guillemets ; le plafond de longueur d'une ligne de commande Windows est
+    // vite atteint, et l'échappement pour un shell qu'on n'emploie même pas
+    // serait du travail inventé.
+    const t = await lanceEtAttends([scriptPipeline('initialise.mjs'), '--json'], {
+      msMax: 30_000,
+      entree: JSON.stringify(corps),
+    })
+    return repondJson(res, 200, travailFini(t))
   }
 
   // ------------------------------------------------------- les chaînes ------
@@ -1169,6 +1295,24 @@ async function routeApi(req, res, url, segments) {
     ))
   }
 
+  // DONNER SON TROUSSEAU A UNE AUTRE CHAINE.
+  //
+  // Une chaine creee sans la case « copier les cles » n'avait aucun moyen d'en
+  // recevoir un ensuite. AUCUNE CLE NE TRAVERSE CETTE ROUTE : la commande fille
+  // copie un fichier d'un dossier a l'autre, dans son propre processus.
+  if (est('POST', 'api', 'chaines', 'cles')) {
+    const corps = await litCorpsJson(req)
+    const cible = path.resolve(String(corps?.dossier ?? ''))
+    if (!corps?.dossier || !estUneChaine(cible)) {
+      throw new ErreurHttp(400, `« ${corps?.dossier ?? ''} » n'est pas une chaîne.`)
+    }
+    const t = await lanceEtAttends(
+      [scriptOutil('cles.mjs'), `--donne-a=${cible}`, '--json'],
+      { msMax: 20_000 }
+    )
+    return repondJson(res, 200, { ...travailFini(t), chaines: chaines() })
+  }
+
   // Une chaîne va à la CORBEILLE de Windows, jamais au broyeur : elle contient
   // un socle écrit à la main, une veille payée en crédits, des tournages.
   if (est('DELETE', 'api', 'chaines')) {
@@ -1191,14 +1335,23 @@ async function routeApi(req, res, url, segments) {
     // Relancer, c'est fermer ce serveur PUIS en démarrer un autre. Si le second
     // refuse de partir, le premier est déjà mort et il ne reste rien à l'écran —
     // pas même un message, puisque le processus qui aurait pu l'écrire n'existe
-    // plus. Les deux causes de refus sont connues, et toutes deux se constatent
-    // sans rien lancer :
+    // plus. Il ne reste qu'une cause de refus, et elle se constate sans rien
+    // lancer : le dossier date d'avant l'atelier (`outils/atelier.mjs` absent).
     //
-    //   - le dossier date d'avant l'atelier (`outils/atelier.mjs` absent) ;
-    //   - la chaîne n'est pas initialisée, et l'atelier s'arrête dès le
-    //     démarrage sur `litChaine({ exigeInitialisee: true })`.
+    // « PAS ENCORE INITIALISÉE » N'EN EST PLUS UNE — 7 septembre 2026.
     //
-    // Les deux ont été rencontrées en essayant, l'une après l'autre.
+    // C'était la seconde, et elle fermait la porte à toutes les chaînes neuves
+    // sans exception : une chaîne qu'on vient de copier n'est jamais
+    // initialisée. Le bouton « Nouvelle chaîne » de cet écran fabriquait donc, à
+    // tous les coups, une ligne que le même écran refusait ensuite d'ouvrir — il
+    // ne restait qu'un chemin à copier. Un bouton qui produit une chose que
+    // l'écran ne sait pas afficher est un bouton qui ment.
+    //
+    // Le refus venait du démarrage (`exigeInitialisee: true`), pas du pipeline :
+    // AUCUNE commande de `pipeline/` n'exige l'initialisation. L'atelier était
+    // plus strict que ce qu'il pilote. Il s'ouvre maintenant et annonce ce qui
+    // manque — `/init-chaine` reste en conversation, c'est un entretien et pas
+    // un formulaire (CLAUDE.md §2).
     if (!fs.existsSync(path.join(cible, 'outils', 'atelier.mjs'))) {
       throw new ErreurHttp(
         409,
@@ -1207,23 +1360,49 @@ async function routeApi(req, res, url, segments) {
           `tout le pipeline y fonctionne déjà en ligne de commande.`
       )
     }
-    const identite = litJson(path.join(cible, 'config', 'chaine.json'), {}) ?? {}
-    if (identite.initialise !== true) {
-      throw new ErreurHttp(
-        409,
-        `« ${path.basename(cible)} » n'est pas initialisée : l'atelier refuserait de démarrer. ` +
-          `Ouvre Claude Code dans ce dossier et lance /init-chaine — c'est un entretien, ` +
-          `pas un formulaire, et il ne peut pas se faire ici.`
-      )
-    }
 
+    // ON ATTEND CINQ SECONDES AVANT DE REFUSER, ET ON DIT QUOI.
+    //
     // Un travail en cours écrirait dans l'ancienne chaîne pendant qu'on regarde
-    // la nouvelle : on refuse plutôt que de laisser le doute.
-    const enCours = [...travaux.values()].filter((t) => t.etat === 'encours')
+    // la nouvelle : c'est la raison du garde, et elle tient. Ce qui ne tenait
+    // pas, c'est de refuser au premier travail venu.
+    //
+    // L'ATELIER LANCE DES COMMANDES TOUT SEUL. Le solde des services payants se
+    // relit à chaque retour dans la fenêtre — et rouvrir le menu des chaînes
+    // est un retour dans la fenêtre. `cles.mjs --quotas` met quatre secondes.
+    // Cliquer « Ouvrir » pendant ces quatre secondes se soldait donc par un
+    // refus, sur un travail qui ne fait que LIRE des soldes chez Apify et
+    // ElevenLabs. Relevé le 7 septembre 2026 : six lancements en trois minutes,
+    // rien qu'en cliquant dans l'écran. Le refus paraissait aléatoire parce que
+    // sa cause était invisible.
+    //
+    // Classer les commandes en « lit » et « écrit » aurait demandé d'auditer
+    // quarante appels et de rejuger chaque nouveau. Le temps suffit à trancher :
+    // ce que l'atelier lance de lui-même dure des secondes, ce qui écrit
+    // vraiment — un montage, un rendu, un entraînement — dure des minutes. On
+    // attend donc la fin des premiers, et on ne refuse que devant les seconds.
+    //
+    // Et le refus NOMME le travail. « 1 travail(aux) en cours » n'apprenait
+    // rien : ni quoi, ni depuis quand, ni s'il fallait attendre ou aller le
+    // tuer.
+    const restants = () => [...travaux.values()].filter((t) => t.etat === 'encours')
+    const limite = Date.now() + 5000
+    let enCours = restants()
+    while (enCours.length && Date.now() < limite) {
+      await new Promise((r) => setTimeout(r, 150))
+      enCours = restants()
+    }
     if (enCours.length) {
+      const noms = enCours
+        .map((t) => {
+          const s = Math.round((Date.now() - new Date(t.debut).getTime()) / 1000)
+          return `  · ${t.commande}  (depuis ${s} s)`
+        })
+        .join(String.fromCharCode(10))
       throw new ErreurHttp(
         409,
-        `${enCours.length} travail(aux) en cours sur cette chaîne. Attends la fin avant d'en changer.`
+        `On reste ici : ${enCours.length} travail(aux) écrivent encore dans cette chaîne.
+${noms}`
       )
     }
     // ON ESSAIE LA CHAÎNE VISÉE À BLANC AVANT DE FERMER CELLE-CI.
@@ -1303,8 +1482,15 @@ ${essai.raison}`
   // Rien n'est détruit — tout part horodaté dans `.prises-precedentes/`.
   if (est('DELETE', 'api', 'videos', '*', 'audio')) {
     const slug = exigeVideo(slugDeLaVideo(segments))
+    // UNE PRISE, OU TOUTES. Deposer trois fois le meme fichier EMPILE — le
+    // montage colle les prises bout a bout — et il n'existait qu'un geste : tout
+    // retirer pour tout redeposer. `?fichier=` en enleve une seule.
+    const cible = String(url.searchParams.get('fichier') ?? '').trim()
+    if (cible && !/^[A-Za-z0-9._-]{1,80}$/.test(cible)) {
+      throw new ErreurHttp(400, `Nom de prise refusé.`)
+    }
     const t = await lanceEtAttends(
-      [scriptPipeline('depose.mjs'), slug, '--retire', '--json'],
+      [scriptPipeline('depose.mjs'), slug, cible ? `--retire=${cible}` : '--retire', '--json'],
       { msMax: 120_000 }
     )
     return repondJson(res, 200, { ...travailFini(t), etat: etatDe(slug) })
@@ -1444,6 +1630,38 @@ ${essai.raison}`
     return Readable.fromWeb(reponse.body).pipe(res)
   }
 
+  // ---------------------------------------------------- les voix favorites ---
+  //
+  // Elles appartiennent à la CHAÎNE et vivent dans `config/chaine.json` : la
+  // lecture passe donc par la commande, comme tout le reste, et l'écran n'écrit
+  // jamais dans ce fichier lui-même (§2, contrainte 1).
+  if (est('GET', 'api', 'voix', 'favoris')) {
+    const t = await lanceEtAttends(
+      [scriptOutil('choix-voix.mjs'), '--favoris', '--json'],
+      { msMax: 15_000 }
+    )
+    return repondJson(res, 200, travailFini(t))
+  }
+
+  if (est('POST', 'api', 'voix', 'favoris')) {
+    const corps = await litCorpsJson(req)
+    if (!corps?.id) throw new ErreurHttp(400, `Donne la voix : { "id": "…" }.`)
+    const moteur = corps.moteur === 'fish' ? 'fish' : 'elevenlabs'
+    const args = [scriptOutil('choix-voix.mjs')]
+    // `retire: true` sur la même route plutôt qu'un DELETE : l'écran bascule une
+    // étoile, et une bascule est un seul geste. Deux routes pour un bouton
+    // auraient fait deux chemins à tenir d'accord.
+    args.push(corps.retire === true ? '--oublie-favori' : '--favori')
+    args.push(`--voix=${corps.id}`)
+    if (moteur === 'fish') args.push('--fish')
+    if (corps.nom) args.push(`--nom=${String(corps.nom).slice(0, 120)}`)
+    if (corps.proprietaire) args.push(`--proprietaire=${corps.proprietaire}`)
+    if (corps.apercu) args.push(`--apercu=${String(corps.apercu).slice(0, 500)}`)
+    args.push('--json')
+    const t = await lanceEtAttends(args, { msMax: 15_000 })
+    return repondJson(res, 200, travailFini(t))
+  }
+
   if (est('POST', 'api', 'voix', 'defaut')) {
     const corps = await litCorpsJson(req)
     if (!corps.voiceId) throw new ErreurHttp(400, `Donne la voix : { "voiceId": "…" }.`)
@@ -1469,7 +1687,13 @@ ${essai.raison}`
     if (!corps?.modele || !/^[a-z0-9][a-z0-9-]{0,60}$/i.test(String(corps.modele))) {
       throw new ErreurHttp(400, `Identifiant de modèle refusé.`)
     }
-    const secondes = Math.max(2, Math.min(30, Math.round(Number(corps.secondes) || 8)))
+    // LA BORNE SUIT L'ÉCRAN, SINON ELLE TRONQUE EN SILENCE.
+    //
+    // L'écran demande vingt secondes et en accepte soixante ; une borne serveur
+    // restée à trente aurait rendu trente secondes sans le dire à qui en
+    // demandait quarante-cinq — le pire cas, parce qu'on juge alors un extrait
+    // qui n'est pas celui qu'on a réglé.
+    const secondes = Math.max(2, Math.min(60, Math.round(Number(corps.secondes) || 20)))
     const depart = Math.max(0, Math.min(36_000, Math.round(Number(corps.depart) || 0)))
     const transpose = Math.max(-24, Math.min(24, Math.round(Number(corps.transpose) || 0)))
 
@@ -1494,7 +1718,7 @@ ${essai.raison}`
     const slug = exigeVideo(slugDeLaVideo(segments))
     const corps = await litCorpsJson(req)
     if (!corps.voiceId) throw new ErreurHttp(400, `Donne la voix : { "voiceId": "…" }.`)
-    const secondes = Math.min(30, Math.max(2, Number(corps.secondes ?? 5)))
+    const secondes = Math.min(60, Math.max(2, Number(corps.secondes ?? 20)))
 
     exigeConfirmation(corps, `essai:${slug}:${corps.voiceId}:${secondes}`, {
       ...coutElevenlabs(secondes),
@@ -1568,11 +1792,48 @@ ${essai.raison}`
     }
 
     if (moteur === 'sts') {
+      // SANS TIMBRE RETENU, ON REFUSE AVANT DE FAIRE PAYER.
+      //
+      // `--voix=sts` ne porte pas d'identifiant : il dit quel MOTEUR employer,
+      // le timbre vient de la cascade (§8). Sur une chaîne neuve, aucun des
+      // quatre niveaux n'est rempli — `nouvelle-chaine` vide
+      // `elevenlabs_voice_id`, et la vidéo n'a rien choisi. La conversion
+      // partait quand même : devis accepté, coupe faite, transcription faite,
+      // et l'échec tombait à la conversion. On vérifie donc AVANT le devis, et
+      // on renvoie à l'étape où le timbre se choisit.
+      const retenue = etatDe(slug).etapes.voixChoisie
+      if (!retenue?.voiceId) {
+        throw new ErreurHttp(
+          409,
+          `Aucun timbre ElevenLabs retenu pour « ${slug} » — la conversion n'aurait rien à plaquer. ` +
+            `Va à l'étape 3, cherche une voix dans le catalogue et retiens-la ; ` +
+            `ou choisis un autre moteur ici.`
+        )
+      }
       exigeConfirmation(corps, `audio:${slug}:${Math.round(secondes)}`, {
         ...coutElevenlabs(secondes),
         estimee_sur: source,
         quoi: `Conversion de toute la prise de « ${slug} » chez ElevenLabs.`,
       })
+    }
+
+    if (moteur === 'local') {
+      // MEME GARDE, AUTRE MOTEUR : on refuse AVANT, pas apres douze minutes.
+      //
+      // Sans modele entraine, la conversion locale echoue — mais elle echoue a
+      // la fin, apres la coupe et la transcription. Le message etait juste et
+      // arrivait trop tard, et il renvoyait au terminal alors que la recolte et
+      // l'entrainement ont leur ecran a l'etape 3.
+      const { modelesEntraines } = await import('../pipeline/lib/voix-locale.mjs')
+      const entraines = modelesEntraines()
+      if (!entraines.length) {
+        throw new ErreurHttp(
+          409,
+          `Aucun modèle entraîné dans cette chaîne — la conversion locale n'aurait rien à plaquer. ` +
+            `Va à l'étape 3, déroule « Empreintes locales » : récolte une voix, puis entraîne-la. ` +
+            `Ou choisis « Ma voix telle quelle », qui ne convertit rien.`
+        )
+      }
     }
 
     if (moteur !== 'sts') {
@@ -1600,8 +1861,17 @@ ${essai.raison}`
     // seulement ici : la confirmation vient d'être donnée par le client, sur un
     // coût calculé avec le même barème. Sans le drapeau, l'atelier resterait
     // bloqué sur une question posée à un terminal que personne ne regarde.
+    // `--voix=sts` MANQUAIT, ET C'EST TOUT LE DEFAUT.
+    //
+    // Les branches `local` et `brute` passaient leur moteur ; celle-ci, non.
+    // `monte.mjs` retombait donc sur le mode par defaut de la chaine — `local`
+    // dans `config/chaine.json`. On choisissait « ElevenLabs » a l'ecran, le
+    // journal repondait « voix (mode local) », et sur une chaine sans modele
+    // entraine ca finissait par « Aucun modele entraine » : un message qui n'a
+    // aucun rapport avec ce qu'on avait demande, apres la coupe et la
+    // transcription. L'ecran disait une chose, la commande en faisait une autre.
     return repondJson(res, 202, travailLance(
-      lanceTravail([scriptPipeline('monte.mjs'), slug, '--depuis=voix', '--oui'])
+      lanceTravail([scriptPipeline('monte.mjs'), slug, '--depuis=voix', '--voix=sts', '--oui'])
     ))
   }
 
@@ -1685,6 +1955,24 @@ ${essai.raison}`
   // une décision de chaîne, et l'écran demande confirmation avant. Le modèle et
   // la transposition partent ensemble — retenir l'un sans l'autre donnerait un
   // timbre plaqué une octave trop bas, qu'on mettrait sur le dos du modèle.
+  // LA VOIX FISH PAR DÉFAUT DE LA CHAÎNE.
+  //
+  // Elle n'avait aucun chemin : ni écran, ni commande. `voix.fish_voice_id` ne
+  // se posait qu'en éditant `config/chaine.json` à la main, ce que le §5
+  // interdit de faire sans prévenir. On pouvait choisir une voix Fish pour UNE
+  // génération, jamais pour la chaîne — c'est le trou qu'on a lu comme « je ne
+  // peux pas sélectionner les voix Fish ».
+  if (est('POST', 'api', 'chaine', 'voix', 'defaut-fish')) {
+    const corps = await litCorpsJson(req)
+    const id = String(corps?.voiceId ?? '')
+    if (!/^[a-z0-9]{8,64}$/i.test(id)) throw new ErreurHttp(400, `Identifiant de voix invalide.`)
+    const t = await lanceEtAttends(
+      [scriptOutil('choix-voix.mjs'), '--defaut', '--fish', `--voix=${id}`, '--json'],
+      { msMax: 30_000 }
+    )
+    return repondJson(res, 200, travailFini(t))
+  }
+
   if (est('POST', 'api', 'chaine', 'voix', 'defaut')) {
     const corps = await litCorpsJson(req)
     if (!corps?.modele || !/^[a-z0-9][a-z0-9-]{0,60}$/i.test(String(corps.modele))) {
@@ -1718,9 +2006,51 @@ ${essai.raison}`
     return repondJson(res, 200, travailFini(t))
   }
 
+  // COMBIEN DE PLANS DE COUPE AURA CE MONTAGE.
+  //
+  // Le curseur « plans générés » a besoin d'une borne : proposer un budget de
+  // trente sur une vidéo qui n'en compte que douze est un chiffre qui ne veut
+  // rien dire, et le coût affiché à côté serait faux d'autant. La commande
+  // n'appelle rien — elle compte les visuels du script, et du plan quand il
+  // existe.
+  if (est('GET', 'api', 'videos', '*', 'estimation')) {
+    const slug = exigeVideo(slugDeLaVideo(segments))
+    const t = await lanceEtAttends(
+      [scriptPipeline('broll.mjs'), slug, '--estime', '--json'],
+      { msMax: 15_000 }
+    )
+    return repondJson(res, 200, travailFini(t))
+  }
+
   // Refuser un plan en appelle un autre — on ne laisse jamais un trou, le
   // précédent s'étirerait et on fabriquerait le temps mort qu'on évitait.
   // Gratuit : la banque d'images ne se facture pas.
+  // LA LISIBILITÉ SE MESURE À LA DEMANDE : deux à trois minutes pour un montage
+  // complet, donc un travail de fond avec son journal, pas un appel bloquant.
+  // EFFACER LA PISTE IMAGE : les dérivés partent, les décisions restent.
+  //
+  // `soustitres.json` vit dans le même dossier que `plan.json` — c'est une
+  // décision réglée à l'œil devant l'aperçu, et l'emporter en effaçant les plans
+  // serait le pire des échanges. La commande le garde ; cette route ne fait que
+  // l'appeler.
+  if (est('DELETE', 'api', 'videos', '*', 'plans')) {
+    const slug = exigeVideo(slugDeLaVideo(segments))
+    const t = await lanceEtAttends(
+      [scriptPipeline('broll.mjs'), slug, '--efface-plans', '--json'],
+      { msMax: 120_000 }
+    )
+    return repondJson(res, 200, { ...travailFini(t), etat: etatDe(slug) })
+  }
+
+  if (est('POST', 'api', 'videos', '*', 'lisibilite')) {
+    const slug = exigeVideo(slugDeLaVideo(segments))
+    return repondJson(res, 202, travailLance(
+      lanceTravail([scriptPipeline('broll.mjs'), slug, '--lisibilite', '--json'], {
+        etiquette: `lisibilité des sous-titres — ${slug}`,
+      })
+    ))
+  }
+
   if (est('POST', 'api', 'videos', '*', 'plans', '*', 'remplace')) {
     const slug = exigeVideo(slugDeLaVideo(segments))
     const numero = Number(segments[4])
@@ -1730,10 +2060,10 @@ ${essai.raison}`
     // LA SOURCE SE DEMANDE, ELLE NE SE DEVINE PAS — L UNE EST GRATUITE, L AUTRE
     // SE PAIE.
     //
-    // Pexels ne coûte rien ; une génération fal coûte ~0,18 $. Le §2 du
-    // CLAUDE.md interdit de lancer un appel payant sans annoncer son prix, donc
-    // l écran le demande avant d appeler cette route. Ici on se contente de
-    // refuser une source inconnue.
+    // Pexels ne coûte rien ; une génération fal coûte de 0,04 $ à 2,36 $ selon le
+    // modèle retenu. Le §2 du CLAUDE.md interdit de lancer un appel payant sans
+    // annoncer son prix, donc l écran le demande avant d appeler cette route. Ici
+    // on se contente de refuser une source inconnue.
     const corps = await litCorpsJson(req).catch(() => ({}))
     const source = corps?.source === 'ia' ? 'ia' : 'pexels'
     const args = [scriptPipeline('broll.mjs'), slug, `--remplace=${numero}`, '--json']
@@ -2175,25 +2505,79 @@ ${essai.raison}`
       ))
     }
 
-    // L'ouverture générée coûte dix-huit centimes : même devis que les autres
-    // appels payants, même accord explicite avant de partir (§2, §7).
+    // LES DEUX OPTIONS PAYANTES DU MONTAGE, ET UN SEUL DEVIS.
+    //
+    // L'ouverture générée coûte un plan. Les plans générés en coûtent autant
+    // chacun, et leur NOMBRE est maintenant décidé par la personne : c'est le
+    // curseur de l'étape 6. Ce qu'on approuve reste le PIRE CAS — le budget
+    // entier — et le journal dit ensuite combien ont réellement servi, parce
+    // qu'un budget non employé n'est pas facturé. Deux devis successifs pour un
+    // seul clic feraient deux dialogues à la file, ce qu'on ne lit plus.
+    //
+    // `combleIa` reste accepté : un onglet ouvert avant la mise à jour porte
+    // encore l'ancien `app.js`, et un booléen silencieusement ignoré aurait
+    // lancé un montage sans le comblage qu'on venait de cocher.
+    const PLANS_IA_MAX = 30
+    const plansIa = Number.isFinite(Number(corps?.plansIa))
+      ? Math.max(0, Math.min(PLANS_IA_MAX, Math.round(Number(corps.plansIa))))
+      : corps?.combleIa === true ? 3 : 0
+    // LE PRIX SUIT LE MODÈLE, IL N'EST PLUS UN NOMBRE ÉCRIT ICI.
+    //
+    // Il valait 0,18 $ en dur. Les tarifs relevés le 7 septembre 2026 vont de
+    // 0,04 $ (LTX, par vidéo) à 2,37 $ (Seedance 2.5, 5 s à 0,473 $/s) : un
+    // facteur soixante. Un devis figé aurait donc annoncé six fois trop peu sur
+    // le modèle le plus cher — c'est-à-dire fait accepter une dépense qu'on n'a
+    // pas montrée, ce que le §7 interdit.
+    const { modeleDePlan, coutDUnPlan, MODELES_PLAN } = await import('../pipeline/lib/fal.mjs')
+    // LE MODÈLE PEUT ÊTRE CHOISI POUR CE MONTAGE-CI.
+    //
+    // Celui de la chaîne reste le défaut ; l'écran de l'étape 6 peut en imposer
+    // un autre — c'est là que la dépense se décide, et refaire une ouverture
+    // avec un modèle plus cher ne doit pas obliger à basculer toute la chaîne.
+    const voulu = String(corps?.modeleVideo ?? '')
+    if (voulu && !MODELES_PLAN[voulu]) throw new ErreurHttp(400, `Modèle vidéo inconnu.`)
+    const modeleVideo = voulu || modeleDePlan(litChaine())
+    // Cinq secondes : la durée d'un plan de coupe ordinaire. Le vrai calcul se
+    // fait plan par plan au montage ; ici on borne le PIRE CAS.
+    const PRIX_PLAN = coutDUnPlan(modeleVideo, 5)
+    const args = [scriptPipeline('monte.mjs'), slug, '--depuis=cale']
+    if (voulu) args.push(`--modele-video=${voulu}`)
+    // « Reprendre des plans différents » : sans ça, un remontage redonne
+    // exactement les mêmes — la banque rend ses candidats dans le même ordre et
+    // la vidéo courante est exclue de la fenêtre de réemploi.
+    if (corps?.refaisPlans === true) args.push('--refais-plans')
+    let dollars = 0
+    const quoi = []
     if (corps.ouvertureIa === true) {
-      exigeConfirmation(corps, `plans-ia:${slug}`, {
-        service: 'fal',
-        dollars: 0.18,
-        bareme: `environ 0,18 $ par plan généré`,
-        quoi:
-          `Le plan d'ouverture de « ${slug} » sera généré par IA — un gros plan de ` +
-          `visage avec l'émotion du passage — au lieu d'être pris en banque.`,
-      })
-      return repondJson(res, 202, travailLance(
-        lanceTravail([scriptPipeline('monte.mjs'), slug, '--depuis=cale', '--ouverture=ia'])
-      ))
+      args.push('--ouverture=ia')
+      dollars += PRIX_PLAN
+      quoi.push(
+        `le plan d'ouverture sera généré par IA — un gros plan de visage avec ` +
+          `l'émotion du passage — au lieu d'être pris en banque`
+      )
     }
-
-    return repondJson(res, 202, travailLance(
-      lanceTravail([scriptPipeline('monte.mjs'), slug, '--depuis=cale'])
-    ))
+    if (plansIa > 0) {
+      args.push(`--plans-ia=${plansIa}`)
+      dollars += PRIX_PLAN * plansIa
+      quoi.push(
+        `jusqu'à ${plansIa} plan(s) seront générés — le script est lu en entier et ` +
+          `la génération va aux passages qu'une banque d'images ne peut pas servir, ` +
+          `le reste du budget comblant les trous`
+      )
+    }
+    if (dollars > 0) {
+      exigeConfirmation(corps, `plans-ia:${slug}:${args.join(' ')}`, {
+        service: 'fal',
+        // Arrondi au centime : une somme de virgules flottantes donne
+        // « 9.459999999999999 », et un devis qui affiche ça n'inspire rien.
+        dollars: Math.round(dollars * 100) / 100,
+        bareme:
+          `${PRIX_PLAN.toFixed(2)} $ par plan de 5 s avec ` +
+          `${MODELES_PLAN[modeleVideo]?.nom ?? modeleVideo}`,
+        quoi: `Sur « ${slug} » : ${quoi.join(' ; ')}. Plafond annoncé, pas montant certain.`,
+      })
+    }
+    return repondJson(res, 202, travailLance(lanceTravail(args)))
   }
 
   if (est('POST', 'api', 'videos', '*', 'rendu')) {
@@ -2234,8 +2618,49 @@ ${essai.raison}`
   //
   // Le texte devient une prise. Payant chez Fish, mais à un dixième de centime
   // la minute : le devis est annoncé à l'écran, et la route le borne.
+  // TES MOTS, POUR ESSAYER UNE VOIX SUR TON PROPRE TEXTE.
+  //
+  // Fish ne convertit pas un enregistrement — il lit. La question « comment
+  // sonnerait ma prise avec cette voix » a pourtant une reponse : lui faire dire
+  // CE QU'ON A DIT. Memes mots, meme longueur, meme sujet. Une phrase de
+  // demonstration ne repond pas a ca : on juge alors le texte autant que la voix.
+  if (est('GET', 'api', 'videos', '*', 'mots-essai')) {
+    const slug = exigeVideo(slugDeLaVideo(segments))
+    const secondes = Math.max(2, Math.min(120, Number(url.searchParams.get('secondes')) || 20))
+    const t = await lanceEtAttends(
+      [scriptPipeline('parle.mjs'), `--mots-de-la-prise=${slug}`, `--secondes=${secondes}`, '--json'],
+      { msMax: 15_000 }
+    )
+    return repondJson(res, 200, travailFini(t))
+  }
+
   if (est('GET', 'api', 'voix-fish')) {
-    const t = await lanceEtAttends([scriptPipeline('parle.mjs'), '--voix=?', '--json'], { msMax: 20_000 })
+    // LA RECHERCHE ET LA PAGE PARTENT AU SERVEUR, PAS AU FILTRE LOCAL.
+    //
+    // L'écran chargeait cent voix et filtrait dedans : taper un nom qui existe
+    // à la trois-centième position ne rendait rien, et on en concluait que la
+    // voix n'existait pas. La bibliothèque Fish se compte en milliers ; elle se
+    // parcourt, elle ne se télécharge pas.
+    const args = [scriptPipeline('parle.mjs'), '--voix=?', '--json']
+    const cherche = String(url.searchParams.get('cherche') ?? '').trim()
+    if (cherche) {
+      if (cherche.length > 60) throw new ErreurHttp(400, `Recherche trop longue.`)
+      args.push(`--cherche=${cherche}`)
+    }
+    const langue = String(url.searchParams.get('langue') ?? '').trim()
+    if (langue) {
+      if (!/^[a-z]{2}$|^toutes$/.test(langue)) throw new ErreurHttp(400, `Langue invalide.`)
+      args.push(`--langue=${langue}`)
+    }
+    const page = Number(url.searchParams.get('page') ?? 1)
+    if (Number.isFinite(page) && page > 1) {
+      args.push(`--page=${Math.min(50, Math.round(page))}`)
+      // Paginer ne change que la bibliothèque : les voix du compte et le solde
+      // n'ont pas bougé, et l'écran les garde. Deux tiers de seconde gagnés sur
+      // chaque « charger 100 de plus ».
+      args.push('--bibliotheque-seule')
+    }
+    const t = await lanceEtAttends(args, { msMax: 20_000 })
     return repondJson(res, 200, travailFini(t))
   }
 
@@ -2268,7 +2693,14 @@ ${essai.raison}`
 
     // Le texte passe par l'entrée standard : un script porte des sauts de ligne,
     // et le garde des arguments les refuse — à raison.
-    const args = [scriptPipeline('parle.mjs'), slug, '--texte=-']
+    // `--json` DÈS LE DÉPART, PAS SEULEMENT POUR LA PRISE.
+    //
+    // Il manquait, et l'écran n'a jamais pu retrouver le fichier d'un essai : la
+    // commande fabriquait bien le wav, l'écrivait dans `03-audio/essais/`, et
+    // journalisait son chemin — mais `travailFini` ne lit que la sortie JSON.
+    // Le lecteur restait donc vide en annonçant que « l'essai n'a rien rendu »,
+    // sur un essai qui avait parfaitement réussi et qui était payé.
+    const args = [scriptPipeline('parle.mjs'), slug, '--texte=-', '--json']
     if (corps?.voix) {
       const v = String(corps.voix)
       if (!/^[a-z0-9]{8,64}$/i.test(v)) throw new ErreurHttp(400, `Voix invalide.`)
@@ -2405,6 +2837,37 @@ ${essai.raison}`
   if (est('POST', 'api', 'videos', '*', 'drive')) {
     const slug = exigeVideo(slugDeLaVideo(segments))
     return repondJson(res, 202, travailLance(lanceTravail([scriptPipeline('drive.mjs'), slug, '--json'])))
+  }
+
+  // CREER LE DOSSIER DRIVE DE LA CHAINE : un geste, pas une decision.
+  //
+  // L'ecran disait « Pas de dossier pour cette chaine — npm run drive --dossier ».
+  // Or il n'y a rien a juger : la portee `drive.file` ne permet PAS d'ecrire
+  // dans un dossier cree a la main dont on collerait l'identifiant, donc c'est
+  // la commande qui doit le creer, une fois. La CONNEXION, elle, reste au
+  // terminal — elle ouvre un ecran de consentement Google.
+  if (est('POST', 'api', 'drive', 'dossier')) {
+    return repondJson(res, 202, travailLance(
+      lanceTravail([scriptPipeline('drive.mjs'), '--dossier', '--json'], {
+        etiquette: `drive — création du dossier de la chaîne`,
+      })
+    ))
+  }
+
+  // TRANSCRIRE : local, gratuit, et sans la moindre decision.
+  //
+  // L'ecran donnait `npm run transcris -- <slug>` a copier. Rien la-dedans ne
+  // s'argumente : whisper lit l'audio et rend des mots avec leurs instants. Une
+  // marche sans bouton la ou aucun jugement n'est demande, c'est exactement le
+  // defaut que le §2 nomme.
+  if (est('POST', 'api', 'videos', '*', 'transcris')) {
+    const slug = exigeVideo(slugDeLaVideo(segments))
+    const corps = await litCorpsJson(req).catch(() => ({}))
+    const args = [scriptPipeline('transcris.mjs'), slug]
+    if (corps?.refais === true) args.push('--refais')
+    return repondJson(res, 202, travailLance(
+      lanceTravail(args, { etiquette: `transcription — ${slug}` })
+    ))
   }
 
   // -------------------------------------------------------------- travaux ---
@@ -2723,7 +3186,11 @@ async function essaieLaChaine(dossier) {
         })
         if (r.ok) return { ok: true }
       } catch { /* pas encore en ligne */ }
-      await new Promise((r) => setTimeout(r, 300))
+      // Un atelier démarre en 240 ms (mesuré) : sonder toutes les 300 ms
+      // ajoutait jusqu'à 300 ms d'attente pure sur un essai qui, lui, est déjà
+      // fini. La granularité de la sonde ne doit pas coûter plus que ce qu'elle
+      // mesure.
+      await new Promise((r) => setTimeout(r, 40))
     }
     return { ok: false, raison: `Elle n'a pas répondu en vingt secondes.` }
   } finally {
@@ -2772,8 +3239,17 @@ function relanceVers(dossier) {
   }
 
   // Un délai court laisse la réponse atteindre le navigateur avant qu'on ferme.
-  setTimeout(() => serveur.close(partir), 150).unref()
-  // Filet : si une connexion persistante retient la fermeture, on part quand même.
+  //
+  // ET ON COUPE LES CONNEXIONS PLUTÔT QUE DE LES ATTENDRE. `close()` attend la
+  // fin de toutes les connexions ouvertes ; un navigateur en garde une vivante
+  // en permanence (keep-alive). Sans `closeAllConnections`, la fermeture
+  // n'aboutissait pas et c'est le filet de trois secondes qui partait — trois
+  // secondes de port muet, à chaque changement de chaîne, pour rien.
+  setTimeout(() => {
+    serveur.close(partir)
+    try { serveur.closeAllConnections() } catch { /* Node < 18.2 : le filet joue */ }
+  }, 150).unref()
+  // Filet : si quelque chose retient quand même la fermeture, on part.
   setTimeout(partir, 3000).unref()
 }
 
@@ -2782,10 +3258,26 @@ await principal(async () => {
   if (orphelins) journal.detail(`${orphelins} temporaire(s) d'atelier abandonné(s) effacé(s).`)
   fs.mkdirSync(TEMPORAIRE, { recursive: true })
 
-  // La chaîne se lit au démarrage plutôt qu'à la première requête : découvrir
-  // qu'elle n'est pas initialisée après avoir déposé un rush est une perte de
-  // temps, et le message de `litChaine` dit déjà quoi faire.
-  litChaine({ exigeInitialisee: true })
+  // La chaîne se lit au démarrage plutôt qu'à la première requête : son absence
+  // dit qu'on n'est pas dans une chaîne du tout, et mieux vaut l'apprendre
+  // maintenant qu'après avoir déposé un rush.
+  //
+  // ELLE SE LIT, ELLE NE SE FILTRE PLUS.
+  //
+  // `exigeInitialisee: true` arrêtait l'atelier net sur une chaîne neuve. C'est
+  // la moitié du défaut corrigé plus haut, dans `/api/chaines/ouvre` : l'autre
+  // moitié refusait la bascule, celle-ci refusait le démarrage. Le dépôt, la
+  // transcription, le carnet et les avatars n'ont jamais eu besoin de
+  // l'initialisation ; seul le montage attend la direction artistique, et il le
+  // dira lui-même le moment venu.
+  const carte = litChaine()
+  if (carte.initialise !== true) {
+    journal.attention(
+      `Chaîne non initialisée. Elle produit quand même — la cascade des sous-titres ` +
+        `et les polices embarquées donnent des réglages complets. Ce qui manque est ` +
+        `éditorial : ouvre Claude Code dans ce dossier et lance /init-chaine.`
+    )
+  }
 
   await new Promise((resoud, rejette) => {
     serveur.once('error', (e) => {
@@ -2805,7 +3297,7 @@ await principal(async () => {
   journal.titre(`Atelier`)
   journal.ok(adresse)
   journal.detail(`${etats().length} vidéo(s) dans videos/`)
-  journal.detail(`Aucune clé d'API ne traverse ce serveur.`)
+  journal.detail(`Aucune clé d'API n'est journalisée ni passée en argument.`)
   journal.detail(`Ctrl+C pour arrêter.`)
 
   if (drapeau(options, 'ouvre')) ouvreLeNavigateur(adresse)

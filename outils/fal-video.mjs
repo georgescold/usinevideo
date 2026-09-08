@@ -104,16 +104,21 @@ export async function genereVideo(
 ) {
   const dire = surEtape ?? (() => {})
 
+  // CHAQUE MODÈLE A SON FORMULAIRE, ET LE CORPS VIENT DU CATALOGUE.
+  //
+  // Le corps était écrit en dur pour LTX : `num_frames`, `negative_prompt`,
+  // `resolution: '720p'`. Seedance et MiniMax veulent `duration` en secondes et
+  // n'ont pas de prompt négatif ; leur envoyer `num_frames` ne lève pas — le
+  // champ inconnu est ignoré, et on paie une vidéo de la durée par DÉFAUT du
+  // modèle, pas celle qu'on a demandée. C'est le genre d'écart qu'on découvre
+  // au montage, sur un plan qui ne tient pas dans son trou.
+  const { corpsDeGeneration } = await import('../pipeline/lib/fal.mjs')
   const r = await fetch(`https://queue.fal.run/${modele}`, {
     method: 'POST',
     headers: AUTH(),
-    body: JSON.stringify({
-      prompt,
-      negative_prompt: sansTexte,
-      num_frames: Math.round(dureeS * 24),
-      aspect_ratio: format,
-      resolution: '720p',
-    }),
+    body: JSON.stringify(
+      corpsDeGeneration(modele, { prompt, secondes: dureeS, format, sansTexte })
+    ),
   })
   if (!r.ok) throw new Error(`fal a refusé la demande (HTTP ${r.status}) : ${(await r.text()).slice(0, 200)}`)
   const { request_id: id, status_url, response_url } = await r.json()

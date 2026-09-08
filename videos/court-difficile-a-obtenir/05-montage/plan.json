@@ -3126,7 +3126,18 @@
       "ken": false,
       "debutMs": 0,
       "dureeMs": 2340,
-      "dureeSourceMs": 5375
+      "dureeSourceMs": 5375,
+      "_accroche": {
+        "mouvement": 0.1,
+        "contraste": 100.1,
+        "couleur": 6.3,
+        "visage": {
+          "present": false,
+          "taille": 0,
+          "vues": 8,
+          "trouve": 0
+        }
+      }
     },
     {
       "type": "broll",

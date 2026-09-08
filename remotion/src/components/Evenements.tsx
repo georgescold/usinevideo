@@ -347,8 +347,12 @@ const UnEvenement: React.FC<{ ev: Evenement; theme: Theme; dureeImages: number }
   dureeImages,
 }) => {
   const image = useCurrentFrame()
-  const { fps, width } = useVideoConfig()
-  const e = width / 1080
+  const { fps, width, height } = useVideoConfig()
+  // Le petit côté, pas la largeur — voir `echelleDe` dans SousTitres.tsx. Tout
+  // ce qui est dimensionné ici l'est pour la composition de référence 1080 ×
+  // 1920 ; prendre la largeur grossissait de 78 % chaque mot-clé, chaque
+  // chiffre et chaque carte d'insert d'un montage horizontal.
+  const e = Math.min(width, height) / 1080
   const opacite = fonduEntreeSortie(image, dureeImages, fps)
   const monte = glisseEntree(image, fps)
 

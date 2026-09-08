@@ -23,7 +23,7 @@ import path from 'node:path'
 import { CHEMINS, dossierVideo, litJson, ecritJson, assureDossier } from './chemins.mjs'
 import { journal } from './journal.mjs'
 import { chercheVideos, cherchePhotos, rapatrie, plansEmployesRecemment, cleDeMedia } from './medias.mjs'
-import { mesureLAccroche, accrocheFaible } from './ffmpeg.mjs'
+import { mesureLAccroche, accrocheFaible, BANDE_CLAIRE } from './ffmpeg.mjs'
 import { chercheUnVisage } from './visages.mjs'
 
 /** Les plans de coupe d'un montage, dans l'ordre, prêts à être montrés. */
@@ -57,6 +57,9 @@ export function plansDe(slug) {
       .filter((m) => (m.debutMs ?? 0) < (fin ?? Infinity) && (m.finMs ?? 0) > debut)
       .map((m) => ({ texte: m.texte, debutMs: m.debutMs ?? 0, finMs: m.finMs ?? 0 }))
 
+  // Le seuil vient de `ffmpeg.mjs` : une seule valeur, pour la commande comme
+  // pour l'écran. Deux copies divergeraient à la première recalibration.
+  const CLAIR = BANDE_CLAIRE
   return brolls.map(({ e, rang }, i) => {
     const debutMs = e.debutMs ?? 0
     const finMs = e.dureeMs != null ? debutMs + e.dureeMs : null
@@ -66,6 +69,14 @@ export function plansDe(slug) {
       // l'événement dans le plan : personne ne compte les punchs pour désigner
       // une image.
       numero: i + 1,
+      // LA LISIBILITÉ DES SOUS-TITRES, quand elle a été mesurée.
+      //
+      // `null` veut dire « pas encore mesuré », jamais « bon » : la mesure
+      // demande deux à trois minutes et se lance à la demande. Confondre les
+      // deux ferait passer un montage non vérifié pour un montage validé.
+      bandeY: e._bandeY ?? null,
+      modele: e._modele ?? null,
+      clair: typeof e._bandeY === 'number' ? e._bandeY >= CLAIR : null,
       rang,
       debutMs,
       dureeMs: e.dureeMs ?? null,
@@ -74,6 +85,14 @@ export function plansDe(slug) {
       requete: e.requete ?? null,
       ancre: e.ancre ?? null,
       source: e.source ?? 'pexels',
+      // POURQUOI CE PLAN-LÀ A ÉTÉ PAYÉ.
+      //
+      // Un plan généré au milieu de trente plans de banque ne se juge pas sans
+      // sa raison : on voit qu'il est différent, on ne peut pas dire si le choix
+      // était bon. `iaChoisi` distingue les deux façons de le décider — le
+      // script l'a désigné, ou la banque n'avait rien.
+      iaPourquoi: e._iaPourquoi ?? null,
+      iaChoisi: e._iaChoisi === true,
       // Un insert est TON plan posé par-dessus : il ne se remplace pas en banque.
       insert: e.insert?.src ?? null,
       essais: e._essais ?? 0,
@@ -133,7 +152,18 @@ export function styleDesSousTitres(slug) {
  * ce qui rend le geste répétable : deux refus de suite ne peuvent pas ramener
  * la même image, et la troisième proposition n'est pas la première.
  */
-export async function remplaceUnPlan(slug, numero, { direction = null, source = 'pexels' } = {}) {
+/**
+ * `modele` : celui que l'APPELANT impose, sinon celui de la chaîne.
+ *
+ * Même piège que dans `medias.mjs` : le modèle se relisait sur le disque, donc
+ * `--modele-video=` — qui vit dans la carte en mémoire de `monte.mjs` — était
+ * ignoré. `--ouverture=ia` annonçait le prix de Seedance et générait avec LTX.
+ */
+export async function remplaceUnPlan(
+  slug,
+  numero,
+  { direction = null, source = 'pexels', modele = null } = {}
+) {
   const v = dossierVideo(slug)
   const plan = litJson(v.plan, null)
   if (!plan) throw new Error(`Aucun plan de montage pour « ${slug} ». Monte-la d'abord.`)
@@ -172,7 +202,7 @@ export async function remplaceUnPlan(slug, numero, { direction = null, source = 
   // le demande avant d'arriver ici.
   if (source === 'ia') {
     const { genereVideo, soldeFal } = await import('../../outils/fal-video.mjs')
-    const { AUCUN_TEXTE_A_L_ECRAN } = await import('./fal.mjs')
+    const { promptDePlan } = await import('./fal.mjs')
 
     // UN PLAN NE MONTRE PAS LE PROPOS, IL EN PORTE L'ÉMOTION.
     //
@@ -183,50 +213,51 @@ export async function remplaceUnPlan(slug, numero, { direction = null, source = 
     //
     // L'intention est déjà écrite dans le script, bloc par bloc — c'est elle
     // qu'on traduit, plutôt que de la deviner depuis le texte français.
-    const TONS = {
-      'posé': 'calm, restrained, contemplative mood',
-      'vif': 'energetic, alive, dynamic mood',
-      'grave': 'sombre, heavy, serious mood',
-      'curieux': 'intrigued, questioning, searching mood',
-      'complice': 'warm, intimate, knowing mood',
-      'tranchant': 'stark, decisive, high contrast mood',
-      'intime': 'intimate, close, tender mood',
-    }
     const script = litJson(dossierVideo(slug).scriptJson, null)
     const bloc = (script?.blocs ?? []).find(
       (b) => vise.ancre && String(b.texte ?? '').includes(vise.ancre)
     )
-    const ton = TONS[bloc?.intention] ?? 'emotionally expressive mood'
-    let emotion = `${ton}, conveys the feeling of the moment, ${AUCUN_TEXTE_A_L_ECRAN}`
-
-    // L'OUVERTURE DEMANDE UN VISAGE, LES AUTRES PLANS NON.
-    //
-    // C'est le seul plan dont dépend le fait que les autres soient vus, et rien
-    // n'arrête l'œil comme un visage : c'est la forme que le regard cherche
-    // avant même de comprendre ce qu'il voit. Sur les plans suivants, imposer
-    // un visage abîmerait le montage — trente portraits d'affilée sont un
-    // diaporama.
-    if (vise.ouverture) {
-      emotion += `, close-up on a human face, the emotion clearly readable in the eyes`
-      journal.detail(`plan d'ouverture : le visage est demandé au modèle.`)
-    }
+    if (vise.ouverture) journal.detail(`plan d'ouverture : le visage est demandé au modèle.`)
+    // LE SEUIL SUIT LE MODÈLE : 0,20 $ suffisait pour LTX, pas pour Seedance,
+    // dont un plan de 5 s coûte 2,37 $. Un garde figé aurait laissé partir une
+    // génération que le solde ne couvre pas, et fal l'aurait refusée après coup.
+    const { dureeDePlan, modeleDePlan: quelModele, coutDUnPlan: prixDe, MODELES_PLAN } =
+      await import('./fal.mjs')
+    // Un identifiant inconnu ne doit pas passer en silence : on retombe alors
+    // sur la chaîne plutôt que d'envoyer à fal un modèle qui n'existe pas.
+    const MODELES_CONNUS = (id) => Boolean(MODELES_PLAN[id])
+    const secondes = dureeDePlan(vise.dureeMs)
+    const modelePrevu =
+      modele && MODELES_CONNUS(modele)
+        ? modele
+        : quelModele(litJson(path.join(CHEMINS.config, 'chaine.json'), null))
+    const prixPrevu = prixDe(modelePrevu, secondes)
     const reste = await soldeFal()
-    if (reste !== null && reste < 0.2) {
+    if (reste !== null && reste < prixPrevu) {
       throw new Error(
-        `Solde fal insuffisant : ${reste.toFixed(2)} $ pour un plan qui en coûte ~0,18.`
+        `Solde fal insuffisant : ${reste.toFixed(2)} $ pour un plan qui en coûte ~${prixPrevu.toFixed(2)}.`
       )
     }
-    const secondes = Math.max(2, Math.min(8, Math.round(((vise.dureeMs ?? 4000) / 1000) * 10) / 10))
     const nom = `broll-${String(vise.numero).padStart(2, '0')}-ia${essais}.mp4`
     const cible = path.join(dossier, nom)
 
-    // Le prompt est la requête du script, en anglais : c'est la langue des
-    // modèles, et le français y donne des résultats nettement plus pauvres.
-    // La direction de plans de la chaîne s'y ajoute, comme pour la banque.
-    const prompt = [vise.requete, emotion, direction].filter(Boolean).join(', ')
+    // LE PROMPT VIENT DE `fal.mjs`, IL NE S'ÉCRIT PLUS ICI.
+    //
+    // Le comblage automatique du montage en a besoin du même — et deux copies
+    // divergeraient à la première correction de l'émotion. C'est la requête du
+    // script en anglais (la langue des modèles ; le français y rend nettement
+    // plus pauvre), l'intention du bloc traduite en direction d'image, et la
+    // direction de plans de la chaîne.
+    const prompt = promptDePlan({
+      requete: vise.requete,
+      intention: bloc?.intention ?? null,
+      direction,
+      ouverture: vise.ouverture,
+    })
     journal.detail(`prompt : ${prompt}`)
+    journal.detail(`modèle : ${modelePrevu} · ~${prixPrevu.toFixed(2)} $`)
     await genereVideo(prompt, {
-      modele: 'fal-ai/ltx-video-13b-distilled',
+      modele: modelePrevu,
       dureeS: secondes,
       format: hauteur > largeur ? '9:16' : '16:9',
       sortie: cible,
@@ -237,6 +268,9 @@ export async function remplaceUnPlan(slug, numero, { direction = null, source = 
     evenement.src = `broll/${nom}`
     evenement.ken = false
     evenement.source = 'fal'
+    // Le modèle qui l'a produit : sans lui, on ne peut pas dire si le prix
+    // payé valait ce qu'on regarde.
+    evenement._modele = modelePrevu
     evenement._essais = essais
     evenement._mediaId = `fal:${nom}`
     evenement._auteur = null
@@ -317,6 +351,14 @@ export async function remplaceUnPlan(slug, numero, { direction = null, source = 
 
   const ancien = evenement.src
   evenement.src = `broll/${pris.nom}`
+  // LA PROVENANCE SE RÉÉCRIT AUSSI, ET SON OUBLI SE VOYAIT NULLE PART.
+  //
+  // Un plan d'abord généré puis remplacé par un plan de banque gardait
+  // `source: 'fal'` : le fichier venait de Pexels, le plan disait l'inverse.
+  // Une licence CC-BY exige l'attribution de son auteur — un plan de banque
+  // catalogué « fal » est un crédit qu'on ne rend pas, et ça ne se remarque
+  // qu'en lisant le plan à la main.
+  evenement.source = 'pexels'
   // Une photo a besoin d'un mouvement : sans lui l'image se fige, et l'attention
   // part avec elle.
   evenement.ken = pris.media.type === 'image'

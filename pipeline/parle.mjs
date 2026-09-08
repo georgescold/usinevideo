@@ -54,6 +54,14 @@ parle.mjs — fabriquer la voix d'une vidéo à partir de son texte
   npm run parle -- <slug> --devis           ce que ça coûterait
 
   --voix=<id>          la voix Fish (défaut : celle de la chaîne)
+  --voix=? --page=2    la page suivante de la bibliothèque (100 par page)
+  --voix=? --cherche=  cherche un nom DANS la bibliothèque, côté serveur
+  --voix=? --langue=   fr par défaut ; « toutes » ne filtre pas
+  --bibliotheque-seule saute les voix du compte et le solde — pour paginer
+  --mots-de-la-prise=<slug>   rend TES mots, ceux de la prise déposée, de quoi
+                        remplir un essai. Le transcript d'abord, le script
+                        ensuite. Ne synthétise rien : il rend du texte.
+  --secondes=20        combien de secondes de prise ces mots couvrent
   --modele-local=<id>  après lecture, ton modèle entraîné plaque son timbre
   --transpose=0        demi-tons — 0 entre deux voix féminines
   --modele=<id>        ${MODELE_DEFAUT} par défaut
@@ -151,23 +159,98 @@ function texteDemande(slug) {
   throw new Error(`Donne le texte : --texte="…" ou --fichier=<chemin>.`)
 }
 
+/**
+ * Les mots de la prise, de quoi remplir un essai.
+ *
+ * FISH NE TOUCHE PAS A L'AUDIO, MAIS IL PEUT DIRE LES MEMES MOTS.
+ *
+ * On veut juger une voix Fish « sur sa prise ». Fish ne sait pas convertir un
+ * enregistrement — il LIT, son API n'expose que la synthese. Ce qu'on peut
+ * faire, et qui repond a la vraie question, c'est lui faire dire CE QU'ON A DIT :
+ * memes mots, meme longueur, meme sujet. La comparaison devient alors juste —
+ * on n'ecoute plus une phrase de demonstration, on ecoute son propre texte.
+ *
+ * DEUX SOURCES, DANS CET ORDRE. Le transcript est ce qui a ete DIT, mot pour
+ * mot, avec ses instants : on peut donc couper a la bonne duree. Le script est
+ * ce qu'on avait PREVU de dire — moins fidele, mais disponible avant la
+ * transcription. Aucun des deux : on le dit, on n'invente pas de phrase.
+ */
+function motsDeLaPrise(slug, secondes) {
+  const v = dossierVideo(slug)
+  const t = litJson(v.transcript, null)
+  const mots = Array.isArray(t?.mots) ? t.mots : []
+  if (mots.length) {
+    const finMs = secondes * 1000
+    const gardes = mots.filter((m) => (m.debutMs ?? 0) < finMs)
+    return {
+      texte: (gardes.length ? gardes : mots.slice(0, 60)).map((m) => m.texte).join(' ').trim(),
+      origine: 'le transcript de la prise',
+    }
+  }
+  const script = litJson(v.scriptJson, null)
+  const blocs = Array.isArray(script?.blocs) ? script.blocs : []
+  const texte = blocs.map((b) => String(b.texte ?? '')).join(' ').trim()
+  if (texte) {
+    // Sans instants, on coupe aux caracteres : environ quinze par seconde de
+    // parole a debit normal. C'est approximatif, et ca ne prete pas a
+    // consequence — on remplit un champ qu'on relit avant de lancer.
+    return { texte: texte.slice(0, Math.round(secondes * 15)), origine: 'le script' }
+  }
+  return { texte: null, origine: null }
+}
+
 principal(async () => {
+  // ------------------------------------------------- les mots de la prise ---
+  if (options['mots-de-la-prise'] && options['mots-de-la-prise'] !== true) {
+    const slugVise = String(options['mots-de-la-prise'])
+    const secondes = Math.max(2, Math.min(120, Number(options.secondes) || 20))
+    const r = motsDeLaPrise(slugVise, secondes)
+    if (drapeau(options, 'json')) {
+      console.log(JSON.stringify({ ok: true, ...r, secondes }, null, 2))
+      return
+    }
+    if (!r.texte) {
+      journal.attention(`Ni transcript ni script pour « ${slugVise} » : rien à faire lire.`)
+      return
+    }
+    journal.detail(`D'après ${r.origine} :`)
+    console.log(r.texte)
+    return
+  }
+
   // ------------------------------------------------------ la liste des voix --
   if (options.voix === '?' || drapeau(options, 'voix-liste')) {
-    const miennes = await voix()
+    // TROIS APPELS RESEAU QUAND UN SEUL CHANGE.
+    //
+    // Charger la page suivante de la bibliotheque redemandait aussi les voix du
+    // compte et le solde — qui n'ont pas bouge. Mesure du 7 septembre 2026 :
+    // 0,34 s pour le compte, 0,82 s pour la page, 0,24 s pour le credit. Deux
+    // tiers de seconde payes a chaque « charger 100 de plus », pour redecouvrir
+    // ce qu'on savait deja. `--bibliotheque-seule` saute les deux autres ;
+    // l'ecran garde ce qu'il a en memoire et n'empile que la page.
+    const bibliothequeSeule = drapeau(options, 'bibliotheque-seule')
+    const miennes = bibliothequeSeule ? [] : await voix()
     // La bibliothèque publique n'est pas indispensable : si elle échoue, on
     // rend quand même les voix du compte plutôt que de tout faire tomber.
     let publiques = []
     try {
       publiques = await voixPubliques({
-        langue: options.langue ? String(options.langue) : 'fr',
-        recherche: options.cherche ? String(options.cherche) : null,
+        // `--langue=` accepte le vide : « toutes les langues » est un choix,
+        // et l'écran doit pouvoir le demander. `--langue=toutes` le dit.
+        langue:
+          options.langue === undefined
+            ? 'fr'
+            : ['', 'toutes', 'all'].includes(String(options.langue)) ? null : String(options.langue),
+        recherche: options.cherche && options.cherche !== true ? String(options.cherche) : null,
+        page: Math.max(1, Number(options.page) || 1),
       })
     } catch { /* la bibliothèque est un bonus */ }
     // Un modèle local n'est PAS une voix Fish : il ne lit pas, il convertit.
     // Il figure dans la même liste parce que c'est le même choix pour la
     // personne — « quelle voix je veux entendre » — mais le champ le distingue.
-    const locaux = modelesEntraines().map((m) => ({ id: m.id, entraine_le: m.entraineLe }))
+    const locaux = bibliothequeSeule
+      ? []
+      : modelesEntraines().map((m) => ({ id: m.id, entraine_le: m.entraineLe }))
 
     if (drapeau(options, 'json')) {
       // LA LISTE DES MARQUEURS PART AVEC, ET C'EST UNE CORRECTION.
@@ -179,7 +262,7 @@ principal(async () => {
       console.log(JSON.stringify({
         ok: true, fish: miennes, bibliotheque: publiques, locaux,
         marqueurs: MARQUEURS, sons: MARQUEURS_SONS, tons: MARQUEURS_TON,
-        credit: await credit(),
+        credit: bibliothequeSeule ? null : await credit(),
       }, null, 2))
       return
     }
@@ -213,7 +296,14 @@ principal(async () => {
 
   // Un essai ne lit pas tout le script : dix secondes suffisent pour juger une
   // intonation, et payer la lecture complète pour l'écarter serait absurde.
-  const aLire = essai ? texte.slice(0, 400) : texte
+  // QUATRE CENTS CARACTERES ETAIT UN QUATRIEME PLAFOND, ET IL TRONQUAIT.
+  //
+  // L'essai valait dix secondes, et 400 caracteres les couvraient. L'ecran en
+  // demande vingt par defaut et jusqu'a soixante : la coupe se serait faite ici,
+  // en silence, et on aurait juge dix-huit secondes en croyant en avoir demande
+  // vingt. Le champ de saisie borne deja a six cents ; ce plafond-ci ne sert plus
+  // qu'a empecher un script entier de partir par erreur dans un essai.
+  const aLire = essai ? texte.slice(0, 1200) : texte
 
   const { id: voixId, origine } = voixRetenue(slug)
   if (!voixId) {
@@ -324,11 +414,32 @@ principal(async () => {
     assureDossier(dossier)
     // Le nom porte les réglages : deux essais de la même voix se comparent au
     // lieu de s'écraser. C'est la règle déjà retenue pour `choix-voix`.
-    const nom = `essai-${modele}-t${String(temperature).replace('.', '')}${modeleLocal ? `-${modeleLocal.id}` : ''}.wav`
+    // LE NOM PORTE LA VOIX, ET C'EST TOUT L'INTÉRÊT DE L'ESSAI.
+    //
+    // Il portait le modèle et la température, pas l'identifiant de voix : deux
+    // voix Fish essayées à la suite écrivaient donc le MÊME fichier, et la
+    // seconde écrasait la première. On ne pouvait pas comparer — c'est-à-dire
+    // qu'on ne pouvait pas choisir, ce pour quoi l'essai existe. C'est la règle
+    // déjà retenue pour `choix-voix` : le nom porte le réglage.
+    const marqueVoix = voixId ? `-${String(voixId).slice(0, 8)}` : ''
+    const nom =
+      `essai-${modele}-t${String(temperature).replace('.', '')}` +
+      `${marqueVoix}${modeleLocal ? `-${modeleLocal.id}` : ''}.wav`
     const sortie = path.join(dossier, nom)
     await fabrique(aLire, sortie)
     const info = await sonde(sortie)
-    journal.ok(`${duree(info.dureeS)} · ${path.relative(CHEMINS.racine, sortie)}`)
+    const relatif = path.relative(CHEMINS.racine, sortie).split(path.sep).join('/')
+    // L'ATELIER A BESOIN DU CHEMIN, PAS D'UNE LIGNE DE JOURNAL.
+    //
+    // La commande ne rendait rien en `--json` : l'écran lançait l'essai, le
+    // fichier arrivait sur le disque, et le lecteur restait vide en annonçant
+    // que « l'essai n'a rien rendu ». Le bouton marchait, son résultat était
+    // introuvable.
+    if (drapeau(options, 'json')) {
+      console.log(JSON.stringify({ ok: true, fichier: relatif, dureeS: info.dureeS, voix: voixId }, null, 2))
+      return
+    }
+    journal.ok(`${duree(info.dureeS)} · ${relatif}`)
     journal.detail(`Rien n'est engagé : la prise n'a pas bougé.`)
     return
   }
