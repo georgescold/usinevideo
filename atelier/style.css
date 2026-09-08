@@ -309,6 +309,15 @@ input[type="number"] { width: 6.5em; }
   border-color: transparent; filter: brightness(1.06);
 }
 .bouton.discret { background: none; }
+/* UN AVERTISSEMENT QUI EST AUSSI LE GESTE QUI LE LÈVE.
+   Le découpage de la colonne est figé pendant l'édition ; le rendu, lui,
+   repagine. Quand les deux divergent, le dire discrètement ne suffit pas — on
+   irait juger un découpage que la vidéo ne produira pas. Le bouton porte donc
+   la couleur de l'attention, et un clic remet la colonne d'accord. */
+.bouton.alerte {
+  border-color: #6b5a2a; background: #221c10; color: #f2dfae;
+}
+.bouton.alerte:hover:not(:disabled) { border-color: #8a7436; background: #2a2214; }
 .bouton.grand { padding: 15px 22px; font-size: 17px; align-self: flex-start; }
 .bouton.minuscule { padding: 6px 12px; font-size: 14px; }
 .bouton.telecharge { align-self: flex-start; text-decoration: none;

@@ -5633,7 +5633,17 @@ function relanceLApercu({ sansTexte = false, gardeLaPosition = false } = {}) {
   arreteLApercu()
   if (!appli.st) return
 
-  const pages = pagine(appli.st.mots, appli.st.reglages.motsParPage)
+  // L'APERÇU LIT LE MÊME DÉCOUPAGE QUE LA COLONNE.
+  //
+  // Il paginait de son côté pendant que la colonne était figée : on corrigeait
+  // une ligne, on cliquait sur son heure pour l'entendre, et l'écran montrait
+  // une page qui ne contenait pas le texte qu'on venait d'écrire. C'était le
+  // « il disparaît quand je veux l'essayer » — deux découpages, deux vérités.
+  //
+  // Ce que le RENDU fera peut différer de ce qu'on voit ici tant qu'on édite :
+  // c'est dit franchement par le bouton d'alerte du pied de colonne, et un clic
+  // remet les trois d'accord.
+  const pages = pagesCourantes()
   // La fenêtre d'affichage d'une page, exactement comme le rendu : elle tient
   // jusqu'à la suivante, sans dépasser deux secondes après son dernier mot.
   apercu.fenetres = pages.map((p, i) => {
@@ -6046,10 +6056,22 @@ const auDixieme = (ms) => {
  * qui n'est plus celui de la vidéo. L'aperçu, à gauche, montre la vérité — et le
  * pied de colonne propose « Redécouper » dès que les deux divergent.
  */
-function lignesDuTexte() {
+/**
+ * Les pages telles que l'écran les montre — colonne ET aperçu.
+ *
+ * C'est le découpage figé tant qu'on édite ; celui du rendu sinon. Un seul
+ * point de décision : deux endroits qui paginent chacun de leur côté finissent
+ * toujours par se contredire, et c'est arrivé.
+ */
+function pagesCourantes() {
   const mots = appli.st.mots
-  const fenetres = appli.st.decoupage
-  const pages = fenetres ? groupeParFenetres(mots, fenetres) : pagine(mots, appli.st.reglages.motsParPage)
+  return appli.st.decoupage
+    ? groupeParFenetres(mots, appli.st.decoupage)
+    : pagine(mots, appli.st.reglages.motsParPage)
+}
+
+function lignesDuTexte() {
+  const pages = pagesCourantes()
   const lignes = []
   let i = 0
   for (const page of pages) {
@@ -6641,26 +6663,35 @@ window.addEventListener('beforeunload', (ev) => {
 $('listeSt').addEventListener('focusout', (ev) => {
   if (!ev.target.classList?.contains('texte-st')) return
   if (ev.relatedTarget?.classList?.contains('texte-st')) return
-  // Le redessin mis en attente pendant la saisie a lieu maintenant : la colonne
-  // rattrape ce qui a changé, et le curseur n'est plus nulle part.
-  if (redessinDu && !corrections.size) { redessinDu = false; dessineLeTexte() }
   if (!corrections.size) return
   programmeLEnregistrement()
 })
 
 async function corrigeVraiment() {
   if (!corrections.size) return
-  const zone = $('listeSt')
+  // LES INDEX VIENNENT DES MOTS, PLUS DU DOM — ET C'ÉTAIT LE PIRE DES BUGS.
+  //
+  // `de` et `a` se lisaient dans `dataset`, c'est-à-dire dans le DOM tel qu'il
+  // avait été dessiné. Or une correction qui change le nombre de mots décale
+  // tous les index qui suivent : dès que la colonne n'était pas redessinée
+  // entre deux enregistrements, la correction suivante partait avec les index
+  // d'AVANT et récrivait une plage décalée — à cheval sur deux lignes. Le texte
+  // se mélangeait avec celui du dessous, et des mots disparaissaient.
+  //
+  // `lignesDuTexte()` recalcule les index depuis `appli.st.mots`, qui est la
+  // seule source à jour. Le DOM ne décide plus de rien.
   const patch = []
   const envoyees = []
-  for (const champ of zone.querySelectorAll('.texte-st')) {
-    const cle = Number(champ.dataset.cle)
-    const enAttente = corrections.get(cle)
+  for (const l of lignesDuTexte()) {
+    const enAttente = corrections.get(l.debutMs)
     if (!enAttente) continue
-    patch.push({ de: Number(champ.dataset.de), a: Number(champ.dataset.a), texte: enAttente.texte })
+    // La ligne a-t-elle encore le texte sur lequel on a écrit ? Sinon elle a
+    // bougé sous la correction, et l'appliquer écraserait autre chose.
+    if (enAttente.origine !== l.texte) continue
+    patch.push({ de: l.de, a: l.a, texte: enAttente.texte })
     // Le TEXTE EXACT qui part, pas seulement sa clé : si la frappe continue
     // pendant l'aller-retour, la ligne a changé et ne doit pas être oubliée.
-    envoyees.push([cle, enAttente.texte])
+    envoyees.push([l.debutMs, enAttente.texte])
   }
   if (!patch.length) return
   const r = await mene(() =>
@@ -6728,25 +6759,57 @@ async function relisLesMots() {
   if (!mots.length) return
   appli.st.mots = mots
   relanceLApercu({ sansTexte: true, gardeLaPosition: true })
-  // ON NE RECONSTRUIT PAS LA COLONNE SOUS LES DOIGTS.
-  //
-  // L'écriture part 450 ms après la dernière frappe : en tapant un nombre
-  // chiffre par chiffre, on dépasse ce délai sans avoir fini. La colonne se
-  // reconstruisait alors en pleine saisie — le champ était recréé, le focus
-  // rendu, mais la position du curseur redevenait approximative dès que le
-  // texte avait bougé. C'est le « je n'arrive pas à placer mon curseur ».
-  //
-  // Tant qu'un champ est visé, on garde ce qui est à l'écran : il porte déjà
-  // exactement ce qu'on vient de taper. Le redessin attend le `blur`.
-  if (document.activeElement?.classList?.contains('texte-st')) {
-    redessinDu = true
-    return
-  }
-  dessineLeTexte()
+  rafraichitLeTexte()
 }
 
-/** Un redessin de la colonne attend qu'on ait fini d'écrire — voir ci-dessus. */
-let redessinDu = false
+/**
+ * Remet la colonne d'accord avec les mots, SANS la reconstruire quand elle
+ * n'en a pas besoin.
+ *
+ * DEUX ÉCUEILS, ET ILS SE FONT FACE.
+ *
+ * Tout redessiner à chaque enregistrement recréait le champ en pleine saisie :
+ * le focus était rendu, mais la position du curseur redevenait approximative
+ * dès que le texte avait bougé. C'est le « je n'arrive pas à placer mon
+ * curseur ».
+ *
+ * Ne RIEN redessiner était pire, et c'est le défaut qui « faisait n'importe
+ * quoi » : le DOM gardait les index d'avant, la correction suivante partait
+ * avec eux, et récrivait une plage décalée — à cheval sur deux lignes. Le texte
+ * se mélangeait avec celui du dessous.
+ *
+ * Le découpage étant figé pendant l'édition, la structure ne bouge presque
+ * jamais : on met alors à jour les index et les textes EN PLACE, sans toucher
+ * au champ qu'on est en train de remplir. Le DOM reste exact, et rien ne
+ * clignote. On ne reconstruit que si la structure a réellement changé — une
+ * insertion, un redécoupage.
+ */
+function rafraichitLeTexte() {
+  const zone = $('listeSt')
+  const lignes = lignesDuTexte()
+  const rangs = [...zone.querySelectorAll('.page-st')]
+  if (rangs.length !== lignes.length) { dessineLeTexte(); return }
+
+  const actif = document.activeElement
+  for (const [i, l] of lignes.entries()) {
+    const champ = rangs[i].querySelector('.texte-st')
+    // Une ligne se reconnaît à son instant de départ : les bornes survivent
+    // aux corrections. S'il a changé, la structure aussi — on refait tout.
+    if (!champ || Number(champ.dataset.cle) !== l.debutMs) { dessineLeTexte(); return }
+    champ.dataset.de = String(l.de)
+    champ.dataset.a = String(l.a)
+    champ.dataset.origine = l.texte
+    const enAttente = corrections.get(l.debutMs)
+    // On ne réécrit ni le champ qu'on remplit, ni celui qui porte une
+    // correction pas encore partie : ce serait effacer ce qui vient d'être tapé.
+    if (champ !== actif && !enAttente && champ.value !== l.texte) {
+      champ.value = l.texte
+      hauteurAuContenu(champ)
+    }
+    champ.classList.toggle('modifie', Boolean(enAttente))
+  }
+  majPiedDeTexte()
+}
 
 // ---------------------------------------------------------------------------
 //  Étape 6 bis — tes propres plans de coupe

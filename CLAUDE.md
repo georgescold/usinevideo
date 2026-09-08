@@ -1321,22 +1321,37 @@ la ligne suivante dans la précédente, et le découpage « figé » ne redonnai
 de figer. On avance un curseur dans des fenêtres ordonnées : un mot appartient à la dernière
 fenêtre ouverte avant lui.
 
-**LA COLONNE NE SE RECONSTRUIT PLUS SOUS LES DOIGTS.** L'écriture part 450 ms après la dernière
-frappe : en tapant un nombre chiffre par chiffre, on dépasse ce délai sans avoir fini. La colonne
-se refaisait alors en pleine saisie — le champ recréé, le focus rendu, mais la position du curseur
-approximative dès que le texte avait bougé. C'est le « je n'arrive pas à placer mon curseur ». Tant
-qu'un champ est visé, on garde ce qui est à l'écran ; le redessin attend le `blur`.
+**LES INDEX DU PATCH VIENNENT DES MOTS, PLUS DU DOM — et c'était le pire des bugs.** `de` et `a` se
+lisaient dans `dataset`, donc dans la colonne telle qu'elle avait été dessinée. Or une correction
+qui change le nombre de mots décale tous les index qui suivent : dès que la colonne n'était pas
+redessinée entre deux enregistrements, la correction suivante partait avec les index d'AVANT et
+récrivait une plage décalée, à cheval sur deux lignes. **Des mots étaient écrasés et le texte tapé
+atterrissait au mauvais endroit** — « ça se mélange avec la ligne du dessous », « il disparaît ».
+`lignesDuTexte()` recalcule les index depuis `appli.st.mots`, la seule source à jour.
 
-**LE RENDU, LUI, REPAGINE — et l'écran le dit.** Après une correction qui change le nombre de mots,
-la colonne peut montrer un découpage qui n'est plus celui de la vidéo. L'aperçu, à gauche, montre
-la vérité en permanence, et « Redécouper comme le rendu » apparaît dans le pied **dès que les deux
-divergent, et seulement là** : proposer de redécouper une colonne déjà juste serait un bouton qui
-ne change rien, donc un bouton qu'on clique pour vérifier.
+**ON MET LA COLONNE À JOUR EN PLACE, ON NE LA RECONSTRUIT PAS.** Deux écueils se font face : tout
+redessiner à chaque enregistrement recrée le champ en pleine saisie et la position du curseur
+redevient approximative — le « je n'arrive pas à placer mon curseur » ; ne rien redessiner laisse
+un DOM périmé, c'est-à-dire le bug ci-dessus. Le découpage étant figé, la structure ne bouge
+presque jamais : on rafraîchit les index et les textes **sans toucher au champ qu'on remplit**, et
+on ne reconstruit que si la structure a réellement changé.
 
-Vérifié le 8 septembre 2026 : six chiffres tapés un par un avec 620 ms de pause — champ jamais
-recréé, curseur à 20, 21, 22, 23, 24, 25, et **67 lignes du début à la fin**. Puis une ligne passée
-de quatre à huit mots : toujours 67 lignes, la voisine intacte, « Redécouper » apparu ; un clic
-dessus rend les 68 lignes du rendu et le bouton s'efface.
+**L'APERÇU LIT LE MÊME DÉCOUPAGE QUE LA COLONNE.** Il paginait de son côté : on corrigeait une
+ligne, on cliquait sur son heure pour l'entendre, et l'écran montrait une page qui ne contenait pas
+le texte qu'on venait d'écrire. Deux découpages, deux vérités. `pagesCourantes()` est le seul point
+de décision — deux endroits qui paginent chacun de leur côté finissent toujours par se contredire.
+
+**CE QUE LE RENDU FERA PEUT DIFFÉRER, ET ÇA SE DIT FRANCHEMENT.** Tant qu'on édite, le découpage
+figé n'est plus celui de `pagine()`. Un bouton discret ne suffisait pas — on irait juger un
+découpage que la vidéo ne produira pas. Le pied porte donc **« ⚠ La vidéo découpera autrement —
+mettre à jour »**, à la couleur de l'attention, visible seulement quand les deux divergent, et un
+clic remet les trois d'accord.
+
+Vérifié le 8 septembre 2026, sur le geste exact. Six chiffres tapés un par un avec 620 ms de
+pause : champ jamais recréé, curseur à 20, 21, 22, 23, 24, 25, **67 lignes du début à la fin**.
+Deux corrections successives **sans redessin entre elles** — le cas qui mélangeait tout : chacune
+au bon endroit, 214 → 216 mots sur le disque, **aucun mot d'origine perdu**. Et la ligne corrigée
+s'affiche à l'identique dans la colonne et dans l'aperçu.
 
 ### Whisper ne se trompe pas seulement, il SAUTE des mots
 
