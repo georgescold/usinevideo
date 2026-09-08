@@ -1296,6 +1296,43 @@ npm run choix-voix -- --oublie-favori --voix=<id>            # la retirer
 L'étoile de l'écran fait la même chose, et **peint avant de demander au serveur** : un aller-retour
 visible sur une bascule se lit comme une hésitation. En cas d'échec elle revient, et on le dit.
 
+### « RIEN NE SEMBLE AVOIR ÉTÉ PRIS EN COMPTE » — LE PANNEAU DE STYLE NE DISAIT RIEN
+
+Un curseur déplacé part sur le disque 400 ms plus tard, et le plan de montage —
+qui porte sa PROPRE copie du thème, celle que Remotion lit — est remis d'accord
+dans la foulée. Vérifié de bout en bout : taille 95 et contour 1,6 posés depuis
+l'écran se retrouvent dans `soustitres.json` **et** dans `plan.json`, sans
+remonter. `patcheLePlan` s'en charge à chaque écriture.
+
+**Mais rien de tout ça ne se voyait.** `soustitres.mjs` annonce « Plan de montage
+mis à jour » dans le journal du terminal, que personne ne regarde depuis cet
+écran. On déplaçait un curseur, on ne voyait pas la vidéo changer, et on en
+concluait que le réglage n'avait pas été pris. C'est le défaut de la colonne de
+texte, mot pour mot, et il se répare pareil : trois états explicites sous les
+réglages — « Enregistrement… », « ✓ Enregistré — le montage porte ces réglages »,
+et « ⚠ Le montage porte encore d'autres sous-titres » quand les deux divergent,
+à la couleur de l'attention.
+
+**Le désaccord est possible et n'était annoncé nulle part** : `plan.json` peut
+avoir été écrit ailleurs, ou par une autre machine (§4). L'état sort de
+`soustitres.mjs --json` (`plan.raison`), pas d'une comparaison refaite à l'écran
+— deux endroits qui jugent chacun de leur côté finissent toujours par se
+contredire.
+
+**Et « Appliquer au montage » reprend la réponse.** Sans ça, la ligne continuait
+d'annoncer le désaccord qu'on venait de résoudre — vérifié : ⚠ avant le clic,
+✓ après, et `plan.json` à 95.
+
+**Un contour à zéro n'affichait plus de chiffre.** `(0).toFixed(2)` vaut
+« 0.00 », et le rognage des zéros de fin n'en laissait rien : le réglage avait
+l'air cassé au moment précis où on l'annulait.
+
+**Ce qu'un réglage à la valeur héritée fait quand même : il s'écrit.** Vérifié —
+`--epaisseurContour=1` sur une chaîne qui hérite déjà de 1 pose bien la clé dans
+`soustitres.json`. Un champ absent du fichier n'a donc jamais été touché ; c'est
+ce qui permet de trancher entre « le réglage n'a pas pris » et « le geste n'a pas
+eu lieu ».
+
 ### Corriger un sous-titre ne recharge plus l'écran
 
 Six défauts se cumulaient sur le même geste. Trois faisaient bouger l'écran tout seul, deux

@@ -256,6 +256,12 @@ b { font-weight: 700; }
 .note { color: var(--doux); font-size: 15px; overflow-wrap: anywhere; max-width: 74ch; }
 .note.erreur { color: var(--erreur); }
 
+/* L'état d'un réglage de style : parti sur le disque, et porté par le montage.
+   Il garde sa hauteur en permanence — sans quoi le bouton juste en dessous
+   saute d'une ligne à chaque enregistrement, sous le curseur qu'on relâche. */
+.etat-style { min-height: 1.4em; margin: -2px 0 0; font-size: 14px; }
+.etat-style.attention { color: var(--attention); }
+
 /* --------------------------------------------------------------- contrôles - */
 
 /* `input[type="url"]` MANQUAIT, ET DEUX CHAMPS D'ADRESSE SORTAIENT NUS.

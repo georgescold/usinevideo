@@ -5080,6 +5080,8 @@ async function chargeLeStudio() {
       mots: (transcript.mots ?? []).filter((m) => m && m.texte && Number.isFinite(m.debutMs)),
       attente: null,
       enVol: false,
+      // Ce que le montage déjà construit porte, comparé à ces réglages-ci.
+      plan: r.plan ?? null,
     }
     annonce('')
   } catch (e) {
@@ -5092,6 +5094,7 @@ async function chargeLeStudio() {
   poseLesBornes()
   versLesControles()
   poseLesRetours()
+  majEtatStyle()
   dessineLesFavoris()
   studio.hidden = false
   relanceLApercu()
@@ -5253,7 +5256,10 @@ function majLesValeurs() {
   $('valMotsParPage').textContent = r.motsParPage
   $('valTaille').textContent = r.taille
   $('valPositionBas').textContent = r.positionBas
-  $('valEpaisseurContour').textContent = Number(r.epaisseurContour).toFixed(2).replace(/\.?0+$/, '')
+  // `(0).toFixed(2)` vaut « 0.00 », et le rognage des zéros n'en laissait RIEN :
+  // contour à zéro, chiffre vide, et un réglage qui a l'air cassé.
+  $('valEpaisseurContour').textContent =
+    Number(r.epaisseurContour).toFixed(2).replace(/\.?0+$/, '') || '0'
 }
 
 /**
@@ -5552,12 +5558,45 @@ $('btnDefautChaine').addEventListener('click', async (ev) => {
   })
 })
 
+/**
+ * OÙ EN EST CE RÉGLAGE : SUR LE DISQUE, ET DANS LE MONTAGE.
+ *
+ * « J'ai changé la taille et l'épaisseur du contour, et rien ne semble avoir
+ * été pris en compte. » Les deux moitiés de la phrase désignent deux endroits
+ * différents, et aucun des deux ne se voyait :
+ *
+ *   - le réglage part 400 ms après le curseur, sans qu'aucun signe ne le dise ;
+ *   - le plan de montage porte sa PROPRE copie du thème, celle que Remotion
+ *     lit. `soustitres.mjs` la remet d'accord à chaque écriture — et le disait
+ *     dans le journal du terminal, que personne ne regarde depuis cet écran.
+ *
+ * C'est le même défaut que la colonne de texte, réparé de la même façon : un
+ * enregistrement automatique qu'on ne voit pas ne rassure personne.
+ */
+function majEtatStyle(quoi) {
+  const e = $('etatStyle')
+  if (!e) return
+  e.classList.remove('attention')
+  if (quoi === 'envoi') { e.textContent = 'Enregistrement…'; return }
+  const p = appli.st?.plan
+  if (!p) { e.textContent = ''; return }
+  if (!p.existe) {
+    e.textContent = '✓ Enregistré — le montage les prendra à sa construction.'
+  } else if (p.raison === 'plan désynchronisé') {
+    e.textContent = '⚠ Le montage porte encore d’autres sous-titres — « Appliquer au montage ».'
+    e.classList.add('attention')
+  } else {
+    e.textContent = '✓ Enregistré — le montage porte ces réglages.'
+  }
+}
+
 async function envoieLesReglages() {
   if (!appli.st || appli.st.enVol) return
   const champs = appli.st.attente
   if (!champs || !Object.keys(champs).length) return
   appli.st.attente = null
   appli.st.enVol = true
+  majEtatStyle('envoi')
   try {
     const r = await api(`/api/videos/${encodeURIComponent(appli.st.slug)}/soustitres`, {
       methode: 'PUT', corps: { champs },
@@ -5565,6 +5604,8 @@ async function envoieLesReglages() {
     const resultat = r.resultat
     if (resultat) {
       appli.st.origine = resultat.origine
+      appli.st.plan = resultat.plan ?? appli.st.plan
+      majEtatStyle()
       appli.st.modeleRetenu = resultat.modele ?? appli.st.modeleRetenu
           marqueLeModele()
       poseLesRetours()
@@ -5609,6 +5650,10 @@ $('btnValideStyle').addEventListener('click', () =>
       })
     )
     if (r) {
+      // La réponse dit ce que le plan porte MAINTENANT : sans la reprendre, la
+      // ligne d'état continuait d'annoncer le désaccord qu'on venait de résoudre.
+      if (appli.st && r.resultat?.plan) appli.st.plan = r.resultat.plan
+      majEtatStyle()
       annonce(`Style appliqué au montage.`, 'ok')
       avanceApres('soustitres')
     }
