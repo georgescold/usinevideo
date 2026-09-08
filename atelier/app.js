@@ -6922,6 +6922,48 @@ function batisLesModelesDEcoute() {
   majNote()
 }
 
+// RECALER : LES MOTS RESTENT, LES INSTANTS SE REMESURENT.
+//
+// Pas de confirmation : rien n'est détruit. C'est même le contraire d'une
+// perte — on remplace des instants devinés par des instants entendus.
+$('btnRecale').addEventListener('click', (ev) =>
+  pendant(ev.currentTarget, '…', async () => {
+    if (!appli.st) return
+    if (corrections.size) {
+      await enregistreLesCorrections()
+      if (corrections.size) {
+        annonce(`Tes corrections en attente n'ont pas pu être écrites — rien n'a été recalé.`, 'erreur')
+        return
+      }
+    }
+    const vue = await mene(() =>
+      api(`/api/videos/${encodeURIComponent(appli.slug)}/reanalyse`, {
+        methode: 'POST',
+        corps: { recale: true, modele: $('modeleTranscription').value },
+      })
+    )
+    if (vue?.etat !== 'fini') return
+    // Les mots ne changent pas, seuls leurs instants : le découpage figé n'a
+    // plus de fenêtres valides, on le refait sur les nouvelles bornes.
+    //
+    // L'ORDRE COMPTE. `relisLesMots` relance déjà l'aperçu — mais AVANT que le
+    // découpage soit refait : la colonne montrait 66 lignes et l'image 89.
+    // L'aperçu se relance donc en dernier, sur le découpage définitif.
+    await relisLesMots()
+    figeLeDecoupage()
+    dessineLeTexte()
+    relanceLApercu({ sansTexte: true, gardeLaPosition: true })
+    // Le pourcentage d'ancrage est la seule chose qui dise si ça a servi.
+    const ancre = (derniereSortie(vue).match(/(\d+) % des mots ancrés/) ?? [])[1]
+    annonce(
+      ancre
+        ? `Recalé sur l'audio — ${ancre} % des mots ancrés. Ton texte n'a pas bougé.`
+        : `Recalé sur l'audio. Ton texte n'a pas bougé.`,
+      'ok'
+    )
+  })
+)
+
 $('btnReanalyse').addEventListener('click', (ev) =>
   pendant(ev.currentTarget, 'Réanalyse…', async () => {
     const combien = appli.st?.mots?.length ?? 0

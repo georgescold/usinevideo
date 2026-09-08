@@ -1355,6 +1355,46 @@ Deux corrections successives **sans redessin entre elles** — le cas qui mélan
 au bon endroit, 214 → 216 mots sur le disque, **aucun mot d'origine perdu**. Et la ligne corrigée
 s'affiche à l'identique dans la colonne et dans l'aperçu.
 
+### UN MOT AJOUTÉ À LA MAIN N'EST PAS SYNCHRONE — IL FAUT LE RECALER
+
+C'est le défaut de fond de l'insertion, et il n'a rien d'un détail. `repartis()` place les mots
+ajoutés **au prorata des lettres** entre deux bornes : faute de savoir QUAND ils ont été prononcés,
+il les étale dans le silence. Le sous-titre tombe alors à côté — et c'est irréparable à la main,
+puisque le problème est précisément qu'on ne connaît pas l'instant.
+
+Mesuré le 8 septembre 2026, en retirant un mot dont on connaît la vraie place puis en le
+réinsérant :
+
+| | instant du mot | écart |
+|---|---|---|
+| vrai (mesuré par whisper) | 10 239 – 10 559 | — |
+| réinséré à la main | 9 399 – **10 800** | **840 ms trop tôt**, et 1,4 s au lieu de 0,3 |
+| après recalage | 10 140 – 10 560 | **99 ms** |
+
+**`aligne()` savait déjà faire ça**, et c'est ce qui rend le remède court : il transcrit l'audio,
+puis cale le texte CONNU dessus. Les mots ne bougent pas — ni l'orthographe, ni les ajouts, ni les
+suppressions — seuls les instants sont recalculés, et ils viennent de ce qu'on entend. C'est le
+mécanisme du mode « calé sur le script », appliqué au transcript qu'on vient de corriger.
+
+```bash
+npm run transcris -- <slug> --recale
+```
+
+Le `⇉` de la tête de colonne fait la même chose. **Pas de confirmation : rien n'est détruit** — on
+remplace des instants devinés par des instants entendus. À ne pas confondre avec le `⟲`, qui jette
+le texte et réécoute tout.
+
+**LE TAUX D'ANCRAGE EST ANNONCÉ**, et c'est la seule chose qui dise si le recalage a servi : un taux
+bas signifie que le texte et l'audio ne se ressemblent plus assez pour s'ancrer, donc que les
+instants sont interpolés. 100 % sur l'essai ci-dessus. Un mot vraiment absent de l'audio ne peut pas
+être ancré — il est alors interpolé entre ses deux voisins, ce qui reste bien plus juste qu'une
+répartition dans un silence choisi à la main.
+
+**Deux pièges rencontrés en le posant.** Le garde de cache (« déjà transcrit ») court-circuitait
+`--recale`, qui a justement besoin du transcript existant comme matière première : le bouton
+répondait sans rien faire. Et l'aperçu se relançait AVANT le refigeage du découpage — la colonne
+montrait 66 lignes, l'image 89. L'aperçu se relance en dernier, sur le découpage définitif.
+
 ### LA LARGEUR D'UNE PAGE SE CALCULE, ELLE N'EST PLUS UNE CONSTANTE
 
 `CARACTERES_MAX_PAGE` valait **42**, en dur. C'était calibré pour la verticale — 1080 de large, un

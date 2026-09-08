@@ -1027,6 +1027,16 @@
                  dont on ignore l'existence. La tête, elle, est toujours à
                  l'écran. Le réglage de qualité reste en bas : c'est un réglage,
                  pas un geste. -->
+            <!-- RECALER N'EST PAS RÉANALYSER.
+                 Un mot ajouté à la main reçoit un instant DEVINÉ — réparti au
+                 prorata des lettres dans le silence, faute de savoir quand il a
+                 été prononcé. Le sous-titre tombe alors à côté, et c'est
+                 irréparable à la main puisque le problème est justement qu'on
+                 ne connaît pas l'instant.
+                 Ce bouton garde le texte — corrections, ajouts, suppressions —
+                 et ne recalcule que les instants, en les MESURANT sur l'audio. -->
+            <button type="button" class="bouton minuscule" id="btnRecale"
+                    title="Recaler sur l'audio : garde ton texte et remesure quand chaque mot est prononcé">⇉</button>
             <button type="button" class="bouton minuscule alerte" id="btnReanalyse"
                     title="Tout réanalyser : réécoute l'audio, réécrit tous les mots et remet les lignes par défaut">⟲</button>
           </div>

@@ -2912,11 +2912,20 @@ ${essai.raison}`
         { msMax: 15_000 }
       )
     }
+    // RECALER N'EST PAS RÉANALYSER, et c'est toute la différence.
+    //
+    // Réanalyser jette le texte et réécoute tout : les corrections partent.
+    // Recaler GARDE le texte — corrections, ajouts, suppressions compris — et
+    // ne recalcule que les instants, depuis l'audio. C'est ce qu'il faut après
+    // avoir ajouté des mots à la main, dont la position n'était que devinée.
+    const args = corps?.recale === true
+      ? [scriptPipeline('transcris.mjs'), slug, '--recale']
+      : [scriptPipeline('transcris.mjs'), slug, '--refais']
+    if (modele) args.push(`--modele=${modele}`)
     return repondJson(res, 202, travailLance(
-      lanceTravail(
-        [scriptPipeline('transcris.mjs'), slug, '--refais'],
-        { etiquette: `réanalyse du texte — ${slug}` }
-      )
+      lanceTravail(args, {
+        etiquette: `${corps?.recale === true ? 'recalage' : 'réanalyse'} — ${slug}`,
+      })
     ))
   }
 

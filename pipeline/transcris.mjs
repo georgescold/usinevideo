@@ -35,6 +35,10 @@ npm run transcris -- <slug de vidéo | fichier> [options]
                        medium          94,6 %  20,5 s
                        large-v3        77,5 % 482,9 s   ← saute des passages
   --defaut=<m>       retient ce modèle pour la CHAÎNE, sans rien transcrire
+  --recale           garde les mots du transcript et recalcule leurs INSTANTS
+                     depuis l'audio. C'est ce qu'il faut après avoir ajouté des
+                     mots à la main : leur position était devinée, elle devient
+                     mesurée. Ni l'orthographe ni les ajouts ne bougent.
   --langue=fr
   --srt              écrit aussi un .srt à côté
   --refais           ignore le résultat déjà en cache
@@ -120,7 +124,10 @@ await principal(async () => {
     sortie = cible.replace(/\.[^.]+$/, '') + '.transcript.json'
   }
 
-  if (fs.existsSync(sortie) && !drapeau(options, 'refais')) {
+  // `--recale` EXIGE le transcript existant : c'est sa matière première, pas un
+  // cache à respecter. Sans cette exception, il rendait « déjà transcrit » et ne
+  // faisait rien — un bouton qui répond et n'agit pas.
+  if (fs.existsSync(sortie) && !drapeau(options, 'refais') && !drapeau(options, 'recale')) {
     const cache = litJson(sortie)
     journal.ok(
       `Déjà transcrit : ${cache.mots?.length ?? 0} mots. ` +
@@ -139,10 +146,38 @@ await principal(async () => {
     langue: options.langue || null,
   }
 
+  // RECALER : LES MOTS SONT LES TIENS, LES INSTANTS VIENNENT DE L'AUDIO.
+  //
+  // Un mot ajouté à la main dans un silence reçoit un instant DEVINÉ :
+  // `repartis` le place au prorata des lettres entre deux bornes, faute de
+  // savoir quand il a été prononcé. Sur « 82 194 € » ajouté après coup, ça
+  // donne un sous-titre qui tombe à côté — et c'est irréparable à la main,
+  // puisque le problème est justement qu'on ne connaît pas l'instant.
+  //
+  // `aligne()` sait le mesurer : il transcrit l'audio, puis cale le texte
+  // CONNU dessus. Les mots ne bougent pas — ni l'orthographe, ni les ajouts,
+  // ni les suppressions —, seuls les instants sont recalculés, et ils viennent
+  // de ce qu'on entend. C'est le même mécanisme que le mode « calé sur le
+  // script », appliqué au transcript qu'on vient de corriger.
+  //
+  // Un mot vraiment absent de l'audio ne peut pas être ancré : il est alors
+  // interpolé entre ses deux voisins ancrés, ce qui reste bien plus juste
+  // qu'une répartition dans un silence choisi à la main.
+  let texteARecaler = null
+  if (drapeau(options, 'recale')) {
+    const dejaLa = litJson(sortie, null)
+    if (!dejaLa?.mots?.length) {
+      throw new Error(`Rien à recaler : il n'y a pas encore de transcription pour « ${cible} ».`)
+    }
+    texteARecaler = dejaLa.mots.map((m) => m.texte).join(' ')
+    journal.info(`Recalage de ${dejaLa.mots.length} mots sur l'audio — les mots ne changent pas.`)
+  }
+
   const texteDuScript =
-    script && !drapeau(options, 'libre')
+    texteARecaler ??
+    (script && !drapeau(options, 'libre')
       ? script.blocs.map((b) => b.texte).join(' ')
-      : null
+      : null)
 
   const debut = Date.now()
   const resultat = texteDuScript
@@ -151,7 +186,9 @@ await principal(async () => {
 
   const donnees = {
     fichier: path.relative(CHEMINS.racine, fichier),
-    mode: texteDuScript ? 'calé sur le script' : 'libre',
+    mode: texteARecaler
+      ? 'recalé sur l’audio'
+      : texteDuScript ? 'calé sur le script' : 'libre',
     langue: resultat.langue,
     modele: resultat.modele,
     dureeAudioS: info.dureeS,
@@ -165,6 +202,18 @@ await principal(async () => {
     `${donnees.mots.length} mots · mode ${donnees.mode} · ` +
       `${duree((Date.now() - debut) / 1000)} de calcul`
   )
+
+  // COMBIEN DE MOTS ONT ÉTÉ RÉELLEMENT ENTENDUS.
+  //
+  // C'est la seule chose qui dit si le recalage a servi. Un taux bas signifie
+  // que le texte et l'audio ne se ressemblent plus assez pour s'ancrer : les
+  // instants sont alors interpolés, donc approximatifs, et il vaut mieux le
+  // savoir que de le découvrir sur des sous-titres qui glissent.
+  if (typeof resultat.tauxAncrage === 'number') {
+    const pc = Math.round(resultat.tauxAncrage * 100)
+    const dire = pc >= 90 ? journal.detail : journal.attention
+    dire(`${pc} % des mots ancrés sur l'audio${pc < 90 ? ' — le reste est interpolé.' : '.'}`)
+  }
 
   // LE PLAN PORTE SA PROPRE COPIE DES MOTS, ET IL FAUT LA REMETTRE D'ACCORD.
   //
