@@ -1020,6 +1020,15 @@
                  quatre cents mots serait impossible à relire. -->
             <button type="button" class="bouton minuscule discret" id="btnChiffres"
                     title="Écrire en chiffres les nombres dits en lettres">123</button>
+            <!-- LE RESET EST EN TÊTE, PARCE QUE C'EST LÀ QU'ON LE VOIT.
+                 Il vivait en pied de colonne. Mesuré : ce pied commence à
+                 767 px et finit à 1 161 dans une fenêtre de 1 050 — il faut
+                 défiler pour l'atteindre, et on ne défile pas vers une chose
+                 dont on ignore l'existence. La tête, elle, est toujours à
+                 l'écran. Le réglage de qualité reste en bas : c'est un réglage,
+                 pas un geste. -->
+            <button type="button" class="bouton minuscule alerte" id="btnReanalyse"
+                    title="Tout réanalyser : réécoute l'audio, réécrit tous les mots et remet les lignes par défaut">⟲</button>
           </div>
 
           <div class="liste-st" id="listeSt"></div>
@@ -1052,21 +1061,21 @@
                  afficherait le texte d'avant sans que rien ne le dise.
                  La VOIX n'est pas refaite — aucune conversion payante ne repart —
                  et les réglages de style ne bougent pas. -->
-            <details class="repli repli-secours">
-              <summary>Repartir de zéro</summary>
-              <p class="note">
-                Réécoute l'audio en entier, réécrit tous les mots et remet les
-                lignes par défaut. <b>Tes corrections, insertions et suppressions
-                de texte sont perdues.</b> La voix et les réglages de style ne
-                bougent pas.
-              </p>
-              <label class="etiquette-bloc" for="modeleTranscription">Qualité d'écoute</label>
+            <!-- IL ÉTAIT REPLIÉ, DONC IL N'EXISTAIT PAS.
+                 Une ligne « ▸ Repartir de zéro » en couleur sourde, tout en bas
+                 d'une colonne bornée à la hauteur de la fenêtre : le bouton a
+                 été redemandé alors qu'il était là. Deuxième fois dans cet écran
+                 qu'un raisonnement sur l'encombrement perd contre une découverte
+                 qui n'a pas lieu — après la bande d'insertion.
+                 Il est donc franc : un vrai bouton, sa qualité d'écoute juste
+                 au-dessus, séparé du reste par un filet. Ce qui le rend sûr
+                 n'est pas qu'il soit caché, c'est la confirmation qui dit ce
+                 qu'il détruit. -->
+            <div class="secours">
+              <label class="etiquette-bloc" for="modeleTranscription">Qualité d'écoute — le ⟲ en haut réanalyse tout</label>
               <select id="modeleTranscription"></select>
               <p class="note" id="noteModeleTranscription"></p>
-              <button type="button" class="bouton alerte pleine" id="btnReanalyse">
-                Tout réanalyser
-              </button>
-            </details>
+            </div>
           </div>
         </div>
       </div>

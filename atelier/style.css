@@ -553,15 +553,23 @@ input[type="number"] { width: 6.5em; }
    laissait une bande vide sous chaque repli replié. */
 .repli[open] > *:last-child { margin-bottom: 14px; }
 
-/* LA SORTIE DE SECOURS EST REPLIÉE, ET ELLE LE RESTE.
-   « Tout réanalyser » efface un travail de relecture : ce n'est pas un bouton
-   qu'on doit croiser en cherchant autre chose. Replié, il faut le vouloir pour
-   l'ouvrir ; ouvert, il dit d'abord ce qu'il détruit. */
-.repli-secours { margin-top: 4px; }
-.repli-secours > summary { color: #a08a5a; font-weight: 400; font-size: 13.5px; }
-.repli-secours > summary:hover { color: #f2dfae; }
-.repli-secours select { width: 100%; }
-.repli-secours .bouton.pleine { width: 100%; margin-top: 10px; }
+/* LA SORTIE DE SECOURS SE VOIT.
+   Elle était repliée, au motif que « Tout réanalyser » efface un travail de
+   relecture et ne doit pas se croiser par hasard. Résultat : le bouton a été
+   redemandé alors qu'il était là — une ligne sourde en bas d'une colonne qui
+   défile ne se trouve pas. Ce qui le rend sûr n'est pas d'être caché, c'est la
+   confirmation qui dit ce qu'il détruit.
+   Un filet le sépare de « Enregistrer » : ce sont deux gestes opposés, et rien
+   ne serait pire que de les confondre. */
+.secours {
+  border-top: 1px solid var(--bord); margin-top: 4px; padding-top: 10px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.secours select { width: 100%; }
+.secours .etiquette-bloc { color: #a08a5a; }
+/* Le ⟲ de la tête : à la couleur de l'attention, de la taille des autres
+   boutons minuscules, et il ne se confond avec aucun d'eux. */
+.textes-tete .bouton.alerte { flex: 0 0 auto; font-size: 15px; line-height: 1; padding: 6px 9px; }
 
 .rang-couleurs { gap: 12px; }
 .paire { display: flex; gap: 8px; align-items: center; }
@@ -610,7 +618,10 @@ input[type="text"].hexa {
 }
 .textes-tete { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .textes-tete .etiquette { margin: 0; flex: 1 1 auto; }
-.textes-tete input[type="search"] { flex: 0 1 150px; padding: 8px 10px; font-size: 14px; }
+/* Le champ rétrécit pour que la tête tienne sur UNE ligne : l'étiquette, la
+   recherche, « 123 » et le ⟲. Passé à la ligne, le ⟲ mangeait une hauteur de
+   liste sur un écran où chaque ligne compte. */
+.textes-tete input[type="search"] { flex: 0 1 110px; min-width: 70px; padding: 8px 10px; font-size: 14px; }
 
 .liste-st {
   flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain;

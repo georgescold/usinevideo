@@ -1395,8 +1395,17 @@ npm run transcris -- <slug> --modele=medium    # pour cette fois
 ### REPARTIR DE ZÉRO, QUAND ON S'EST PERDU
 
 On corrige, on insère, on supprime — et on finit par ne plus reconnaître son texte. Il manquait le
-geste qui rend tout à ce que la machine entend. Il est à l'étape 5, replié : « Tout réanalyser »
-efface un travail de relecture, ce n'est pas un bouton qu'on doit croiser en cherchant autre chose.
+geste qui rend tout à ce que la machine entend.
+
+**IL ÉTAIT EN PIED DE COLONNE, DONC IL N'EXISTAIT PAS.** Mesuré : ce pied commence à 767 px et
+finit à 1 161 dans une fenêtre de 1 050 — **il faut défiler pour l'atteindre**, et on ne défile pas
+vers une chose dont on ignore l'existence. Le bouton a été redemandé alors qu'il était là.
+Troisième fois dans cet écran qu'un raisonnement sur l'encombrement perd contre une découverte qui
+n'a pas lieu, après la bande d'insertion et le repli qui l'enfermait.
+
+Le `⟲` vit donc dans la TÊTE de la colonne, à côté de « 123 », toujours à l'écran. Ce qui le rend
+sûr n'est pas d'être caché, c'est la confirmation qui dit ce qu'il détruit. La qualité d'écoute
+reste en pied : c'est un réglage, pas un geste.
 
 **ON NE REFAIT PAS LE MONTAGE, ON REMET LE TEXTE.** `monte --depuis=transcris` aurait été le geste
 évident, et il en fait beaucoup trop : il reconstruit la piste image, donc trente recherches
