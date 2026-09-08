@@ -248,7 +248,21 @@ export async function transcris(fichier, { modele = null, langue = null, silenci
       tokenLevelTimestamps: true,
       splitOnWord: true,
       language: lang,
-      printOutput: false,
+      printOutput: false,
+      // L'ATTENTION RAPIDE DÉSACTIVE LES INSTANTS PRÉCIS, EN SILENCE.
+      //
+      // `tokenLevelTimestamps` passe déjà `--dtw` à whisper.cpp — l'alignement
+      // par déformation temporelle, qui donne l'instant réel de chaque mot au
+      // lieu du découpage grossier du segment. Mais depuis la 1.9, l'attention
+      // rapide est active PAR DÉFAUT, et les deux sont incompatibles :
+      //
+      //   whisper_init_with_params_no_state:
+      //     dtw_token_timestamps is not supported with flash_attn - disabling
+      //
+      // La ligne passe dans le journal du sous-processus, que personne ne lit,
+      // et `t_dtw` revient à −1 sur TOUS les mots. On payait donc l'option sans
+      // jamais recevoir ce qu'elle promet.
+      additionalArgs: ['-nfa'],
       onProgress: (p) => {
         if (silencieux) return
         const pc = Math.round(p * 100)
@@ -261,8 +275,37 @@ export async function transcris(fichier, { modele = null, langue = null, silenci
     if (!silencieux) process.stdout.write('\r' + ' '.repeat(30) + '\r')
 
     const { captions } = toCaptions({ whisperCppOutput: brut })
+
+    // LE DÉBUT D'UN MOT VIENT DU DTW, SA DURÉE DES OFFSETS.
+    //
+    // `startMs` / `endMs` sont les bornes du SEGMENT, un découpage grossier :
+    // mesuré sur une VSL de 931 mots, un mot sur cinq (22 %) commençait dans un
+    // silence, jusqu'à 880 ms AVANT que la voix ne le prononce. C'est ce qu'on
+    // entend comme « les sous-titres ne sont pas synchro », et c'est aussi ce
+    // qui fabrique les pages d'un dixième de seconde : deux mots datés trop tôt,
+    // une virgule qui ferme la page, et elle clignote.
+    //
+    // `timestampMs` est l'instant DTW du premier jeton du mot. Sur le même
+    // fichier : 3 % de débuts dans le silence au lieu de 22 %, et 2 mots au-delà
+    // de 300 ms d'avance au lieu de 32.
+    //
+    // LA FIN, ELLE, RESTE LA DURÉE D'ORIGINE. Prendre le début du mot suivant
+    // collerait les mots bout à bout et supprimerait tous les silences — or
+    // `pagine` s'en sert pour couper les pages. Vérifié : 83 coupures de silence
+    // conservées contre 84 aujourd'hui, pour 114 silences réels.
+    const dtw = captions.some((c) => c.timestampMs !== null)
     const bruts = captions
-      .map((c) => ({ texte: c.text.trim(), debutMs: c.startMs, finMs: c.endMs }))
+      .map((c, i) => {
+        const debutMs = c.timestampMs ?? c.startMs
+        const duree = Math.max(0, c.endMs - c.startMs)
+        const suivant = captions[i + 1]
+        const plafond = suivant ? (suivant.timestampMs ?? suivant.startMs) : Infinity
+        return {
+          texte: c.text.trim(),
+          debutMs,
+          finMs: Math.min(plafond, debutMs + duree),
+        }
+      })
       .filter((mot) => mot.texte.length > 0)
 
     // Trois défauts connus du moteur, corrigés avant que quoi que ce soit ne
@@ -272,6 +315,14 @@ export async function transcris(fichier, { modele = null, langue = null, silenci
 
     if (!silencieux) {
       journal.ok(`${mots.length} mots transcrits en ${duree((Date.now() - debut) / 1000)}`)
+      // Un repli silencieux sur les bornes de segment était précisément le
+      // défaut : on se demanderait ensuite pourquoi les sous-titres avancent.
+      if (!dtw) {
+        journal.attention(
+          `Instants au segment près : whisper n'a pas rendu d'alignement fin ` +
+            `pour « ${m} ». Les sous-titres peuvent devancer la voix d'un tiers de seconde.`
+        )
+      }
       if (retires.hallucinations) {
         journal.detail(`${retires.hallucinations} mot(s) hallucinés en fin de prise, retirés.`)
       }
@@ -301,10 +352,20 @@ export async function transcris(fichier, { modele = null, langue = null, silenci
  */
 export async function aligne(fichier, texteAttendu, options = {}) {
   const { mots: entendus, langue, modele } = await transcris(fichier, options)
+  // L'ESPACE FINE D'UN NOMBRE N'EST PAS UNE SÉPARATION DE MOTS.
+  //
+  // `assainisMots` recolle « 480 » et « 000 » en un seul mot, avec une espace
+  // fine insécable au milieu : c'est un montant, il s'affiche d'un bloc. Mais
+  // `--recale` reconstruit son texte de référence en joignant les mots par des
+  // espaces, et `\s+` rattrape aussi l'espace fine : chaque montant repartait en
+  // deux. Relevé sur une VSL : 12 nombres cassés — « 480 000 », « 82 194 »,
+  // « 13 989 » — par une commande qui promet de ne pas toucher aux mots.
+  const SCEAU = ''
   const attendus = texteAttendu
     .replace(/\[[^\]]*\]/g, ' ')
+    .replace(/(\d) (\d)/g, `$1${SCEAU}$2`)
     .split(/\s+/)
-    .map((s) => s.trim())
+    .map((x) => x.trim().split(SCEAU).join(' '))
     .filter(Boolean)
 
   const nu = (s) =>

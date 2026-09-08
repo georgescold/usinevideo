@@ -1516,6 +1516,72 @@ npm run transcris -- --defaut=large-v3-turbo   # pour la chaîne
 npm run transcris -- <slug> --modele=medium    # pour cette fois
 ```
 
+### L'ATTENTION RAPIDE DÉSACTIVAIT LES INSTANTS PRÉCIS, EN SILENCE
+
+C'est la cause des sous-titres qui devancent la voix, et des pages qui durent un
+dixième de seconde. whisper.cpp sait donner l'instant réel de chaque mot —
+l'alignement par déformation temporelle, `--dtw`, que `tokenLevelTimestamps`
+passe déjà. Mais depuis la 1.9, **l'attention rapide est active par défaut, et
+les deux sont incompatibles** :
+
+```
+whisper_init_with_params_no_state:
+  dtw_token_timestamps is not supported with flash_attn - disabling
+```
+
+La ligne part dans le journal du sous-processus, que personne ne lit. `t_dtw`
+revenait à −1 sur les 925 mots d'une VSL : on payait l'option et on retombait
+sur les bornes de SEGMENT, un découpage grossier. `-nfa` règle le tout.
+
+**CE QUE ÇA CHANGE, MESURÉ SUR DEUX VOIX** — un mot dont le début tombe dans un
+silence est un mot affiché avant d'être dit :
+
+| | mots commençant dans un silence | plus de 300 ms d'avance |
+|---|---|---|
+| VSL, 915 mots — avant | **221 (24 %)** | 62 |
+| VSL — après | **34 (4 %)** | 5 |
+| video-3, 214 mots — avant | 54 (25 %) | — |
+| video-3 — après | 24 (11 %) | — |
+
+Et sur les pages de sous-titres de cette VSL, celles qui **clignotent** :
+**10 pages sous 400 ms → 1**. La plus courte passait 50 ms à l'écran ; « le
+notaire, » 100 ms, « Sauf que Julien, » 150 ms. Sur le passage signalé, « Mais
+malheureusement, » tenait **300 ms** et tient maintenant **1 260 ms** ; « 6 mois
+plus tard, » s'affichait à 46,5 s alors que la voix le dit à 47,4 — **900 ms
+d'avance**.
+
+**LE DÉBUT VIENT DU DTW, LA DURÉE DES OFFSETS.** Prendre le début du mot suivant
+comme fin collerait les mots bout à bout et supprimerait tous les silences — or
+`pagine` s'en sert pour couper les pages. Vérifié : 83 coupures de silence
+conservées contre 84 avant, pour 114 silences réels.
+
+**LE DTW EST EN RETARD, ET ON NE LE CORRIGE PAS.** Mesuré sur les attaques qui
+suivent un silence de 300 ms : médiane **+120 ms** sur la VSL, **+60 ms** sur
+video-3. Le biais n'est pas constant d'une voix à l'autre : soustraire une
+constante sur-corrigerait l'une et pousserait des sous-titres devant la voix,
+c'est-à-dire le défaut qu'on vient de retirer. Un léger retard se remarque bien
+moins qu'une demi-seconde d'avance.
+
+**Ce que ça coûte : 24 % de temps.** 17,0 s avec attention rapide, 21,1 s sans,
+sur cinq minutes d'audio. Un repli sur les bornes de segment est désormais
+**annoncé** — un repli silencieux était exactement le défaut.
+
+**Les transcriptions déjà faites n'en profitent pas toutes seules.** `⇉` —
+`npm run transcris -- <slug> --recale` — garde les mots et ne recalcule que les
+instants : c'est le geste, et il ne coûte rien.
+
+**ET LE RECALAGE CASSAIT LES NOMBRES.** `assainisMots` recolle « 480 » et
+« 000 » en un seul mot, avec une espace fine insécable au milieu : c'est un
+montant, il s'affiche d'un bloc. Mais `--recale` reconstruit son texte de
+référence en joignant les mots par des espaces, et `\s+` rattrape aussi
+l'espace fine. Douze montants repartaient en deux — « 480 000 », « 82 194 »,
+« 13 989 » — par une commande qui promet de ne pas toucher aux mots. Vérifié
+après correction : **915 mots avant, 915 après, identiques mot pour mot.**
+
+Un piège au passage : `` `(\d)` `` dans un GABARIT de chaîne vaut « d », pas le
+chiffre — l'échappement ne survit pas à un template literal. La regex est
+littérale.
+
 ### REPARTIR DE ZÉRO, QUAND ON S'EST PERDU
 
 On corrige, on insère, on supprime — et on finit par ne plus reconnaître son texte. Il manquait le
