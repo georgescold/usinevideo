@@ -2080,6 +2080,37 @@ de coupe, et les refaire coûterait une conversion payante pour rien.
 image n'est ni l'un ni l'autre. Cinq cents mégaoctets de clips de banque « mis de côté » sont cinq
 cents mégaoctets qu'on ne rouvrira jamais.
 
+### « C'EST EXACTEMENT LES MÊMES QU'AVANT » — LE MONTAGE LE DIT MAINTENANT
+
+Un remontage sans rien cocher redonne le **même** plan, et c'est correct :
+`plansEmployesRecemment` exclut le slug COURANT — sinon remonter pour changer une
+taille de sous-titres ferait valser toute la piste image. À requêtes identiques,
+la banque rend ses candidats dans le même ordre.
+
+Correct, et illisible. Rien ne distinguait trois situations qui appellent des
+gestes opposés : « ça n'a pas changé », « le bouton n'a rien fait », et
+« l'aperçu ne se met pas à jour ». Le montage compte donc, et le dit :
+
+- `12 plan(s) sur 12 diffèrent du montage précédent.`
+- `Aucun plan ne change : la banque a rendu les mêmes candidats.` — suivi du
+  geste, **nommé** : « Reprendre des plans différents » les écarte.
+
+Et quand la case était déjà cochée, le message change : ils étaient pourtant
+écartés, donc la banque n'a rien d'autre sur ces requêtes-là. Ce n'est plus le
+même problème, et ça n'appelle plus le même geste.
+
+Le compte ne coûte rien : les identifiants du plan précédent sont déjà lus pour
+`--refais-plans`. Ils le sont maintenant **toujours**, pas seulement dans ce cas.
+
+**L'APERÇU, LUI, EST À JOUR — VÉRIFIÉ.** Le soupçon était fondé : les vignettes
+de l'étape 6 sont les seules adresses média de l'atelier sans `?v=`, et les
+clips gardent des noms stables (`broll-01.mp4`) réécrits en place. Mais
+`sertFichier` répond `Cache-Control: no-cache`, et la mesure tranche : en
+remplaçant `broll-01.mp4` par un clip de 10,0 s là où le navigateur en affichait
+un de 21,0 s, la vignette redessinée annonce **10,033 s**. Elle lit le disque.
+Il n'y avait donc rien à corriger de ce côté, et le corriger « au cas où » aurait
+ajouté un paramètre qui invalide 700 Mo de clips à chaque redessin.
+
 ### La fenêtre de réemploi est un ARBITRAGE, pas une loi
 
 La règle 4 du §10 — un plan de banque ne resservira pas avant dix vidéos — évite

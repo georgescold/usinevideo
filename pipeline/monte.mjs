@@ -660,14 +660,13 @@ await principal(async () => {
         ` Le journal dira combien ont servi.`
     )
   }
-  // LES PLANS DÉJÀ EMPLOYÉS, quand on demande à en changer.
-  //
-  // Ils se lisent AVANT que le plan soit réécrit : après, ils n'existent plus.
-  const dejaEmployes = drapeau(options, 'refais-plans')
-    ? (litJson(v.plan, null)?.evenements ?? [])
-        .filter((e) => e.type === 'broll' && e._mediaId)
-        .map((e) => e._mediaId)
-    : []
+  // LES PLANS DU MONTAGE PRÉCÉDENT, lus AVANT que le plan soit réécrit :
+  // après, ils n'existent plus. Ils servent à deux choses — les écarter quand
+  // on demande à en changer, et DIRE ensuite ce qui a bougé.
+  const plansDAvant = (litJson(v.plan, null)?.evenements ?? [])
+    .filter((e) => e.type === 'broll' && e._mediaId)
+    .map((e) => e._mediaId)
+  const dejaEmployes = drapeau(options, 'refais-plans') ? plansDAvant : []
 
   // COMBIEN DE MONTAGES RÉCENTS ÉCARTENT LEURS PLANS.
   //
@@ -731,6 +730,34 @@ await principal(async () => {
         `${(broll.combles * prixDUnPlan).toFixed(2)} $ dépensés. ` +
         `Le budget non employé n'est pas facturé.`
     )
+  }
+
+  // « C'EST EXACTEMENT LES MÊMES QU'AVANT » : ON LE DIT, ET ON DIT QUOI FAIRE.
+  //
+  // `plansEmployesRecemment` exclut le slug COURANT — à raison : remonter pour
+  // changer une taille de sous-titres ne doit pas faire valser la piste image.
+  // Conséquence : à requêtes identiques, la banque rend ses candidats dans le
+  // même ordre, et un remontage redonne le même plan. C'est correct, et c'est
+  // illisible : rien ne distinguait « ça n'a pas changé » de « le bouton n'a
+  // rien fait », ni de « l'aperçu ne se met pas à jour ».
+  //
+  // Le compte tranche, et il ne coûte rien : les identifiants d'avant sont
+  // déjà lus.
+  if (plansDAvant.length) {
+    const apres = evenements.filter((e) => e.type === 'broll' && e._mediaId).map((e) => e._mediaId)
+    const avant = new Set(plansDAvant)
+    const nouveaux = apres.filter((id) => !avant.has(id)).length
+    if (nouveaux) {
+      journal.ok(`${nouveaux} plan(s) sur ${apres.length} diffèrent du montage précédent.`)
+    } else {
+      journal.attention(`Aucun plan ne change : la banque a rendu les mêmes candidats.`)
+      journal.detail(
+        drapeau(options, 'refais-plans')
+          ? `Ils étaient pourtant écartés : la banque n'a rien d'autre à proposer sur ces requêtes.`
+          : `« Reprendre des plans différents » les écarte — ` +
+            `au terminal, --refais-plans.`
+      )
+    }
   }
   // UN PLAN DE COUPE SANS FICHIER N'ENTRE PAS DANS LE PLAN.
   //
