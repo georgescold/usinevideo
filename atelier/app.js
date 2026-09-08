@@ -5047,6 +5047,10 @@ async function chargeLeStudio() {
       bornes: r.bornes,
       polices: r.polices?.length ? r.polices : appli.polices,
       modeleRetenu: r.modele ?? null,
+      // Le seuil au-delà duquel un silence peut cacher des mots sautés. Il est
+      // mesuré et vit dans `pipeline/texte.mjs` : l'écran le reçoit plutôt que
+      // d'en garder une copie qui se périmerait au premier ajustement.
+      silenceInserableMs: r.silence_inserable_ms ?? 600,
       mots: (transcript.mots ?? []).filter((m) => m && m.texte && Number.isFinite(m.debutMs)),
       attente: null,
       enVol: false,
@@ -6014,6 +6018,9 @@ function lignesDuTexte() {
       de,
       a: i - 1,
       debutMs: page.debutMs,
+      // La fin de la ligne, pour mesurer le silence qui la suit. C'est le seul
+      // indice qu'un mot a été prononcé sans être entendu.
+      finMs: page.finMs,
       texte: page.mots.map((m) => m.texte).join(' '),
       doute: page.mots.some((m) => m.incertain),
     })
@@ -6046,7 +6053,8 @@ function dessineLeTexte() {
   // reste en dehors a perdu sa ligne — voir la purge en fin de fonction.
   const vues = new Set()
 
-  for (const [numero, l] of lignesDuTexte().entries()) {
+  const lignes = lignesDuTexte()
+  for (const [numero, l] of lignes.entries()) {
     const ligne = creer('div', 'page-st')
     ligne.dataset.page = String(numero)
 
@@ -6098,6 +6106,22 @@ function dessineLeTexte() {
     })
     ligne.append(champ)
     zone.append(ligne)
+
+    // LE SILENCE QUI SUIT, QUAND IL EST ASSEZ LARGE POUR CACHER DES MOTS.
+    //
+    // Whisper ne se contente pas de mal entendre, il SAUTE : « 82.194 euros »
+    // ressort en « 82 », et il ne reste rien à corriger — le manque n'a pas de
+    // mot où s'accrocher. Le seul indice est le TEMPS, et il est fiable : sur
+    // une prise réelle, l'intervalle médian entre deux mots vaut 40 ms.
+    //
+    // La zone n'existe QUE là où un mot tiendrait, et ne se montre qu'au
+    // survol : sur deux cents lignes, un marqueur permanent à chaque
+    // respiration serait le bruit qui empêche de lire.
+    const suivante = lignes[numero + 1]
+    const silence = suivante ? suivante.debutMs - l.finMs : 0
+    if (suivante && silence >= seuilSilence()) {
+      zone.append(zoneDInsertion(l, silence))
+    }
   }
 
   // UNE CORRECTION ORPHELINE SE JETTE, ET ÇA SE DIT.
@@ -6140,6 +6164,98 @@ function dessineLeTexte() {
   zone.scrollTop = defilement
 }
 
+// ---------------------------------------------------------------------------
+//  Les mots que Whisper a sautés
+// ---------------------------------------------------------------------------
+//
+// CORRIGER NE SUFFIT PAS : IL FAUT POUVOIR AJOUTER.
+//
+// La colonne récrivait des lignes existantes, ce qui couvre le mot mal entendu.
+// Elle ne couvrait pas le mot ABSENT — « les droits s'élèvent à 82.194 euros »
+// ressorti en « les droits s'élèvent à 82 » : il n'y a aucun mot où accrocher la
+// correction, et rattacher « 194 euros » à la ligne d'avant les caserait dans SA
+// fenêtre, donc les afficherait avant qu'ils soient prononcés.
+//
+// Le silence est exactement le temps pendant lequel ces mots ont été dits. On
+// les y pose, et rien d'autre ne bouge : ni les mots voisins, ni leurs instants.
+
+/** Le seuil vient de la commande — voir `SILENCE_INSERABLE_MS` dans texte.mjs. */
+const seuilSilence = () => appli.st?.silenceInserableMs ?? 600
+
+/** « 1,5 s » — la durée du trou, qui dit combien de mots peuvent y tenir. */
+const secondesFr = (ms) => `${(ms / 1000).toFixed(1).replace('.', ',')} s`
+
+/**
+ * La bande fine entre deux lignes, et ce qu'elle ouvre.
+ *
+ * Elle ne se montre qu'au survol (voir `.trou` dans style.css) : sur deux cents
+ * lignes, un marqueur permanent à chaque respiration serait le bruit qui
+ * empêche de lire. Ce qu'on cherche ici se repère en LISANT — deux lignes qui
+ * ne s'enchaînent pas — pas en balayant des boutons.
+ */
+function zoneDInsertion(ligne, silenceMs) {
+  const trou = creer('div', 'trou')
+  const bouton = creer('button', 'trou-plus')
+  bouton.type = 'button'
+  bouton.textContent = `+ ${secondesFr(silenceMs)} de silence`
+  bouton.title = `Ajouter les mots prononcés ici et que la transcription a manqués`
+  bouton.addEventListener('click', () => ouvreLInsertion(trou, ligne, silenceMs))
+  trou.append(bouton)
+  return trou
+}
+
+/** Le champ d'ajout, à la place du bouton. Échap referme, Entrée valide. */
+function ouvreLInsertion(trou, ligne, silenceMs) {
+  if (trou.querySelector('.trou-champ')) return
+  trou.classList.add('ouvert')
+  trou.replaceChildren()
+
+  const champ = creer('input', 'trou-champ')
+  champ.type = 'text'
+  champ.spellcheck = false
+  champ.placeholder = `les mots manquants (${secondesFr(silenceMs)})`
+  champ.maxLength = 200
+
+  const ferme = () => {
+    trou.classList.remove('ouvert')
+    trou.replaceChildren()
+    trou.append(zoneDInsertion(ligne, silenceMs).firstChild)
+  }
+
+  const valide = async () => {
+    const texte = champ.value.trim()
+    if (!texte) { ferme(); return }
+    champ.disabled = true
+    // `a` est l'index du DERNIER mot de la ligne : le silence commence juste
+    // après lui, et c'est exactement ce que `apres` attend.
+    const fait = await mene(() =>
+      api(`/api/videos/${encodeURIComponent(appli.slug)}/texte`, {
+        methode: 'PUT',
+        corps: { corrections: [{ apres: ligne.a, texte }] },
+      })
+    )
+    if (!fait) { champ.disabled = false; return }
+    etatEcriture = 'enregistre'
+    lignesRecalees = 0
+    // Les mots ont changé : on relit, et `dessineLeTexte` reconstruit la
+    // colonne — la zone d'insertion disparaît d'elle-même, le silence n'existe
+    // plus.
+    await relisLesMots()
+    majPiedDeTexte()
+  }
+
+  champ.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { e.preventDefault(); ferme() }
+    if (e.key === 'Enter') { e.preventDefault(); valide().catch(() => { champ.disabled = false }) }
+  })
+  // Quitter le champ sans rien écrire le referme : un champ vide laissé ouvert
+  // au milieu de la colonne ressemble à une ligne de texte, et n'en est pas une.
+  champ.addEventListener('blur', () => { if (!champ.value.trim()) ferme() })
+
+  trou.append(champ)
+  champ.focus()
+}
+
 /** Un `textarea` ne grandit pas tout seul : on le remet à la hauteur du texte. */
 function hauteurAuContenu(champ) {
   champ.style.height = 'auto'
@@ -6177,11 +6293,15 @@ function hauteursAuContenu(champs) {
 /** Le filtre de recherche : on cache les lignes, on ne redessine pas. */
 function filtreLeTexte() {
   const q = ($('chercheTexte').value ?? '').trim().toLowerCase()
-  for (const ligne of $('listeSt').children) {
+  const zone = $('listeSt')
+  for (const ligne of zone.querySelectorAll('.page-st')) {
     if (!q) { ligne.classList.remove('filtree'); continue }
     const texte = ligne.querySelector('.texte-st')?.value.toLowerCase() ?? ''
     ligne.classList.toggle('filtree', !texte.includes(q))
   }
+  // Les bandes de silence n'ont pas de texte à chercher : pendant un filtre
+  // elles décriraient des voisinages qui ne sont plus à l'écran.
+  for (const trou of zone.querySelectorAll('.trou')) trou.classList.toggle('filtree', Boolean(q))
 }
 
 /**
@@ -6223,7 +6343,12 @@ function suitLeTexte(indice) {
   const zone = $('listeSt')
   const avant = zone.querySelector('.page-st.en-cours')
   if (avant) avant.classList.remove('en-cours')
-  const ligne = zone.children[indice]
+  // PAR NUMÉRO DE PAGE, PLUS PAR RANG D'ENFANT. Les bandes de silence sont des
+  // enfants de la liste au même titre que les lignes : depuis qu'elles
+  // existent, `children[indice]` désignait une ligne de plus en plus décalée à
+  // mesure qu'on avançait dans la prise — et le surlignage de lecture suivait
+  // une autre phrase que celle qu'on entend.
+  const ligne = zone.querySelector(`.page-st[data-page="${indice}"]`)
   if (!ligne) return
   ligne.classList.add('en-cours')
   // On ne fait défiler que si la ligne est sortie du cadre : un défilement

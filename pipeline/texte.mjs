@@ -55,6 +55,40 @@ const horodate = (ms) => {
   return `${m}:${String(Math.floor(s % 60)).padStart(2, '0')},${Math.floor((s % 1) * 10)}`
 }
 
+/**
+ * En dessous, un silence n'est pas un mot manqué mais une respiration.
+ *
+ * MESURÉ, PAS CHOISI. Sur une prise réelle de 907 mots, l'intervalle médian
+ * entre deux mots vaut 40 ms et le neuvième décile 460. Les silences de plus
+ * de 600 ms sont 66 sur 846 — assez rares pour qu'on les regarde un par un,
+ * assez larges pour qu'un ou deux mots y tiennent (soixante millisecondes
+ * suffisent à peine à un mot, six cents à une dizaine).
+ */
+export const SILENCE_INSERABLE_MS = 600
+
+/**
+ * Les silences assez longs pour qu'un mot y ait été prononcé sans être entendu.
+ *
+ * Rendus avec l'index du mot qui PRÉCÈDE : c'est exactement ce que le patch
+ * attend dans `apres`, et le faire calculer deux fois donnerait deux vérités.
+ */
+export function silencesDe(mots, seuil = SILENCE_INSERABLE_MS) {
+  const trous = []
+  for (let i = 1; i < mots.length; i++) {
+    const dureeMs = mots[i].debutMs - mots[i - 1].finMs
+    if (dureeMs < seuil) continue
+    trous.push({
+      apres_i: i - 1,
+      debutMs: mots[i - 1].finMs,
+      finMs: mots[i].debutMs,
+      dureeMs,
+      avant: mots[i - 1].texte,
+      apres: mots[i].texte,
+    })
+  }
+  return trous
+}
+
 /** Les mots du transcript, avec leur index — la clé du patch. */
 export function motsDe(slug) {
   const v = dossierVideo(slug)
@@ -112,9 +146,31 @@ function repartis(debutMs, finMs, textes) {
  *                       le nombre de mots ne change pas, chacun garde ses
  *                       instants ; s'il change, ils sont répartis dans la plage
  *                       au prorata des lettres, bornes conservées.
+ *   { apres, texte }    INSÈRE des mots dans le silence qui suit le mot `apres`.
+ *                       Rien n'est remplacé : les instants se répartissent dans
+ *                       le trou, et aucun mot existant ne bouge.
+ *
+ * POURQUOI L'INSERTION EST UNE TROISIÈME FORME, ET PAS UNE PLAGE.
+ *
+ * Whisper ne se contente pas de mal entendre : il SAUTE des mots. « les droits
+ * s'élèvent à 82.194 euros » ressort en « les droits s'élèvent à 82 », et il ne
+ * reste rien à corriger — il n'y a aucun mot à l'endroit du manque. Une plage
+ * remplace des mots existants et se cale sur LEURS bornes ; on ne peut donc pas
+ * s'en servir pour poser du texte dans un intervalle qui n'en contient aucun.
+ *
+ * Rattacher les mots manquants à la ligne d'avant marcherait à l'écrit et
+ * mentirait à l'image : ils se caleraient dans la fenêtre de cette ligne, donc
+ * s'afficheraient AVANT d'être prononcés, et le reste de la ligne se
+ * comprimerait pour leur faire place. Le silence, lui, est exactement le temps
+ * pendant lequel ces mots ont été dits.
+ *
+ * `apres: -1` insère avant le tout premier mot. Après le DERNIER, on refuse :
+ * ce module ne connaît pas la durée de l'audio, et inventer une borne haute
+ * poserait des sous-titres au-delà de la fin de la vidéo.
  *
  * Un texte vide retire les mots visés. Les plages sont appliquées de la FIN vers
  * le début : autrement, la première remplacée décalerait les index des suivantes.
+ * Les insertions se trient avec elles, à la position `apres + 0,5`.
  */
 export function corrige(slug, patch) {
   const v = dossierVideo(slug)
@@ -123,8 +179,50 @@ export function corrige(slug, patch) {
 
   let mots = transcript.mots ?? []
 
+  // LES INSERTIONS SE SÉPARENT DES PLAGES : elles ne visent aucun mot existant,
+  // donc aucun des contrôles de bornes ci-dessous ne s'y applique.
+  const insertions = patch
+    .filter((p) => p && p.apres !== undefined)
+    .map((p) => {
+      const apres = Number(p.apres)
+      if (!Number.isInteger(apres) || apres < -1 || apres >= mots.length) {
+        throw new Error(
+          `Position d'insertion hors bornes : ${JSON.stringify(p.apres)} ` +
+            `(la transcription a ${mots.length} mots ; -1 insère avant le premier).`
+        )
+      }
+      if (apres === mots.length - 1) {
+        throw new Error(
+          `On n'insère pas après le dernier mot : la durée de l'audio n'est pas connue ici, ` +
+            `et il faudrait inventer une borne de fin. Récris la dernière ligne à la place.`
+        )
+      }
+      const texte = String(p.texte ?? '').trim()
+      if (!texte) throw new Error(`Rien à insérer : le texte est vide.`)
+      if (/[\r\n\t]/.test(texte)) {
+        throw new Error(`Ni saut de ligne ni tabulation dans un sous-titre : « ${texte} ».`)
+      }
+      const debutMs = apres < 0 ? 0 : mots[apres].finMs
+      const finMs = mots[apres + 1].debutMs
+      const textes = texte.split(/\s+/).filter(Boolean)
+      // SOIXANTE MILLISECONDES PAR MOT, ET C'EST UN PLANCHER PHYSIQUE.
+      //
+      // En dessous, `repartis` rendrait des mots d'une image, qui clignotent
+      // sans être lisibles. Le refus dit combien de place il y a réellement :
+      // sans ça, on croirait à une panne alors que le silence est trop court.
+      if (finMs - debutMs < 60 * textes.length) {
+        throw new Error(
+          `Le silence ne fait que ${finMs - debutMs} ms : trop court pour ` +
+            `${textes.length} mot(s). Il en faut au moins ${60 * textes.length}.`
+        )
+      }
+      return { apres, texte, textes, debutMs, finMs }
+    })
+
   // On normalise tout en plages : un mot seul est la plage [i, i].
-  const plages = patch.map((p) => {
+  const plages = patch
+    .filter((p) => p && p.apres === undefined)
+    .map((p) => {
     const seul = p?.i !== undefined && p?.de === undefined
     const de = Number(seul ? p.i : p.de)
     const a = Number(seul ? p.i : p.a)
@@ -154,9 +252,59 @@ export function corrige(slug, patch) {
     }
   }
 
+  // Une insertion qui tombe DANS une plage récrite est ambiguë : les mots qui
+  // l'entourent sont sur le point de disparaître, donc le silence où elle
+  // s'accroche n'existera plus. On refuse plutôt que de deviner.
+  for (const ins of insertions) {
+    const dedans = triees.find((p) => ins.apres >= p.de && ins.apres < p.a)
+    if (dedans) {
+      throw new Error(
+        `L'insertion après le mot ${ins.apres} tombe au milieu de la ligne ` +
+          `[${dedans.de}, ${dedans.a}] qu'on récrit dans le même envoi. ` +
+          `Fais les deux l'un après l'autre.`
+      )
+    }
+  }
+
   const changements = []
 
-  for (const plage of [...triees].reverse()) {
+  // DE LA FIN VERS LE DÉBUT, PLAGES ET INSERTIONS MÊLÉES.
+  //
+  // Chaque écriture change la longueur de la liste après elle. Une insertion se
+  // range à `apres + 0,5` : elle vient donc juste après le mot qu'elle suit, et
+  // avant la plage qui commencerait là — c'est le même invariant que pour deux
+  // plages voisines.
+  const operations = [
+    ...triees.map((p) => ({ ...p, rang: p.de, insertion: false })),
+    ...insertions.map((x) => ({ ...x, rang: x.apres + 0.5, insertion: true })),
+  ].sort((x, y) => y.rang - x.rang)
+
+  for (const op of operations) {
+    if (op.insertion) {
+      const remplacement = repartis(op.debutMs, op.finMs, op.textes).map((m) => ({
+        ...m,
+        corrige: true,
+        // Ces mots n'ont jamais été entendus par Whisper : ils n'ont pas de
+        // confiance, et la lui inventer ferait mentir le repérage des passages
+        // à relire en premier.
+        confiance: null,
+        incertain: false,
+      }))
+      changements.push({
+        de: op.apres + 1,
+        a: op.apres,
+        avant: '',
+        apres: op.texte,
+        debutMs: op.debutMs,
+        finMs: op.finMs,
+        _remplacement: remplacement,
+        _insertion: true,
+        instantsRepartis: true,
+      })
+      mots = [...mots.slice(0, op.apres + 1), ...remplacement, ...mots.slice(op.apres + 1)]
+      continue
+    }
+    const plage = op
     const anciens = mots.slice(plage.de, plage.a + 1)
     const avant = anciens.map((m) => m.texte).join(' ')
     if (plage.texte === avant) continue
@@ -218,6 +366,23 @@ export function corrige(slug, patch) {
       // De la fin vers le début, là encore : chaque remplacement change la
       // longueur de la liste après lui.
       for (const c of [...changements].sort((x, y) => y.debutMs - x.debutMs)) {
+        // UNE INSERTION NE REMPLACE RIEN, DONC ELLE NE SE CHERCHE PAS PAREIL.
+        //
+        // Le repérage par fenêtre suppose des mots DANS la fenêtre ; dans un
+        // silence il n'y en a aucun, `findIndex` rendait -1, et le `continue`
+        // laissait le plan en arrière. Le rendu aurait alors affiché l'ancien
+        // texte sans que rien ne le dise — exactement le défaut que ce bloc
+        // existe pour éviter.
+        //
+        // On cherche donc le point d'INSERTION : le premier mot qui commence
+        // après le silence. S'il n'y en a pas, le plan s'arrête avant ce
+        // passage et on ajoute à la fin.
+        if (c._insertion) {
+          const ou = plan.mots.findIndex((m) => m.debutMs >= c.finMs)
+          const place = ou < 0 ? plan.mots.length : ou
+          plan.mots = [...plan.mots.slice(0, place), ...c._remplacement, ...plan.mots.slice(place)]
+          continue
+        }
         const dans = (m) => m.debutMs >= c.debutMs && m.debutMs <= c.finMs
         const debut = plan.mots.findIndex(dans)
         if (debut < 0) continue
@@ -234,8 +399,16 @@ export function corrige(slug, patch) {
     }
   }
 
-  // `_remplacement` ne sort pas : c'est un détail d'application, pas un résultat.
-  return { changements: changements.map(({ _remplacement, ...c }) => c), planPatche }
+  // `_remplacement` ne sort pas : c'est un détail d'application. `_insertion`
+  // devient `insertion` — l'écran en a besoin pour dire « ajoutée » plutôt que
+  // « récrite », qui ne décrit pas le même geste.
+  return {
+    changements: changements.map(({ _remplacement, _insertion, ...c }) => ({
+      ...c,
+      insertion: _insertion === true,
+    })),
+    planPatche,
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -258,7 +431,13 @@ npm run texte -- <slug> [options]
                         [{ "i": 42, "texte": "devine" }]          un mot
                         [{ "de": 40, "a": 42, "texte": "et devine quoi" }]
                                                                  toute une ligne
+                        [{ "apres": 42, "texte": "194 euros" }]
+                                                                 INSÈRE dans le
+                        silence qui suit le mot 42 — pour les mots que Whisper
+                        a sautés. Rien n'est remplacé, aucun mot ne bouge.
+                        "apres": -1 insère avant le tout premier mot.
                       un texte vide retire les mots visés
+  --trous             les silences où des mots ont pu être sautés, et leur durée
   --chiffres          réécrit en chiffres les nombres dits en lettres :
                       « voici trois signes » devient « voici 3 signes ».
                       --chiffres=voir montre ce qui changerait, sans rien écrire
@@ -292,6 +471,31 @@ Le plan de montage est corrigé en même temps : pas besoin de remonter.
     // les instants quand deux mots deviennent un, et qui corrige le plan dans
     // la foulée. Réécrire le transcript ici aurait dupliqué cette mécanique —
     // celle, précisément, dont dépend le calage des sous-titres.
+    // LES SILENCES OÙ DES MOTS ONT PU ÊTRE SAUTÉS.
+    //
+    // Whisper ne signale pas ce qu'il n'a pas entendu : il n'y a rien à
+    // corriger là où il manque quelque chose. Le seul indice est le TEMPS —
+    // deux mots séparés par une seconde, alors que le débit médian de cette
+    // prise place quarante millisecondes entre deux mots.
+    if (drapeau(options, 'trous')) {
+      const mots = motsDe(slug)
+      if (!mots) throw new Error(`Pas de transcription pour « ${slug} ».`)
+      const seuil = Math.max(60, Number(options.seuil) || SILENCE_INSERABLE_MS)
+      const trous = silencesDe(mots, seuil)
+      if (enJson) { console.log(JSON.stringify({ ok: true, slug, seuil, trous }, null, 2)); return }
+      if (!trous.length) {
+        journal.info(`Aucun silence de plus de ${seuil} ms entre deux mots.`)
+        return
+      }
+      journal.titre(`Silences de plus de ${seuil} ms · ${slug}`)
+      for (const t of trous) {
+        journal.info(`${horodate(t.debutMs)} → ${horodate(t.finMs)}  ${t.dureeMs} ms`)
+        journal.detail(`  … ${t.avant} ⟨ici⟩ ${t.apres} …`)
+        journal.detail(`  npm run texte -- ${slug} --corrige=-  avec [{"apres":${t.apres_i},"texte":"…"}]`)
+      }
+      return
+    }
+
     if (options.chiffres !== undefined) {
       const mots = motsDe(slug)
       const trouves = reperesDesNombres(mots)

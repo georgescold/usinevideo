@@ -583,6 +583,7 @@ npm run soustitres -- <slug>          # les réglages de sous-titrage, et leur o
 npm run soustitres -- <slug> --applique   # les pose dans le plan SANS remonter
 npm run texte -- <slug>      # les mots transcrits, avec leurs temps
 npm run texte -- <slug> --incertains  # ceux dont Whisper doutait — à relire en premier
+npm run texte -- <slug> --trous       # les silences où des mots ont pu être SAUTÉS
 npm run texte -- <slug> --chiffres    # les nombres dits en lettres, mis en chiffres
 npm run soustitres -- <slug> --defaut # ces réglages deviennent ceux de la chaîne
 npm run broll                # tes propres plans de coupe, et leurs mots-clés
@@ -1298,6 +1299,62 @@ deux sur le disque et dans le plan. Une frappe **sans jamais quitter le champ** 
 « ✓ Enregistré » affiché. Et sur le même geste, en venant de l'étape 6 : `data-sens` inchangé,
 aucune animation rejouée, panneau jamais masqué, aperçu resté à 0:34, colonne restée à 700 px, focus
 et position du curseur rendus.
+
+### Whisper ne se trompe pas seulement, il SAUTE des mots
+
+Corriger une ligne couvre le mot mal entendu. Ça ne couvre pas le mot **absent** : « les droits
+s'élèvent à 82.194 euros » ressort en « les droits s'élèvent à 82 », et il ne reste rien à
+corriger — le manque n'a aucun mot où s'accrocher.
+
+**Rattacher les mots manquants à la ligne d'avant marcherait à l'écrit et mentirait à l'image.**
+Ils se caleraient dans la fenêtre de CETTE ligne, donc s'afficheraient avant d'être prononcés, et
+le reste de la ligne se comprimerait pour leur faire place. Le silence, lui, est exactement le
+temps pendant lequel ces mots ont été dits.
+
+D'où une **troisième forme de patch**, à côté du mot et de la plage :
+
+```bash
+[{ "apres": 42, "texte": "194 euros" }]   # insère dans le silence qui suit le mot 42
+npm run texte -- <slug> --trous           # où sont ces silences, et leur durée
+```
+
+Rien n'est remplacé : les instants se répartissent dans le trou, et **aucun mot existant ne
+bouge**. Vérifié sur une prise réelle — trois mots posés entre 9 399 et 10 239 ms, le mot d'avant
+finit toujours à 9 399, celui d'après commence toujours à 10 239, et le plan est patché avec.
+
+**LE SEUIL EST MESURÉ, PAS CHOISI.** Sur une prise de 907 mots, l'intervalle médian entre deux mots
+vaut **40 ms** et le neuvième décile 460. Au-delà de **600 ms**, un silence peut cacher une dizaine
+de mots — et il n'y en a qu'une soixantaine sur 846 intervalles, assez rares pour qu'on les regarde
+un par un. En dessous de 60 ms par mot inséré, on refuse en disant combien de place il y a
+réellement : `repartis` rendrait des mots d'une image, qui clignotent sans être lisibles.
+
+**On n'insère pas après le dernier mot** : ce module ne connaît pas la durée de l'audio, et
+inventer une borne haute poserait des sous-titres au-delà de la fin de la vidéo. On récrit la
+dernière ligne à la place.
+
+**Deux pièges du plan, et le premier était silencieux.** Le repérage par fenêtre de temps suppose
+des mots DANS la fenêtre ; dans un silence il n'y en a aucun, `findIndex` rendait −1, et le
+`continue` laissait `plan.json` en arrière — le rendu aurait affiché l'ancien texte sans que rien
+ne le dise. Une insertion cherche donc son point d'ancrage : le premier mot qui commence après le
+silence. Et une insertion qui tombe au milieu d'une plage récrite dans le même envoi est
+**refusée** : les mots qui l'entourent sont sur le point de disparaître.
+
+**LA BANDE NE SE MONTRE QU'AU SURVOL, et c'est une question de nombre.** Sur les 201 lignes d'une
+prise, une soixantaine de silences dépassent le seuil : un marqueur permanent sur chacun serait
+exactement le bruit qui empêche de lire — or ce qu'on cherche ici se repère **en lisant**, deux
+lignes qui ne s'enchaînent pas, pas en balayant des boutons. La bande garde sa place (quatre
+pixels, aucun saut de mise en page au survol) et affiche la durée du trou, qui dit combien de mots
+peuvent y tenir.
+
+**Le seuil voyage, il ne se recopie pas.** La soustraction entre deux instants n'est pas une règle
+métier et se fait à l'écran ; le seuil en est une, et il sort de `soustitres.mjs --json`
+(`silence_inserable_ms`). Une copie dans l'interface se serait périmée au premier ajustement.
+
+**Deux fonctions supposaient que chaque enfant de la liste est une ligne**, et les bandes de
+silence en sont aussi. `suitLeTexte` prenait `children[indice]` : le surlignage de lecture suivait
+une phrase de plus en plus décalée à mesure qu'on avançait. Il vise maintenant
+`[data-page="N"]`. Le filtre de recherche, lui, masque les bandes tant qu'il est actif — elles
+décriraient des voisinages qui ne sont plus à l'écran.
 
 ### La stabilité se règle par vidéo, et le montage l'emploie
 

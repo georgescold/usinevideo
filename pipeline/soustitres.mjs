@@ -32,6 +32,9 @@ import { CHEMINS, dossierVideo, litJson } from './lib/chemins.mjs'
 import { journal } from './lib/journal.mjs'
 import { litArgs, aide, drapeau, principal } from './lib/args.mjs'
 import { estVertical } from './lib/montage.mjs'
+// Le seuil au-delà duquel un silence peut cacher des mots sautés. Il vit avec
+// l'insertion, dans `texte.mjs`, et voyage jusqu'à l'écran par cette sortie.
+import { SILENCE_INSERABLE_MS } from './texte.mjs'
 import {
   MODELES,
   BORNES,
@@ -389,6 +392,14 @@ await principal(async () => {
       animations: ANIMATIONS,
       styles: STYLES,
       polices: policesDisponibles(),
+      // LE SEUIL VIENT D'ICI, LA SOUSTRACTION SE FAIT LÀ-BAS.
+      //
+      // L'écran doit savoir où proposer d'insérer les mots que Whisper a
+      // sautés. Le calcul est une soustraction entre deux instants — pas une
+      // règle métier —, mais le SEUIL en est une : il a été mesuré, et le
+      // recopier dans l'interface en ferait une seconde vérité qui se
+      // périmerait au premier ajustement. Il voyage donc avec les réglages.
+      silence_inserable_ms: SILENCE_INSERABLE_MS,
     }, null, 2))
     return
   }
