@@ -173,11 +173,33 @@ await principal(async () => {
     journal.info(`Recalage de ${dejaLa.mots.length} mots sur l'audio — les mots ne changent pas.`)
   }
 
+  // UN SCRIPT VIDE FAISAIT BASCULER EN MODE LIBRE, EN SILENCE.
+  //
+  // `01-script.json` peut exister sans porter un mot — créé par `depose`, jamais
+  // rempli. La condition ne regardait que le FICHIER : le texte tombait à la
+  // chaîne vide, et la transcription partait en mode libre sans que rien ne le
+  // dise. Or l'écart entre les deux modes est énorme sur cette prise :
+  //
+  //   calé sur le script  →  « le notaire tourne alors une feuille vers lui »
+  //   libre               →  « le notaire tourne à l'heure une fée vers lui »
+  //
+  // On croit que son script sert, on lit un texte truffé d'homophones, et on
+  // corrige à la main ce qu'un alignement aurait rendu juste d'un coup.
+  const texteBrutDuScript = script ? (script.blocs ?? []).map((b) => b.texte).join(' ').trim() : ''
+  if (script && !texteBrutDuScript && !drapeau(options, 'libre')) {
+    journal.attention(
+      `01-script.json existe mais ne porte aucun texte : la transcription sera LIBRE, ` +
+        `donc nettement moins juste (homophones, noms propres, chiffres).`
+    )
+    journal.detail(
+      `Écris le script — /script en conversation — puis relance : les mots viendront de lui, ` +
+        `et seuls les instants de l'audio.`
+    )
+  }
+
   const texteDuScript =
     texteARecaler ??
-    (script && !drapeau(options, 'libre')
-      ? script.blocs.map((b) => b.texte).join(' ')
-      : null)
+    (texteBrutDuScript && !drapeau(options, 'libre') ? texteBrutDuScript : null)
 
   const debut = Date.now()
   const resultat = texteDuScript
