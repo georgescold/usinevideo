@@ -727,7 +727,20 @@ input[type="text"].hexa {
  * quand la souris passe.
  */
 .trou { height: 13px; display: flex; align-items: center; justify-content: center; }
-.trou.ouvert { height: auto; padding: 3px 5px 3px 60px; }
+/* Ouvert : le champ ET son bouton. Un champ sans bouton ne dit pas comment on
+   valide — on tapait, on cliquait ailleurs, et rien ne partait. */
+.trou.ouvert {
+  height: auto; padding: 3px 5px 3px 60px;
+  display: flex; gap: 6px; align-items: stretch;
+}
+.trou-ajoute {
+  flex: 0 0 auto; cursor: pointer; white-space: nowrap;
+  border: 1px solid var(--accent); border-radius: 6px;
+  background: var(--accent); color: #0f1720;
+  font: inherit; font-size: 13px; font-weight: 700; padding: 0 10px;
+}
+.trou-ajoute:hover:not(:disabled) { background: var(--accent-clair); border-color: var(--accent-clair); }
+.trou-ajoute:disabled { opacity: .55; cursor: default; }
 .trou-plus {
   border: 0; background: none; cursor: pointer; padding: 0 8px;
   font: inherit; font-size: 11px; color: #46536a;
@@ -742,7 +755,8 @@ input[type="text"].hexa {
 }
 .trou:hover .trou-plus .duree, .trou-plus:focus-visible .duree { display: inline; }
 .trou-champ {
-  width: 100%; font: inherit; font-size: 14.5px; line-height: 1.35;
+  flex: 1 1 auto; min-width: 0;
+  font: inherit; font-size: 14.5px; line-height: 1.35;
   color: var(--texte); background: var(--panneau);
   border: 1px solid var(--accent); border-radius: 6px; padding: 3px 6px;
 }

@@ -1476,6 +1476,20 @@ Rien n'est remplacé : les instants se répartissent dans le trou, et **aucun mo
 bouge**. Vérifié sur une prise réelle — trois mots posés entre 9 399 et 10 239 ms, le mot d'avant
 finit toujours à 9 399, celui d'après commence toujours à 10 239, et le plan est patché avec.
 
+**UN CHAMP SANS BOUTON EST UN CHAMP QUI NE VALIDE PAS.** Le seul moyen d'ajouter était la touche
+Entrée, et rien ne le disait. On tapait les mots, on cliquait ailleurs, et le champ restait ouvert
+avec le texte dedans — jamais enregistré, jamais annoncé. « Il n'apparaît pas à l'écran » : il
+n'était jamais parti. Il y a maintenant un bouton **« Ajouter »**, et quitter le champ avec du texte
+l'ajoute — comme partout ailleurs dans cette colonne. Le focus qui part sur le bouton ne déclenche
+rien : le bouton s'en charge, et deux envois pour un clic feraient deux insertions.
+
+**LA BORNE HAUTE D'UNE FENÊTRE EST EXCLUE, et c'est le premier mot inséré qui l'a montré.** Un mot
+ajouté dans un silence commence EXACTEMENT à la fin de la ligne d'avant — `repartis` part de cette
+borne. Avec un test `<=`, il tombait dans la fenêtre précédente : « 82 194 € » s'affichait en
+« …aujourd'hui 82 » puis « 194 € », le premier mot happé par la ligne du dessus. Vérifié après
+correction : la ligne insérée est bien « 82 194 € », seule, entre « l'amour aujourd'hui » et « ? »,
+et elle s'affiche telle quelle dans l'aperçu.
+
 **LE SEUIL EST MESURÉ, PAS CHOISI.** Sur une prise de 907 mots, l'intervalle médian entre deux mots
 vaut **40 ms** et le neuvième décile 460. Au-delà de **600 ms**, un silence peut cacher une dizaine
 de mots — et il n'y en a qu'une soixantaine sur 846 intervalles, assez rares pour qu'on les regarde

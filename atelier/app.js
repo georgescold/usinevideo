@@ -6125,7 +6125,16 @@ function groupeParFenetres(mots, fenetres) {
   let k = 0
   for (const mot of mots) {
     while (k + 1 < triees.length && triees[k + 1].debutMs <= mot.debutMs) k++
-    const f = triees[k] && mot.debutMs >= triees[k].debutMs && mot.debutMs <= triees[k].finMs
+    // LA BORNE HAUTE EST EXCLUE, ET C'EST LE PREMIER MOT INSÉRÉ QUI L'A MONTRÉ.
+    //
+    // Un mot ajouté dans un silence commence EXACTEMENT à la fin de la ligne
+    // d'avant — `repartis` part de cette borne. Avec un test `<=`, il tombait
+    // donc dans la fenêtre précédente : « 82 194 € » s'affichait en
+    // « …aujourd'hui 82 » puis « 194 € », le premier mot happé par la ligne du
+    // dessus. On exclut la borne haute, tout en gardant le cas d'une fenêtre
+    // dont le premier mot serait aussi le dernier.
+    const f = triees[k] && mot.debutMs >= triees[k].debutMs &&
+      (mot.debutMs < triees[k].finMs || mot.debutMs === triees[k].debutMs)
       ? triees[k]
       // Hors de toute fenêtre : c'est une insertion tombée dans un silence.
       // Elle forme sa propre ligne, ce qui est bien ce qu'on veut là.
@@ -6445,6 +6454,16 @@ function ouvreLInsertion(trou, ligne, silenceMs) {
     champ.placeholder = `les mots manquants (${secondesFr(silenceMs)})`
   }
 
+  // UN CHAMP SANS BOUTON EST UN CHAMP QUI NE VALIDE PAS.
+  //
+  // Le seul moyen d'ajouter était la touche Entrée, et rien ne le disait. On
+  // tapait les mots, on cliquait ailleurs, et le champ restait ouvert avec le
+  // texte dedans — jamais enregistré, jamais annoncé. « Il n'apparaît pas à
+  // l'écran » : il n'était jamais parti.
+  const ajoute = creer('button', 'trou-ajoute')
+  ajoute.type = 'button'
+  ajoute.textContent = 'Ajouter'
+
   const ferme = () => {
     trou.classList.remove('ouvert')
     trou.replaceChildren()
@@ -6454,7 +6473,9 @@ function ouvreLInsertion(trou, ligne, silenceMs) {
   const valide = async () => {
     const texte = champ.value.trim()
     if (!texte) { ferme(); return }
+    if (champ.disabled) return
     champ.disabled = true
+    ajoute.disabled = true
     // `a` est l'index du DERNIER mot de la ligne : le silence commence juste
     // après lui, et c'est exactement ce que `apres` attend.
     const fait = await mene(() =>
@@ -6463,7 +6484,7 @@ function ouvreLInsertion(trou, ligne, silenceMs) {
         corps: { corrections: [{ apres: ligne.a, texte }] },
       })
     )
-    if (!fait) { champ.disabled = false; return }
+    if (!fait) { champ.disabled = false; ajoute.disabled = false; return }
     etatEcriture = 'enregistre'
     lignesRecalees = 0
     // Les mots ont changé : on relit, et `dessineLeTexte` reconstruit la
@@ -6477,11 +6498,27 @@ function ouvreLInsertion(trou, ligne, silenceMs) {
     if (e.key === 'Escape') { e.preventDefault(); ferme() }
     if (e.key === 'Enter') { e.preventDefault(); valide().catch(() => { champ.disabled = false }) }
   })
-  // Quitter le champ sans rien écrire le referme : un champ vide laissé ouvert
-  // au milieu de la colonne ressemble à une ligne de texte, et n'en est pas une.
-  champ.addEventListener('blur', () => { if (!champ.value.trim()) ferme() })
+  ajoute.addEventListener('click', () => valide().catch(() => {
+    champ.disabled = false
+    ajoute.disabled = false
+  }))
 
-  trou.append(champ)
+  // QUITTER LE CHAMP AVEC DU TEXTE L'AJOUTE, comme partout ailleurs dans cette
+  // colonne. Il restait ouvert, en suspens, sans que rien ne parte : le texte
+  // était là, à l'écran, et nulle part sur le disque.
+  //
+  // Vide, il se referme : un champ vide laissé ouvert au milieu de la colonne
+  // ressemble à une ligne de texte, et n'en est pas une.
+  //
+  // Le focus qui part sur « Ajouter » ne déclenche rien : le bouton s'en charge,
+  // et deux envois pour un clic feraient deux insertions.
+  champ.addEventListener('blur', (ev) => {
+    if (ev.relatedTarget === ajoute) return
+    if (champ.value.trim()) valide().catch(() => { champ.disabled = false; ajoute.disabled = false })
+    else ferme()
+  })
+
+  trou.append(champ, ajoute)
   champ.focus()
   // Le texte reproposé est sélectionné : on valide d'un Entrée pour le remettre,
   // ou on tape par-dessus pour écrire autre chose.
