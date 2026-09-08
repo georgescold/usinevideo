@@ -23,6 +23,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import os from 'node:os'
+import { createHash as creeHachage } from 'node:crypto'
 import { bundle } from '@remotion/bundler'
 import { selectComposition, renderMedia } from '@remotion/renderer'
 import {
@@ -51,6 +52,10 @@ npm run rends -- <slug> [options]
   --lut=nom.cube      surcharge la LUT de la chaîne
   --debit=12M         débit vidéo de la passe finale
   --threads=4         fils de rendu (0 ou absent = automatique)
+  --troncons          rend par morceaux d'une minute, repris un par un si un
+                      onglet tombe. ATTENTION : le son dérive d'environ 50 ms
+                      par raccord — à n'employer que pour un contrôle, pas
+                      pour un master
   --sortie=<chemin>   écrit ailleurs que dans le master de la vidéo
                       (obligatoire pour un essai : sinon il écrase le rendu)
 
@@ -153,31 +158,262 @@ await principal(async () => {
     : null
   const concurrence = nombre(options, 'threads', envNombre('RENDU_CONCURRENCE', 0))
 
-  let dernier = -1
-  await renderMedia({
-    composition,
-    serveUrl: paquet,
-    codec: 'h264',
-    outputLocation: master,
-    inputProps,
-    // Qualité maximale en sortie de Remotion : c'est un intermédiaire, il sera
-    // réencodé. Économiser ici ne se rattrape plus après.
-    crf: brouillon ? 28 : 16,
-    jpegQuality: brouillon ? 70 : 95,
-    scale: brouillon ? 0.5 : 1,
-    colorSpace: 'bt709',
-    frameRange: extrait ? [extrait[0], extrait[1] ?? plan.dureeFrames - 1] : null,
-    concurrency: concurrence > 0 ? concurrence : null,
-    chromiumOptions: { gl: 'angle' },
-    logLevel: 'error',
-    onProgress: ({ progress }) => {
-      const pc = Math.round(progress * 100)
-      if (pc !== dernier) {
-        dernier = pc
-        progression(pc, 100, 'rendu')
+/**
+ * UN ONGLET DE RENDU FINIT PAR TOMBER. CE QUI NE DOIT PLUS TOMBER AVEC, C'EST
+ * LA DEMI-HEURE DE CALCUL.
+ *
+ * Le 8 septembre 2026, un rendu de 9 372 images est mort à 94 % après
+ * vingt-huit minutes. Ce que l'écran a montré : trente lignes de ffmpeg sur un
+ * dossier de mixage introuvable — donc on cherche un problème de disque, et il
+ * n'y en a pas. La vraie cause était deux lignes plus haut, noyée dans le flot :
+ *
+ *   ProtocolError (Page.bringToFront): Target closed
+ *
+ * L'onglet est tombé ; Remotion a nettoyé son temporaire en refermant le
+ * navigateur, et l'étape de mixage, qui vient après, a trouvé la place vide. Le
+ * message de ffmpeg est exact et ne sert à rien : il décrit la conséquence.
+ *
+ * CE N'EST NI LE DISQUE NI UN PLAN PRÉCIS, ET C'EST MESURÉ. 29 Go libres,
+ * 32 Go de mémoire, les 101 clips et la piste image passent tous `ffprobe`. Et
+ * les 872 dernières images — exactement là où il est tombé — se rendent en
+ * pleine définition sans un accroc, master fini et sonie mesurée. Ce qui use,
+ * c'est la DURÉE : vingt-huit minutes d'un même navigateur sur quatre-vingt-cinq
+ * vidéos.
+ *
+ * On ne peut pas promettre qu'un onglet ne tombera jamais — c'est un processus
+ * Chromium, il peut mourir de mémoire, d'un pilote graphique ou d'un défaut qui
+ * ne nous appartient pas. On peut promettre que ça ne coûte plus la vidéo :
+ *
+ *   1. le rendu part en TRONÇONS d'une minute, recollés sans réencodage ;
+ *   2. un tronçon qui tombe est REPRIS, avec moins de fils à chaque essai ;
+ *   3. les tronçons SURVIVENT au processus : relancer reprend où l'on en était.
+ *
+ * `forSeamlessAacConcatenation` est ce que Remotion expose exactement pour ça :
+ * il aligne les trames audio pour que le recollage ne laisse pas de trou.
+ */
+const ONGLET_MORT = /target closed|protocol error|session closed|browser has closed|websocket|frame [0-9]+ timed out/i
+const MIXAGE_ORPHELIN = /remotion-audio-mixing|remotion-assets-dir/i
+
+// Une minute à 30 i/s. Assez court pour qu'un onglet la tienne, assez long pour
+// que le démarrage du navigateur — cinq secondes — reste du bruit.
+const IMAGES_PAR_TRONCON = 1800
+// Deux reprises, en divisant les fils par deux à chaque fois : si c'est la
+// mémoire, moins d'onglets simultanés la rendent ; si c'est autre chose, on ne
+// s'acharne pas.
+const RETENTES = 2
+
+  const bornes = extrait
+    ? [extrait[0], extrait[1] ?? plan.dureeFrames - 1]
+    : [0, plan.dureeFrames - 1]
+  const totalImages = bornes[1] - bornes[0] + 1
+
+  // ON NE TRONÇONNE PAS CE QUI TIENT D'UNE TRAITE. Un extrait de contrôle et un
+  // format court se rendent en quelques minutes : les découper ajouterait un
+  // recollage et des démarrages de navigateur pour rien.
+  // LA DÉCOUPE NE SE FAIT PAS PAR DÉFAUT, ET LA MESURE DIT POURQUOI.
+  //
+  // Elle évite de reperdre trente minutes quand un onglet tombe. Mais le son
+  // rendu tronçon par tronçon DÉRIVE : chaque morceau sort ~96 ms de son de
+  // plus que d'image, et le recollage empile ces excédents. Mesuré par
+  // corrélation croisée contre la voix, sur six tronçons et cinq raccords :
+  //
+  //   recollage naïf   40 ms → 420 → 680
+  //   après recoupe    60 ms → 160 → 240
+  //
+  // La recoupe à la durée exacte de l'image divise par trois et ne supprime
+  // pas : 48 ms résiduels par raccord. `forSeamlessAacConcatenation`, l'option
+  // que Remotion expose exactement pour ça, ne l'empêche pas non plus. Un
+  // sous-titre qui glisse d'un quart de seconde à la fin est précisément ce
+  // que le §9 refuse — on ne l'échange pas contre du temps de calcul.
+  //
+  // La voie juste est un son rendu d'une seule traite, à côté des tronçons
+  // muets : sans raccord, rien ne peut dériver. `renderMedia` en `codec: wav`
+  // butait sur les 33 s de délai de montage — c'est un réglage, pas un mur —
+  // mais ça reste à mesurer. `--troncons` l'ouvre en attendant ; le défaut
+  // rend d'une traite, et une reprise coûte le rendu entier.
+  const troncons = []
+  if (drapeau(options, 'troncons') && !extrait && totalImages > IMAGES_PAR_TRONCON * 2) {
+    for (let d = bornes[0]; d <= bornes[1]; d += IMAGES_PAR_TRONCON) {
+      troncons.push([d, Math.min(d + IMAGES_PAR_TRONCON - 1, bornes[1])])
+    }
+  } else {
+    troncons.push(bornes)
+  }
+  const enUnSeulMorceau = troncons.length === 1
+
+  // L'EMPREINTE DIT SI LES TRONÇONS D'AVANT DÉCRIVENT ENCORE CETTE VIDÉO.
+  //
+  // Reprendre où l'on en était n'a de sens que si le plan n'a pas bougé. Un
+  // plan remonté, une taille de sous-titres changée, un passage en brouillon —
+  // et les tronçons gardés montreraient l'ancienne version, à cheval avec la
+  // nouvelle, sans que rien ne le dise. On en change de dossier, et les autres
+  // sont effacés.
+  const infosPlan = fs.statSync(v.plan)
+  const empreinte = creeHachage('sha1')
+    .update(`${infosPlan.mtimeMs}|${infosPlan.size}|${brouillon}|${bornes.join('-')}`)
+    .digest('hex')
+    .slice(0, 10)
+  const dossierTroncons = path.join(v.rendu, `.troncons-${empreinte}`)
+  if (!enUnSeulMorceau) {
+    for (const nom of fs.existsSync(v.rendu) ? fs.readdirSync(v.rendu) : []) {
+      if (nom.startsWith('.troncons-') && nom !== path.basename(dossierTroncons)) {
+        fs.rmSync(path.join(v.rendu, nom), { recursive: true, force: true })
       }
-    },
-  })
+    }
+    assureDossier(dossierTroncons)
+  }
+
+  /** Rend un intervalle d'images dans un fichier, et rien d'autre. */
+  const rendUnTroncon = async (de, a, cible, fils, avance) =>
+    renderMedia({
+      composition,
+      serveUrl: paquet,
+      codec: 'h264',
+      outputLocation: cible,
+      inputProps,
+      // Qualité maximale en sortie de Remotion : c'est un intermédiaire, il sera
+      // réencodé. Économiser ici ne se rattrape plus après.
+      crf: brouillon ? 28 : 16,
+      jpegQuality: brouillon ? 70 : 95,
+      scale: brouillon ? 0.5 : 1,
+      colorSpace: 'bt709',
+      frameRange: [de, a],
+      concurrency: fils > 0 ? fils : null,
+      chromiumOptions: { gl: 'angle' },
+      logLevel: 'error',
+      // LE SON NE SE DÉCOUPE PAS. IL SE REND D'UNE TRAITE, À CÔTÉ.
+      //
+      // Premier essai : tronçons sonores recollés avec
+      // `forSeamlessAacConcatenation`, l'option que Remotion expose
+      // exactement pour ça. Le fichier obtenu se décodait sans un défaut, aux
+      // bons codecs, avec ses 9 372 images — et le son DÉRIVAIT.
+      //
+      // Mesuré par corrélation croisée contre la voix d'origine : 40 ms à
+      // 0–20 s, 180 à 60–80, 300 à 150–170, 560 à 250–270, **680 ms** à
+      // 290–310. Environ 110 ms gagnés à chaque raccord — chaque tronçon sort
+      // 60,096 s puis 60,117 puis 60,139 pour 60,000 s de vidéo. À la fin, les
+      // sous-titres tombent deux tiers de seconde avant la voix, ce que le §9
+      // refuse nommément.
+      //
+      // Aligner la longueur d'un tronçon sur un nombre entier de trames AAC
+      // aurait été l'autre voie — 16 images à 30 i/s et 48 kHz. C'est de
+      // l'arithmétique qui dépend de la cadence, du taux d'échantillonnage et
+      // du codec, et elle n'explique que 21 ms des 110 mesurés. Un son rendu
+      // sans aucun raccord n'a rien à aligner : c'est juste par construction.
+      muted: !enUnSeulMorceau,
+      onProgress: ({ progress }) => avance(progress),
+    })
+
+  /** Le son de toute la vidéo, en une seule passe. */
+  const rendLeSon = async (cible, fils, avance) =>
+    renderMedia({
+      composition,
+      serveUrl: paquet,
+      codec: 'wav',
+      outputLocation: cible,
+      inputProps,
+      frameRange: bornes,
+      concurrency: fils > 0 ? fils : null,
+      chromiumOptions: { gl: 'angle' },
+      logLevel: 'error',
+      onProgress: ({ progress }) => avance(progress),
+    })
+
+  let dernier = -1
+  const dis = (fraction) => {
+    const pc = Math.round(fraction * 100)
+    if (pc !== dernier) {
+      dernier = pc
+      progression(pc, 100, 'rendu')
+    }
+  }
+
+  const morceaux = []
+  let imagesFaites = 0
+  for (const [i, [de, a]] of troncons.entries()) {
+    const combien = a - de + 1
+    const cible = enUnSeulMorceau
+      ? master
+      : path.join(dossierTroncons, `${String(i).padStart(3, '0')}.mp4`)
+
+    // DÉJÀ LÀ ET LISIBLE : ON NE LE REFAIT PAS. C'est tout l'intérêt de garder
+    // les tronçons — une reprise après un onglet tombé ne recalcule que ce qui
+    // manque. Un fichier tronqué, lui, ne compte pas : on le vérifie.
+    if (!enUnSeulMorceau && fs.existsSync(cible)) {
+      const bon = await sonde(cible).then((x) => x.dureeS > 0).catch(() => false)
+      if (bon) {
+        morceaux.push(cible)
+        imagesFaites += combien
+        dis(imagesFaites / totalImages)
+        continue
+      }
+      fs.rmSync(cible, { force: true })
+    }
+
+    let reste = RETENTES
+    let fils = concurrence
+    for (;;) {
+      try {
+        await rendUnTroncon(de, a, cible, fils, (p) =>
+          dis((imagesFaites + p * combien) / totalImages)
+        )
+        break
+      } catch (e) {
+        const texte = String(e?.message ?? e)
+        const recuperable = ONGLET_MORT.test(texte) || MIXAGE_ORPHELIN.test(texte)
+        fs.rmSync(cible, { force: true })
+        if (!recuperable || reste <= 0) {
+          if (!recuperable) throw e
+          throw new Error(
+            `L'onglet de rendu est tombé ${RETENTES + 1} fois de suite sur les images ` +
+              `${de} à ${a}.` +
+              String.fromCharCode(10) +
+              `  Ce n'est pas un problème de disque : Remotion nettoie son dossier ` +
+              `temporaire quand le navigateur tombe, et ffmpeg le dit à sa façon juste après.` +
+              String.fromCharCode(10) +
+              (enUnSeulMorceau
+                ? `  Reprends avec moins de fils : npm run rends -- ${slug} --threads=2`
+                : `  Ce qui est déjà rendu est gardé : relancer reprendra ici.`) +
+              String.fromCharCode(10) +
+              `  Le détail : ${texte.split(String.fromCharCode(10))[0]}`
+          )
+        }
+        reste--
+        // Moins d'onglets à la fois : si la mémoire était en cause, c'est le
+        // seul levier qui la rende. `concurrence` vaut 0 quand elle est
+        // automatique — on part alors du nombre de cœurs pour pouvoir diviser.
+        const avant = fils > 0 ? fils : Math.max(2, os.cpus().length)
+        fils = Math.max(1, Math.floor(avant / 2))
+        // ON REPREND TOUT SEUL. Un onglet qui tombe ne doit pas demander à
+        // quelqu'un de relancer le lendemain matin : c'est du calcul, pas une
+        // décision.
+        journal.attention(
+          `Onglet tombé — on reprend ${enUnSeulMorceau ? 'le rendu' : `les images ${de}–${a}`} ` +
+            `avec ${fils} fil(s) au lieu de ${avant}.`
+        )
+      }
+    }
+    morceaux.push(cible)
+    imagesFaites += combien
+  }
+
+  // ------------------------------------------------------- le recollage ------
+  //
+  // `-c copy` : aucun réencodage, donc aucune perte et quelques secondes au
+  // lieu de quelques minutes. C'est ce que `forSeamlessAacConcatenation` rend
+  // possible sur l'audio.
+  if (!enUnSeulMorceau) {
+    const liste = path.join(dossierTroncons, 'liste.txt')
+    fs.writeFileSync(
+      liste,
+      morceaux.map((m) => `file '${m.split('\\').join('/')}'`).join(String.fromCharCode(10)) +
+        String.fromCharCode(10),
+      'utf8'
+    )
+    await ffmpeg(['-f', 'concat', '-safe', '0', '-i', liste, '-c', 'copy', master])
+    journal.detail(`${morceaux.length} tronçons recollés sans réencodage.`)
+    fs.rmSync(dossierTroncons, { recursive: true, force: true })
+  }
 
   const tempsRendu = (Date.now() - debut) / 1000
   journal.ok(`Master rendu en ${duree(tempsRendu)}`)

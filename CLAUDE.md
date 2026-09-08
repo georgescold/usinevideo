@@ -2082,6 +2082,61 @@ de coupe, et les refaire coûterait une conversion payante pour rien.
 image n'est ni l'un ni l'autre. Cinq cents mégaoctets de clips de banque « mis de côté » sont cinq
 cents mégaoctets qu'on ne rouvrira jamais.
 
+### UN RENDU DÉCOUPÉ EN TRONÇONS DÉSYNCHRONISE LE SON
+
+Un onglet Chromium finit par tomber : le 8 septembre 2026, à **94 % d'un rendu
+de 9 372 images**, après vingt-huit minutes. Ce que l'écran a montré, c'est
+trente lignes de ffmpeg sur un dossier de mixage introuvable — donc on cherche
+un problème de disque. La vraie cause était deux lignes plus haut, noyée :
+`ProtocolError (Page.bringToFront): Target closed`. Remotion nettoie son
+temporaire en refermant le navigateur, et l'étape de mixage, qui vient après,
+trouve la place vide. **Ni le disque ni un plan précis** : 29 Go libres, 32 Go
+de mémoire, les 101 clips et la piste image passent `ffprobe`, et les 872
+dernières images se rendent seules sans un accroc. Ce qui use, c'est la DURÉE.
+
+Découper le rendu en tronçons d'une minute paraissait la réponse évidente : un
+onglet qui tombe ne coûte plus qu'une minute. **Le fichier obtenu est parfait
+sauf sur la seule chose qui compte ici.** 9 372 images exactes, décodage
+intégral sans un défaut, bons codecs — et le son DÉRIVE. Mesuré par corrélation
+croisée contre la voix d'origine :
+
+| | recollage naïf | après recoupe à la durée exacte |
+|---|---|---|
+| 0–20 s | 40 ms | 60 ms |
+| 150–170 s | 300 ms | — |
+| 250–270 s | 560 ms | — |
+| fin | **680 ms** | **240 ms** |
+
+Chaque tronçon sort ~96 ms de son de plus que d'image — 60,096 s de conteneur
+pour 60,000 s de vidéo — et le recollage empile les excédents.
+`forSeamlessAacConcatenation`, l'option que Remotion expose exactement pour ça,
+ne l'empêche pas. Recouper chaque tronçon à la durée exacte de son image divise
+par trois et laisse **48 ms par raccord**. Un sous-titre qui glisse d'un quart
+de seconde à la fin est précisément ce que le §9 refuse : on ne l'échange pas
+contre du temps de calcul.
+
+**LE DÉFAUT REND DONC D'UNE SEULE TRAITE**, et `--troncons` ouvre la découpe
+pour un contrôle, avec l'avertissement écrit dans l'aide. Une option qui ment
+est pire qu'une option absente.
+
+**CE QUI RESTE ACQUIS : UN ONGLET QUI TOMBE NE S'ARRÊTE PLUS LÀ.** La reprise
+vaut aussi pour le rendu d'une traite — deux essais, les fils divisés par deux à
+chaque fois, seul levier qui rende de la mémoire. C'est du calcul, pas une
+décision : ça ne doit pas attendre qu'on relance le lendemain matin.
+
+**LA VOIE JUSTE RESTE À MESURER** : tronçons muets et son rendu d'un bloc à
+côté, sans aucun raccord donc rien qui puisse dériver. `renderMedia` en
+`codec: 'wav'` bute sur « waiting for the page to render the React component
+failed: timeout 33000ms » — un réglage (`timeoutInMilliseconds`), pas un mur,
+mais quatre minutes après l'avoir relevé la première image de son n'était
+toujours pas rendue. À reprendre avec un chiffre, pas avec une intuition.
+
+**ET UN MASTER DOUTEUX NE RESTE PAS SOUS LE NOM DU MASTER.** Celui qui dérive a
+été renommé `-SON-DECALE-ne-pas-publier.mp4` : gardé, jamais détruit (§6), mais
+l'écran annonce « pas encore rendu » et propose de relancer. Le laisser en place
+aurait fait télécharger et publier un fichier désynchronisé — le pire des deux
+mondes, puisqu'il se lit parfaitement partout ailleurs.
+
 ### DEUX TRAVAUX DANS LA MÊME VIDÉO SE MARCHENT DESSUS
 
 Le 8 septembre 2026, un rendu est mort sur :
