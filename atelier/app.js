@@ -6962,7 +6962,27 @@ $('btnTexteDit').addEventListener('click', (ev) =>
     retires.length = 0
     etatEcriture = 'repos'
     await rechargeLeStudio()
-    const ancre = (derniereSortie(vue).match(/(\d+) % des mots ancrés/) ?? [])[1]
+    const sortie = derniereSortie(vue)
+    const ancre = (sortie.match(/(\d+) % des mots ancrés/) ?? [])[1]
+
+    // LES PASSAGES QUE L'AUDIO NE CONFIRME PAS SONT LA SEULE CHOSE QUI COMPTE.
+    //
+    // Si le texte a changé depuis l'enregistrement — deux phrases récrites, une
+    // coupe —, l'alignement impose l'ANCIENNE version avec l'aplomb d'un texte
+    // exact. Ces passages disent exactement où regarder ; les taire ferait de
+    // cette fonction un piège plutôt qu'un outil.
+    const divergences = [...sortie.matchAll(/^\s+« (.+) »$/gm)].map((m) => m[1])
+    if (divergences.length) {
+      annonce(
+        `Calé sur ton texte — ${appli.st?.mots?.length ?? 0} mots. ` +
+          `MAIS ${divergences.length} passage(s) ne se retrouvent pas dans l'audio : ` +
+          divergences.slice(0, 3).map((d) => `« ${d} »`).join(', ') +
+          (divergences.length > 3 ? `…` : '') +
+          ` — vérifie qu'ils sont à jour, sinon le transcript porte l'ancienne version.`,
+        'attention'
+      )
+      return
+    }
     annonce(
       `Calé sur ton texte — ${appli.st?.mots?.length ?? 0} mots exacts` +
         (ancre ? `, ${ancre} % ancrés sur l'audio.` : '.'),

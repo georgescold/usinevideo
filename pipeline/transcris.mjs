@@ -52,6 +52,61 @@ Sortie : videos/<slug>/04-transcript.json
 `
 )
 
+/**
+ * Les suites de mots du texte de référence que l'audio ne confirme pas.
+ *
+ * Même procédé que l'alignement — la plus longue sous-séquence commune — mais
+ * on garde ce qui reste EN DEHORS : les mots du texte qui n'ont trouvé aucun
+ * écho dans ce que whisper a entendu. Regroupés en passages, parce qu'un mot
+ * isolé ne dit rien alors que trois mots d'affilée désignent une phrase récrite.
+ *
+ * Deux mots suffisent : « alors une » contre « à l'heure une » est un homophone,
+ * et ce n'est PAS ce qu'on cherche ici — l'alignement le corrige justement bien.
+ * Trois mots d'affilée hors de l'audio, c'est un passage qui a changé.
+ */
+function passagesNonConfirmes(texteAttendu, entendus, minimum = 3) {
+  const nu = (s) =>
+    String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, '')
+  const mots = texteAttendu.replace(/\[[^\]]*\]/g, ' ').split(/\s+/).filter(Boolean)
+  const A = mots.map(nu)
+  const B = entendus.map((m) => nu(m.texte)).filter(Boolean)
+  const n = A.length, p = B.length
+  if (!n || !p) return []
+
+  // Table de la LCS, en avant : `dp[i][j]` = longueur commune de A[i…] et B[j…].
+  let suivante = new Uint32Array(p + 1)
+  const table = [suivante]
+  for (let i = n - 1; i >= 0; i--) {
+    const courante = new Uint32Array(p + 1)
+    for (let j = p - 1; j >= 0; j--) {
+      courante[j] = A[i] === B[j] ? suivante[j + 1] + 1 : Math.max(suivante[j], courante[j + 1])
+    }
+    table.unshift(courante)
+    suivante = courante
+  }
+
+  const passages = []
+  let courant = []
+  let i = 0, j = 0
+  while (i < n) {
+    if (j < p && A[i] === B[j]) {
+      if (courant.length >= minimum) passages.push(courant.join(' '))
+      courant = []
+      i++; j++
+    } else if (j < p && table[i + 1][j] >= table[i][j + 1]) {
+      courant.push(mots[i])
+      i++
+    } else if (j < p) {
+      j++
+    } else {
+      courant.push(mots[i])
+      i++
+    }
+  }
+  if (courant.length >= minimum) passages.push(courant.join(' '))
+  return passages
+}
+
 /** Les modèles que whisper.cpp sait télécharger. */
 const MODELES = ['tiny', 'base', 'small', 'medium', 'large-v3-turbo', 'large-v3', 'large-v2', 'large-v1']
 
@@ -237,6 +292,32 @@ await principal(async () => {
   const resultat = texteDuScript
     ? await aligne(fichier, texteDuScript, opts)
     : await transcris(fichier, opts)
+
+  // UN TEXTE DE RÉFÉRENCE PÉRIMÉ IMPOSE DES MOTS QUI NE SONT PAS DITS.
+  //
+  // C'est le danger de l'alignement, et il est silencieux : les mots viennent du
+  // texte, donc si le texte a changé depuis l'enregistrement — deux ou trois
+  // passages récrits, une phrase coupée —, le transcript affiche l'ANCIENNE
+  // version, avec l'aplomb d'un texte exact. Le taux d'ancrage baisse, mais il
+  // ne dit pas OÙ.
+  //
+  // On liste donc les passages du texte de référence que l'audio ne confirme
+  // pas. Ce sont exactement les endroits à vérifier : soit le texte est périmé,
+  // soit whisper ne les a pas entendus. Dans les deux cas, il faut regarder.
+  if (texteDuScript && Array.isArray(resultat.entendus)) {
+    const divergences = passagesNonConfirmes(texteDuScript, resultat.entendus)
+    if (divergences.length) {
+      journal.attention(
+        `${divergences.length} passage(s) de ton texte ne se retrouvent pas dans l'audio :`
+      )
+      for (const d of divergences.slice(0, 6)) journal.detail(`  « ${d} »`)
+      if (divergences.length > 6) journal.detail(`  … et ${divergences.length - 6} autres`)
+      journal.detail(
+        `Soit le texte a changé depuis l'enregistrement, soit ces mots n'ont pas été ` +
+          `entendus. Dans le premier cas, le transcript porte l'ANCIENNE version.`
+      )
+    }
+  }
 
   const donnees = {
     fichier: path.relative(CHEMINS.racine, fichier),

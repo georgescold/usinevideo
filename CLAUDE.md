@@ -1386,6 +1386,18 @@ déduit de rien. `01-script.json` ensuite : il peut avoir été **déduit du tra
 exact ; le calage de ces mots-là reste à une seconde près. Le taux est annoncé à chaque fois — c'est
 la seule chose qui dise si l'on peut se fier aux instants.
 
+**UN TEXTE DE RÉFÉRENCE PÉRIMÉ IMPOSE DES MOTS QUI NE SONT PAS DITS — et c'est le danger de cette
+fonction.** Il est silencieux par nature : les mots viennent du texte, donc si deux ou trois
+passages ont été récrits depuis l'enregistrement, le transcript affiche l'**ancienne version**, avec
+l'aplomb d'un texte exact. Le taux d'ancrage baisse, mais il ne dit pas OÙ.
+
+L'alignement liste donc les **passages du texte que l'audio ne confirme pas** — trois mots
+consécutifs au moins, parce qu'un ou deux mots isolés sont des homophones, que l'alignement corrige
+justement bien. Relevé en calant une VSL sur une version antérieure de son texte : « Ni leur
+banquier », « ni leur notaire », « 82 194 € », « 13 989 € », « pas les seules. », « papa et
+maman, ». Les deux premiers étaient des phrases récrites ; les montants, des mots que whisper ne
+capte pas. Dans les deux cas, il faut regarder — et l'écran le dit en jaune plutôt qu'en vert.
+
 **POURQUOI UN PASSAGE ENTIER PEUT ÊTRE SAUTÉ.** whisper emploie le texte déjà transcrit comme
 contexte de la fenêtre suivante, et peut juger une reprise redondante. Le « 82.194€ » de 24,7 s est
 bel et bien prononcé — voix à −12 dB, et whisper l'entend quand on lui donne l'extrait isolé — mais
