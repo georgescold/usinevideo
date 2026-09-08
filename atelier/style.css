@@ -1874,7 +1874,14 @@ dl.cout dd { margin: 0; font-size: 17px; font-weight: 700; font-variant-numeric:
 .plan-vignette .plan-cadre { width: 100%; }
 .plan-texte { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .plan-quand { font-size: 13px; color: var(--doux); font-variant-numeric: tabular-nums; }
-.plan-sur { font-size: 13px; overflow-wrap: anywhere; }
+/* Les mots dits pendant ce plan. Deux lignes au plus : au-delà, les vignettes
+   n'ont plus la même hauteur et la grille se met à onduler. Le texte entier
+   reste dans l'infobulle. */
+.plan-sur {
+  font-size: 13px; overflow-wrap: anywhere;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+  overflow: hidden;
+}
 .plan-refus { font-size: 12px; color: var(--attention); }
 
 /* LE PREMIER PLAN SE VOIT DANS LA GRILLE.

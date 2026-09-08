@@ -257,6 +257,15 @@ export const FENETRE_REEMPLOI = 10
  */
 export function cleDeMedia(x) {
   const t = String(x ?? '')
+  // UN IDENTIFIANT NU EST UN IDENTIFIANT PEXELS.
+  //
+  // `remplaceUnPlan` écrivait `media.id` brut là où le montage écrit la clé
+  // normalisée : le même plan portait donc « 8135022 » ou « pexels:8135022 »
+  // selon qu'il venait d'un montage ou d'un échange à la main. Toutes les
+  // comparaisons passaient à côté — le doublon dans la vidéo, la fenêtre de
+  // réemploi, et « reprendre des plans différents ». La source est corrigée ;
+  // cette ligne répare EN LECTURE les plans déjà écrits.
+  if (/^\d{5,}$/.test(t)) return `pexels:${t}`
   const n = t.match(/(?:video-files\/|videos\/|photos\/|-)(\d{5,})(?:[/\-]|$)/)
   return n ? `pexels:${n[1]}` : t
 }

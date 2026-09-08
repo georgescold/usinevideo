@@ -32,7 +32,7 @@ import {
 import { journal, duree, compact } from './lib/journal.mjs'
 import { litArgs, aide, drapeau, nombre, principal } from './lib/args.mjs'
 import * as M from './lib/montage.mjs'
-import { resoudBroll, FENETRE_REEMPLOI } from './lib/medias.mjs'
+import { resoudBroll, FENETRE_REEMPLOI, cleDeMedia } from './lib/medias.mjs'
 import { remplaceUnPlan } from './lib/plan-broll.mjs'
 import { sonde } from './lib/ffmpeg.mjs'
 import { transcris, corrigeParLeScript } from './lib/whisper.mjs'
@@ -743,6 +743,30 @@ await principal(async () => {
   //
   // Le compte tranche, et il ne coûte rien : les identifiants d'avant sont
   // déjà lus.
+  // DEUX FOIS LE MÊME PLAN DANS UNE VIDÉO : ON LE COMPTE, ET ON LE DIT.
+  //
+  // La déduplication existe à trois endroits — dans la vidéo, entre vidéos, et
+  // à l'échange à la main. Elle a été muette pendant qu'un défaut de clé la
+  // rendait inopérante à l'échange : le plan sortait avec des doublons et rien
+  // ne l'annonçait. Une ligne qui affirme le contraire quand tout va bien
+  // aurait montré le défaut le premier jour.
+  {
+    const cles = evenements
+      .filter((e) => e.type === 'broll' && e._mediaId)
+      .map((e) => cleDeMedia(e._mediaId))
+    const compte = new Map()
+    for (const k of cles) compte.set(k, (compte.get(k) ?? 0) + 1)
+    const doublons = [...compte.values()].filter((n) => n > 1).length
+    if (doublons) {
+      journal.attention(
+        `${doublons} média(s) employé(s) plusieurs fois dans cette vidéo — ` +
+          `un plan qui revient se lit comme une redite.`
+      )
+    } else if (cles.length) {
+      journal.detail(`${cles.length} plans, ${compte.size} médias distincts : aucun doublon.`)
+    }
+  }
+
   if (plansDAvant.length) {
     const apres = evenements.filter((e) => e.type === 'broll' && e._mediaId).map((e) => e._mediaId)
     const avant = new Set(plansDAvant)

@@ -2080,6 +2080,55 @@ de coupe, et les refaire coûterait une conversion payante pour rien.
 image n'est ni l'un ni l'autre. Cinq cents mégaoctets de clips de banque « mis de côté » sont cinq
 cents mégaoctets qu'on ne rouvrira jamais.
 
+### DEUX FOIS LE MÊME PLAN : UNE CLÉ ÉCRITE SOUS DEUX FORMES
+
+`resoudBroll` écrit `_mediaId = cleDeMedia(page ?? url ?? id)` — « pexels:8135022 ».
+`remplaceUnPlan`, lui, écrivait `media.id` **brut**. Le même plan portait donc
+deux formes selon qu'il venait d'un montage ou d'un échange à la main, et les
+trois déduplications qui lisent ce champ tombaient à côté :
+
+| ce qui devait être écarté | ce qui se passait |
+|---|---|
+| le même média deux fois dans UNE vidéo | `ailleurs.has(m.id)` contre un ensemble de clés normalisées — jamais vrai |
+| la fenêtre de réemploi des dix derniers montages | un plan échangé à la main n'y entrait pas |
+| « reprendre des plans différents » | les plans échangés à la main n'étaient pas écartés |
+
+Une seule incohérence, trois pannes silencieuses. La source est corrigée, les
+deux côtés de chaque comparaison passent par `cleDeMedia`, et **la fonction
+répare aussi en LECTURE** : un identifiant nu de cinq chiffres ou plus est un
+identifiant Pexels. Les plans déjà écrits redeviennent comparables sans qu'on
+ait à les réécrire.
+
+**ET LE MONTAGE AFFIRME MAINTENANT LE CONTRAIRE QUAND TOUT VA BIEN** :
+« 85 plans, 85 médias distincts : aucun doublon. » Une ligne qui ne dit rien
+tant que rien ne va mal ne se lit jamais ; celle-ci aurait montré le défaut le
+premier jour. Un doublon qui passerait quand même est annoncé en attention.
+
+### TROIS DÉFAUTS DE LA REVUE DES PLANS, ET LE MÊME REMÈDE DEUX FOIS
+
+**L'étiquette portait l'ancre du BLOC, pas les mots du plan.** Un bloc de script
+se découpe en plusieurs plans de coupe : trois vignettes à la file portaient
+« La maison où ils ». Ça se lit comme du texte affiché en double, et surtout ça
+n'apprend rien — la question devant un plan est « est-ce que ça va avec ce qui
+est dit À CET INSTANT ». Ce sont donc SES mots, et ils étaient déjà là : la
+couche de sous-titres de la vignette les affiche. Vérifié : 85 étiquettes,
+**zéro répétition consécutive** là où il y en avait des dizaines. Deux lignes au
+plus, le texte entier dans l'infobulle — au-delà, la grille se met à onduler.
+
+**Échanger un plan ramenait la page en haut.** La revue se reconstruit en entier
+— quatre-vingt-cinq vignettes — et le plan qu'on venait d'échanger sortait de
+l'écran. C'est le défaut de la colonne de texte, une troisième fois, et le même
+remède : on garde la position. Mesuré : 3 129 px avant, 3 129 px après.
+
+**Et le panneau agrandi gardait l'ancien clip.** L'échange se fait depuis
+« Agrandir » ; la grille se refaisait derrière, le panneau non — alors même que
+le fichier d'origine venait d'être supprimé. On voyait la même image, on
+concluait que le clic n'avait rien fait, et on recliquait : le second échange
+était bien réel et consommait un candidat de plus. D'où le « je suis obligé de
+m'y reprendre à deux fois », et les « 3 refus » qui s'accumulaient sur une
+vignette. Vérifié : `broll-41.mp4` → `broll-41-v1.mp4` dans le panneau, sans
+second clic.
+
 ### « C'EST EXACTEMENT LES MÊMES QU'AVANT » — LE MONTAGE LE DIT MAINTENANT
 
 Un remontage sans rien cocher redonne le **même** plan, et c'est correct :

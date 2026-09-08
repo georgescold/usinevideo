@@ -306,12 +306,17 @@ export async function remplaceUnPlan(
   // Ce que les AUTRES plans emploient déjà : un plan qui revient deux fois dans
   // la même vidéo se lit comme une redite, et c'est précisément ce qu'on est en
   // train de corriger.
+  // ON COMPARE DES CLÉS NORMALISÉES, DES DEUX CÔTÉS.
+  //
+  // Le montage écrit `cleDeMedia(page ?? url ?? id)` — « pexels:8135022 » — et
+  // cette fonction écrivait `media.id` brut. Le test tombait donc toujours à
+  // faux, et le même plan pouvait revenir deux fois dans la même vidéo.
   const ailleurs = new Set(
     plan.evenements
       .filter((e, i) => e.type === 'broll' && i !== vise.rang && e._mediaId)
-      .map((e) => e._mediaId)
+      .map((e) => cleDeMedia(e._mediaId))
   )
-  if (evenement._mediaId) ailleurs.add(evenement._mediaId)
+  if (evenement._mediaId) ailleurs.add(cleDeMedia(evenement._mediaId))
 
   // LE DOUBLON N'EST PAS DANS LE FICHIER, IL EST DANS LE REGARD.
   //
@@ -327,9 +332,8 @@ export async function remplaceUnPlan(
   // Ni ce que les autres plans de CETTE vidéo emploient, ni ce que les dix
   // derniers montages de la chaîne ont déjà montré.
   const recents = plansEmployesRecemment(slug).ids
-  const disponibles = tous.filter(
-    (m) => !ailleurs.has(m.id ?? m.url) && !recents.has(cleDeMedia(m.page ?? m.url ?? m.id))
-  )
+  const cle = (m) => cleDeMedia(m.page ?? m.url ?? m.id)
+  const disponibles = tous.filter((m) => !ailleurs.has(cle(m)) && !recents.has(cle(m)))
   const neufs = disponibles.filter((m) => (auteursAilleurs.get(m.auteur ?? '?') ?? 0) < 2)
   const restants = neufs.length ? neufs : disponibles
   if (!restants.length) {
@@ -363,7 +367,9 @@ export async function remplaceUnPlan(
   // part avec elle.
   evenement.ken = pris.media.type === 'image'
   evenement._essais = essais
-  evenement._mediaId = pris.media.id ?? pris.media.url
+  // La MÊME clé que le montage : sans quoi ce plan devient invisible aux
+  // trois déduplications qui la lisent.
+  evenement._mediaId = cleDeMedia(pris.media.page ?? pris.media.url ?? pris.media.id)
   evenement._auteur = pris.media.auteur ?? null
   await remesureLOuverture(vise, evenement, path.join(dossier, pris.nom))
 

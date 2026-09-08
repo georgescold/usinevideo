@@ -4083,8 +4083,18 @@ function arreteLaRevue() {
   if (planQuiJoue) { planQuiJoue.arrete(); planQuiJoue = null }
 }
 
-async function dessineLaRevueDesPlans() {
+/**
+ * ÉCHANGER UN PLAN NE DOIT PAS RAMENER LA PAGE EN HAUT.
+ *
+ * La revue se reconstruit en entier après un échange — quatre-vingt-cinq
+ * vignettes sur une VSL. La page repartait donc du début, et le plan qu'on
+ * venait d'échanger disparaissait de l'écran : on lisait ça comme « ça saute »
+ * et comme un clic qui n'avait rien fait. C'est le défaut de la colonne de
+ * texte, une troisième fois, et il se répare pareil : on garde la position.
+ */
+async function dessineLaRevueDesPlans({ gardeLaPosition = false } = {}) {
   const zone = $('revuePlans')
+  const defilement = gardeLaPosition ? window.scrollY : null
   arreteLaRevue()
   zone.replaceChildren()
   zone.hidden = true
@@ -4115,6 +4125,7 @@ async function dessineLaRevueDesPlans() {
       `sous-titres, et « Agrandir » l'ouvre en grand pour le juger.`
     zone.append(rien)
     zone.hidden = false
+    if (defilement !== null) window.scrollTo({ top: defilement })
     return
   }
 
@@ -4204,9 +4215,18 @@ async function dessineLaRevueDesPlans() {
     const texte = creer('div', 'plan-texte')
     const quand = creer('span', 'plan-quand')
     quand.textContent = `${chrono(p.debutMs)}${p.finMs != null ? ` → ${chrono(p.finMs)}` : ''}`
+    // CE QUI SE DIT PENDANT CE PLAN, PAS L'ANCRE DU BLOC.
+    //
+    // Un bloc de script se découpe en plusieurs plans, et l'ancre est la même
+    // pour tous : trois vignettes à la file portaient « La maison où ils » —
+    // du texte affiché en double, en apparence, et surtout une étiquette qui
+    // n'apprend rien. Or la question devant un plan est « est-ce que ça va
+    // avec ce qui est dit À CET INSTANT » : ce sont donc SES mots qu'il faut.
+    // Ils sont déjà là — la couche de sous-titres les affiche.
+    const dits = (p.mots ?? []).map((m) => m.texte).join(' ').trim()
     const sur = creer('span', 'plan-sur')
-    sur.textContent = p.ancre ? `« ${p.ancre} »` : (p.requete ?? '')
-    sur.title = p.requete ?? ''
+    sur.textContent = dits ? `« ${dits} »` : (p.ancre ? `« ${p.ancre} »` : (p.requete ?? ''))
+    sur.title = [dits, p.requete].filter(Boolean).join(String.fromCharCode(10))
     texte.append(quand, sur)
     if (p.essais) {
       const refus = creer('span', 'plan-refus')
@@ -4308,6 +4328,7 @@ async function dessineLaRevueDesPlans() {
     zone.append(carte)
   }
   zone.hidden = false
+  if (defilement !== null) window.scrollTo({ top: defilement })
 }
 
 async function remplaceUnPlanDeCoupe(numero, source = 'pexels') {
@@ -4325,7 +4346,19 @@ async function remplaceUnPlanDeCoupe(numero, source = 'pexels') {
     const vue = r.travail?.etat === 'encours' ? await suisLeTravail(r.travail) : r.travail
     if (vue?.etat === 'echec') { annonce(derniereErreur(vue), 'erreur'); return }
 
-    await dessineLaRevueDesPlans()
+    await dessineLaRevueDesPlans({ gardeLaPosition: true })
+    // ET LE PANNEAU OUVERT MONTRE LE NOUVEAU PLAN.
+    //
+    // L'échange se fait depuis « Agrandir » : la grille se refaisait derrière,
+    // le panneau gardait l'ancien clip — dont le fichier venait d'être
+    // supprimé. On voyait donc la même image qu'avant, on concluait que le
+    // clic n'avait rien fait, et on recliquait. D'où le « je suis obligé de
+    // m'y reprendre à deux fois » : le deuxième échange était bien réel, et
+    // il consommait un candidat de plus.
+    if (planOuvert) {
+      const frais = (appli.plansRevue ?? []).find((x) => x.numero === numero)
+      if (frais) ouvreLePlan(frais)
+    }
     // LE RAIL DOIT LE DIRE AVANT QU'ON ARRIVE À L'ÉTAPE 7.
     //
     // Le plan vient de changer : le master est périmé à la seconde même. Sans
