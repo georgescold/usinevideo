@@ -365,6 +365,19 @@ export async function resoudBroll(
     // Le repli reste la chaîne du disque : `broll --remplace` et les appels
     // directs n'ont pas d'option à passer.
     modele = null,
+    // LA FENÊTRE DE RÉEMPLOI SE RÈGLE, ELLE NE SE SUBIT PLUS.
+    //
+    // Écarter ce que les dix derniers montages ont montré évite la signature
+    // « chaîne à plans de banque » (§10). Mais la règle a un prix : sur une
+    // niche étroite, la banque rend toujours les mêmes candidats, et écarter
+    // les bons laisse les suivants — moins justes, moins nets. On se prive
+    // alors d'un plan qui allait bien pour éviter une répétition que personne
+    // n'aurait remarquée.
+    //
+    // C'est un arbitrage, donc un choix : 10 par défaut, 0 pour ne rien
+    // écarter. Ce que cette vidéo emploie déjà (`exclus`) n'en dépend pas —
+    // c'est « reprendre des plans différents », une autre demande.
+    fenetreReemploi = FENETRE_REEMPLOI,
   }
 ) {
   // TES PROPRES PLANS SE POSENT EN INSERT, PAS EN PLEIN ÉCRAN.
@@ -534,7 +547,7 @@ export async function resoudBroll(
   // `plansEmployesRecemment`. Le slug courant n'est pas dans le dossier des
   // événements : on le lit sur le premier plan à résoudre.
   const slugCourant = path.basename(path.resolve(dossier, '..', '..', '..'))
-  const recents = plansEmployesRecemment(slugCourant)
+  const recents = plansEmployesRecemment(slugCourant, { fenetre: fenetreReemploi })
   // CE QUE CETTE VIDÉO A DÉJÀ EMPLOYÉ, quand on demande expressément d'autres
   // plans.
   //
@@ -544,7 +557,11 @@ export async function resoudBroll(
   // mêmes : la banque rend ses candidats dans le même ordre, et rien ne les
   // écartait. On ne pouvait pas refuser une piste entière.
   for (const id of exclus) recents.ids.add(cleDeMedia(id))
-  if (recents.ids.size) {
+  if (!fenetreReemploi) {
+    // Le dire dans les deux sens : un écart qu'on a choisi reste un écart, et
+    // c'est la seule ligne qui expliquera un plan revu d'une vidéo à l'autre.
+    journal.detail(`Fenêtre de réemploi coupée : les plans des autres vidéos sont autorisés.`)
+  } else if (recents.ids.size) {
     journal.detail(
       `${recents.ids.size} plan(s) écarté(s) : déjà employés dans ${recents.videos.length} vidéo(s) récente(s).`
     )

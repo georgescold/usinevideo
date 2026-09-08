@@ -32,7 +32,7 @@ import {
 import { journal, duree, compact } from './lib/journal.mjs'
 import { litArgs, aide, drapeau, nombre, principal } from './lib/args.mjs'
 import * as M from './lib/montage.mjs'
-import { resoudBroll } from './lib/medias.mjs'
+import { resoudBroll, FENETRE_REEMPLOI } from './lib/medias.mjs'
 import { remplaceUnPlan } from './lib/plan-broll.mjs'
 import { sonde } from './lib/ffmpeg.mjs'
 import { transcris, corrigeParLeScript } from './lib/whisper.mjs'
@@ -79,6 +79,11 @@ npm run monte -- <slug> [options]
                           en obtenir d'autres. Sans lui, un remontage redonne
                           les mêmes : la banque rend ses candidats dans le
                           même ordre
+  --fenetre-reemploi=<n>  combien de montages récents de la CHAÎNE écartent
+                          leurs plans (défaut 10, 0 pour n'écarter personne).
+                          Sur une niche étroite, la banque rend toujours les
+                          mêmes candidats : écarter les bons laisse les moins
+                          justes
   --oui                   passe les seuils de confirmation
 
 Sortie : videos/<slug>/05-montage/plan.json
@@ -663,6 +668,23 @@ await principal(async () => {
         .filter((e) => e.type === 'broll' && e._mediaId)
         .map((e) => e._mediaId)
     : []
+
+  // COMBIEN DE MONTAGES RÉCENTS ÉCARTENT LEURS PLANS.
+  //
+  // Dix par défaut (§10). Zéro les autorise tous : c'est le bon réglage quand
+  // la niche est étroite et que la banque rend toujours les mêmes candidats —
+  // écarter les meilleurs laisse les suivants, moins justes, et on se prive
+  // d'un plan qui allait bien pour éviter une répétition qui ne se verrait
+  // pas. C'est un arbitrage : il se décide, il ne se subit pas.
+  const fenetreVoulue = options['fenetre-reemploi']
+  let fenetreReemploi = FENETRE_REEMPLOI
+  if (fenetreVoulue !== undefined) {
+    const n = Number(fenetreVoulue)
+    if (!Number.isInteger(n) || n < 0 || n > 100) {
+      throw new Error(`--fenetre-reemploi attend un entier de 0 à 100, pas « ${fenetreVoulue} ».`)
+    }
+    fenetreReemploi = n
+  }
   if (dejaEmployes.length) {
     journal.info(`${dejaEmployes.length} plan(s) déjà employés par cette vidéo seront écartés.`)
   }
@@ -696,6 +718,7 @@ await principal(async () => {
     aGenerer: choixIa,
     blocs: script?.blocs ?? [],
     exclus: dejaEmployes,
+    fenetreReemploi,
     // CELUI QU'ON VIENT D'ANNONCER, PAS CELUI DU FICHIER. `--modele-video=` est
     // posé dans `chaine` en mémoire vingt lignes plus haut ; sans ce passage,
     // la génération relisait `config/chaine.json` et employait le modèle de la

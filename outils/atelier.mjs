@@ -2583,6 +2583,14 @@ ${essai.raison}`
     // exactement les mêmes — la banque rend ses candidats dans le même ordre et
     // la vidéo courante est exclue de la fenêtre de réemploi.
     if (corps?.refaisPlans === true) args.push('--refais-plans')
+    // LA FENÊTRE DE RÉEMPLOI EST UN ARBITRAGE, DONC UNE CASE.
+    //
+    // Écarter ce que les dix derniers montages ont montré évite la signature
+    // « chaîne à plans de banque ». Sur une niche étroite, ça prive aussi des
+    // meilleurs candidats : la banque rend toujours les mêmes, et les suivants
+    // sont moins justes. Le §10 pose la règle, il ne dit pas qu'elle vaut sur
+    // toutes les niches.
+    if (corps?.sansFenetreReemploi === true) args.push('--fenetre-reemploi=0')
     let dollars = 0
     const quoi = []
     if (corps.ouvertureIa === true) {

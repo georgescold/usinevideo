@@ -4642,6 +4642,7 @@ $('btnPlans').addEventListener('click', async () => {
         plansIa: modeDeLaVideo() === 'mixte' ? budgetIa() : 0,
         modeleVideo: $('planModeleVideo').value || undefined,
         refaisPlans: $('estRefaisPlans').checked,
+        sansFenetreReemploi: $('estSansFenetre').checked,
       }),
       { refus: `Montage annulé — rien n'a été facturé.` }
     )

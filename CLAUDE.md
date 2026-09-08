@@ -631,6 +631,7 @@ npm run broll -- <slug> --plans        # les plans de coupe du montage, un par u
 npm run broll -- <slug> --lisibilite   # les plans dont le fond avalerait les sous-titres
 npm run broll -- <slug> --efface-plans # détruit la piste image, garde les sous-titres
 npm run monte -- <slug> --refais-plans # écarte les plans déjà employés, pour en avoir d'autres
+npm run monte -- <slug> --fenetre-reemploi=0   # autorise les plans des autres vidéos
 npm run broll -- <slug> --remplace=3   # en échange un contre un autre candidat
 npm run studio -- <slug>     # aperçu, pour contrôler avant de rendre
 npm run initialise           # l'identité de la chaîne : nom, formats, palette
@@ -2076,6 +2077,45 @@ de coupe, et les refaire coûterait une conversion payante pour rien.
 **On détruit vraiment, on n'archive pas.** Le §6 protège les rushes et les rendus ; une piste
 image n'est ni l'un ni l'autre. Cinq cents mégaoctets de clips de banque « mis de côté » sont cinq
 cents mégaoctets qu'on ne rouvrira jamais.
+
+### La fenêtre de réemploi est un ARBITRAGE, pas une loi
+
+La règle 4 du §10 — un plan de banque ne resservira pas avant dix vidéos — évite
+la signature « chaîne à plans de banque ». Elle a un prix, et il se mesure :
+relevé le 8 septembre 2026 sur une chaîne de **deux** montages seulement,
+**61 plans écartés**. Sur une niche étroite, la banque rend toujours les mêmes
+candidats : écarter les meilleurs laisse les suivants — moins justes, moins
+nets. On se prive alors d'un plan qui allait bien pour éviter une répétition que
+personne n'aurait remarquée.
+
+C'est donc un choix, et il se fait là où la piste image se fabrique :
+
+```bash
+npm run monte -- <slug> --fenetre-reemploi=0    # aucune vidéo n'écarte ses plans
+npm run monte -- <slug> --fenetre-reemploi=3    # seulement les trois derniers
+```
+
+À l'étape 6, la case **« Autoriser les plans des autres vidéos »**, sous
+« Reprendre des plans différents ». Elle est décochée par défaut : la règle reste
+la règle, on la lève quand on constate que la banque n'a plus rien de bon.
+
+**Les deux cases ne demandent pas la même chose, et il ne faut pas les
+confondre :**
+
+| case | ce qu'elle écarte |
+|---|---|
+| Reprendre des plans différents | ce que **cette** vidéo emploie déjà |
+| Autoriser les plans des autres vidéos | lève l'écart des **autres** montages |
+
+**LE JOURNAL LE DIT DANS LES DEUX SENS.** Il n'annonçait les exclusions que
+lorsqu'il y en avait ; une fenêtre coupée passait en silence, et c'est justement
+la ligne qui expliquerait un plan revu d'une vidéo à l'autre trois semaines plus
+tard. Vérifié : « 61 plan(s) écarté(s) : déjà employés dans 2 vidéo(s)
+récente(s) » par défaut, « Fenêtre de réemploi coupée : les plans des autres
+vidéos sont autorisés » à zéro.
+
+**`broll --remplace` garde le défaut de la chaîne** : c'est un échange à
+l'unité, il n'a pas d'option à passer et n'a pas de raison d'en avoir une.
 
 ### Un remontage redonnait les MÊMES plans
 
