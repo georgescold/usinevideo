@@ -6118,7 +6118,7 @@ function dessineLeTexte() {
   }
 
   // La hauteur se règle après insertion : `scrollHeight` vaut zéro hors du DOM.
-  for (const c of zone.querySelectorAll('.texte-st')) hauteurAuContenu(c)
+  hauteursAuContenu(zone.querySelectorAll('.texte-st'))
   filtreLeTexte()
   majPiedDeTexte()
 
@@ -6148,6 +6148,32 @@ function hauteurAuContenu(champ) {
   champ.style.height = `${champ.scrollHeight + 2}px`
 }
 
+/**
+ * La même chose sur TOUS les champs — en deux passes, et c'est tout l'écart.
+ *
+ * DEUX CENTS RECALCULS DE MISE EN PAGE FORCÉS, EN SÉRIE.
+ *
+ * `hauteurAuContenu` écrit `height: auto` puis LIT `scrollHeight` : lire une
+ * mesure après avoir écrit un style oblige le navigateur à recalculer la page
+ * sur-le-champ. Un champ, deux recalculs. Appelée dans une boucle sur les deux
+ * cents lignes d'une prise, elle en demandait quatre cents — d'affilée, en
+ * bloquant le fil. C'est le gel qu'on sentait en traînant « mots par ligne »,
+ * et il revenait après chaque enregistrement de correction.
+ *
+ * Séparer les écritures des lectures ramène le tout à deux recalculs : on pose
+ * `auto` partout, on lit toutes les hauteurs, on les écrit toutes. Le résultat
+ * est identique au pixel — seul l'ordre change.
+ */
+function hauteursAuContenu(champs) {
+  const liste = [...champs]
+  if (!liste.length) return
+  for (const c of liste) c.style.height = 'auto'
+  // Une seule lecture groupée : le recalcul a lieu au premier `scrollHeight`,
+  // les suivants tapent dans le même résultat puisque rien n'a été réécrit.
+  const hauteurs = liste.map((c) => c.scrollHeight + 2)
+  liste.forEach((c, i) => { c.style.height = `${hauteurs[i]}px` })
+}
+
 /** Le filtre de recherche : on cache les lignes, on ne redessine pas. */
 function filtreLeTexte() {
   const q = ($('chercheTexte').value ?? '').trim().toLowerCase()
@@ -6171,6 +6197,8 @@ function filtreLeTexte() {
  * qui disparaît toute seule laisse à nouveau devant un écran muet.
  */
 let etatEcriture = 'repos'
+/** Combien de lignes ont vu leurs instants répartis au dernier enregistrement. */
+let lignesRecalees = 0
 
 function majPiedDeTexte() {
   const n = corrections.size
@@ -6182,7 +6210,9 @@ function majPiedDeTexte() {
   } else if (n) {
     note.textContent = `${n} ligne${n > 1 ? 's' : ''} récrite${n > 1 ? 's' : ''} — enregistrement dans un instant`
   } else if (etatEcriture === 'enregistre') {
-    note.textContent = `✓ Enregistré`
+    note.textContent = lignesRecalees
+      ? `✓ Enregistré — ${lignesRecalees} ligne(s) recalées`
+      : `✓ Enregistré`
   } else {
     note.textContent = ''
   }
@@ -6417,13 +6447,19 @@ async function corrigeVraiment() {
     dessineLeRail()
   }
 
-  const repartis = (r.resultat?.changements ?? []).filter((c) => c.instantsRepartis).length
-  annonce(
-    repartis
-      ? `Corrections enregistrées — ${repartis} ligne(s) recalées.`
-      : `Corrections enregistrées.`,
-    'ok'
-  )
+  // LE SUCCÈS NE PASSE PLUS PAR LE BANDEAU, ET C'EST UNE QUESTION DE FRÉQUENCE.
+  //
+  // Le bandeau est fait pour ce qui arrive une fois : un rendu fini, une voix
+  // retenue. Depuis que l'écriture part après chaque frappe, « Corrections
+  // enregistrées » s'affichait toutes les quelques secondes — et le pied de
+  // colonne disait déjà la même chose, à trente centimètres de l'endroit où
+  // l'on regarde. Deux messages pour un fait, dont le plus voyant est le plus
+  // loin des yeux.
+  //
+  // Ce qui mérite d'être dit, c'est le RECALAGE : une ligne dont le nombre de
+  // mots a changé voit ses instants répartis, et le surlignage y devient
+  // approximatif. Ça se dit là où on lit, pas en haut de l'écran.
+  lignesRecalees = (r.resultat?.changements ?? []).filter((c) => c.instantsRepartis).length
 }
 
 /**

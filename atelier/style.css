@@ -1380,10 +1380,23 @@ dl.cout dd { margin: 0; font-size: 17px; font-weight: 700; font-variant-numeric:
  * Il s'affichait en tête du DOCUMENT : dès qu'on avait déroulé l'écran, un
  * échec s'annonçait hors champ. Et il poussait toute la page vers le bas à
  * chaque apparition.
+ *
+ * `sticky` A RÉGLÉ LE HORS-CHAMP, PAS LA POUSSÉE — et c'est la moitié qu'on
+ * voit. Un élément collant reste DANS LE FLUX : il occupe sa hauteur, donc
+ * chaque apparition décalait la page de soixante pixels, et chaque disparition
+ * la remontait. Sur l'écran des sous-titres, où un message part à chaque
+ * enregistrement, l'écran passait son temps à sauter.
+ *
+ * `fixed` le sort du flux : il ne pousse plus rien, et il reste sous l'en-tête
+ * quel que soit le défilement — ce que `sticky` ne faisait qu'une fois atteint.
+ * La contrepartie est qu'il recouvre le haut du contenu pendant quelques
+ * secondes ; c'est le bon échange contre deux sauts de mise en page par
+ * message.
  */
 .bandeau {
-  position: sticky; top: calc(var(--h-entete) + 2px); z-index: 30;
-  margin: 0 32px;
+  position: fixed; top: calc(var(--h-entete) + 10px); z-index: 30;
+  left: 32px; right: 32px; margin: 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .45);
   animation: bandeauEntre var(--t-moyen) var(--ressort) both;
 }
 @keyframes bandeauEntre {
