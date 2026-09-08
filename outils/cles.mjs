@@ -181,13 +181,19 @@ function etat() {
  * — et le travail restait « encours » dans l'atelier, où il bloquait la bascule
  * de chaîne. Relevé le 8 septembre 2026 : 36 s et toujours rien.
  *
- * Six secondes suffisent largement : mesuré le même jour, fish 0,54 s, apify
- * 0,58 s, elevenlabs 1,42 s, fal 6,39 s — fal est le lent, et c'est justement
- * celui qu'on ne peut pas laisser décider du temps des trois autres. Au-delà,
- * on dit que le solde est indisponible : c'est une information juste, et elle
- * arrive tout de suite.
+ * ELLE EST GÉNÉREUSE, ET SIX SECONDES NE L'ÉTAIENT PAS. Premier essai à 6 s,
+ * calé sur une mesure unique de fal à 6,39 s : trois appels de suite ont donné
+ * 2,40 s, 5,70 s et 8,83 s. Le solde fal disparaissait donc de l'en-tête une
+ * fois sur trois, pour un service qui répondait très bien. Une échéance sert à
+ * couper ce qui ne répond JAMAIS, pas à faire la course avec un service lent :
+ * on prend vingt secondes, loin au-dessus du pire relevé et loin en dessous des
+ * minutes qu'on cherche à éviter. Le garde de bascule, lui, ne l'attend plus
+ * du tout — voir `pourLEcran` dans l'atelier.
+ *
+ * Mesuré le 8 septembre 2026 : fish 0,54 s, apify 0,58 s, elevenlabs 1,42 s,
+ * fal 2,4 à 8,8 s.
  */
-const ECHEANCE_SOLDE_MS = 6000
+const ECHEANCE_SOLDE_MS = 20_000
 
 /**
  * ON REND LA MAIN, MÊME SI UN SERVICE NE RÉPOND JAMAIS.

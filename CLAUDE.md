@@ -230,11 +230,13 @@ paragraphe ci-dessus repose sur « ce que l'atelier lance de lui-même dure des 
 Trois défauts se cumulaient, et chacun se répare à sa place :
 
 1. **`cles.mjs --quotas` n'avait AUCUNE échéance.** `soldeFal` et `credit` appellent `fetch`
-   nu, sans temps mort ; `demande()` en accorde 120 s par essai, trois fois. Un solde a
-   maintenant **six secondes** — mesuré le même jour : fish 0,54 s, apify 0,58 s, elevenlabs
-   1,42 s, fal 6,39 s. fal est le lent, et c'est justement celui qu'on ne peut pas laisser
-   décider du temps des trois autres. Au-delà, « solde indisponible » : c'est juste, et ça
-   arrive tout de suite.
+   nu, sans temps mort ; `demande()` en accorde 120 s par essai, trois fois. Un solde en a
+   maintenant une — et elle est **généreuse**, ce que le premier essai n'était pas. Posée à
+   6 s sur une mesure unique de fal à 6,39 s, elle a fait disparaître le solde fal de
+   l'en-tête une fois sur trois : trois appels de suite donnent **2,40 s, 5,70 s et 8,83 s**.
+   Une échéance coupe ce qui ne répond JAMAIS, elle ne fait pas la course avec un service
+   lent. **Vingt secondes**, loin au-dessus du pire relevé et loin en dessous des minutes
+   qu'on évite. Au-delà, « solde indisponible » : c'est juste, et ça arrive tout de suite.
 2. **L'échéance ne rend pas la main : un `fetch` en vol tient le processus en vie.** La sortie
    tombait immédiatement et le processus s'attardait 2,3 s — indéfiniment si le service ne
    répondait jamais, donc le travail restait « encours ». On sort explicitement une fois la
