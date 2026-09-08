@@ -371,7 +371,7 @@ function verifieArguments(args) {
   return args
 }
 
-function lanceTravail(args, { etiquette = null, entree = null, cwd = null } = {}) {
+function lanceTravail(args, { etiquette = null, entree = null, cwd = null, pourLEcran = false } = {}) {
   verifieArguments(args)
   purgeLesTravaux()
 
@@ -387,6 +387,14 @@ function lanceTravail(args, { etiquette = null, entree = null, cwd = null } = {}
     resultat: null,
     debut: new Date().toISOString(),
     fin: null,
+    // CE QUE L'ÉCRAN LANCE POUR LUI-MÊME NE BLOQUE PAS CELUI QUI REGARDE.
+    //
+    // Les soldes se relisent tout seuls à chaque retour dans la fenêtre. Ce
+    // sont des lectures : elles n'écrivent rien, et leur résultat concerne la
+    // chaîne qu'on est en train de QUITTER. Les compter dans le garde de
+    // bascule enfermait dans la chaîne courante — vu le 8 septembre 2026,
+    // « 1 travail(aux) écrivent encore » sur un `cles.mjs --quotas` de 36 s.
+    pourLEcran,
     _enfant: null,
     _attentes: [],
   }
@@ -549,9 +557,19 @@ function vueTravail(t, depuis = 0) {
 }
 
 /** Lance, attend, et refuse d'aller plus loin si la commande a échoué. */
-async function lanceEtAttends(args, { msMax = 120_000, etiquette = null, entree = null, cwd = null } = {}) {
-  const t = lanceTravail(args, { etiquette, entree, cwd })
+async function lanceEtAttends(args, { msMax = 120_000, etiquette = null, entree = null, cwd = null, pourLEcran = false } = {}) {
+  const t = lanceTravail(args, { etiquette, entree, cwd, pourLEcran })
   await attendTravail(t, msMax)
+  // UNE ATTENTE DÉPASSÉE TUE L'ENFANT — MAIS SEULEMENT CELUI DE L'ÉCRAN.
+  //
+  // `attendTravail` rendait la main sans rien arrêter : un appel réseau qui
+  // ne répond jamais laissait le travail « encours » POUR TOUJOURS. On ne
+  // peut pas généraliser — un montage passe par le même chemin avec trois
+  // minutes d'attente, et le tuer parce que la requête a renoncé serait
+  // détruire du travail. Une lecture de soldes, elle, ne perd rien.
+  if (pourLEcran && t.etat === 'encours') {
+    try { t._enfant?.kill() } catch { /* déjà parti */ }
+  }
   return t
 }
 
@@ -1135,6 +1153,7 @@ async function routeApi(req, res, url, segments) {
   if (est('GET', 'api', 'quotas')) {
     const t = await lanceEtAttends([scriptOutil('cles.mjs'), '--quotas', '--json'], {
       msMax: 30_000,
+      pourLEcran: true,
     })
     return repondJson(res, 200, travailFini(t))
   }
@@ -1385,7 +1404,25 @@ async function routeApi(req, res, url, segments) {
     // Et le refus NOMME le travail. « 1 travail(aux) en cours » n'apprenait
     // rien : ni quoi, ni depuis quand, ni s'il fallait attendre ou aller le
     // tuer.
-    const restants = () => [...travaux.values()].filter((t) => t.etat === 'encours')
+    // ET ON NE COMPTE PAS CE QUE L'ÉCRAN A LANCÉ POUR LUI-MÊME.
+    //
+    // L'attente de cinq secondes reposait sur une hypothèse : « ce que
+    // l'atelier lance de lui-même dure des secondes ». Elle est fausse dès
+    // qu'un service ne répond pas — `cles.mjs --quotas` n'avait AUCUNE
+    // échéance, et un solde qui pend laissait le travail « encours » sans
+    // fin. Le 8 septembre 2026, il bloquait la bascule depuis 36 s, et il
+    // l'aurait bloquée indéfiniment : on ne pouvait plus changer de chaîne.
+    //
+    // Ce n'est pas le classement en « lit » et « écrit » qui avait été
+    // refusé — celui-là demandait d'auditer quarante appels. Ici l'écran sait
+    // exactement ce qu'il a lancé de son propre chef, à un seul endroit, et
+    // ce résultat concerne la chaîne qu'on QUITTE : il n'a rien à protéger.
+    for (const t of travaux.values()) {
+      if (t.pourLEcran && t.etat === 'encours') {
+        try { t._enfant?.kill() } catch { /* déjà parti */ }
+      }
+    }
+    const restants = () => [...travaux.values()].filter((t) => t.etat === 'encours' && !t.pourLEcran)
     const limite = Date.now() + 5000
     let enCours = restants()
     while (enCours.length && Date.now() < limite) {

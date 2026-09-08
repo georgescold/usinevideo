@@ -172,13 +172,56 @@ function etat() {
  * `Promise.all` ramène le total au plus lent des quatre. Chaque branche garde
  * son propre `try` : un service qui tombe ne doit pas emporter les trois autres.
  */
+/**
+ * UN SOLDE A UNE ÉCHÉANCE. C'EST UNE COURTOISIE, PAS UNE ÉTAPE.
+ *
+ * Aucune des quatre branches n'en avait : `soldeFal` et `credit` appellent
+ * `fetch` nu, sans temps mort, et `demande()` en accorde 120 s par essai, trois
+ * fois. Un service qui ne répond pas figeait donc la commande pour des minutes
+ * — et le travail restait « encours » dans l'atelier, où il bloquait la bascule
+ * de chaîne. Relevé le 8 septembre 2026 : 36 s et toujours rien.
+ *
+ * Six secondes suffisent largement : mesuré le même jour, fish 0,54 s, apify
+ * 0,58 s, elevenlabs 1,42 s, fal 6,39 s — fal est le lent, et c'est justement
+ * celui qu'on ne peut pas laisser décider du temps des trois autres. Au-delà,
+ * on dit que le solde est indisponible : c'est une information juste, et elle
+ * arrive tout de suite.
+ */
+const ECHEANCE_SOLDE_MS = 6000
+
+/**
+ * ON REND LA MAIN, MÊME SI UN SERVICE NE RÉPOND JAMAIS.
+ *
+ * L'échéance rend une réponse tout de suite, mais elle n'annule pas la
+ * requête : un `fetch` en vol tient le processus en vie, et le travail restait
+ * « encours » côté atelier — c'est-à-dire exactement le blocage qu'on répare.
+ * Mesuré : la sortie tombe immédiatement, le processus s'attardait 2,3 s de
+ * plus, et indéfiniment si le service ne répond pas du tout.
+ *
+ * On sort donc explicitement, une fois la sortie ÉCRITE — le rappel de
+ * `write` ne se déclenche qu'après le vidage, et les écritures sont ordonnées,
+ * donc rien n'est tronqué. Lire des soldes n'a rien d'autre à finir.
+ */
+const rendLaMain = () => process.stdout.write('', () => process.exit(0))
+
+const avantEcheance = (promesse, service) =>
+  Promise.race([
+    promesse,
+    new Promise((_, rejette) =>
+      setTimeout(
+        () => rejette(new Error(`${service} n'a pas répondu en ${ECHEANCE_SOLDE_MS / 1000} s`)),
+        ECHEANCE_SOLDE_MS
+      ).unref()
+    ),
+  ])
+
 async function quotas() {
   const sortie = {}
 
   const apify = (async () => {
   try {
     const { etatPool } = await import('../pipeline/lib/apify.mjs')
-    const p = await etatPool()
+    const p = await avantEcheance(etatPool(), 'apify')
     sortie.apify = {
       resume: `${p.total.toFixed(2)} $ sur ${p.vivantes} clé${p.vivantes > 1 ? 's' : ''}`,
       detail: `≈ ${p.videosPossibles} vidéos avec transcript`,
@@ -197,7 +240,7 @@ async function quotas() {
   const elevenlabs = (async () => {
   try {
     const el = await import('../pipeline/lib/elevenlabs.mjs')
-    const p = await el.etatPool()
+    const p = await avantEcheance(el.etatPool(), 'elevenlabs')
     sortie.elevenlabs = {
       resume: `${p.minutesTotales.toFixed(1)} min de conversion`,
       detail: p.aDuCommercial
@@ -228,7 +271,7 @@ async function quotas() {
   const fal = (async () => {
   try {
     const { soldeFal } = await import('./fal-video.mjs')
-    const reste = await soldeFal()
+    const reste = await avantEcheance(soldeFal(), 'fal')
     sortie.fal =
       reste === null
         ? { erreur: `solde indisponible` }
@@ -262,7 +305,7 @@ async function quotas() {
       sortie.fish = { erreur: `aucune cle fish` }
     } else {
       const { credit } = await import('../pipeline/lib/fish.mjs')
-      const reste = await credit()
+      const reste = await avantEcheance(credit(), 'fish')
       sortie.fish =
         reste === null
           ? { erreur: `solde indisponible` }
@@ -486,6 +529,7 @@ await principal(async () => {
 
   if (enJson) {
     console.log(JSON.stringify({ services, quotas: q }, null, 2))
+    if (q) rendLaMain()
     return
   }
 
@@ -515,4 +559,5 @@ await principal(async () => {
     console.log('')
     journal.detail(`Ajoute --quotas pour interroger les quotas réels.`)
   }
+  if (q) rendLaMain()
 })

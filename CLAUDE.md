@@ -221,6 +221,40 @@ donc cinq secondes, et on ne refuse que ce qui tourne encore après. Et le refus
 travail et son âge : « 1 travail(aux) en cours » n'apprenait ni quoi, ni depuis quand, ni s'il
 fallait attendre ou aller le tuer.
 
+**L'ATTENTE NE SUFFISAIT PAS, ET LE 8 SEPTEMBRE 2026 ELLE A ENFERMÉ.** « On reste ici : 1
+travail(aux) écrivent encore dans cette chaîne · `cles.mjs --quotas` (depuis 36 s) » — et il
+n'y avait aucune issue : le bouton « Ouvrir » refusait, indéfiniment. Le raisonnement du
+paragraphe ci-dessus repose sur « ce que l'atelier lance de lui-même dure des secondes », et
+**cette hypothèse est fausse dès qu'un service ne répond pas.**
+
+Trois défauts se cumulaient, et chacun se répare à sa place :
+
+1. **`cles.mjs --quotas` n'avait AUCUNE échéance.** `soldeFal` et `credit` appellent `fetch`
+   nu, sans temps mort ; `demande()` en accorde 120 s par essai, trois fois. Un solde a
+   maintenant **six secondes** — mesuré le même jour : fish 0,54 s, apify 0,58 s, elevenlabs
+   1,42 s, fal 6,39 s. fal est le lent, et c'est justement celui qu'on ne peut pas laisser
+   décider du temps des trois autres. Au-delà, « solde indisponible » : c'est juste, et ça
+   arrive tout de suite.
+2. **L'échéance ne rend pas la main : un `fetch` en vol tient le processus en vie.** La sortie
+   tombait immédiatement et le processus s'attardait 2,3 s — indéfiniment si le service ne
+   répondait jamais, donc le travail restait « encours ». On sort explicitement une fois la
+   sortie **écrite** (le rappel de `write` attend le vidage, et les écritures sont ordonnées :
+   rien n'est tronqué). Mesuré : 2,29 s → **0,26 s**.
+3. **Ce que l'écran lance pour LUI-MÊME ne compte plus dans le garde.** Ce n'est pas le
+   classement en « lit » et « écrit » qui revient par la fenêtre — celui-là demandait quarante
+   audits. L'atelier sait exactement ce qu'il a lancé de son propre chef, **à un seul endroit**,
+   et ce résultat concerne la chaîne qu'on QUITTE : `pourLEcran` le marque, le garde l'ignore
+   et l'arrête avant de basculer.
+
+**Une attente dépassée tue l'enfant — mais seulement celui de l'écran.** `attendTravail`
+rendait la main sans rien arrêter, d'où un travail immortel. On ne peut pas généraliser : un
+montage passe par le même chemin avec trois minutes d'attente, et le tuer parce que la requête
+a renoncé serait détruire du travail. Une lecture de soldes, elle, ne perd rien.
+
+Vérifié sur le geste exact, avec un solde **qui ne répond jamais** : bascule acceptée en
+**967 ms** au lieu d'un refus permanent. Et sans panne, le clic ne l'attend plus du tout —
+354 ms au lieu des 2,3 s de la lecture en cours.
+
 ### Une chaîne n'hérite de RIEN, pas même de l'esthétique
 
 `nouvelle-chaine` vidait l'identité, le produit, l'avatar, la voix et le Drive, et laissait passer
