@@ -1028,6 +1028,17 @@
             <p class="note" id="noteCorrections">
               Clique un mot pour le corriger ; l'aperçu saute à cet instant.
             </p>
+            <!-- LE DÉCOUPAGE DE CETTE COLONNE EST FIGÉ PENDANT QU'ON ÉDITE.
+                 Sans ça, écrire « 82.194 euros » là où il y avait « 82 » faisait
+                 passer la ligne de cinq mots à sept : elle se scindait, une
+                 ligne apparaissait en dessous, et tout descendait d'un cran. Ce
+                 qu'on écrit dans une ligne doit rester dans cette ligne.
+                 Le rendu, lui, repagine. Ce bouton n'apparaît que quand les deux
+                 ont divergé, et il rend la colonne à ce que la vidéo affichera.
+                 L'aperçu, à gauche, montre la vérité en permanence. -->
+            <button type="button" class="bouton discret" id="btnRedecoupe" hidden>
+              Redécouper comme le rendu
+            </button>
             <button type="button" class="bouton primaire" id="btnCorrige" disabled>
               Enregistrer
             </button>

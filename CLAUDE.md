@@ -1300,6 +1300,44 @@ deux sur le disque et dans le plan. Une frappe **sans jamais quitter le champ** 
 aucune animation rejouée, panneau jamais masqué, aperçu resté à 0:34, colonne restée à 700 px, focus
 et position du curseur rendus.
 
+### CE QU'ON ÉCRIT DANS UNE LIGNE RESTE DANS CETTE LIGNE
+
+La colonne re-paginait à chaque relecture des mots. Or `pagine()` coupe sur le nombre de mots, la
+ponctuation et les silences : écrire « 82.194 euros » là où il y avait « 82 » fait passer la ligne
+de cinq mots à sept, et elle **se scinde**. On tapait un chiffre, une ligne apparaissait en dessous
+avec la fin de sa propre phrase, et tout ce qui suivait descendait d'un cran. C'est le contraire de
+ce qu'on attend d'une zone de texte.
+
+**On fige les FENÊTRES DE TEMPS, pas les index.** Une correction qui change le nombre de mots
+décale tous les index ; `[debutMs, finMs]` de chaque ligne, non — `pipeline/texte.mjs` conserve
+explicitement les bornes de toute plage récrite. C'est le mécanisme qui sert déjà à patcher
+`plan.json` sans le repaginer. Un mot qui ne tombe dans aucune fenêtre forme sa propre ligne :
+c'est le cas d'une insertion dans un silence, et une ligne neuve est bien ce qu'on veut là.
+
+**LES BORNES SE TOUCHENT, ET UN TEST D'INTERVALLE S'Y TROMPE.** La fin d'une ligne est le `finMs`
+de son dernier mot, et le mot suivant commence souvent **exactement** là — `repartis` pose la borne
+d'un côté et reprend de l'autre. Un test `debutMs <= fenetre.finMs` happait donc le premier mot de
+la ligne suivante dans la précédente, et le découpage « figé » ne redonnait pas celui qu'on venait
+de figer. On avance un curseur dans des fenêtres ordonnées : un mot appartient à la dernière
+fenêtre ouverte avant lui.
+
+**LA COLONNE NE SE RECONSTRUIT PLUS SOUS LES DOIGTS.** L'écriture part 450 ms après la dernière
+frappe : en tapant un nombre chiffre par chiffre, on dépasse ce délai sans avoir fini. La colonne
+se refaisait alors en pleine saisie — le champ recréé, le focus rendu, mais la position du curseur
+approximative dès que le texte avait bougé. C'est le « je n'arrive pas à placer mon curseur ». Tant
+qu'un champ est visé, on garde ce qui est à l'écran ; le redessin attend le `blur`.
+
+**LE RENDU, LUI, REPAGINE — et l'écran le dit.** Après une correction qui change le nombre de mots,
+la colonne peut montrer un découpage qui n'est plus celui de la vidéo. L'aperçu, à gauche, montre
+la vérité en permanence, et « Redécouper comme le rendu » apparaît dans le pied **dès que les deux
+divergent, et seulement là** : proposer de redécouper une colonne déjà juste serait un bouton qui
+ne change rien, donc un bouton qu'on clique pour vérifier.
+
+Vérifié le 8 septembre 2026 : six chiffres tapés un par un avec 620 ms de pause — champ jamais
+recréé, curseur à 20, 21, 22, 23, 24, 25, et **67 lignes du début à la fin**. Puis une ligne passée
+de quatre à huit mots : toujours 67 lignes, la voisine intacte, « Redécouper » apparu ; un clic
+dessus rend les 68 lignes du rendu et le bouton s'efface.
+
 ### Whisper ne se trompe pas seulement, il SAUTE des mots
 
 Corriger une ligne couvre le mot mal entendu. Ça ne couvre pas le mot **absent** : « les droits

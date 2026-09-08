@@ -5069,6 +5069,10 @@ async function chargeLeStudio() {
   dessineLesFavoris()
   studio.hidden = false
   relanceLApercu()
+  // Au chargement, le découpage de la colonne est celui du rendu. Il se fige
+  // là, et ne rebougera que sur un geste : « mots par ligne », la ponctuation,
+  // ou le bouton « Redécouper ».
+  figeLeDecoupage()
   dessineLeTexte()
 }
 
@@ -5262,8 +5266,13 @@ for (const [id, champ, lis] of CONTROLES) {
   e.addEventListener('change', () => {
     enregistre({ [champ]: appli.st.reglages[champ] })
     // Le découpage a bougé pendant la traînée : la liste se remet à jour ici,
-    // une fois, plutôt qu'à chaque pixel.
-    if (['motsParPage', 'ponctuation'].includes(champ) && $('listeSt').children.length) dessineLeTexte()
+    // une fois, plutôt qu'à chaque pixel. C'est un geste EXPLICITE sur le
+    // découpage, donc le seul endroit avec « Redécouper » où la colonne a le
+    // droit de repaginer.
+    if (['motsParPage', 'ponctuation'].includes(champ) && $('listeSt').children.length) {
+      figeLeDecoupage()
+      dessineLeTexte()
+    }
   })
 }
 
@@ -6007,8 +6016,40 @@ const auDixieme = (ms) => {
 }
 
 /** Les lignes du rendu, avec la plage d'index de mots que chacune couvre. */
+/**
+ * LE DÉCOUPAGE DE LA COLONNE EST FIGÉ PENDANT QU'ON ÉDITE.
+ *
+ * CE QUI N'ALLAIT PAS.
+ *
+ * La colonne re-paginait à chaque relecture des mots. Or `pagine()` coupe sur
+ * le nombre de mots, la ponctuation et les silences : écrire « 82.194 euros »
+ * là où il y avait « 82 » fait passer la ligne de cinq mots à sept, et elle se
+ * scinde. On tapait un chiffre, une ligne apparaissait en dessous avec la fin
+ * de sa propre phrase, et tout ce qui suivait descendait d'un cran.
+ *
+ * C'est le contraire de ce qu'on attend d'une zone de texte : ce qu'on écrit
+ * dans une ligne doit rester dans cette ligne.
+ *
+ * COMMENT ON FIGE, SANS INVENTER DE SECONDE VÉRITÉ.
+ *
+ * Pas en mémorisant des index — une correction qui change le nombre de mots les
+ * décale tous. On mémorise les FENÊTRES DE TEMPS, `[debutMs, finMs]` de chaque
+ * ligne : `pipeline/texte.mjs` conserve explicitement les bornes de toute plage
+ * récrite, donc ces fenêtres survivent aux corrections. C'est exactement le
+ * mécanisme qui sert déjà à patcher `plan.json` sans le repaginer.
+ *
+ * Un mot qui ne tombe dans aucune fenêtre forme sa propre ligne : c'est le cas
+ * d'une insertion dans un silence, et une ligne neuve est bien ce qu'on veut là.
+ *
+ * CE QUE ÇA COÛTE, ET COMMENT ON LE DIT. Le rendu, lui, repagine : après une
+ * correction qui change le nombre de mots, la colonne peut montrer un découpage
+ * qui n'est plus celui de la vidéo. L'aperçu, à gauche, montre la vérité — et le
+ * pied de colonne propose « Redécouper » dès que les deux divergent.
+ */
 function lignesDuTexte() {
-  const pages = pagine(appli.st.mots, appli.st.reglages.motsParPage)
+  const mots = appli.st.mots
+  const fenetres = appli.st.decoupage
+  const pages = fenetres ? groupeParFenetres(mots, fenetres) : pagine(mots, appli.st.reglages.motsParPage)
   const lignes = []
   let i = 0
   for (const page of pages) {
@@ -6026,6 +6067,67 @@ function lignesDuTexte() {
     })
   }
   return lignes
+}
+
+/** Le découpage courant, en fenêtres de temps — à figer avant d'éditer. */
+function figeLeDecoupage() {
+  if (!appli.st?.mots?.length) return
+  appli.st.decoupage = pagine(appli.st.mots, appli.st.reglages.motsParPage)
+    .map((p) => ({ debutMs: p.debutMs, finMs: p.finMs }))
+}
+
+/**
+ * Regroupe les mots selon des fenêtres figées.
+ *
+ * Un mot appartient à la fenêtre dont l'intervalle contient son début. Les
+ * autres — ceux d'une insertion tombée dans un silence — se rassemblent en
+ * lignes à part, dans l'ordre où ils arrivent.
+ */
+function groupeParFenetres(mots, fenetres) {
+  // LES BORNES SE TOUCHENT, ET UN TEST D'INTERVALLE S'Y TROMPE.
+  //
+  // La fin d'une ligne est le `finMs` de son dernier mot, et le mot suivant
+  // commence souvent EXACTEMENT là — `repartis` pose la borne d'un côté et
+  // reprend de l'autre. Un test `debutMs <= fenetre.finMs` happait donc le
+  // premier mot de la ligne suivante dans la précédente, et le découpage
+  // « figé » ne redonnait pas celui qu'on venait de figer.
+  //
+  // On avance donc un curseur dans des fenêtres ordonnées : un mot appartient à
+  // la dernière fenêtre ouverte avant lui. C'est sans ambiguïté, et ça reste
+  // juste même si deux bornes coïncident.
+  const triees = [...fenetres].sort((x, y) => x.debutMs - y.debutMs)
+  const pages = []
+  let courante = null
+  let repere = null
+  let k = 0
+  for (const mot of mots) {
+    while (k + 1 < triees.length && triees[k + 1].debutMs <= mot.debutMs) k++
+    const f = triees[k] && mot.debutMs >= triees[k].debutMs && mot.debutMs <= triees[k].finMs
+      ? triees[k]
+      // Hors de toute fenêtre : c'est une insertion tombée dans un silence.
+      // Elle forme sa propre ligne, ce qui est bien ce qu'on veut là.
+      : null
+    // `f !== repere` couvre les deux passages — entrer dans une fenêtre, en
+    // sortir. On ne coupe PAS entre deux orphelins consécutifs : les trois mots
+    // d'une même insertion forment une ligne, pas trois.
+    if (!courante || f !== repere) {
+      courante = { mots: [], debutMs: mot.debutMs, finMs: mot.finMs }
+      repere = f
+      pages.push(courante)
+    }
+    courante.mots.push(mot)
+    courante.finMs = mot.finMs
+  }
+  return pages
+}
+
+/** Le découpage figé dit-il encore la même chose que celui du rendu ? */
+function decoupageADerive() {
+  if (!appli.st?.decoupage || !appli.st.mots?.length) return false
+  const vrai = pagine(appli.st.mots, appli.st.reglages.motsParPage)
+  const vu = groupeParFenetres(appli.st.mots, appli.st.decoupage)
+  if (vrai.length !== vu.length) return true
+  return vrai.some((p, i) => p.mots.length !== vu[i].mots.length)
 }
 
 function dessineLeTexte() {
@@ -6323,6 +6425,10 @@ let lignesRecalees = 0
 function majPiedDeTexte() {
   const n = corrections.size
   $('btnCorrige').disabled = n === 0
+  // Le bouton n'existe que quand il a quelque chose à faire : proposer de
+  // redécouper une colonne qui montre déjà le bon découpage serait un bouton
+  // qui ne change rien, donc un bouton qu'on clique pour vérifier.
+  $('btnRedecoupe').hidden = !decoupageADerive()
   const note = $('noteCorrections')
   note.classList.toggle('ecrit', etatEcriture === 'enregistre' && n === 0)
   if (n && etatEcriture === 'envoi') {
@@ -6490,6 +6596,17 @@ async function enregistreMaintenant() {
 
 $('btnCorrige').addEventListener('click', enregistreLesCorrections)
 
+// REDÉCOUPER EST UN GESTE, PAS UN EFFET DE BORD.
+//
+// C'est le seul endroit, avec « mots par ligne » et la ponctuation, où la
+// colonne a le droit de repaginer. Le faire toute seule après une correction
+// était précisément le défaut : on tapait un chiffre et la ligne se scindait.
+$('btnRedecoupe').addEventListener('click', () => {
+  if (!appli.st) return
+  figeLeDecoupage()
+  dessineLeTexte()
+})
+
 // LE DERNIER FILET : FERMER L'ONGLET PENDANT LE DEMI-BATTEMENT.
 //
 // L'écriture part 450 ms après la dernière frappe. Fermer, recharger ou quitter
@@ -6524,6 +6641,9 @@ window.addEventListener('beforeunload', (ev) => {
 $('listeSt').addEventListener('focusout', (ev) => {
   if (!ev.target.classList?.contains('texte-st')) return
   if (ev.relatedTarget?.classList?.contains('texte-st')) return
+  // Le redessin mis en attente pendant la saisie a lieu maintenant : la colonne
+  // rattrape ce qui a changé, et le curseur n'est plus nulle part.
+  if (redessinDu && !corrections.size) { redessinDu = false; dessineLeTexte() }
   if (!corrections.size) return
   programmeLEnregistrement()
 })
@@ -6608,8 +6728,25 @@ async function relisLesMots() {
   if (!mots.length) return
   appli.st.mots = mots
   relanceLApercu({ sansTexte: true, gardeLaPosition: true })
+  // ON NE RECONSTRUIT PAS LA COLONNE SOUS LES DOIGTS.
+  //
+  // L'écriture part 450 ms après la dernière frappe : en tapant un nombre
+  // chiffre par chiffre, on dépasse ce délai sans avoir fini. La colonne se
+  // reconstruisait alors en pleine saisie — le champ était recréé, le focus
+  // rendu, mais la position du curseur redevenait approximative dès que le
+  // texte avait bougé. C'est le « je n'arrive pas à placer mon curseur ».
+  //
+  // Tant qu'un champ est visé, on garde ce qui est à l'écran : il porte déjà
+  // exactement ce qu'on vient de taper. Le redessin attend le `blur`.
+  if (document.activeElement?.classList?.contains('texte-st')) {
+    redessinDu = true
+    return
+  }
   dessineLeTexte()
 }
+
+/** Un redessin de la colonne attend qu'on ait fini d'écrire — voir ci-dessus. */
+let redessinDu = false
 
 // ---------------------------------------------------------------------------
 //  Étape 6 bis — tes propres plans de coupe
