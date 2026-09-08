@@ -2912,7 +2912,31 @@ ${essai.raison}`
         { msMax: 15_000 }
       )
     }
-    // RECALER N'EST PAS RÉANALYSER, et c'est toute la différence.
+    // LE TEXTE RÉELLEMENT DIT : LE SEUL CHEMIN VERS ZÉRO FAUTE.
+  //
+  // Mesuré sur une VSL de 907 mots : en écoute libre, whisper rend 93 à 97 % —
+  // des homophones (« les doigts s'élèvent » pour « les droits »), et parfois
+  // un passage entier sauté. Avec le texte de référence, l'alignement rend
+  // 907 mots sur 907, IDENTIQUES.
+  //
+  // Le texte part sur l'ENTRÉE STANDARD : une VSL fait plusieurs milliers de
+  // caractères, et une ligne de commande n'est pas un canal pour ça.
+  if (est('POST', 'api', 'videos', '*', 'texte-dit')) {
+    const slug = exigeVideo(slugDeLaVideo(segments))
+    const corps = await litCorpsJson(req)
+    const texte = String(corps?.texte ?? '').trim()
+    if (texte.split(/\s+/).filter(Boolean).length < 5) {
+      throw new ErreurHttp(400, `Le texte de référence est trop court pour servir d'ancrage.`)
+    }
+    return repondJson(res, 202, travailLance(
+      lanceTravail(
+        [scriptPipeline('transcris.mjs'), slug, '--texte=-', '--refais'],
+        { etiquette: `calage sur ton texte — ${slug}`, entree: texte }
+      )
+    ))
+  }
+
+  // RECALER N'EST PAS RÉANALYSER, et c'est toute la différence.
     //
     // Réanalyser jette le texte et réécoute tout : les corrections partent.
     // Recaler GARDE le texte — corrections, ajouts, suppressions compris — et

@@ -1082,6 +1082,21 @@
                  n'est pas qu'il soit caché, c'est la confirmation qui dit ce
                  qu'il détruit. -->
             <div class="secours">
+              <!-- LE SEUL CHEMIN VERS ZÉRO FAUTE.
+                   En écoute libre, whisper rend 93 à 97 % : des homophones, et
+                   parfois un passage entier sauté. Avec le texte réellement dit,
+                   l'alignement rend 907 mots sur 907, identiques — mesuré.
+                   Sur une VSL, ce texte existe forcément : c'est lui qu'on a
+                   donné à lire. L'ignorer, c'est redécouvrir à l'oreille ce
+                   qu'on connaissait déjà. -->
+              <label class="etiquette-bloc" for="texteDit">Le texte réellement dit — pour zéro faute</label>
+              <textarea id="texteDit" rows="3" spellcheck="false"
+                        placeholder="Colle ici le texte que la voix prononce. Les mots viendront de lui, les instants de l'audio."></textarea>
+              <p class="note" id="noteTexteDit"></p>
+              <button type="button" class="bouton primaire pleine" id="btnTexteDit">
+                Caler sur ce texte
+              </button>
+
               <label class="etiquette-bloc" for="modeleTranscription">Qualité d'écoute — le ⟲ en haut réanalyse tout</label>
               <select id="modeleTranscription"></select>
               <p class="note" id="noteModeleTranscription"></p>

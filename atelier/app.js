@@ -6922,6 +6922,55 @@ function batisLesModelesDEcoute() {
   majNote()
 }
 
+// CALER SUR LE TEXTE RÉELLEMENT DIT : LE SEUL CHEMIN VERS ZÉRO FAUTE.
+//
+// Mesuré sur une VSL de 907 mots. En écoute libre, whisper rend 93 à 97 % : des
+// homophones — « les doigts s'élèvent » pour « les droits » — et parfois un
+// passage entier sauté. Avec le texte de référence : 907 mots sur 907,
+// identiques, le montant retrouvé et l'homophone corrigé.
+//
+// On confirme, parce que ça REMPLACE tout le transcript : les corrections
+// faites à la main sur l'ancien partent avec lui.
+$('btnTexteDit').addEventListener('click', (ev) =>
+  pendant(ev.currentTarget, 'Calage…', async () => {
+    if (!appli.st) return
+    const texte = $('texteDit').value.trim()
+    const combien = texte.split(/\s+/).filter(Boolean).length
+    if (combien < 5) {
+      annonce(`Colle d'abord le texte que la voix prononce.`, 'attention')
+      return
+    }
+    const ok = await demandeConfirmation({
+      titre: `Caler sur ces ${combien} mots ?`,
+      quoi:
+        `Le transcript sera entièrement remplacé : les mots viendront de ton ` +
+        `texte, et seuls les instants de l'audio.\n\n` +
+        `Tes corrections de texte actuelles sont perdues — elles n'ont plus lieu ` +
+        `d'être, puisque le texte devient exact. La voix et les réglages de style ` +
+        `ne bougent pas.`,
+      action: 'Caler',
+    })
+    if (!ok) return
+    const vue = await mene(() =>
+      api(`/api/videos/${encodeURIComponent(appli.slug)}/texte-dit`, {
+        methode: 'POST',
+        corps: { texte },
+      })
+    )
+    if (vue?.etat !== 'fini') return
+    corrections.clear()
+    retires.length = 0
+    etatEcriture = 'repos'
+    await rechargeLeStudio()
+    const ancre = (derniereSortie(vue).match(/(\d+) % des mots ancrés/) ?? [])[1]
+    annonce(
+      `Calé sur ton texte — ${appli.st?.mots?.length ?? 0} mots exacts` +
+        (ancre ? `, ${ancre} % ancrés sur l'audio.` : '.'),
+      'ok'
+    )
+  })
+)
+
 // RECALER : LES MOTS RESTENT, LES INSTANTS SE REMESURENT.
 //
 // Pas de confirmation : rien n'est détruit. C'est même le contraire d'une

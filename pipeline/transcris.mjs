@@ -28,7 +28,12 @@ aide(
   `
 npm run transcris -- <slug de vidéo | fichier> [options]
 
-  --libre            transcription libre, même si un script existe
+  --texte=-          LE TEXTE RÉELLEMENT DIT, lu sur l'entrée standard. Il est
+                     conservé et sert à chaque transcription de cette vidéo :
+                     les mots viennent de LUI, seuls les instants de l'audio.
+                     C'est le seul chemin vers une transcription sans faute —
+                     mesuré 100 % contre 93 à 97 % en écoute libre.
+  --libre            transcription libre, même si un texte ou un script existe
   --modele=<m>       tiny | base | small | medium | large-v3-turbo | large-v3
                      Mesuré le 8 septembre 2026 sur 897 mots réels :
                        large-v3-turbo  96,8 %  12,9 s   ← le défaut
@@ -185,7 +190,34 @@ await principal(async () => {
   //
   // On croit que son script sert, on lit un texte truffé d'homophones, et on
   // corrige à la main ce qu'un alignement aurait rendu juste d'un coup.
-  const texteBrutDuScript = script ? (script.blocs ?? []).map((b) => b.texte).join(' ').trim() : ''
+  // LE TEXTE RÉELLEMENT DIT PASSE AVANT TOUT, et c'est ce qui permet le zéro
+  // faute. Il est écrit une fois (`--texte=-`), conservé, et sert à chaque
+  // transcription suivante — y compris après un « Tout réanalyser ».
+  //
+  // `01-script.json` vient après : il peut avoir été DÉDUIT du transcript par
+  // `npm run ecris`, donc reproduire les fautes qu'on cherche à corriger. La
+  // référence, elle, ne se déduit de rien.
+  if (estVideoDuProjet && options.texte !== undefined) {
+    const brut = String(options.texte) === '-'
+      ? fs.readFileSync(0, 'utf8')
+      : String(options.texte)
+    const propre = brut.replace(/\s+/g, ' ').trim()
+    if (propre.split(/\s+/).filter(Boolean).length < 5) {
+      throw new Error(`Le texte de référence est trop court pour servir d'ancrage.`)
+    }
+    fs.writeFileSync(dossierVideo(path.basename(dossierPossible)).texteDit, propre, 'utf8')
+    journal.ok(`Texte de référence enregistré : ${propre.split(/\s+/).length} mots.`)
+    journal.detail(`Il servira à chaque transcription de cette vidéo.`)
+  }
+
+  const texteDitFichier = estVideoDuProjet
+    ? dossierVideo(path.basename(dossierPossible)).texteDit
+    : null
+  const texteDit = texteDitFichier && fs.existsSync(texteDitFichier)
+    ? fs.readFileSync(texteDitFichier, 'utf8').trim()
+    : ''
+
+  const texteBrutDuScript = texteDit || (script ? (script.blocs ?? []).map((b) => b.texte).join(' ').trim() : '')
   if (script && !texteBrutDuScript && !drapeau(options, 'libre')) {
     journal.attention(
       `01-script.json existe mais ne porte aucun texte : la transcription sera LIBRE, ` +
@@ -210,7 +242,7 @@ await principal(async () => {
     fichier: path.relative(CHEMINS.racine, fichier),
     mode: texteARecaler
       ? 'recalé sur l’audio'
-      : texteDuScript ? 'calé sur le script' : 'libre',
+      : texteDit ? 'calé sur ton texte' : texteDuScript ? 'calé sur le script' : 'libre',
     langue: resultat.langue,
     modele: resultat.modele,
     dureeAudioS: info.dureeS,

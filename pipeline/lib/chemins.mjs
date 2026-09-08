@@ -112,6 +112,18 @@ export function dossierVideo(slug) {
     brief: path.join(base, '00-brief.md'),
     script: path.join(base, '01-script.md'),
     scriptJson: path.join(base, '01-script.json'),
+    // LE TEXTE RÉELLEMENT DIT, QUAND ON L'A.
+    //
+    // C'est la seule chose qui permette une transcription SANS ERREUR : les
+    // mots viennent de lui, et seuls les instants de l'audio. Sur une VSL
+    // fabriquée à partir d'un texte — Fish ou ElevenLabs lisent ce qu'on leur
+    // donne —, ce texte existe forcément, et l'ignorer revient à redécouvrir à
+    // l'oreille ce qu'on connaissait déjà.
+    //
+    // À NE PAS CONFONDRE AVEC `01-script.json`, qui peut avoir été DÉDUIT du
+    // transcript : déduit d'un texte fautif, il reproduit les fautes. Celui-ci
+    // est la référence, il ne se déduit de rien.
+    texteDit: path.join(base, '01-texte-dit.txt'),
     tournage: path.join(base, '02-tournage'),
     audio: path.join(base, '03-audio'),
     // La voix retenue pour CETTE vidéo. Elle vit avec l'audio qu'elle produira,

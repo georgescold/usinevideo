@@ -586,6 +586,8 @@ npm run texte -- <slug> --incertains  # ceux dont Whisper doutait — à relire 
 npm run texte -- <slug> --trous       # les silences où des mots ont pu être SAUTÉS
 npm run transcris -- --defaut=<modele>   # la qualité d'écoute de la CHAÎNE
 npm run transcris -- <slug> --refais     # tout réécouter, et remettre le plan d'accord
+npm run transcris -- <slug> --texte=-      # LE texte reellement dit, sur stdin : zero faute
+npm run transcris -- <slug> --recale     # garde les mots, remesure leurs instants
 npm run texte -- <slug> --chiffres    # les nombres dits en lettres, mis en chiffres
 npm run soustitres -- <slug> --defaut # ces réglages deviennent ceux de la chaîne
 npm run broll                # tes propres plans de coupe, et leurs mots-clés
@@ -1354,6 +1356,42 @@ pause : champ jamais recréé, curseur à 20, 21, 22, 23, 24, 25, **67 lignes du
 Deux corrections successives **sans redessin entre elles** — le cas qui mélangeait tout : chacune
 au bon endroit, 214 → 216 mots sur le disque, **aucun mot d'origine perdu**. Et la ligne corrigée
 s'affiche à l'identique dans la colonne et dans l'aperçu.
+
+### ZÉRO FAUTE EST POSSIBLE — MAIS SEULEMENT AVEC LE TEXTE RÉELLEMENT DIT
+
+« Est-ce qu'on peut ne plus avoir aucune erreur de détection ? » La réponse est **non en écoute
+libre, oui avec le texte**. Aucun modèle n'atteint 100 % à l'oreille ; mesuré le 8 septembre 2026
+sur une VSL de 897 mots, en libre : `medium` 94,6 %, `large-v3-turbo` 96,8 %. Les 3 % restants sont
+des homophones — « les **doigts** s'élèvent » pour « les **droits** », « tourne **à l'heure une
+fée** » pour « tourne **alors une feuille** ».
+
+**Sur une VSL, ce texte existe forcément** : c'est celui qu'on a donné à lire à Fish ou ElevenLabs.
+L'ignorer, c'est redécouvrir à l'oreille ce qu'on connaissait déjà. `01-texte-dit.txt` le conserve,
+et l'alignement s'en sert à chaque transcription :
+
+```bash
+cat texte.txt | npm run transcris -- <slug> --texte=- --refais
+```
+
+Vérifié sur la vidéo qui était fautive : **907 mots attendus, 907 obtenus, identiques mot pour
+mot.** Le « 82.194€ » que l'écoute libre sautait est revenu, l'homophone est corrigé. Le champ
+« Le texte réellement dit » de l'étape 5 fait la même chose.
+
+**TROIS SOURCES, ET L'ORDRE COMPTE.** `01-texte-dit.txt` d'abord — c'est une référence, elle ne se
+déduit de rien. `01-script.json` ensuite : il peut avoir été **déduit du transcript** par
+`npm run ecris`, donc reproduire les fautes qu'on cherche à corriger. Le mode libre en dernier.
+
+**CE QUI RESTE APPROXIMATIF, ET IL FAUT LE SAVOIR.** L'ancrage était de 93 % sur cet essai : les
+7 % de mots que whisper n'entend pas sont **interpolés** entre leurs voisins ancrés. Le TEXTE est
+exact ; le calage de ces mots-là reste à une seconde près. Le taux est annoncé à chaque fois — c'est
+la seule chose qui dise si l'on peut se fier aux instants.
+
+**POURQUOI UN PASSAGE ENTIER PEUT ÊTRE SAUTÉ.** whisper emploie le texte déjà transcrit comme
+contexte de la fenêtre suivante, et peut juger une reprise redondante. Le « 82.194€ » de 24,7 s est
+bel et bien prononcé — voix à −12 dB, et whisper l'entend quand on lui donne l'extrait isolé — mais
+il le saute sur la prise entière. `-mc 0` coupe ce contexte et le récupère, au prix de 1,4 point
+d'exactitude globale (93,8 % → 92,4 %) : mauvais échange, **le réglage n'est pas retenu**. Le texte
+de référence règle le cas sans rien coûter.
 
 ### UN MOT AJOUTÉ À LA MAIN N'EST PAS SYNCHRONE — IL FAUT LE RECALER
 

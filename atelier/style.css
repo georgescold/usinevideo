@@ -566,6 +566,13 @@ input[type="number"] { width: 6.5em; }
   display: flex; flex-direction: column; gap: 6px;
 }
 .secours select { width: 100%; }
+.secours textarea {
+  width: 100%; resize: vertical; min-height: 64px;
+  font: inherit; font-size: 14px; line-height: 1.45;
+}
+/* Le calage sur le texte est le geste PRINCIPAL de ce bloc : c'est le seul qui
+   mène à zéro faute. Il porte donc la couleur d'une action, pas d'un secours. */
+.secours .bouton.primaire { margin-bottom: 6px; }
 .secours .etiquette-bloc { color: #a08a5a; }
 /* Le ⟲ de la tête : à la couleur de l'attention, de la taille des autres
    boutons minuscules, et il ne se confond avec aucun d'eux. */
