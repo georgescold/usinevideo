@@ -881,8 +881,16 @@ function montre(cle, { relis = true } = {}) {
   // contradictoires : on clique, ça échoue, et la raison affichée passe pour
   // décorative. On retire donc ce qui agit, et il ne reste que la phrase qui dit
   // quoi faire — c'est exactement ce qui manquait à la version précédente.
+  // SAUF UN CHOIX QUI N'AGIT PAS. `.inerte` le dit.
+  //
+  // La règle vise ce qui ÉCHOUERAIT si on cliquait. Le mode de fabrication,
+  // lui, ne décide de rien sur le disque et ne coûte rien : c'est une
+  // intention, retenue dans le navigateur, qui dit ce que produira le bouton
+  // une fois débloqué. Le masquer laissait « Comment fabriquer l'image ? » en
+  // titre au-dessus du vide, et on découvrait qu'un mode existait APRÈS avoir
+  // déduit le script — c'est-à-dire trop tard pour l'avoir choisi.
   const bloque = Boolean(etape.blocage)
-  for (const zone of section.querySelectorAll('.commandes, .bouton.grand, .depot, .filtres, .reglage-essai, .liste-voix, .studio, .cartes, .case, .doctrine, .parle')) {
+  for (const zone of section.querySelectorAll('.commandes, .bouton.grand, .depot, .filtres, .reglage-essai, .liste-voix, .studio, .cartes:not(.inerte), .case, .doctrine, .parle')) {
     zone.hidden = bloque
   }
 

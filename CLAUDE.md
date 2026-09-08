@@ -713,6 +713,33 @@ OAuth de Claude Code (`sk-ant-oat…`) qui, lui, est refusé en 401 par l'API. C
 centime par vidéo. Sans clé, le script se déduit en conversation — c'est ce que fait cette
 commande, en moins de mots.
 
+### UN DÉCALAGE D'UNE ENTRÉE NE DOIT PAS JETER CINQ MINUTES DE TRAVAIL
+
+« Le modèle a rendu 40 entrées pour 39 blocs » — et toute la déduction partait à
+la poubelle, sur une VSL de 919 mots. C'est le défaut de l'appariement **par
+rang** : le prompt numérote les passages, la réponse est un tableau nu, et une
+seule entrée de trop décale TOUTES les requêtes suivantes. Le contrôle strict
+était donc juste dans son constat et ruineux dans sa conséquence.
+
+Le modèle reprend maintenant le numéro du passage dans un champ `n`, et
+l'appariement se fait par ce numéro. C'est la règle déjà posée au §10 pour le
+choix des plans générés : **un numéro inventé est jeté, jamais rattrapé.** Sans
+`n`, on retombe sur le rang — un modèle qui ne l'a pas repris mais qui rend le
+bon compte reste exploitable.
+
+Un passage resté sans requête prendra l'image générique : il est **nommé par son
+numéro**, parce qu'on l'échange en un clic à l'étape 6 et qu'on ne le rattrape
+plus une fois rendu. Vérifié sur la même VSL : 39 blocs, 39 requêtes distinctes,
+aucun repli.
+
+**LE CHOIX DU MODE RESTE VISIBLE QUAND L'ÉTAPE EST BLOQUÉE.** « Une étape bloquée
+n'affiche pas ses commandes » vise ce qui ÉCHOUERAIT si on cliquait. Le mode de
+fabrication n'est pas une commande : il ne décide de rien sur le disque, ne coûte
+rien, et dit ce que produira le bouton une fois débloqué. Le masquer laissait
+« Comment fabriquer l'image ? » en titre au-dessus du vide — et on découvrait
+qu'un mode existait APRÈS avoir déduit le script, donc trop tard pour l'avoir
+choisi. `.inerte` marque ce cas ; le reste du masquage n'a pas bougé.
+
 ### Trois modes de fabrication, et un avatar qui appartient à la chaîne
 
 **LE MODE SE CHOISIT À L'ÉTAPE 6, EN TÊTE DES PLANS.** Il vivait à l'étape 1, juste sous le

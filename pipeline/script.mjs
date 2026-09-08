@@ -106,11 +106,41 @@ principal(async () => {
   )
 
   const reponses = Array.isArray(valeur) ? valeur : valeur?.blocs ?? []
-  if (reponses.length !== blocs.length) {
-    throw new Error(
-      `Le modèle a rendu ${reponses.length} entrées pour ${blocs.length} blocs. ` +
-        `Relance : npm run ecris -- ${slug} --force`
+  if (!reponses.length) {
+    throw new Error(`Le modèle n'a rendu aucune requête d'images pour ${blocs.length} passages.`)
+  }
+
+  // ON APPARIE PAR NUMÉRO, PLUS PAR POSITION.
+  //
+  // Une entrée de trop faisait tout échouer : « le modèle a rendu 40 entrées
+  // pour 39 blocs », et cinq minutes de déduction partaient à la poubelle sur
+  // une VSL de 919 mots. C'est le défaut de l'appariement par rang — un seul
+  // décalage et TOUTES les requêtes suivantes changent de passage.
+  //
+  // C'est la règle déjà posée pour le choix des plans générés (§10) : un
+  // numéro inventé est jeté, jamais rattrapé. Le modèle reprend le numéro du
+  // passage, et ce qui ne correspond à rien tombe.
+  const parNumero = new Map()
+  reponses.forEach((r, i) => {
+    // Sans `n`, on retombe sur le rang : un modèle qui ne l'a pas repris mais
+    // qui a rendu le bon compte reste exploitable.
+    const n = Number.isInteger(r?.n) ? r.n : i + 1
+    if (n >= 1 && n <= blocs.length && !parNumero.has(n)) parNumero.set(n, r)
+  })
+
+  // Un passage sans requête recevra l'image générique — visible à l'écran.
+  // On dit lesquels : les corriger un par un se fait à l'étape 6, les
+  // découvrir au rendu ne se rattrape plus.
+  const sansReponse = blocs.map((_, i) => i + 1).filter((n) => !parNumero.has(n))
+  if (sansReponse.length) {
+    journal.attention(
+      `${sansReponse.length} passage(s) sur ${blocs.length} sans requête d'images : ` +
+        `n° ${sansReponse.slice(0, 12).join(', ')}${sansReponse.length > 12 ? '…' : ''}.`
     )
+    journal.detail(`Ils prendront une image générique. Échange-les à l'étape 6, une par une.`)
+  }
+  if (reponses.length > blocs.length) {
+    journal.detail(`${reponses.length - blocs.length} entrée(s) hors bornes, écartées.`)
   }
 
   const prix = cout(jetons)
@@ -130,7 +160,7 @@ principal(async () => {
     avatar,
     deduit_le: new Date().toISOString(),
     blocs: blocs.map((b, i) => {
-      const r = reponses[i] ?? {}
+      const r = parNumero.get(i + 1) ?? {}
       const intention = INTENTIONS.includes(r.intention) ? r.intention : 'posé'
       const requete = String(r.requete ?? '').trim() || 'person alone thinking, quiet room'
       return {
@@ -247,8 +277,9 @@ function consigne(direction) {
     `Donne aussi l'INTENTION de chaque passage, parmi exactement :`,
     INTENTIONS.join(', '),
     ``,
-    `Réponds UNIQUEMENT par un tableau JSON, un objet par passage, dans l'ordre :`,
-    `[{"requete": "...", "intention": "..."}]`,
+    `Réponds UNIQUEMENT par un tableau JSON, un objet par passage. REPRENDS LE NUMÉRO`,
+    `du passage dans le champ "n" — c'est lui qui fait le lien, pas l'ordre :`,
+    `[{"n": 1, "requete": "...", "intention": "..."}]`,
   ]
     .filter(Boolean)
     .join('\n')
