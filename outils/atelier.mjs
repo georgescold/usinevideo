@@ -43,14 +43,13 @@
  */
 
 import fs from 'node:fs'
-import os from 'node:os'
 import path from 'node:path'
 import http from 'node:http'
 import { spawn } from 'node:child_process'
 import { randomUUID, randomBytes } from 'node:crypto'
 import { Readable } from 'node:stream'
 
-import { CHEMINS, dossierVideo, litJson, assureDossierVideo, litChaine } from '../pipeline/lib/chemins.mjs'
+import { CHEMINS, dossierVideo, dossierDeTravail, litJson, assureDossierVideo, litChaine } from '../pipeline/lib/chemins.mjs'
 import { ffmpeg } from '../pipeline/lib/ffmpeg.mjs'
 import { journal, nettoie } from '../pipeline/lib/journal.mjs'
 import { litArgs, aide, drapeau, nombre, principal } from '../pipeline/lib/args.mjs'
@@ -99,8 +98,12 @@ const TAILLE_MAX = Math.round(nombre(options, 'taille-max-mo', 2048) * 1e6)
 
 const DOSSIER_ATELIER = path.join(CHEMINS.racine, 'atelier')
 
-/** Le temporaire des envois. Isolé par processus : deux ateliers ne se marchent pas dessus. */
-const TEMPORAIRE = path.join(os.tmpdir(), `atelier-${process.pid}`)
+/**
+ * Le temporaire des envois. Isolé par processus : deux ateliers ne se marchent
+ * pas dessus. Hors de `%TEMP%` : il porte un RUSH pendant tout son
+ * téléversement, et le §6 dit qu'un rush ne se perd pas.
+ */
+const TEMPORAIRE = dossierDeTravail('atelier')
 
 /** Le barème d'ElevenLabs, repris tel quel de `pipeline/lib/elevenlabs.mjs`. */
 const CREDITS_PAR_MINUTE = 1000
@@ -3303,7 +3306,11 @@ function ouvreLeNavigateur(adresse) {
  * échouer son dépôt en cours.
  */
 function balaieLesTemporairesOrphelins() {
-  const base = os.tmpdir()
+  // Le balayage suit le temporaire : il vit maintenant dans le cache partagé,
+  // pas dans `%TEMP%` (voir `dossierDeTravail`). Les orphelins restés là-bas
+  // ne sont plus les nôtres à ramasser — et c'est justement le dossier que le
+  // système nettoie tout seul.
+  const base = path.dirname(TEMPORAIRE)
   let jetes = 0
   try {
     for (const nom of fs.readdirSync(base)) {

@@ -104,6 +104,31 @@ export const CHEMINS = {
   cachePartage: CACHE_PARTAGE,
 }
 
+/**
+ * UN DOSSIER DE TRAVAIL NE VIT PAS DANS `%TEMP%`.
+ *
+ * Le 9 septembre 2026, les polices d'un rendu ont disparu du temporaire système
+ * en pleine course : cinq bundles Remotion ont perdu le même sous-dossier dans
+ * la même fenêtre de 88 ms, dont quatre abandonnés la veille. C'était un
+ * balayage — l'Assistant de stockage Windows est actif sur ce poste, nettoyage
+ * des fichiers temporaires compris. Le master est sorti en police de repli.
+ *
+ * La leçon ne dépend pas du coupable : `%TEMP%` est un dossier que le système
+ * s'autorise à vider quand il veut, et nos travaux l'occupent pendant des
+ * minutes — une demi-heure pour un rendu. Ce qui doit survivre le temps d'une
+ * commande vit donc dans le cache partagé, qui n'est balayé par personne.
+ *
+ * Deux vertus par-dessus : le chemin est sans accent, là où le dossier de la
+ * chaîne s'appelle « Usine à vidéo » (voir le piège faiss du §8), et il est
+ * commun aux chaînes, donc un seul endroit à surveiller.
+ *
+ * Le pid est dans le nom pour la raison qui vaut déjà partout : deux commandes
+ * simultanées ne doivent pas écrire au même endroit.
+ */
+export function dossierDeTravail(nom) {
+  return path.join(CACHE_PARTAGE, 'travail', `${nom}-${process.pid}`)
+}
+
 /** Dossier d'une vidéo, avec ses sous-dossiers numérotés. */
 export function dossierVideo(slug) {
   const base = path.join(CHEMINS.videos, slug)

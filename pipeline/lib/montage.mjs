@@ -16,10 +16,10 @@
 
 import fs from 'node:fs'
 import path from 'node:path'
-import os from 'node:os'
 import {
   CHEMINS,
   assureDossier,
+  dossierDeTravail,
   envNombre,
   env,
 } from './chemins.mjs'
@@ -139,7 +139,7 @@ export async function fabriqueAudioCoupe(aGarder, destination) {
     parRush.get(m.src).push({ debutS: m.depuisS, finS: m.jusquaS })
   }
 
-  const travail = path.join(os.tmpdir(), `coupe-${process.pid}`)
+  const travail = dossierDeTravail('coupe')
   assureDossier(travail)
   const morceaux = []
   try {

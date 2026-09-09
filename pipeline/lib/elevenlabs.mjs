@@ -21,11 +21,10 @@
 
 import fs from 'node:fs'
 import path from 'node:path'
-import os from 'node:os'
 import { avecCle, clefGrillee, pool } from './trousseau.mjs'
 import { demande, ErreurHttp } from './http.mjs'
 import { journal, duree } from './journal.mjs'
-import { assureDossier, env } from './chemins.mjs'
+import { assureDossier, dossierDeTravail, env } from './chemins.mjs'
 import { sonde, detecteSilences, ffmpeg, recolleAudio } from './ffmpeg.mjs'
 
 const API = 'https://api.elevenlabs.io/v1'
@@ -488,7 +487,9 @@ export async function changeDeVoix(
       `— environ ${Math.round(cout)} crédits (${(dureeS / 60 * 0.12).toFixed(2)} $).`
   )
 
-  const travail = path.join(os.tmpdir(), `sts-${process.pid}`)
+  // Hors de `%TEMP%` : ce dossier porte des morceaux de conversion DÉJÀ PAYÉS.
+  // Un balayage en cours de route les ferait repayer sans rien dire.
+  const travail = dossierDeTravail('sts')
   assureDossier(travail)
   const rendus = []
 

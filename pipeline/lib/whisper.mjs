@@ -15,7 +15,13 @@ import fs from 'node:fs'
 import path from 'node:path'
 import os from 'node:os'
 import { transcribe, downloadWhisperModel, toCaptions } from '@remotion/install-whisper-cpp'
-import { CHEMINS, assureDossier, env, litChaine } from './chemins.mjs'
+import {
+  CHEMINS,
+  assureDossier,
+  dossierDeTravail,
+  env,
+  litChaine,
+} from './chemins.mjs'
 import { journal, duree } from './journal.mjs'
 import { telecharge } from './http.mjs'
 import { lance, lanceOuEchoue, extraitAudio, sonde } from './ffmpeg.mjs'
@@ -231,9 +237,10 @@ export async function transcris(fichier, { modele = null, langue = null, silenci
   // whisper.cpp n'accepte que du WAV 16 kHz mono. On convertit systématiquement
   // plutôt que de sonder : la conversion coûte moins cher qu'un échec obscur.
   const temporaire = path.join(
-    os.tmpdir(),
-    `whisper-${path.basename(fichier, path.extname(fichier))}-${process.pid}.wav`
+    dossierDeTravail('whisper'),
+    `${path.basename(fichier, path.extname(fichier))}.wav`
   )
+  assureDossier(path.dirname(temporaire))
   await extraitAudio(fichier, temporaire)
 
   const debut = Date.now()
@@ -262,7 +269,7 @@ export async function transcris(fichier, { modele = null, langue = null, silenci
       // La ligne passe dans le journal du sous-processus, que personne ne lit,
       // et `t_dtw` revient à −1 sur TOUS les mots. On payait donc l'option sans
       // jamais recevoir ce qu'elle promet.
-      additionalArgs: ['-nfa'],
+      additionalArgs: ['-nfa'],
       onProgress: (p) => {
         if (silencieux) return
         const pc = Math.round(p * 100)
@@ -339,7 +346,9 @@ export async function transcris(fichier, { modele = null, langue = null, silenci
       modele: m,
     }
   } finally {
-    fs.rmSync(temporaire, { force: true })
+    // Le dossier entier : il est à ce processus seul, et le laisser derrière
+    // ferait s'accumuler des coquilles vides dans le cache partagé.
+    fs.rmSync(path.dirname(temporaire), { recursive: true, force: true })
   }
 }
 

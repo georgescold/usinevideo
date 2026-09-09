@@ -29,6 +29,7 @@ import { selectComposition, renderMedia } from '@remotion/renderer'
 import {
   CHEMINS,
   dossierVideo,
+  dossierDeTravail,
   litJson,
   litChaine,
   assureDossier,
@@ -63,24 +64,211 @@ Sortie : videos/<slug>/06-rendu/<slug>.mp4
 `
 )
 
+/** Les chemins relatifs de tous les fichiers d'une arborescence. */
+function fichiersDe(racine) {
+  if (!fs.existsSync(racine)) return []
+  const trouves = []
+  const aVoir = ['']
+  while (aVoir.length > 0) {
+    const rel = aVoir.pop()
+    for (const e of fs.readdirSync(path.join(racine, rel), {
+      withFileTypes: true,
+    })) {
+      const chemin = rel ? `${rel}/${e.name}` : e.name
+      if (e.isDirectory()) aVoir.push(chemin)
+      else trouves.push(chemin)
+    }
+  }
+  return trouves
+}
+
+/**
+ * CE QUI N'EST PAS ARRIVÉ DANS LE BUNDLE NE SE VOIT PAS PENDANT LE RENDU.
+ *
+ * Remotion recopie `05-montage/public/` dans le bundle, et sert la copie. Un
+ * fichier qui manque à la copie ne fait échouer personne : le navigateur rend
+ * 404, la page continue, et le défaut sort dans le master — une police en
+ * repli, un plan de coupe en noir. On l'a payé une fois, trente minutes de
+ * calcul pour une typographie fausse d'un bout à l'autre.
+ *
+ * La comparaison coûte une lecture de deux arborescences, soit quelques
+ * millisecondes pour deux cents fichiers. Elle a lieu AVANT le rendu, ce qui
+ * est tout l'intérêt : après, il n'y a plus qu'à recommencer.
+ */
+function manquantsDeLaCopie(source, copie) {
+  const attendus = fichiersDe(source)
+  if (attendus.length === 0) return { attendus, manquants: [] }
+  const arrives = new Set(fichiersDe(copie))
+  return { attendus, manquants: attendus.filter((f) => !arrives.has(f)) }
+}
+
+function verifieLaCopiePublique(source, copie) {
+  const { attendus, manquants } = manquantsDeLaCopie(source, copie)
+  if (attendus.length === 0) return
+  if (manquants.length === 0) {
+    journal.detail(`${attendus.length} fichiers publics recopiés dans le bundle.`)
+    return
+  }
+  const apercu = manquants.slice(0, 8).join(', ')
+  throw new Error(
+    `Le bundle de rendu est incomplet : ${manquants.length} fichier(s) sur ` +
+      `${attendus.length} ne sont pas arrivés dans la copie du dossier public.` +
+      String.fromCharCode(10) +
+      `  Manquent : ${apercu}${manquants.length > 8 ? ', …' : ''}` +
+      String.fromCharCode(10) +
+      `  Rien ne le signalerait pendant le rendu : une police absente sort en ` +
+      `police de repli, un plan absent sort en noir. On s'arrête avant les ` +
+      `trente minutes de calcul.` +
+      String.fromCharCode(10) +
+      `  Relance : le bundle est reconstruit de zéro à chaque rendu.`
+  )
+}
+
+/**
+ * ON REVÉRIFIE LE BUNDLE AVANT CHAQUE REPRISE, ET ON LE RÉPARE.
+ *
+ * Le bundle est vérifié une fois, juste après sa construction. Or l'incident du
+ * 9 septembre s'est produit EN COURS DE RENDU : les fichiers étaient là au
+ * départ et n'y étaient plus à la vingt-huitième minute. Une reprise après
+ * onglet tombé rouvre des onglets neufs, qui redemandent tout — c'est
+ * exactement le moment où le trou se voit, et c'était exactement le moment où
+ * personne ne regardait.
+ *
+ * On répare plutôt que de refuser : la source est intacte, la copie coûte
+ * quelques millisecondes, et le rendu d'une traite repart de zéro de toute
+ * façon. Refuser ferait perdre une demi-heure pour un fichier qui est là, à
+ * trois centimètres. Ce qui reste introuvable À LA SOURCE, en revanche, arrête
+ * tout : on ne sait plus quoi mettre à la place.
+ */
+function repareLaCopiePublique(source, copie) {
+  const { manquants } = manquantsDeLaCopie(source, copie)
+  if (manquants.length === 0) return []
+  const remis = []
+  for (const rel of manquants) {
+    const de = path.join(source, rel)
+    if (!fs.existsSync(de)) continue
+    const vers = path.join(copie, rel)
+    assureDossier(path.dirname(vers))
+    fs.copyFileSync(de, vers)
+    remis.push(rel)
+  }
+  const perdus = manquants.filter((f) => !remis.includes(f))
+  if (perdus.length > 0) {
+    throw new Error(
+      `${perdus.length} fichier(s) ont disparu du bundle ET de la source ` +
+        `pendant le rendu : ${perdus.slice(0, 6).join(', ')}` +
+        (perdus.length > 6 ? ', …' : '') +
+        String.fromCharCode(10) +
+        `  Relance le montage pour les reconstruire : npm run monte`
+    )
+  }
+  return remis
+}
+
+/**
+ * LE PLAN RÉFÉRENCE DES FICHIERS. AUCUN N'ÉTAIT VÉRIFIÉ.
+ *
+ * `plan.json` nomme la piste image, la voix, chaque plan de coupe et chaque
+ * police — vingt-cinq fichiers sur une vidéo courte, deux cents sur une VSL.
+ * Il est écrit par le montage, qui a pu tourner il y a trois semaines : depuis,
+ * un clip a pu être effacé, un dossier déplacé, une piste régénérée ailleurs.
+ *
+ * Rien ne le disait. Un `src` qui ne pointe nulle part sort en NOIR dans la
+ * vidéo, une voix absente sort en SILENCE — et le rendu se termine avec un
+ * verdict de sonie parfaitement calme sur un fichier muet. C'est le même défaut
+ * que les polices, sur des fichiers qu'on remarque encore moins.
+ *
+ * On lit le plan en entier plutôt que ses champs connus : les types
+ * d'événements changent, et une liste de champs se périme au premier ajout.
+ */
+function verifieLesFichiersDuPlan(plan, source) {
+  const references = new Set()
+  const parcours = (n) => {
+    if (Array.isArray(n)) return n.forEach(parcours)
+    if (!n || typeof n !== 'object') return
+    for (const [nom, valeur] of Object.entries(n)) {
+      if (typeof valeur === 'string') {
+        // `src` seul. On ne retient que ce qui désigne un fichier du dossier
+        // public : un chemin relatif, sans protocole. Une requête de banque
+        // d'images ou une ancre de script n'ont rien à faire ici.
+        if (
+          nom === 'src' &&
+          valeur.length > 0 &&
+          !/^[a-z]+:/i.test(valeur) &&
+          !path.isAbsolute(valeur)
+        ) {
+          references.add(valeur)
+        }
+      } else parcours(valeur)
+    }
+  }
+  parcours(plan)
+
+  // Les polices se nomment à part : leur champ s'appelle `fichier`, et ce mot
+  // est trop courant pour être reconnu au nom dans tout le plan.
+  for (const p of plan?.theme?.polices ?? []) {
+    if (typeof p?.fichier === 'string' && p.fichier) {
+      references.add(`fonts/${p.fichier}`)
+    }
+  }
+
+  const absents = [...references].filter(
+    (rel) => !fs.existsSync(path.join(source, rel))
+  )
+  if (absents.length === 0) {
+    journal.detail(
+      `${references.size} fichiers référencés par le plan, tous présents.`
+    )
+    return
+  }
+  throw new Error(
+    `${absents.length} fichier(s) sur ${references.size} que le plan référence ` +
+      `sont absents de 05-montage/public/ :` +
+      String.fromCharCode(10) +
+      `  ${absents.slice(0, 8).join(', ')}${absents.length > 8 ? ', …' : ''}` +
+      String.fromCharCode(10) +
+      `  Ils sortiraient en noir, en silence ou en police de repli, sans que ` +
+      `rien ne le signale.` +
+      String.fromCharCode(10) +
+      `  Relance le montage pour les reconstruire : npm run monte`
+  )
+}
+
 await principal(async () => {
   const slug = positionnels[0]
   if (!slug) throw new Error(`Donne le slug de la vidéo à rendre.`)
 
-  // CHAQUE RENDU A SON PROPRE DOSSIER TEMPORAIRE.
+  // CHAQUE RENDU A SON PROPRE DOSSIER DE TRAVAIL, ET IL N'EST PAS DANS `%TEMP%`.
   //
   // Deux rendus lancés en parallèle se marchaient dessus dans le temporaire
   // système : le premier à finir nettoyait des fichiers que le second était en
   // train d'écrire, et celui-ci mourait au mixage audio — « Error opening
   // output … remotion-audio-mixing ». L'échec passait inaperçu, et on jugeait
-  // ensuite une planche issue du rendu précédent.
+  // ensuite une planche issue du rendu précédent. D'où l'isolement par
+  // processus, qui rend le parallélisme non seulement sûr mais souhaitable.
   //
-  // Isoler le temporaire par processus règle le problème à la racine, et rend
-  // le parallélisme non seulement sûr mais souhaitable : deux vidéos, deux
-  // variantes d'identité, deux formats — tout peut tourner en même temps.
-  const tempPropre = path.join(os.tmpdir(), `rendu-${slug}-${process.pid}`)
+  // LE 9 SEPTEMBRE 2026, LE MÊME SYMPTÔME EST REVENU PAR UNE AUTRE PORTE. Un
+  // rendu de 9 372 images est sorti en police de repli : le `public/fonts` du
+  // bundle avait disparu en cours de route. Mesuré — les cinq bundles Remotion
+  // de %TEMP%, dont quatre abandonnés la veille au soir, ont perdu ce dossier
+  // dans la même fenêtre de 88 ms, dans l'ordre de parcours du dossier.
+  // Personne n'ajoute rien à un bundle abandonné : c'est un balayage, pas notre
+  // code — ni `pipeline/`, ni `atelier/`, ni `@remotion/*` ne suppriment ce
+  // dossier, et un `bundle()` relancé à la main recopie les neuf .ttf sans
+  // faute. L'Assistant de stockage Windows est actif sur ce poste, nettoyage
+  // des fichiers temporaires compris.
+  //
+  // On ne cherche donc plus le coupable : `%TEMP%` est un dossier que le
+  // système s'autorise à vider, et un rendu l'occupe une demi-heure. Le
+  // dossier de mixage ET le bundle vivent dans le cache partagé — voir
+  // `dossierDeTravail`. C'est le mixage qui compte le plus ici : c'est lui qui
+  // avait produit le message trompeur de l'incident précédent.
+  const tempPropre = dossierDeTravail(`rendu-${slug}`)
   fs.mkdirSync(tempPropre, { recursive: true })
   for (const v of ['TMPDIR', 'TMP', 'TEMP']) process.env[v] = tempPropre
+
+  const dossierBundle = dossierDeTravail(`bundle-${slug}`)
+
   // LE NETTOYAGE NE DOIT JAMAIS MASQUER L'ERREUR QU'IL SUIT.
   //
   // Il tournait sans garde dans le gestionnaire de sortie. Sous Windows,
@@ -90,10 +278,12 @@ await principal(async () => {
   // On nettoie au mieux, on ne se plaint pas : un dossier temporaire oublie
   // coute quelques megaoctets, un message d'erreur perdu coute une heure.
   const nettoieTemp = () => {
-    try {
-      fs.rmSync(tempPropre, { recursive: true, force: true })
-    } catch {
-      /* le systeme le reprendra ; ce n'est pas une raison d'echouer */
+    for (const d of [tempPropre, dossierBundle]) {
+      try {
+        fs.rmSync(d, { recursive: true, force: true })
+      } catch {
+        /* le systeme le reprendra ; ce n'est pas une raison d'echouer */
+      }
     }
   }
   process.on('exit', nettoieTemp)
@@ -140,11 +330,21 @@ await principal(async () => {
   // image, la voix, les polices et le B-roll de ce rendu-là. Remotion recopie
   // le dossier public à chaque construction — y laisser les rushes d'origine
   // reviendrait à recopier des gigaoctets pour rien.
+  const publicSource = path.join(v.montage, 'public')
+  // Ce que le plan réclame doit exister AVANT qu'on recopie sept cents
+  // mégaoctets : le refus arrive en une seconde au lieu d'une minute.
+  verifieLesFichiersDuPlan(plan, publicSource)
+  // Un dossier de bundle porte le pid : il est neuf à chaque rendu. On le vide
+  // quand même — un processus tué net (`taskkill /F`) ne passe pas par
+  // `nettoieTemp`, et un pid se recycle.
+  fs.rmSync(dossierBundle, { recursive: true, force: true })
   const paquet = await bundle({
     entryPoint: CHEMINS.remotionEntree,
-    publicDir: path.join(v.montage, 'public'),
+    publicDir: publicSource,
+    outDir: dossierBundle,
     onProgress: (p) => progression(p, 100, 'préparation'),
   })
+  verifieLaCopiePublique(publicSource, path.join(paquet, 'public'))
 
   const inputProps = { plan }
   const composition = await selectComposition({
@@ -391,6 +591,16 @@ const RETENTES = 2
           `Onglet tombé — on reprend ${enUnSeulMorceau ? 'le rendu' : `les images ${de}–${a}`} ` +
             `avec ${fils} fil(s) au lieu de ${avant}.`
         )
+        // Et on revérifie le bundle avant de rouvrir des onglets : c'est ici
+        // que le trou du 9 septembre se serait vu. Voir `repareLaCopiePublique`.
+        const remis = repareLaCopiePublique(publicSource, path.join(paquet, 'public'))
+        if (remis.length > 0) {
+          journal.attention(
+            `${remis.length} fichier(s) avaient disparu du bundle depuis sa ` +
+              `construction — remis : ${remis.slice(0, 5).join(', ')}` +
+              (remis.length > 5 ? ', …' : '')
+          )
+        }
       }
     }
     morceaux.push(cible)

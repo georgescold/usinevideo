@@ -2178,6 +2178,97 @@ les espaces et on compare.
 Vérifié : montage lancé, rendu demandé une seconde plus tard → **409**, avec la
 commande en cours et son âge. Et le rendu seul repasse : 60 images en 14 s.
 
+### LE BUNDLE NE VIT PLUS DANS `%TEMP%`, ET UNE POLICE ABSENTE ARRÊTE LE RENDU
+
+Le 9 septembre 2026, un rendu de 9 372 images est sorti **en police de repli** :
+le thème demandait Anton, la vidéo affiche une linéale générique du début à la
+fin. Neuf `404` dans le journal, un par `.ttf`, et rien d'autre — le rendu s'est
+terminé normalement.
+
+**Ce qui rendait le défaut invisible tenait en un `catch`.** `polices.tsx`
+faisait `document.fonts.load(…).catch(() => null)` puis `continueRender`. Or
+`load` REJETTE quand le fichier ne vient pas : on avalait exactement le signal
+qu'on aurait dû lire. Le coût de cet échec silencieux est le pire possible —
+une demi-heure de calcul, un master qui se lit parfaitement partout, et une
+typographie fausse que personne ne remarque sans comparer avec la DA.
+
+Une police qui ne charge pas **annule** désormais le rendu, en nommant la
+famille et le fichier. Vérifié en retirant `public/fonts` : neuf polices
+nommées, arrêt en quelques secondes, aucun MP4 produit.
+
+**LA CAUSE, ELLE, EST DEHORS — ET LA LEÇON NE DÉPEND PAS DU COUPABLE.** Les
+fichiers sont bien à la source, et un `bundle()` relancé à la main les recopie
+sans faute : ils ont donc été copiés **puis retirés en cours de rendu**. Mesuré :
+les cinq bundles Remotion présents dans `%TEMP%`, dont quatre abandonnés la
+veille au soir, ont tous perdu leur `public/fonts` dans la même fenêtre de
+**88 ms**, dans l'ordre de parcours du dossier. Personne n'ajoute rien à un
+bundle abandonné : c'est un balayage. Rien dans `pipeline/`, `atelier/` ni
+`@remotion/*` ne supprime ce dossier — cherché ; l'Assistant de stockage Windows
+est actif sur ce poste, nettoyage des fichiers temporaires compris. Aucun journal
+ne nomme la suppression, et ça n'a pas d'importance : **`%TEMP%` est un dossier
+que le système s'autorise à vider, et un rendu l'occupe pendant une demi-heure.**
+
+**AUCUN DOSSIER DE TRAVAIL NE VIT PLUS DANS `%TEMP%`**, et c'est `dossierDeTravail`
+dans `chemins.mjs` qui le décide, à un seul endroit. Le pid reste dans le nom,
+pour la raison qui valait déjà : deux commandes simultanées ne doivent pas écrire
+au même endroit. Le cache a deux vertus par-dessus : il n'est balayé par
+personne, et son chemin est sans accent là où le dossier de la chaîne s'appelle
+« Usine à vidéo » (voir le piège faiss du §8).
+
+Cinq dossiers y sont passés, et l'ordre dit ce qu'on risquait :
+
+| dossier | durée de vie | ce qu'un balayage coûtait |
+|---|---|---|
+| le **mixage audio** du rendu | 30 min | le rendu — et le message trompeur de l'incident précédent |
+| le **bundle** | 30 min | les polices, en silence |
+| `sts` — ElevenLabs | minutes | une conversion **déjà payée**, repayée sans un mot |
+| `atelier` — les envois | un téléversement | un **rush**, que le §6 protège |
+| `coupe`, `whisper` | minutes | recalculable, mais un échec obscur |
+
+`verifie-<pid>.mp4` reste dans `%TEMP%` : il vit quelques secondes et ne contient
+rien qu'on regrette. Le balayage des ateliers orphelins a suivi son dossier — ce
+qui traîne encore dans `%TEMP%` n'est plus à nous de ramasser, c'est justement là
+que le système fait le ménage tout seul.
+
+Le bundle est en plus vidé avant chaque construction : un `taskkill /F` ne passe
+pas par le nettoyage de sortie, et un pid se recycle.
+
+**ET CE QUI N'EST PAS ARRIVÉ DANS LA COPIE SE COMPTE AVANT DE RENDRE.** Remotion
+recopie `05-montage/public/` dans le bundle et sert la copie ; un fichier
+manquant ne fait échouer personne — 404, la page continue, le défaut sort dans le
+master. On compare donc les deux arborescences juste après le bundle : quelques
+millisecondes pour deux cents fichiers, et le refus arrive **avant** les trente
+minutes, pas après. Le journal l'affirme aussi quand tout va bien — « 39 fichiers
+publics recopiés dans le bundle » —, parce qu'une ligne qui ne dit rien tant que
+rien ne va mal ne se lit jamais.
+
+**ET CE QUE LE PLAN RÉCLAME EST VÉRIFIÉ AVANT MÊME LA COPIE.** `plan.json` nomme
+la piste image, la voix, chaque plan de coupe et chaque police — vingt-cinq
+fichiers sur une vidéo courte, deux cents sur une VSL — et **aucun n'était
+vérifié**. Le plan a pu être écrit il y a trois semaines : un clip effacé depuis
+sort en NOIR, une voix absente sort en SILENCE, et le rendu se termine avec un
+verdict de sonie parfaitement calme sur un fichier muet.
+
+Le contrôle lit le plan en entier plutôt qu'une liste de champs connus — les
+types d'événements changent, une liste se périme au premier ajout. Il ne retient
+que `src` (chemin relatif, sans protocole) et les polices du thème, qui se
+nomment `fichier` : ce mot est trop courant pour être reconnu au nom partout.
+Vérifié en retirant un plan de coupe et la voix : **refus en 1 seconde**, les deux
+fichiers nommés, avant les sept cents mégaoctets de copie.
+
+**ET LA REPRISE APRÈS ONGLET TOMBÉ REVÉRIFIE, PUIS RÉPARE.** Le bundle n'était
+contrôlé qu'à sa construction ; or le trou du 9 septembre s'est ouvert **en cours
+de rendu** — les fichiers étaient là au départ et plus à la vingt-huitième
+minute. Une reprise rouvre des onglets neufs qui redemandent tout : c'est
+exactement le moment où le défaut se voit, et exactement celui où personne ne
+regardait. On répare plutôt que de refuser — la source est intacte, la copie
+coûte quelques millisecondes, et le rendu d'une traite repart de zéro de toute
+façon. Ce qui manque AUSSI à la source, en revanche, arrête tout : on ne sait
+plus quoi mettre à la place.
+
+Les trois gardes ne se remplacent pas : le plan peut être complet et la copie
+partielle, la copie complète et un fichier illisible.
+
 ### LA REQUÊTE EST LE VRAI LEVIER, ET ELLE ÉTAIT INVISIBLE
 
 « Un autre » rejouait la même recherche et descendait d'un candidat. Sur une
